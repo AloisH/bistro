@@ -1,0 +1,77 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+bun.lockb
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Nuxt build outputs
+.nuxt/
+.output/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Coverage & Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Prisma
+prisma/migrations/**/*.sql
+!prisma/migrations/migration_lock.toml
+
+# Docker
+docker-compose.override.yml
+
+# Build artifacts
+*.tsbuildinfo
+.cache/
+
+# Vercel
+.vercel
+
+# Sentry
+.sentryclirc
+
+# Local development
+.local/

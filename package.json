@@ -1,0 +1,34 @@
+{
+  "name": "bistro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Free, open-source Nuxt 4 starter kit for AI-powered SaaS",
+  "author": "Bistro Contributors",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter=\"@bistro/web\" dev",
+    "build": "bun run --filter=\"*\" build",
+    "test": "bun test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "bun run --filter=\"*\" typecheck",
+    "db:migrate": "bun run --filter=\"@bistro/database\" migrate",
+    "db:seed": "bun run --filter=\"@bistro/database\" seed",
+    "db:studio": "bun run --filter=\"@bistro/database\" studio"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "bun": ">=1.0.0"
+  }
+}
