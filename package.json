@@ -11,15 +11,13 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun run --filter=\"@bistro/web\" dev",
-    "build": "bun run --filter=\"*\" build",
-    "test": "bun test",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "typecheck": "bun run --filter=\"*\" typecheck",
-    "db:migrate": "bun run --filter=\"@bistro/database\" migrate",
-    "db:seed": "bun run --filter=\"@bistro/database\" seed",
-    "db:studio": "bun run --filter=\"@bistro/database\" studio"
+    "dev": "bun run --filter=web dev",
+    "dev:web": "bun run --filter=web dev",
+    "dev:landing": "bun run --filter=landing dev",
+    "build": "bun run --filter=web build && bun run --filter=landing build",
+    "db:migrate": "cd apps/web && bunx prisma migrate dev",
+    "db:studio": "cd apps/web && bunx prisma studio",
+    "db:generate": "cd apps/web && bunx prisma generate"
   },
   "devDependencies": {
     "@types/bun": "latest",
