@@ -17,12 +17,17 @@
     "build": "bun run --filter=web build && bun run --filter=landing build",
     "db:migrate": "cd apps/web && bunx prisma migrate dev",
     "db:studio": "cd apps/web && bunx prisma studio",
-    "db:generate": "cd apps/web && bunx prisma generate"
+    "db:generate": "cd apps/web && bunx prisma generate",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "bun run --filter=web lint",
+    "typecheck": "bun run --filter=web typecheck"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "eslint": "^9.15.0",
     "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "typescript": "^5.7.2"
   },
   "engines": {
