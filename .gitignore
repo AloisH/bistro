@@ -75,3 +75,9 @@ docker-compose.override.yml
 
 # Local development
 .local/
+
+# Environment files
+.env
+.env.local
+.env.docker
+.env*.local

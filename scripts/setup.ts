@@ -105,6 +105,17 @@ async function main() {
       )
       await writeFile('.env', updatedEnv)
       console.log(c.green('✓') + ' Generated AUTH_SECRET')
+
+      // Create .env.docker with Docker network hostname
+      const dockerEnv = updatedEnv.replace(
+        'DATABASE_URL=postgresql://bistro:bistro@localhost:5432/bistro',
+        'DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro'
+      ).replace(
+        'REDIS_URL=redis://localhost:6379',
+        'REDIS_URL=redis://redis:6379'
+      )
+      await writeFile('.env.docker', dockerEnv)
+      console.log(c.green('✓') + ' Created .env.docker (for Docker testing)')
     } else {
       console.log(c.yellow('⊘ Skipped .env creation'))
       console.log(c.yellow('  Run: cp .env.example .env'))

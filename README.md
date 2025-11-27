@@ -42,6 +42,28 @@ bun dev
 
 Visit http://localhost:3000
 
+## Production Testing
+
+Test production Docker build locally (uses `.env.docker` automatically):
+
+```bash
+# Build and run production setup
+bun docker:prod
+
+# Or run detached
+bun docker:prod:up
+
+# View logs
+bun docker:prod:logs
+
+# Stop
+bun docker:prod:down
+```
+
+Uses separate `.env.docker` file (postgres hostname) so local dev `.env` (localhost) stays unchanged.
+
+See [docs/docker-production.md](docs/docker-production.md) for details.
+
 ## Features
 
 ✅ **Core Infrastructure**
