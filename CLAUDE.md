@@ -50,6 +50,79 @@ cd apps/web && bun typecheck # Nuxt type checking
 cd apps/web && bun lint      # ESLint
 ```
 
+## GitHub Workflow
+
+### Working with Issues
+
+**List issues:**
+```bash
+gh issue list                    # View all open issues
+gh issue list --label phase-1    # Filter by label
+gh issue view 24                 # View specific issue
+```
+
+**Create issue:**
+```bash
+# Use custom command
+/issue
+
+# Or gh CLI directly
+gh issue create --title "Title" --body "Description" --label "feature,phase-1"
+```
+
+**Standard workflow:**
+
+1. **Pick issue**: Choose from `gh issue list` (prioritize phase-1)
+
+2. **Plan**: Use `/plan-issue <number>` command
+   - Fetches issue details
+   - Explores codebase
+   - Creates implementation plan in `~/.claude/plans/`
+   - Get user approval before implementing
+
+3. **Implement**: Execute the approved plan
+   - Make changes
+   - Test thoroughly
+   - Follow existing patterns
+
+4. **Commit**: Use `/commit` command
+   - Stages relevant files
+   - Creates conventional commit message
+   - Format: `type(scope): description`
+   - Types: feat, fix, chore, docs, refactor, test, ci
+
+5. **Push & PR**:
+   ```bash
+   git push origin main                           # Push to main
+   # Or create feature branch + PR
+   git checkout -b feat/issue-24
+   git push -u origin feat/issue-24
+   gh pr create --title "..." --body "Fixes #24"
+   ```
+
+6. **Close issue**:
+   - Auto-closed by PR merge with "Fixes #24" in description
+   - Or manually: `gh issue close 24 --comment "Done"`
+
+### Commit Message Convention
+
+Follow conventional commits:
+- `feat(auth): add OAuth login`
+- `fix(db): correct migration syntax`
+- `chore(deps): update nuxt to 4.x`
+- `docs(readme): add setup instructions`
+- `test(api): add unit tests for routes`
+- `ci: add GitHub Actions workflow`
+
+Keep messages concise, imperative mood.
+
+### Labels
+
+Use for organization:
+- **Phase**: `phase-1`, `phase-2`, `phase-3`, `phase-4`
+- **Type**: `feature`, `bug`, `docs`, `chore`
+- **Area**: `auth`, `database`, `ai`, `ui`, `ci-cd`
+
 ## Architecture
 
 ### apps/web Structure
