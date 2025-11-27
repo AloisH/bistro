@@ -11,6 +11,8 @@
     "packages/*"
   ],
   "scripts": {
+    "prepare": "bun run scripts/setup.ts",
+    "setup": "bun run scripts/setup.ts",
     "dev": "bun run --filter=web dev",
     "dev:web": "bun run --filter=web dev",
     "dev:landing": "bun run --filter=landing dev",
