@@ -101,7 +101,7 @@ async function main() {
       const secret = randomBytes(32).toString('hex')
       const updatedEnv = envContent.replace(
         'AUTH_SECRET=your-secret-key-change-in-production',
-        `AUTH_SECRET=${secret}`
+        `AUTH_SECRET=${secret}`,
       )
       await writeFile('.env', updatedEnv)
       console.log(c.green('✓') + ' Generated AUTH_SECRET')
@@ -110,7 +110,7 @@ async function main() {
       const dockerEnv = updatedEnv
         .replace(
           'DATABASE_URL=postgresql://bistro:bistro@localhost:5432/bistro',
-          'DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro'
+          'DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro',
         )
         .replace('REDIS_URL=redis://localhost:6379', 'REDIS_URL=redis://redis:6379')
       await writeFile('.env.docker', dockerEnv)
