@@ -8,8 +8,8 @@ useHead({
 })
 
 const title = 'Nuxt Starter Template'
-const description
-  = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const description =
+  'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
 useSeoMeta({
   title,
@@ -55,9 +55,7 @@ useSeoMeta({
 
     <UFooter>
       <template #left>
-        <p class="text-muted text-sm">
-          Built with Nuxt UI • © {{ new Date().getFullYear() }}
-        </p>
+        <p class="text-muted text-sm">Built with Nuxt UI • © {{ new Date().getFullYear() }}</p>
       </template>
 
       <template #right>
