@@ -15,6 +15,8 @@ COPY package.json ./
 COPY bun.lockb* ./
 RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
+# Debug: List files to verify prisma directory is copied
+RUN ls -la && ls -la prisma/ || echo "prisma dir not found"
 # Prisma generate needs DATABASE_URL (doesn't connect, just validates schema)
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/db"
 RUN bunx prisma generate --schema=prisma/schema.prisma
