@@ -118,7 +118,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./apps/web
           file: ./apps/web/Dockerfile
           push: false
           tags: bistro:${{ github.sha }}
