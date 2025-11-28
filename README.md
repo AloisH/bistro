@@ -1,5 +1,8 @@
 # 🍽️ Bistro
 
+[![CI](https://github.com/AloisH/bistro/actions/workflows/ci.yml/badge.svg)](https://github.com/AloisH/bistro/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 > **Free, open-source Nuxt 4 starter kit for AI-powered SaaS products**
 
 ## What is Bistro?
@@ -7,6 +10,7 @@
 Bistro is a production-ready starter kit for developers building AI-powered SaaS applications. Unlike paid alternatives ($149-$349), Bistro provides everything you need completely free with an MIT license.
 
 **Built with:**
+
 - ⚡ **Nuxt 4** — Full-stack framework
 - 🎨 **Nuxt UI + Tailwind 4** — Beautiful, accessible components
 - 🗄️ **PostgreSQL + Prisma** — Type-safe database
@@ -67,12 +71,14 @@ See [docs/docker-production.md](docs/docker-production.md) for details.
 ## Features
 
 ✅ **Core Infrastructure**
+
 - Full-stack TypeScript with Nuxt 4
 - PostgreSQL database with Prisma ORM
 - Better Auth (email, OAuth, 2FA)
 - Docker Compose dev environment
 
 🤖 **AI-Powered Workflows**
+
 - Blog post generation
 - Ad creative studio
 - Landing page builder
@@ -81,12 +87,14 @@ See [docs/docker-production.md](docs/docker-production.md) for details.
 - Product idea validator
 
 🎨 **UI & Content**
+
 - Pre-built Nuxt UI components
 - Nuxt Content for docs/blog
 - Tiptap rich text editor
 - Mobile-responsive layouts
 
 💼 **Business Features**
+
 - Polar payments integration
 - Multi-tenant support
 - Email templates (Resend)
@@ -121,13 +129,13 @@ bistro/
 
 ## Why Bistro?
 
-| Feature | Bistro | Others |
-|---------|--------|--------|
-| **Price** | **Free (MIT)** | $149-$349 |
-| **Framework** | **Nuxt 4** | Nuxt 3 |
-| **AI Built-in** | **✓** | Limited/None |
-| **Content Workflows** | **✓** | ❌ |
-| **Community** | **Open-source** | Proprietary |
+| Feature               | Bistro          | Others       |
+| --------------------- | --------------- | ------------ |
+| **Price**             | **Free (MIT)**  | $149-$349    |
+| **Framework**         | **Nuxt 4**      | Nuxt 3       |
+| **AI Built-in**       | **✓**           | Limited/None |
+| **Content Workflows** | **✓**           | ❌           |
+| **Community**         | **Open-source** | Proprietary  |
 
 ## Development
 
@@ -153,6 +161,7 @@ bun db:studio     # Open Prisma Studio
 Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Ways to contribute:**
+
 - 🐛 Bug reports & fixes
 - ✨ New features
 - 📖 Documentation improvements
