@@ -7,13 +7,13 @@ RUN apk add --no-cache curl openssl openssl-dev
 FROM base AS deps
 COPY package.json ./
 COPY bun.lockb* ./
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile --production --ignore-scripts
 
 # Stage 3: Build application
 FROM base AS build
 COPY package.json ./
 COPY bun.lockb* ./
-RUN bun install --frozen-lockfile
+RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
 # Prisma generate needs DATABASE_URL (doesn't connect, just validates schema)
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/db"
