@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Bistro - Free, open-source Nuxt 4 starter kit for AI-powered SaaS products. MIT licensed alternative to paid starters ($149-$349).
 
 **Stack:**
+
 - Nuxt 4 (full-stack framework)
 - Nuxt UI + Tailwind 4
 - PostgreSQL + Prisma ORM
@@ -18,6 +19,7 @@ Bistro - Free, open-source Nuxt 4 starter kit for AI-powered SaaS products. MIT 
 ## Monorepo Structure
 
 Bun workspaces with:
+
 - `apps/web/` - Main Nuxt 4 SaaS application
 - `apps/landing/` - Marketing site (planned, not yet implemented)
 - `apps/docs/` - Documentation (planned, not yet implemented)
@@ -55,6 +57,7 @@ cd apps/web && bun lint      # ESLint
 ### Working with Issues
 
 **List issues:**
+
 ```bash
 gh issue list                    # View all open issues
 gh issue list --label phase-1    # Filter by label
@@ -62,6 +65,7 @@ gh issue view 24                 # View specific issue
 ```
 
 **Create issue:**
+
 ```bash
 # Use custom command
 /issue
@@ -92,6 +96,7 @@ gh issue create --title "Title" --body "Description" --label "feature,phase-1"
    - Types: feat, fix, chore, docs, refactor, test, ci
 
 5. **Push & PR**:
+
    ```bash
    git push origin main                           # Push to main
    # Or create feature branch + PR
@@ -107,6 +112,7 @@ gh issue create --title "Title" --body "Description" --label "feature,phase-1"
 ### Commit Message Convention
 
 Follow conventional commits:
+
 - `feat(auth): add OAuth login`
 - `fix(db): correct migration syntax`
 - `chore(deps): update nuxt to 4.x`
@@ -119,6 +125,7 @@ Keep messages concise, imperative mood.
 ### Labels
 
 Use for organization:
+
 - **Phase**: `phase-1`, `phase-2`, `phase-3`, `phase-4`
 - **Type**: `feature`, `bug`, `docs`, `chore`
 - **Area**: `auth`, `database`, `ai`, `ui`, `ci-cd`
@@ -128,6 +135,7 @@ Use for organization:
 ### apps/web Structure
 
 Nuxt 4 app using new `/app` directory structure:
+
 - `/app/app.vue` - Root component with UApp wrapper, header/footer
 - `/app/pages/` - File-based routing
 - `/app/components/` - Vue components (auto-imported)
@@ -138,6 +146,7 @@ Nuxt 4 app using new `/app` directory structure:
 ### Database
 
 Prisma with PostgreSQL. Schema includes:
+
 - `User` - Auth with email, password, OAuth accounts
 - `Account` - OAuth provider accounts
 - `Session` - Auth sessions
@@ -155,6 +164,7 @@ Prisma client: Import from `server/utils/db.ts` (singleton pattern with dev logg
 ### Environment
 
 .env.example shows required vars:
+
 - `DATABASE_URL` - PostgreSQL connection
 - `AUTH_SECRET` - Better Auth secret
 - `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` - AI providers
@@ -172,6 +182,7 @@ Prisma client: Import from `server/utils/db.ts` (singleton pattern with dev logg
 ## AI Integration Plan
 
 Per README, planned AI workflows:
+
 - Blog post generation
 - Ad creative studio
 - Landing page builder

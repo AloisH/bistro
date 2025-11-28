@@ -9,6 +9,7 @@
 Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-powered SaaS products. Unlike paid alternatives ($149-$349), Bistro provides production-ready foundations with built-in AI content/productization workflows (Idea Builder, Ad Creatives, Brand Package, Landing Page, Email Funnels, SEO content). This document provides: tech stack with rationale, system architecture, data model, API contracts, dev setup, CI/CD, security, testing strategy, MVP roadmap, and machine-friendly handoff for AI agents.
 
 **Tech Stack Summary:**
+
 - **Framework:** Nuxt 4 + Nitro (full-stack)
 - **UI:** Nuxt UI + Tailwind CSS 4
 - **Database:** PostgreSQL + Prisma
@@ -25,16 +26,19 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 ## 2) Goals & success metrics (KPI)
 
 **Developer Experience:**
+
 - Bootstrap to running app: < 10 minutes
 - First deployment: < 30 minutes
 - Full customization understanding: < 2 hours with docs
 
 **Adoption Metrics:**
+
 - GitHub stars: 1k in first 3 months
 - Active forks/projects built: 100+ in 6 months
 - Community contributors: 10+ regular contributors
 
 **Technical Goals:**
+
 - Zero-config local dev with Docker Compose
 - Type-safe end-to-end (frontend ↔ API)
 - Mobile-responsive out of the box
@@ -44,20 +48,21 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 
 ## 3) Competitor comparison & differentiation
 
-| Feature | Bistro | supastarter | nuxtstarter.ai | supersaas |
-|---------|--------|-------------|----------------|-----------|
-| **Price** | **Free (OSS)** | $349 ($244 sale) | $169 | $149 |
-| **Framework** | **Nuxt 4** | Nuxt 3 | Nuxt 3 | Nuxt 4 |
-| **UI** | **Nuxt UI + Tailwind 4** | Radix Vue + Tailwind | Tailwind | Tailwind v4 |
-| **ORM** | **Prisma** | Prisma | Supabase | Drizzle |
-| **Auth** | **Better Auth** | Multiple options | Basic + OAuth | 30+ providers |
-| **AI SDK** | **✓ Vercel AI SDK** | Vercel AI SDK | ❌ | ❌ |
-| **Content** | **✓ Nuxt Content** | MDX blog | ❌ | ❌ |
-| **AI Workflows** | **✓ Built-in** | Basic | ❌ | ❌ |
-| **Example Apps** | **6+** | Few | Few | 5+ |
-| **License** | **MIT** | Proprietary | Proprietary | Proprietary |
+| Feature          | Bistro                   | supastarter          | nuxtstarter.ai | supersaas     |
+| ---------------- | ------------------------ | -------------------- | -------------- | ------------- |
+| **Price**        | **Free (OSS)**           | $349 ($244 sale)     | $169           | $149          |
+| **Framework**    | **Nuxt 4**               | Nuxt 3               | Nuxt 3         | Nuxt 4        |
+| **UI**           | **Nuxt UI + Tailwind 4** | Radix Vue + Tailwind | Tailwind       | Tailwind v4   |
+| **ORM**          | **Prisma**               | Prisma               | Supabase       | Drizzle       |
+| **Auth**         | **Better Auth**          | Multiple options     | Basic + OAuth  | 30+ providers |
+| **AI SDK**       | **✓ Vercel AI SDK**      | Vercel AI SDK        | ❌             | ❌            |
+| **Content**      | **✓ Nuxt Content**       | MDX blog             | ❌             | ❌            |
+| **AI Workflows** | **✓ Built-in**           | Basic                | ❌             | ❌            |
+| **Example Apps** | **6+**                   | Few                  | Few            | 5+            |
+| **License**      | **MIT**                  | Proprietary          | Proprietary    | Proprietary   |
 
 **Bistro's Unique Value:**
+
 - **Free & open-source** — no $149-$349 upfront cost
 - **AI-first** — content generation, ad creatives, SEO tools built-in
 - **Productization workflows** — not just auth/payments, but complete content pipelines
@@ -69,6 +74,7 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 ## 4) Tech stack
 
 **Why these choices?**
+
 - **Nuxt 4**: Latest stable, full-stack, great DX, huge ecosystem
 - **Better Auth**: Modern, flexible, no vendor lock-in
 - **Vercel AI SDK**: Provider-agnostic, streaming built-in
@@ -78,6 +84,7 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 - **Polar**: Developer-friendly payments, merchant of record
 
 **Core Framework:**
+
 - **Nuxt 4** — Full-stack framework (Vue 3, Composition API, TypeScript)
   - SSR/SSG support, file-based routing, auto-imports
   - Server routes for API (no separate backend needed)
@@ -87,17 +94,20 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 - **Nuxt Content** — File-based CMS for docs, blog, MDX support
 
 **Data & Backend:**
+
 - **Prisma** — TypeScript-first ORM with migrations
 - **PostgreSQL** — Primary database (local/Neon/Vercel Postgres)
 - **Redis** (optional) — Background jobs, caching (Upstash for serverless)
 
 **Auth & Security:**
+
 - **Better Auth** — Modern, framework-agnostic auth library
   - Email/password, OAuth, magic links, 2FA
   - Session management, CSRF protection
   - Built-in multi-tenancy support
 
 **AI Integration:**
+
 - **Vercel AI SDK** — Unified interface for LLMs
   - Streaming responses
   - OpenAI, Anthropic, local models
@@ -106,17 +116,20 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 - **Vector DB:** Not included by default (can add pgvector if needed)
 
 **Optional Services:**
+
 - **Payments:** Polar (merchant of record, simple setup)
 - **Email:** Resend (developer-friendly, generous free tier)
 - **Storage:** Vercel Blob or S3-compatible
 - **Analytics:** Vercel Analytics (privacy-friendly)
 
 **Deployment:**
+
 - **Docker** (primary) — Docker Compose for dev, production-ready Dockerfile
 - **Alternative:** Vercel, Cloudflare Pages, Netlify, Railway
 - **Database:** Neon, Supabase, or self-hosted PostgreSQL
 
 **Dev Tools:**
+
 - **Bun** — Fast all-in-one runtime, package manager, bundler
 - **Vitest** — Unit testing (ESM-native, fast)
 - **Playwright** — E2E testing
@@ -125,6 +138,7 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 - **GitHub Actions** — CI/CD
 
 **IDE & AI Assistant Setup:**
+
 - **VSCode** — Settings, extensions, snippets pre-configured
 - **Zed** — Modern editor config included
 - **Cursor/Claude/Copilot** — AI coding assistant rules and prompts
@@ -169,6 +183,7 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 ```
 
 **Core Components:**
+
 - **Frontend:** Nuxt pages + Nuxt UI components
 - **Backend:** Nitro server routes (built into Nuxt 4)
 - **API:** RESTful endpoints at `/api/v1/*`
@@ -179,6 +194,7 @@ Bistro is a **free, open-source Nuxt 4 starter kit** for developers building AI-
 - **Jobs:** Optional BullMQ + Redis for async AI tasks
 
 **Why Nitro:**
+
 - Universal JS engine (runs anywhere)
 - Auto-imports, file-based routing
 - Built-in caching, storage layers
@@ -256,11 +272,13 @@ The OpenAPI file contains types for request/response bodies and example payloads
 ```
 
 **Apps breakdown:**
+
 - **landing** — Public-facing site (bistro.dev), built with Nuxt Content
 - **web** — The starter kit itself (users clone/fork this)
 - **docs** — Documentation site (docs.bistro.dev)
 
 **CLI package:**
+
 - `bun create bistro` — Bootstrap new project from template
 - `bistro add [feature]` — Add features (auth, payments, AI, etc.)
 - `bistro deploy` — Guided deployment setup
@@ -272,6 +290,7 @@ The OpenAPI file contains types for request/response bodies and example payloads
 **Pre-configured for popular IDEs:**
 
 **VSCode (`.vscode/` included):**
+
 - `settings.json` — Format on save, ESLint, Prettier, auto-imports
 - `extensions.json` — Recommended extensions:
   - Vue - Official (Vue Language Features)
@@ -285,11 +304,13 @@ The OpenAPI file contains types for request/response bodies and example payloads
 - `snippets/` — Custom Vue 3, Nuxt, TypeScript snippets
 
 **Zed (`.zed/` included):**
+
 - `settings.json` — Modern editor optimized config
 - Language server settings for Vue, TypeScript
 - Fast startup, minimal configuration
 
 **AI Coding Assistants:**
+
 - `.cursorrules` — Rules for Cursor AI (project conventions, patterns)
 - `.github/copilot-instructions.md` — Context for GitHub Copilot
 - `.claude/` — Claude Code project rules:
@@ -300,12 +321,14 @@ The OpenAPI file contains types for request/response bodies and example payloads
 - AI-friendly documentation in code comments
 
 **Dev Containers:**
+
 - `.devcontainer/devcontainer.json` — Full development environment
 - Pre-installed: Bun, Node, PostgreSQL, Redis
 - Works with GitHub Codespaces, VSCode Dev Containers
 - One-click setup for new contributors
 
 **Pre-commit Hooks:**
+
 - Husky + lint-staged configured
 - Auto-format on commit
 - Type checking before push
@@ -318,6 +341,7 @@ The OpenAPI file contains types for request/response bodies and example payloads
 **Bistro CLI** — Fast project scaffolding and feature management
 
 **Core commands:**
+
 ```bash
 # Create new project
 bun create bistro my-saas
@@ -339,6 +363,7 @@ bistro doctor            # Check project health
 ```
 
 **Templates:**
+
 - **minimal** — Barebones Nuxt 4 + Tailwind 4
 - **saas-basic** — Auth + DB + Nuxt UI
 - **saas-full** — Auth + AI + Payments + Email (recommended)
@@ -346,6 +371,7 @@ bistro doctor            # Check project health
 - **marketplace** — Multi-tenant marketplace setup
 
 **Features:**
+
 - Interactive prompts (like create-t3-app)
 - TypeScript-first code generation
 - Automatic dependency installation
@@ -366,6 +392,7 @@ bistro doctor            # Check project health
 - `release.yml` — Automated releases with semantic versioning
 
 **Deployment:**
+
 - **Docker:** Multi-stage Dockerfile with Bun (primary method)
 - **Docker Compose:** Production-ready compose file included
 - **Alternative:** Vercel, Railway, Fly.io (configs provided)
@@ -398,19 +425,23 @@ Secrets managed via environment variables and GitHub Actions secrets.
 ## 14) Observability (optional, easy to add)
 
 **Error Tracking:**
+
 - Sentry integration (optional) — pre-configured, just add DSN
 - Source maps for production debugging
 
 **Logging:**
+
 - Structured JSON logs (console in dev, file in prod)
 - Pino or Winston for performance
 - Integration guides for BetterStack, Axiom, Logflare
 
 **Analytics (privacy-friendly):**
+
 - Plausible or Umami pre-configured (cookieless)
 - Custom event tracking for key actions
 
 **Performance Monitoring:**
+
 - Vercel Analytics (built-in on Vercel)
 - Web Vitals tracking included
 - API response time middleware
@@ -428,6 +459,7 @@ Secrets managed via environment variables and GitHub Actions secrets.
 - **Coverage target:** >80% for core business logic
 
 **Example Gherkin scenarios included** in `/tests/features/` for:
+
 - User signup/login flow
 - AI content generation
 - Project creation and management
@@ -447,6 +479,7 @@ Bistro includes 5+ fully-functional example apps demonstrating best practices:
 6. **Product Idea Validator** — Market research + competitive analysis tool
 
 Each example includes:
+
 - Complete UI implementation
 - API routes
 - Database schema
@@ -458,12 +491,14 @@ Each example includes:
 ## 17) Open-source licensing & sustainability
 
 **License:** MIT License
+
 - Use for any purpose (personal, commercial, SaaS products)
 - No attribution required (appreciated!)
 - Modify and redistribute freely
 - Full source code available on GitHub
 
 **Sustainability Model:**
+
 - **GitHub Sponsors** — Support ongoing development and maintenance
   - Sponsor tiers: $5/month (supporter), $25/month (backer), $100/month (sponsor)
   - Sponsors get recognition in README and website
@@ -472,6 +507,7 @@ Each example includes:
 - **Community-driven** — No paid tiers, premium features, or paywalls
 
 **Contribution Guidelines:**
+
 - All contributions welcome (PRs, issues, docs, translations)
 - CLA not required
 - Maintainer team reviews within 48 hours
@@ -482,6 +518,7 @@ Each example includes:
 ## 18) Documentation & developer experience
 
 **Docs site** (Nuxt Content):
+
 - **Quickstart:** Running app in < 10 minutes
 - **Architecture guide:** Understanding the codebase
 - **Customization guide:** Swap auth, DB, UI components
@@ -492,6 +529,7 @@ Each example includes:
 - **Component library:** Nuxt UI components showcase
 
 **Interactive tutorials:**
+
 - "Build your first AI feature"
 - "Add a new payment tier"
 - "Customize the UI theme"
@@ -501,6 +539,7 @@ Each example includes:
 ## 19) Roadmap (90-day MVP)
 
 **Month 1: Foundation & Infrastructure**
+
 - [ ] Monorepo setup (bun workspaces, turborepo)
 - [ ] Starter kit app (apps/web): Nuxt 4 + TypeScript + Tailwind 4
 - [ ] Nuxt UI component library integration
@@ -515,6 +554,7 @@ Each example includes:
 - [ ] GitHub Actions CI
 
 **Month 2: Core AI Features**
+
 - [ ] Vercel AI SDK integration (OpenAI, Anthropic)
 - [ ] AI streaming responses with proper error handling
 - [ ] Prompt library & management system
@@ -524,6 +564,7 @@ Each example includes:
 - [ ] Background job queue (BullMQ + Redis) for async AI tasks
 
 **Month 3: Polish, Docs & Launch**
+
 - [ ] Polar payments integration (optional, removable)
 - [ ] Email templates (Resend)
 - [ ] CLI improvements: `bistro add` commands
@@ -543,6 +584,7 @@ Each example includes:
 **For AI agents building Bistro:**
 
 1. **Bootstrap command:**
+
    ```bash
    bun create bistro my-saas
    cd my-saas
@@ -577,6 +619,7 @@ Each example includes:
    - Sensible defaults for local dev
 
 **AI collaboration workflow:**
+
 - Read `/docs/CONTRIBUTING.md` for code style, patterns, testing requirements
 - Check `/docs/ARCHITECTURE.md` for system design decisions
 - Use `/scripts/ai-generate.sh <feature-name>` to scaffold new features
@@ -587,6 +630,7 @@ Each example includes:
 ## 21) Security & compliance notes
 
 **For starter kit builders:**
+
 - API keys should NEVER be committed (checked by pre-commit hook)
 - GDPR compliance: user data export/deletion endpoints included
 - CCPA compliance: opt-out mechanisms in place
@@ -600,12 +644,14 @@ Each example includes:
 ## 22) Community & support
 
 **Getting help:**
+
 - **Discord:** [discord.gg/bistro](#) — real-time chat with community
 - **GitHub Discussions:** Q&A, show & tell, ideas
 - **Stack Overflow:** Tag questions with `bistro-saas`
 - **Twitter/X:** [@bistrosass](#) — updates and announcements
 
 **Ways to contribute:**
+
 - Code contributions (features, bug fixes)
 - Documentation improvements
 - Example apps & templates
@@ -615,6 +661,7 @@ Each example includes:
 - Testing & bug reports
 
 **Recognition:**
+
 - All contributors listed in README
 - Top contributors get "core team" badge
 - Monthly spotlight on community projects
@@ -638,6 +685,7 @@ Each example includes:
 ## 23) Key decisions summary
 
 **Confirmed specifications:**
+
 - ✅ License: MIT (most permissive)
 - ✅ Framework: Nuxt 4 + Nitro
 - ✅ UI: Nuxt UI + Tailwind 4
@@ -652,6 +700,7 @@ Each example includes:
 - ✅ IDE Setup: VSCode, Zed, devcontainers, AI assistant configs
 
 **Next steps:**
+
 1. Set up monorepo structure
 2. Initialize Nuxt 4 apps
 3. Build CLI scaffolding tool

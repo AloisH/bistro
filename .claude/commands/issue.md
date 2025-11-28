@@ -5,6 +5,7 @@ description: Create GitHub issue for Bistro project
 Create a new GitHub issue for the Bistro project with proper labels and formatting.
 
 **Instructions:**
+
 1. Ask user for issue details if not provided:
    - Title (required)
    - Description/body (required)
@@ -43,6 +44,7 @@ Create a new GitHub issue for the Bistro project with proper labels and formatti
    - phase-4: Production
 
 4. Create the issue using `gh issue create`:
+
    ```bash
    gh issue create --title "TITLE" --body "BODY" --label "label1,label2"
    ```
@@ -56,6 +58,7 @@ Create a new GitHub issue for the Bistro project with proper labels and formatti
 6. Return the issue URL
 
 **Example:**
+
 ```
 Title: "Feature: Add dark mode toggle"
 Category: ui

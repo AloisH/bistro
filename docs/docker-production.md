@@ -44,17 +44,20 @@ The production setup includes:
 Uses `.env.docker` file automatically (configured in scripts).
 
 **Two separate env files:**
+
 - `.env` - Local development (uses `localhost:5432`)
 - `.env.docker` - Docker production (uses `postgres:5432`)
 
 This way you don't need to manually change DATABASE_URL each time.
 
 **Required variables:**
+
 - `DATABASE_URL` - Postgres connection (use internal Docker network)
 - `AUTH_SECRET` - Auth secret key
 - `APP_URL` - Application URL
 
 **Optional variables:**
+
 - `OPENAI_API_KEY`
 - `ANTHROPIC_API_KEY`
 - `POLAR_API_KEY`
@@ -174,15 +177,15 @@ bun docker:prod:build --no-cache
 
 ## Differences from Development
 
-| Aspect | Development | Production |
-|--------|-------------|------------|
-| **Build** | Dev server | Optimized build |
-| **Port** | 3000 (host) | 3000 (container) |
-| **Database** | Host postgres | Container postgres |
-| **Hot Reload** | ✅ | ❌ |
-| **Source Maps** | ✅ | ❌ |
-| **Minification** | ❌ | ✅ |
-| **ENV** | `.env` direct | `.env` via Docker |
+| Aspect           | Development   | Production         |
+| ---------------- | ------------- | ------------------ |
+| **Build**        | Dev server    | Optimized build    |
+| **Port**         | 3000 (host)   | 3000 (container)   |
+| **Database**     | Host postgres | Container postgres |
+| **Hot Reload**   | ✅            | ❌                 |
+| **Source Maps**  | ✅            | ❌                 |
+| **Minification** | ❌            | ✅                 |
+| **ENV**          | `.env` direct | `.env` via Docker  |
 
 ## CI/CD Integration
 

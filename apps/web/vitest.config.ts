@@ -11,13 +11,7 @@ export default defineVitestConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        '.nuxt/**',
-        'node_modules/**',
-        'dist/**',
-        '*.config.{js,ts}',
-        'prisma/**',
-      ],
+      exclude: ['.nuxt/**', 'node_modules/**', 'dist/**', '*.config.{js,ts}', 'prisma/**'],
     },
   },
 })

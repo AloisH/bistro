@@ -19,6 +19,7 @@ Phase 4: CI/CD & Polish (Day 10-14)
 ## Phase 0: Repository & Environment Setup ✓
 
 **Status:** COMPLETED
+
 - Repository initialized
 - README.md created
 - package.json, docker-compose.yml, .env.example, .gitignore created
@@ -35,6 +36,7 @@ cd apps/web
 ```
 
 #### Create package.json
+
 ```bash
 cat > package.json << 'EOF'
 {
@@ -246,6 +248,7 @@ EOF
 ### Step 1.6: Create Base Layout & Pages
 
 #### app.vue
+
 ```bash
 cat > app.vue << 'EOF'
 <template>
@@ -259,6 +262,7 @@ EOF
 ```
 
 #### layouts/default.vue
+
 ```bash
 mkdir -p layouts
 
@@ -276,6 +280,7 @@ EOF
 ```
 
 #### pages/index.vue
+
 ```bash
 cat > pages/index.vue << 'EOF'
 <script setup lang="ts">
@@ -303,6 +308,7 @@ EOF
 ```
 
 #### pages/dashboard/index.vue
+
 ```bash
 mkdir -p pages/dashboard
 
@@ -347,6 +353,7 @@ EOF
 ### Step 1.7: Create Components
 
 #### components/AppHeader.vue
+
 ```bash
 cat > components/AppHeader.vue << 'EOF'
 <script setup lang="ts">
@@ -376,6 +383,7 @@ EOF
 ```
 
 #### components/AppFooter.vue
+
 ```bash
 cat > components/AppFooter.vue << 'EOF'
 <template>
@@ -393,6 +401,7 @@ EOF
 ### Step 1.8: Create API Routes
 
 #### server/api/health.get.ts
+
 ```bash
 cat > server/api/health.get.ts << 'EOF'
 export default defineEventHandler(() => {
@@ -420,6 +429,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `bun run --filter web dev` starts app
 - Visit http://localhost:3000
 - Home page & dashboard load
@@ -487,6 +497,7 @@ mkdir -p public
 ```
 
 #### app.vue
+
 ```bash
 cat > app.vue << 'EOF'
 <template>
@@ -498,6 +509,7 @@ EOF
 ```
 
 #### pages/index.vue
+
 ```bash
 cat > pages/index.vue << 'EOF'
 <script setup lang="ts">
@@ -522,6 +534,7 @@ EOF
 ### Step 2.4: Create Landing Components
 
 #### components/landing/LandingHeader.vue
+
 ```bash
 cat > components/landing/LandingHeader.vue << 'EOF'
 <template>
@@ -541,6 +554,7 @@ EOF
 ```
 
 #### components/landing/LandingHero.vue
+
 ```bash
 cat > components/landing/LandingHero.vue << 'EOF'
 <template>
@@ -572,6 +586,7 @@ EOF
 ```
 
 #### components/landing/LandingFeatures.vue
+
 ```bash
 cat > components/landing/LandingFeatures.vue << 'EOF'
 <script setup lang="ts">
@@ -636,6 +651,7 @@ EOF
 ```
 
 #### components/landing/LandingCta.vue
+
 ```bash
 cat > components/landing/LandingCta.vue << 'EOF'
 <template>
@@ -658,6 +674,7 @@ EOF
 ```
 
 #### components/landing/LandingFooter.vue
+
 ```bash
 cat > components/landing/LandingFooter.vue << 'EOF'
 <template>
@@ -677,6 +694,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `bun run --filter landing dev` starts on port 3001
 - Visit http://localhost:3001
 - Landing page loads with all sections
@@ -727,6 +745,7 @@ mkdir -p src/commands
 ```
 
 #### src/index.ts
+
 ```bash
 cat > src/index.ts << 'EOF'
 #!/usr/bin/env node
@@ -751,6 +770,7 @@ EOF
 ```
 
 #### src/commands/create.ts
+
 ```bash
 cat > src/commands/create.ts << 'EOF'
 import prompts from 'prompts'
@@ -828,6 +848,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `./packages/cli/dist/index.js --help` shows help
 
 ---
@@ -919,6 +940,7 @@ EOF
 ```
 
 **Verification:**
+
 - All scripts work
 - Docker builds
 - CI workflow valid

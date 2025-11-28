@@ -57,7 +57,7 @@ async function waitForPostgres(maxAttempts = 30): Promise<boolean> {
       await $`docker compose exec -T postgres pg_isready -U bistro`.quiet()
       return true
     } catch {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
   }
 
@@ -107,13 +107,12 @@ async function main() {
       console.log(c.green('✓') + ' Generated AUTH_SECRET')
 
       // Create .env.docker with Docker network hostname
-      const dockerEnv = updatedEnv.replace(
-        'DATABASE_URL=postgresql://bistro:bistro@localhost:5432/bistro',
-        'DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro'
-      ).replace(
-        'REDIS_URL=redis://localhost:6379',
-        'REDIS_URL=redis://redis:6379'
-      )
+      const dockerEnv = updatedEnv
+        .replace(
+          'DATABASE_URL=postgresql://bistro:bistro@localhost:5432/bistro',
+          'DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro'
+        )
+        .replace('REDIS_URL=redis://localhost:6379', 'REDIS_URL=redis://redis:6379')
       await writeFile('.env.docker', dockerEnv)
       console.log(c.green('✓') + ' Created .env.docker (for Docker testing)')
     } else {

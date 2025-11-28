@@ -15,6 +15,7 @@ bun setup
 ```
 
 **Auto-skips when:**
+
 - CI environment detected (`CI=true` or `GITHUB_ACTIONS=true`)
 - Production environment (`NODE_ENV=production`)
 - Docker environment (`/.dockerenv` exists)
@@ -38,6 +39,7 @@ bun setup
 **Safe for CI/Production:**
 
 Script automatically detects and skips in:
+
 - GitHub Actions / CI pipelines
 - Production environments
 - Docker containers

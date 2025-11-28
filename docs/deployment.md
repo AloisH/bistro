@@ -57,6 +57,7 @@ SENTRY_DSN=...
 ```
 
 **Security Notes:**
+
 - Generate `AUTH_SECRET` with: `openssl rand -base64 32`
 - Never commit `.env` to version control
 - Use secrets management in production (e.g., Docker secrets, Kubernetes secrets)
@@ -84,6 +85,7 @@ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 This will:
+
 1. Start PostgreSQL with health checks
 2. Run database migrations via init container
 3. Start the application once migrations complete
@@ -184,6 +186,7 @@ The Dockerfile works with any container platform:
 ### Kubernetes
 
 Create K8s manifests:
+
 - Deployment (with init container for migrations)
 - Service (ClusterIP + Ingress)
 - ConfigMap/Secret (for env vars)
@@ -209,11 +212,13 @@ Create K8s manifests:
 ### Container won't start
 
 Check logs:
+
 ```bash
 docker-compose -f docker-compose.prod.yml logs app
 ```
 
 Common issues:
+
 - Missing required env vars (validated by entrypoint)
 - Database connection failed
 - Migrations failed
@@ -221,11 +226,13 @@ Common issues:
 ### Migrations fail
 
 View migration logs:
+
 ```bash
 docker-compose -f docker-compose.prod.yml logs db-migrate
 ```
 
 Common issues:
+
 - Invalid `DATABASE_URL`
 - Database user lacks permissions
 - Network connectivity to database
@@ -233,6 +240,7 @@ Common issues:
 ### Health check failing
 
 Check app is listening on port 3000:
+
 ```bash
 docker exec bistro-app curl localhost:3000
 ```
@@ -240,6 +248,7 @@ docker exec bistro-app curl localhost:3000
 ### Image too large
 
 Current optimizations should keep image <500MB. If larger:
+
 - Check `.dockerignore` includes `node_modules`, `.nuxt`, `.output`
 - Verify multi-stage build copies only necessary files
 - Consider using `bun build --compile` for standalone binary
@@ -290,6 +299,7 @@ Update `docker-compose.prod.yml` and `.env` accordingly.
 ## Support
 
 For deployment issues:
+
 - Check [GitHub Discussions](https://github.com/your-org/bistro/discussions)
 - Open issue with logs and config (redact secrets!)
 - Join [Discord community](#) for real-time help

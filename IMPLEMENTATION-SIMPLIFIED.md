@@ -21,6 +21,7 @@ bistro/
 ```
 
 **What's removed:**
+
 - No separate packages/lib, packages/ui, packages/config, packages/database
 - No templates/, prompts/, scripts/ (add later)
 - No .devcontainer (add if needed)
@@ -224,6 +225,7 @@ bun install
 ```
 
 **What this gives you:**
+
 - Nuxt 4 + TypeScript pre-configured
 - Nuxt UI with Tailwind CSS 4
 - ESLint + Prettier setup
@@ -422,6 +424,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `bun run dev` starts app on http://localhost:3000
 - Pages load correctly
 - Database connected
@@ -441,6 +444,7 @@ bun install
 ```
 
 **What this gives you:**
+
 - Nuxt 4 + Nuxt UI pre-configured
 - Nuxt Content for docs/blog
 - Landing page sections ready
@@ -489,6 +493,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `bun run dev:landing` starts on http://localhost:3001
 - Landing page renders with template sections
 - Docs accessible at /docs
@@ -591,6 +596,7 @@ cd ../..
 ```
 
 **Verification:**
+
 - `./packages/cli/dist/index.js --help` shows help
 - CLI builds successfully
 
