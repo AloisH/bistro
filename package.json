@@ -11,7 +11,7 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "bun run scripts/setup.ts",
+    "prepare": "bun run scripts/setup.ts && simple-git-hooks",
     "setup": "bun run scripts/setup.ts",
     "dev": "bun run --filter=web dev",
     "dev:web": "bun run --filter=web dev",
@@ -28,17 +28,31 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "bun run --filter=web lint",
-    "typecheck": "bun run --filter=web typecheck"
+    "lint:fix": "bun run --filter=web lint:fix",
+    "typecheck": "bun run --filter=web typecheck",
+    "test": "bun run --filter=web test",
+    "test:ui": "bun run --filter=web test:ui",
+    "test:run": "bun run --filter=web test:run",
+    "test:coverage": "bun run --filter=web test:coverage"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "eslint": "^9.15.0",
+    "lint-staged": "^16.0.0",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.7.2"
   },
   "engines": {
     "node": ">=20.0.0",
     "bun": ">=1.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bunx lint-staged"
+  },
+  "lint-staged": {
+    "apps/web/**/*.{js,ts,vue}": "bun run lint:fix",
+    "*.{json,md,css}": "prettier --write"
   }
 }
