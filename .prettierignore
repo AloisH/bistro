@@ -35,4 +35,4 @@ yarn.lock
 
 # Prisma
 prisma/migrations
-prisma/generated
+**/prisma/generated/**
