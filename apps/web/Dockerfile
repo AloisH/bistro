@@ -17,7 +17,7 @@ RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
 # Prisma generate needs DATABASE_URL (doesn't connect, just validates schema)
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/db"
-RUN bunx prisma generate
+RUN bunx prisma generate --schema=prisma/schema.prisma
 RUN bun run build
 
 # Stage 4: Production runtime
