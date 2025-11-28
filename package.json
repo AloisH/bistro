@@ -11,12 +11,12 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "bun run scripts/setup.ts && simple-git-hooks",
+    "prepare": "simple-git-hooks",
     "setup": "bun run scripts/setup.ts",
     "dev": "bun run --filter=web dev",
     "dev:web": "bun run --filter=web dev",
     "dev:landing": "bun run --filter=landing dev",
-    "build": "bun run --filter=web build && bun run --filter=landing build",
+    "build": "bun run --filter=web build",
     "db:migrate": "cd apps/web && bunx prisma migrate dev",
     "db:studio": "cd apps/web && bunx prisma studio",
     "db:generate": "cd apps/web && bunx prisma generate",
