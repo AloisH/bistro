@@ -27,24 +27,21 @@ WORKDIR /app
 # Install curl for healthcheck and openssl for Prisma
 RUN apk add --no-cache curl openssl openssl-dev
 
-# Copy production dependencies
-COPY --from=deps /app/node_modules ./node_modules
+# Copy production dependencies with ownership
+COPY --chown=bun:bun --from=deps /app/node_modules ./node_modules
 
 # Copy built application
-COPY --from=build /app/.output ./.output
+COPY --chown=bun:bun --from=build /app/.output ./.output
 
 # Copy Prisma schema for migrations
-COPY --from=build /app/prisma ./prisma
+COPY --chown=bun:bun --from=build /app/prisma ./prisma
 
 # Copy package.json for runtime
-COPY --from=build /app/package.json ./
+COPY --chown=bun:bun --from=build /app/package.json ./
 
 # Copy and setup entrypoint script
-COPY --from=build /app/docker-entrypoint.sh /app/
+COPY --chown=bun:bun --from=build /app/docker-entrypoint.sh /app/
 RUN chmod +x /app/docker-entrypoint.sh
-
-# Set ownership for existing bun user (already exists in base image)
-RUN chown -R bun:bun /app
 
 USER bun
 
