@@ -34,6 +34,8 @@ useSeoMeta({
       </template>
 
       <template #right>
+        <AuthButton />
+
         <UColorModeButton />
 
         <UButton

@@ -29,6 +29,8 @@ Currently only `apps/web` is implemented as Nuxt 4 starter.
 
 ## Development Commands
 
+**IMPORTANT: Run all commands from project root (`/home/alois/bistro`), not from subdirectories.**
+
 ```bash
 # Dev
 bun dev                      # Start web app (port 3000)
@@ -36,7 +38,7 @@ bun dev:web                  # Same as above
 bun dev:landing              # Landing site (port 3001) - not yet impl
 
 # Database
-bun db:migrate               # Run Prisma migrations (cd apps/web && bunx prisma migrate dev)
+bun db:migrate               # Run Prisma migrations
 bun db:studio                # Open Prisma Studio UI
 bun db:generate              # Generate Prisma Client
 
@@ -48,9 +50,23 @@ docker compose up -d         # Start PostgreSQL + Redis
 docker compose down          # Stop services
 
 # Type checking & linting
-cd apps/web && bun typecheck # Nuxt type checking
-cd apps/web && bun lint      # ESLint
+bun typecheck                # Nuxt type checking
+bun lint                     # ESLint
+bun lint:fix                 # ESLint auto-fix
 ```
+
+**Environment:**
+
+- Uses `.env` from root directory
+- `DATABASE_URL` in root `.env` is picked up by all scripts
+- Fallback in `apps/web/prisma.config.ts` if env var not found
+
+**Monorepo Pattern:**
+
+- Root scripts use `bun run --filter=web <command>` to delegate to workspace
+- Actual commands in `apps/web/package.json`
+- Run everything from root - Bun handles workspace resolution
+- Use `--elide-lines=0` for full logs (default=10 truncates output)
 
 ## GitHub Workflow
 
@@ -192,10 +208,22 @@ Per README, planned AI workflows:
 
 Use Vercel AI SDK for implementation.
 
+## Authentication
+
+Better Auth integrated with email/password authentication:
+
+- **Server**: `server/utils/auth.ts` - Better Auth instance with Prisma adapter
+- **Client**: `lib/auth-client.ts` + `app/composables/useAuth.ts` - Session management
+- **Pages**: `/auth/login`, `/auth/register`, `/dashboard` (protected)
+- **Middleware**: `app/middleware/auth.global.ts` - Route protection
+- **UI**: `AuthButton` component in header - Login/avatar dropdown
+
+OAuth providers (GitHub, Google) planned for separate implementation.
+
 ## Notes
 
 - Project early stage: Only web app skeleton exists
 - Packages folder planned but empty
-- No auth implementation yet (Better Auth dependency added)
+- Auth: Email/password implemented, OAuth planned
 - No payment integration yet (Polar planned)
 - Docker Compose ready: postgres:16-alpine + redis:7-alpine

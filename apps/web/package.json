@@ -15,7 +15,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "db:migrate": "bunx prisma migrate dev",
+    "db:studio": "bunx prisma studio",
+    "db:generate": "bunx prisma generate"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.74",

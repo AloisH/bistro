@@ -8,10 +8,16 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createPrismaClient() {
+  const connectionString = process.env.DATABASE_URL
+
+  if (!connectionString) {
+    throw new Error('DATABASE_URL environment variable is not set')
+  }
+
   const pool =
     globalForPrisma.pool ??
     new pg.Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: String(connectionString),
     })
 
   if (process.env.NODE_ENV !== 'production') {
