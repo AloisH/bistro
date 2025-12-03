@@ -27,13 +27,13 @@
     "docker:prod:logs": "docker compose -f docker-compose.prod.yml logs -f",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "bun run --filter=web lint",
-    "lint:fix": "bun run --filter=web lint:fix",
-    "typecheck": "bun run --filter=web typecheck",
-    "test": "bun run --filter=web test",
-    "test:ui": "bun run --filter=web test:ui",
-    "test:run": "bun run --filter=web test:run",
-    "test:coverage": "bun run --filter=web test:coverage"
+    "lint": "bun run --elide-lines=0   --filter=web lint",
+    "lint:fix": "bun run --elide-lines=0  --filter=web lint:fix",
+    "typecheck": "bun run --elide-lines=0  --filter=web typecheck",
+    "test": "bun run --elide-lines=0  --filter=web test",
+    "test:ui": "bun run --elide-lines=0  --filter=web test:ui",
+    "test:run": "bun run --elide-lines=0  --filter=web test:run",
+    "test:coverage": "bun run --elide-lines=0  --filter=web test:coverage"
   },
   "devDependencies": {
     "@types/bun": "latest",

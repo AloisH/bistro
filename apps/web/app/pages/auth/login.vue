@@ -56,6 +56,8 @@
         </UButton>
       </UForm>
 
+      <AuthOAuthButtons />
+
       <template #footer>
         <p class="text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?
@@ -74,7 +76,15 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
-const { signIn, fetchSession } = useAuth()
+const { signIn, fetchSession, session, loggedIn } = useAuth()
+
+// Redirect if already authenticated (e.g., after OAuth callback)
+onMounted(async () => {
+  await fetchSession()
+  if (loggedIn.value) {
+    await navigateTo('/dashboard')
+  }
+})
 
 const state = reactive({
   email: '',

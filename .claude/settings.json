@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit:*.ts|Edit:*.vue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run typecheck --noEmit"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit:*.ts|Edit:*.vue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun format && bun lint:fix"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Skip acknowledgments - focus on the solution'"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -24,7 +24,7 @@
         [{
           label: 'Logout',
           icon: 'i-lucide-log-out',
-          click: handleLogout,
+          onSelect: handleLogout,
         }],
       ]"
     >
@@ -38,10 +38,10 @@
 </template>
 
 <script setup lang="ts">
-const { session, isPending, signOut } = useAuth()
+const { session, isPending, signOut, client } = useAuth()
 
 async function handleLogout() {
-  await signOut()
+  await client.signOut()
   await navigateTo('/')
 }
 </script>

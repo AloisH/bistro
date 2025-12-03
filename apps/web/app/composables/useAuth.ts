@@ -43,6 +43,7 @@ export const useAuth = () => {
     session,
     user,
     loggedIn: computed(() => !!session.value),
+    isPending: sessionFetching,
     signIn: client.signIn,
     signUp: client.signUp,
     async signOut({ redirectTo }: { redirectTo?: string } = {}) {
