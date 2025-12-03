@@ -2,14 +2,11 @@
 description: Check project health (lint, types, build, tests)
 ---
 
-I'll run health checks on the project in this order:
+Run health checks in order (fail fast):
 
-1. **Repomix** - Regenerate context files
-2. **Lint** - ESLint code quality
-3. **Type-check** - TypeScript validation
-4. **Build** - Production build
-5. **Tests** - Run test suite
+1. **Lint** - `bun lint`
+2. **Type-check** - `bun typecheck`
+3. **Build** - `bun build`
+4. **Tests** - `bun test:run`
 
-**Strategy:** Fail fast (stop at first error)
-
-Running checks now...
+Running now...
