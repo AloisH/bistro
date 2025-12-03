@@ -3,7 +3,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { db } from './db'
 
 // Build socialProviders config conditionally based on env vars
-const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {}
+const socialProviders: Record<string, { clientId: string, clientSecret: string }> = {}
 
 if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
   socialProviders.github = {

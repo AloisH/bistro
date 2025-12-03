@@ -1,6 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  // Public routes that don't require authentication
-  const publicRoutes = ['/', '/auth/login', '/auth/register']
+  // Public routes centralized in nuxt.config.ts
+  const config = useRuntimeConfig()
+  const publicRoutes = config.public.publicRoutes as string[]
 
   // Allow access to public routes
   if (publicRoutes.includes(to.path)) {

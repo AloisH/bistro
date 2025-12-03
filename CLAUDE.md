@@ -2,6 +2,34 @@
 
 Guidance for Claude Code when working in this repository.
 
+## Working with Claude Code
+
+**Before You Start:**
+- Read entire CLAUDE.md first time in project
+- Use `/plan-issue <number>` for complex features (creates detailed plan in ~/.claude/plans/)
+- Check existing patterns before creating new ones (Glob + Grep)
+- Run `/check` before commits (lint, typecheck, build, tests)
+
+**Communication:**
+- Extremely concise per user preference
+- Sacrifice grammar for conciseness
+- No emojis in responses
+- Always use absolute paths in responses
+
+**Workflow:**
+1. Explore with Read, Glob, Grep (NEVER modify in plan mode)
+2. Find similar patterns in codebase
+3. Propose approach, get approval
+4. Implement following established conventions
+5. Test thoroughly before committing
+6. Use `/commit` for conventional commit messages
+
+**Check Before Create:**
+- Search for existing patterns: `grep -r "pattern" apps/web/`
+- Find similar files: `find apps/web -name "*auth*"`
+- Read related code before implementing
+- Prefer extending existing over creating new
+
 ## Project Overview
 
 Bistro - Free MIT-licensed Nuxt 4 starter for AI-powered SaaS. Alternative to paid starters ($149-$349).
@@ -25,6 +53,66 @@ Bun workspaces:
 - `packages/cli/` - CLI tool (placeholder)
 
 Only `apps/web` has implementation. Other workspaces are empty directories.
+
+## Philosophy
+
+**KISS (Keep It Simple):**
+- Use Nuxt/Prisma conventions, no custom abstractions
+- Leverage Better Auth defaults, minimal config
+- Standard file-based routing, no complex route configs
+- Example: useAuth composable wraps Better Auth client directly, no extra layers
+
+**DRY (Don't Repeat):**
+- DB singleton pattern (`server/utils/db.ts`) prevents multiple Prisma instances
+- useAuth composable centralizes auth logic
+- Auto-imports eliminate repetitive import statements
+- Shared Prettier/ESLint configs for all workspaces
+- publicRoutes centralized in nuxt.config.ts (single source of truth)
+
+**YAGNI (You Aren't Gonna Need It):**
+- No unused workspace packages (landing/cli are placeholders)
+- No premature optimization (add caching when needed)
+- OAuth optional (only enabled if env vars present)
+- No complex state management (useState sufficient)
+
+## Code Conventions
+
+**Formatting (Prettier):**
+- No semicolons
+- Single quotes
+- Trailing commas (multiline)
+- 100 char line width
+- 2 space tabs
+- See prettier.config.js
+
+**Vue:**
+- `<script setup>` Composition API only
+- Multi-word component names optional (disabled in ESLint)
+- Place tests next to components: `Component.test.ts`
+- Use Nuxt UI components (UButton, UCard, etc)
+
+**TypeScript:**
+- Strict mode enabled
+- Use Prisma-generated types
+- Zod schemas for form validation
+- Type imports: `import type { ... }`
+
+**File Naming:**
+- Components: PascalCase (`AuthButton.vue`)
+- Composables: camelCase with 'use' prefix (`useAuth.ts`)
+- API routes: kebab-case with method suffix (`user.get.ts`)
+- Pages: kebab-case or index.vue
+
+**Imports:**
+- Server utils: Explicit imports (`import { db } from '~/server/utils/db'`)
+- Components/composables: Auto-imported (no import needed)
+- External packages: Standard imports
+
+**Banned Patterns:**
+- ❌ `new PrismaClient()` - Use singleton from db.ts
+- ❌ Class components - Use `<script setup>` only
+- ❌ Options API - Use Composition API only
+- ❌ Multiple PrismaClient instances - Connection pool exhaustion
 
 ## Development Commands
 
@@ -97,6 +185,17 @@ gh issue view 24                 # View detail
 5. Commit with `/commit` (stages files, conventional message)
 6. Push & PR: `git push origin main` or create branch + `gh pr create --body "Fixes #24"`
 
+**Planning:**
+- Complex features: Use `/plan-issue <number>`
+- Plans saved to `~/.claude/plans/` for reference
+- Review plan before executing
+- Update plan if requirements change
+
+**Context Loading:**
+- Read relevant context-specific CLAUDE.md first
+- Explore existing patterns in that area
+- Check for gotchas in root CLAUDE.md
+
 **Commit format:** `type(scope): description`
 
 Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`
@@ -121,13 +220,146 @@ Runs on push/PR to main/develop:
 
 Pre-commit: `simple-git-hooks` + `lint-staged` (ESLint fix on .ts/.vue, Prettier on .json/.md/.css)
 
+## Common Gotchas
+
+**Database:**
+- ❌ `new PrismaClient()` - Creates multiple connections
+- ✅ `import { db } from '~/server/utils/db'` - Use singleton
+- Must use PrismaPg adapter with pg.Pool (Prisma 7 requirement)
+- Run `bun db:generate` after schema changes, before typecheck
+- Generated client in `prisma/generated/`, gitignored
+
+**Authentication:**
+- Session cache is 5 min - may see stale session briefly after updates
+- OAuth buttons only show if env vars configured (runtime check)
+- Public routes centralized in `nuxt.config.ts` runtimeConfig.public.publicRoutes
+- Add new public routes to config, NOT middleware (middleware reads from config)
+- After OAuth callback, must call `fetchSession()` to populate state
+- Better Auth uses catch-all route: `/api/auth/[...]`
+
+**Monorepo:**
+- Always run commands from root, NOT subdirectories
+- Root scripts delegate via `bun run --filter=web <cmd>`
+- Use `--elide-lines=0` for full logs (default truncates at 10)
+- Actual scripts defined in `apps/web/package.json`
+
+**Testing:**
+- Must mock @prisma/client, @prisma/adapter-pg, pg modules
+- Use `vi.resetModules()` in beforeEach for clean state
+- Environment: 'nuxt' with domEnvironment: 'happy-dom'
+- Tests run in Vitest, NOT Jest
+- Place tests next to files: `Component.test.ts`
+
+**Docker:**
+- Local dev: DATABASE_URL=localhost:5432
+- Docker prod: DATABASE_URL=postgres:5432 (hostname differs!)
+- Use .env for local, .env.docker for production
+- Must `bun db:generate` in migrations image before build
+
+**Auto-imports:**
+- Components in `app/components/` auto-imported
+- Composables in `app/composables/` auto-imported
+- Nuxt utils (useRoute, useState, etc) auto-imported
+- If confused about source, check `.nuxt/` generated imports
+
+## Troubleshooting
+
+**"Cannot find module '@prisma/client'"**
+```bash
+bun db:generate  # Generate Prisma Client
+```
+
+**"Database connection failed"**
+```bash
+docker compose up -d  # Start postgres
+# Check DATABASE_URL matches docker-compose.yml credentials
+```
+
+**"OAuth buttons not showing"**
+```bash
+# Add to .env:
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+# Restart dev server
+```
+
+**"Session not updating after login"**
+```typescript
+// Must call fetchSession() after auth operations:
+await signIn.email({ email, password })
+await fetchSession()  // ← Add this
+await navigateTo('/dashboard')
+```
+
+**"Type errors after DB schema change"**
+```bash
+bun db:generate  # Regenerate types
+bun typecheck    # Verify
+```
+
+**"Git hooks not running"**
+```bash
+bun prepare  # Install simple-git-hooks
+```
+
+**"Tests failing with Prisma errors"**
+```typescript
+// Mock Prisma modules (see apps/web/server/utils/db.test.ts):
+vi.mock('@prisma/client')
+vi.mock('@prisma/adapter-pg')
+vi.mock('pg')
+```
+
+**"Build fails in CI but works locally"**
+```bash
+# Run full CI sequence locally:
+bun lint
+bun db:generate  # ← Often forgotten
+bun typecheck
+bun test:run
+bun build
+```
+
+**"Bun command not found in scripts"**
+```bash
+# Use from repo root, not subdirectories:
+cd /home/alois/bistro  # ← Go to root
+bun dev                # ← Then run command
+```
+
+## Performance Targets
+
+**Build:**
+- Dev server start: < 2s
+- Hot reload: < 200ms
+- Production build: < 60s
+
+**Runtime:**
+- Initial page load: < 1s
+- Route transitions: < 100ms
+- API response: < 200ms
+
+**Database:**
+- Use connection pooling (pg.Pool)
+- Index foreign keys (already in schema)
+- Limit query results (pagination)
+
+**CI:**
+- Full pipeline: < 5 min
+- Individual jobs: < 2 min each
+- Use concurrency for parallel checks
+
 ## Architecture
 
 ### apps/web Structure
 
 ```
 apps/web/
+├── CLAUDE.md                # Web app overview
 ├── app/
+│   ├── CLAUDE.md            # App context (pages, components, composables)
 │   ├── app.vue              # Root (UApp wrapper, header/footer)
 │   ├── pages/               # File-based routes
 │   ├── components/          # Vue components (auto-imported)
@@ -135,12 +367,20 @@ apps/web/
 │   ├── middleware/          # auth.global.ts (route protection)
 │   └── assets/              # Static files
 ├── server/
+│   ├── CLAUDE.md            # Server context (API, auth, DB)
 │   ├── api/                 # API routes
 │   └── utils/               # auth.ts, serverAuth.ts, db.ts
 ├── lib/                     # auth-client.ts (Better Auth client)
-├── prisma/schema.prisma     # Database schema
-└── vitest.config.ts         # Test config
+├── prisma/
+│   ├── schema.prisma        # Database schema
+│   ├── migrations/          # Migration history
+│   └── generated/           # Prisma Client (gitignored)
+├── nuxt.config.ts
+├── vitest.config.ts
+└── eslint.config.mjs
 ```
+
+See context-specific CLAUDE.md files for detailed guidance.
 
 ### Database (Prisma 7 + PostgreSQL)
 
@@ -153,6 +393,16 @@ apps/web/
 - `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
 
 **Import:** Use `server/utils/db.ts` singleton (Prisma Client with dev logging + @prisma/adapter-pg)
+
+## Context-Specific Documentation
+
+For detailed guidance on specific areas:
+
+- **[apps/web/CLAUDE.md](./apps/web/CLAUDE.md)** - Web app overview, config, deployment
+- **[apps/web/server/CLAUDE.md](./apps/web/server/CLAUDE.md)** - API routes, auth, DB patterns
+- **[apps/web/app/CLAUDE.md](./apps/web/app/CLAUDE.md)** - Pages, components, composables
+
+These files provide deep-dive context when working in specific areas. Root CLAUDE.md covers project-wide concerns.
 
 ### Styling
 
@@ -195,6 +445,22 @@ Better Auth (email/password implemented, OAuth planned):
 - **Routes**: `/auth/login`, `/auth/register`, `/dashboard` (protected)
 - **Middleware**: `app/middleware/auth.global.ts` (route guard)
 - **Component**: `AuthButton` (header login/avatar dropdown)
+
+## Payments & Email
+
+**Polar Integration (Placeholder):**
+- Webhook endpoint pattern: `/api/webhooks/polar`
+- Verify webhook signature with POLAR_WEBHOOK_SECRET
+- Handle events: checkout.completed, subscription.created, subscription.updated
+- Update user subscription status in DB
+- Test with Polar CLI webhook forwarding
+
+**Resend Integration (Placeholder):**
+- Use server-only import: `import { Resend } from 'resend'`
+- Email templates in `server/emails/` as React components
+- Common emails: welcome, password-reset, receipt
+- Use server API routes, never client-side
+- Test with Resend test API key
 
 ## AI Workflows (Planned)
 

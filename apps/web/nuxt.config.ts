@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       appUrl: process.env.APP_URL || 'http://localhost:3000',
       oauthGithubEnabled: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
       oauthGoogleEnabled: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
+      publicRoutes: ['/', '/auth/login', '/auth/register'],
     },
   },
 
