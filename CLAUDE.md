@@ -1,203 +1,204 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
 
 ## Project Overview
 
-Bistro - Free, open-source Nuxt 4 starter kit for AI-powered SaaS products. MIT licensed alternative to paid starters ($149-$349).
+Bistro - Free MIT-licensed Nuxt 4 starter for AI-powered SaaS. Alternative to paid starters ($149-$349).
 
 **Stack:**
 
-- Nuxt 4 (full-stack framework)
-- Nuxt UI + Tailwind 4
-- PostgreSQL + Prisma ORM
-- Better Auth (email, OAuth, 2FA)
+- Nuxt 4 + Nuxt UI v4 + Tailwind 4
+- PostgreSQL + Prisma 7 (with @prisma/adapter-pg)
+- Better Auth (email/password + OAuth providers)
 - Vercel AI SDK (OpenAI, Anthropic, local models)
 - Polar (payments), Resend (email)
-- Docker Compose (dev environment)
+- Docker Compose (dev + prod)
+- Vitest + Testing Library
 
 ## Monorepo Structure
 
-Bun workspaces with:
+Bun workspaces:
 
-- `apps/web/` - Main Nuxt 4 SaaS application
-- `apps/landing/` - Marketing site (planned, not yet implemented)
-- `apps/docs/` - Documentation (planned, not yet implemented)
-- `packages/` - Shared packages (planned: cli, ui, lib, database, config)
+- `apps/web/` - Main Nuxt 4 app (implemented)
+- `apps/landing/` - Marketing site (placeholder)
+- `packages/cli/` - CLI tool (placeholder)
 
-Currently only `apps/web` is implemented as Nuxt 4 starter.
+Only `apps/web` has implementation. Other workspaces are empty directories.
 
 ## Development Commands
 
-**IMPORTANT: Run all commands from project root (`/home/alois/bistro`), not from subdirectories.**
+**ALWAYS run from project root, not subdirectories.**
 
 ```bash
 # Dev
-bun dev                      # Start web app (port 3000)
-bun dev:web                  # Same as above
-bun dev:landing              # Landing site (port 3001) - not yet impl
+bun dev                      # Start web (port 3000)
+bun dev:web                  # Alias for above
 
 # Database
-bun db:migrate               # Run Prisma migrations
-bun db:studio                # Open Prisma Studio UI
+bun db:migrate               # Prisma migrations
+bun db:studio                # Prisma Studio UI
 bun db:generate              # Generate Prisma Client
 
-# Build
-bun build                    # Build all apps
+# Testing
+bun test                     # Vitest watch mode
+bun test:run                 # Run tests once
+bun test:ui                  # Vitest UI
+bun test:coverage            # Generate coverage report
 
-# Docker
-docker compose up -d         # Start PostgreSQL + Redis
-docker compose down          # Stop services
-
-# Type checking & linting
-bun typecheck                # Nuxt type checking
+# Quality checks
+bun typecheck                # TypeScript check
 bun lint                     # ESLint
 bun lint:fix                 # ESLint auto-fix
+bun format                   # Prettier format
+bun format:check             # Prettier check
+
+# Build
+bun build                    # Build web app
+
+# Docker
+docker compose up -d         # Start postgres + redis (dev)
+docker compose down          # Stop services
+bun docker:prod              # Build + run production Docker
+bun docker:prod:up           # Run production detached
+bun docker:prod:down         # Stop production
+bun docker:prod:logs         # View production logs
 ```
 
 **Environment:**
 
-- Uses `.env` from root directory
-- `DATABASE_URL` in root `.env` is picked up by all scripts
-- Fallback in `apps/web/prisma.config.ts` if env var not found
+- `.env` in root for local dev (DATABASE_URL=localhost)
+- `.env.docker` for production Docker (DATABASE_URL=postgres hostname)
+- Fallback in `apps/web/prisma.config.ts` if env var missing
 
-**Monorepo Pattern:**
+**Monorepo:**
 
-- Root scripts use `bun run --filter=web <command>` to delegate to workspace
+- Root scripts delegate via `bun run --filter=web <cmd>`
 - Actual commands in `apps/web/package.json`
-- Run everything from root - Bun handles workspace resolution
-- Use `--elide-lines=0` for full logs (default=10 truncates output)
+- Use `--elide-lines=0` for full logs (default truncates at 10 lines)
 
 ## GitHub Workflow
 
-### Working with Issues
-
-**List issues:**
+**Issue commands:**
 
 ```bash
-gh issue list                    # View all open issues
-gh issue list --label phase-1    # Filter by label
-gh issue view 24                 # View specific issue
+gh issue list                    # All open
+gh issue list --label phase-1    # Filter by phase
+gh issue view 24                 # View detail
+/issue                          # Create via slash command
 ```
 
-**Create issue:**
+**Standard flow:**
 
-```bash
-# Use custom command
-/issue
+1. Pick issue (`gh issue list`, prioritize phase-1)
+2. Plan with `/plan-issue <number>` (fetches, explores, creates plan in `~/.claude/plans/`)
+3. Get approval, implement following plan
+4. Test thoroughly (`bun test:run`, `bun lint`, `bun typecheck`)
+5. Commit with `/commit` (stages files, conventional message)
+6. Push & PR: `git push origin main` or create branch + `gh pr create --body "Fixes #24"`
 
-# Or gh CLI directly
-gh issue create --title "Title" --body "Description" --label "feature,phase-1"
-```
+**Commit format:** `type(scope): description`
 
-**Standard workflow:**
+Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`
 
-1. **Pick issue**: Choose from `gh issue list` (prioritize phase-1)
+**Labels:**
 
-2. **Plan**: Use `/plan-issue <number>` command
-   - Fetches issue details
-   - Explores codebase
-   - Creates implementation plan in `~/.claude/plans/`
-   - Get user approval before implementing
+- Phase: `phase-1/2/3/4`
+- Type: `feature`, `bug`, `docs`, `chore`
+- Area: `auth`, `database`, `ai`, `ui`, `ci-cd`
 
-3. **Implement**: Execute the approved plan
-   - Make changes
-   - Test thoroughly
-   - Follow existing patterns
+**CI Pipeline (.github/workflows/ci.yml):**
 
-4. **Commit**: Use `/commit` command
-   - Stages relevant files
-   - Creates conventional commit message
-   - Format: `type(scope): description`
-   - Types: feat, fix, chore, docs, refactor, test, ci
+Runs on push/PR to main/develop:
 
-5. **Push & PR**:
+1. Lint (ESLint + Prettier)
+2. Typecheck (TypeScript + Prisma generate)
+3. Test (Vitest + coverage → Codecov)
+4. Build (Nuxt build + artifact upload)
+5. Docker (Build production image)
 
-   ```bash
-   git push origin main                           # Push to main
-   # Or create feature branch + PR
-   git checkout -b feat/issue-24
-   git push -u origin feat/issue-24
-   gh pr create --title "..." --body "Fixes #24"
-   ```
+**Git Hooks:**
 
-6. **Close issue**:
-   - Auto-closed by PR merge with "Fixes #24" in description
-   - Or manually: `gh issue close 24 --comment "Done"`
-
-### Commit Message Convention
-
-Follow conventional commits:
-
-- `feat(auth): add OAuth login`
-- `fix(db): correct migration syntax`
-- `chore(deps): update nuxt to 4.x`
-- `docs(readme): add setup instructions`
-- `test(api): add unit tests for routes`
-- `ci: add GitHub Actions workflow`
-
-Keep messages concise, imperative mood.
-
-### Labels
-
-Use for organization:
-
-- **Phase**: `phase-1`, `phase-2`, `phase-3`, `phase-4`
-- **Type**: `feature`, `bug`, `docs`, `chore`
-- **Area**: `auth`, `database`, `ai`, `ui`, `ci-cd`
+Pre-commit: `simple-git-hooks` + `lint-staged` (ESLint fix on .ts/.vue, Prettier on .json/.md/.css)
 
 ## Architecture
 
 ### apps/web Structure
 
-Nuxt 4 app using new `/app` directory structure:
+```
+apps/web/
+├── app/
+│   ├── app.vue              # Root (UApp wrapper, header/footer)
+│   ├── pages/               # File-based routes
+│   ├── components/          # Vue components (auto-imported)
+│   ├── composables/         # useAuth.ts
+│   ├── middleware/          # auth.global.ts (route protection)
+│   └── assets/              # Static files
+├── server/
+│   ├── api/                 # API routes
+│   └── utils/               # auth.ts, serverAuth.ts, db.ts
+├── lib/                     # auth-client.ts (Better Auth client)
+├── prisma/schema.prisma     # Database schema
+└── vitest.config.ts         # Test config
+```
 
-- `/app/app.vue` - Root component with UApp wrapper, header/footer
-- `/app/pages/` - File-based routing
-- `/app/components/` - Vue components (auto-imported)
-- `/app/assets/` - Static assets
-- `/server/` - Nitro server (API routes, middleware, utils)
-- `/prisma/schema.prisma` - Database schema
+### Database (Prisma 7 + PostgreSQL)
 
-### Database
+**Schema models:**
 
-Prisma with PostgreSQL. Schema includes:
+- `User` - Email, password, OAuth accounts
+- `Account` - OAuth provider links
+- `Session` - Auth sessions (token, expiry, user agent)
+- `Project` - User projects (slug, status)
+- `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
 
-- `User` - Auth with email, password, OAuth accounts
-- `Account` - OAuth provider accounts
-- `Session` - Auth sessions
-- `Project` - User projects with slug, status
-- `AIJob` - AI task tracking with input/output, tokens, cost
-
-Prisma client: Import from `server/utils/db.ts` (singleton pattern with dev logging).
+**Import:** Use `server/utils/db.ts` singleton (Prisma Client with dev logging + @prisma/adapter-pg)
 
 ### Styling
 
-- Tailwind 4 via Nuxt UI
-- Color modes: Built-in dark mode support via `UColorModeButton`
-- Components: Use Nuxt UI components (UApp, UHeader, UMain, UFooter, UButton, etc.)
+- Tailwind 4 via Nuxt UI v4
+- Dark mode: `UColorModeButton` (built-in)
+- Components: `UApp`, `UHeader`, `UMain`, `UFooter`, `UButton`, etc.
 
-### Environment
+### Environment Variables
 
-.env.example shows required vars:
+Required (`.env`):
 
-- `DATABASE_URL` - PostgreSQL connection
-- `AUTH_SECRET` - Better Auth secret
+- `DATABASE_URL` - PostgreSQL (localhost for dev, postgres for docker)
+- `AUTH_SECRET` - Better Auth key
 - `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` - AI providers
-- `POLAR_API_KEY`, `RESEND_API_KEY` - Payments/email
-- `REDIS_URL` - Background jobs (optional)
+- `POLAR_API_KEY`, `POLAR_WEBHOOK_SECRET` - Payments
+- `RESEND_API_KEY` - Email
+
+Optional:
+
+- `REDIS_URL` - Background jobs
+- `BLOB_READ_WRITE_TOKEN` - Vercel Blob storage
+- `S3_*` - S3-compatible storage
+- `SENTRY_DSN`, `SENTRY_AUTH_TOKEN` - Observability
 
 ## Key Patterns
 
-1. **Server utils**: Use `server/utils/db.ts` for database access
-2. **Auto-imports**: Components, composables auto-imported in Nuxt
-3. **API routes**: Create in `server/api/` with `.get.ts`, `.post.ts` suffixes
-4. **Type safety**: Prisma types + Nuxt TypeScript strict mode
-5. **Composition API**: Vue 3 Composition API with `<script setup>`
+1. **DB access**: Import from `server/utils/db.ts` (singleton)
+2. **Auto-imports**: Components, composables auto-imported
+3. **API routes**: `server/api/` with `.get.ts`, `.post.ts` suffixes
+4. **Type safety**: Prisma types + strict TypeScript
+5. **Composition API**: Vue 3 `<script setup>`
+6. **Testing**: Vitest + happy-dom, place `.test.ts` next to files
 
-## AI Integration Plan
+## Authentication
 
-Per README, planned AI workflows:
+Better Auth (email/password implemented, OAuth planned):
+
+- **Server**: `server/utils/auth.ts` (Better Auth + Prisma adapter), `server/utils/serverAuth.ts` (session helper)
+- **Client**: `lib/auth-client.ts` (Better Auth client), `app/composables/useAuth.ts` (session state)
+- **Routes**: `/auth/login`, `/auth/register`, `/dashboard` (protected)
+- **Middleware**: `app/middleware/auth.global.ts` (route guard)
+- **Component**: `AuthButton` (header login/avatar dropdown)
+
+## AI Workflows (Planned)
+
+Using Vercel AI SDK:
 
 - Blog post generation
 - Ad creative studio
@@ -206,24 +207,23 @@ Per README, planned AI workflows:
 - Brand package creator
 - Product idea validator
 
-Use Vercel AI SDK for implementation.
+## Project Status
 
-## Authentication
+**Implemented:**
 
-Better Auth integrated with email/password authentication:
+- ✅ Nuxt 4 app structure
+- ✅ Database (Prisma 7 + PostgreSQL)
+- ✅ Auth (Better Auth email/password)
+- ✅ Testing (Vitest + coverage)
+- ✅ CI/CD (GitHub Actions)
+- ✅ Docker (dev + prod)
+- ✅ Git hooks (lint-staged)
 
-- **Server**: `server/utils/auth.ts` - Better Auth instance with Prisma adapter
-- **Client**: `lib/auth-client.ts` + `app/composables/useAuth.ts` - Session management
-- **Pages**: `/auth/login`, `/auth/register`, `/dashboard` (protected)
-- **Middleware**: `app/middleware/auth.global.ts` - Route protection
-- **UI**: `AuthButton` component in header - Login/avatar dropdown
+**Planned:**
 
-OAuth providers (GitHub, Google) planned for separate implementation.
-
-## Notes
-
-- Project early stage: Only web app skeleton exists
-- Packages folder planned but empty
-- Auth: Email/password implemented, OAuth planned
-- No payment integration yet (Polar planned)
-- Docker Compose ready: postgres:16-alpine + redis:7-alpine
+- ⏳ OAuth providers (GitHub, Google)
+- ⏳ Payment integration (Polar)
+- ⏳ Email templates (Resend)
+- ⏳ AI workflows (Vercel AI SDK)
+- ⏳ Landing site (`apps/landing`)
+- ⏳ CLI tool (`packages/cli`)
