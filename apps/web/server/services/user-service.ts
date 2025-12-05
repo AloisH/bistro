@@ -1,4 +1,4 @@
-import type { UpdateProfileInput, UserProfile } from '../shared/schemas/user'
+import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user'
 import { userRepository } from '../repositories/user-repository'
 
 /**

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { User } from '../../../prisma/generated/client'
+import type { User } from '../../prisma/generated/client'
 
 /**
  * User validation schemas

@@ -1,5 +1,5 @@
 import { defineValidatedApiHandler } from '../../../utils/api-handler'
-import { updateProjectSchema } from '../../../shared/schemas/project'
+import { updateProjectSchema } from '#shared/schemas/project'
 import { projectService } from '../../../services/project-service'
 
 export default defineValidatedApiHandler(

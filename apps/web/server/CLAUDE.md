@@ -56,6 +56,33 @@ if (!session?.user) {
 const userId = session.user.id // Safe!
 ```
 
+### Import Patterns
+
+**Server imports use relative paths + `#shared` alias**
+
+```typescript
+// ❌ WRONG: ~/  alias doesn't work in server/
+import { db } from '~/server/utils/db'
+import { createProjectSchema } from '~/shared/schemas/project'
+
+// ✅ CORRECT: Relative for server/, #shared for shared/
+// From server/api/projects/index.post.ts:
+import { defineValidatedApiHandler } from '../../utils/api-handler'
+import { projectService } from '../../services/project-service'
+import { createProjectSchema } from '#shared/schemas/project'
+
+// From server/services/project-service.ts:
+import type { Project } from '../../prisma/generated/client'
+import type { CreateProjectInput } from '#shared/schemas/project'
+import { projectRepository } from '../repositories/project-repository'
+```
+
+**Import rules:**
+- Server code: Use relative paths (`../../utils/db`)
+- Shared code: Use `#shared` alias (`#shared/schemas/project`)
+- Prisma: Use relative paths (`../../prisma/generated/client`)
+- Auto-imported: `server/utils/*` exports (no import needed)
+
 ---
 
 ## Database (Prisma 7)
@@ -153,8 +180,8 @@ const projects = await db.project.findMany({
 **For endpoints without request body (GET, DELETE):**
 
 ```typescript
-import { defineApiHandler } from '~/server/utils/api-handler'
-import { projectService } from '~/server/services/project-service'
+import { defineApiHandler } from '../../utils/api-handler'
+import { projectService } from '../../services/project-service'
 
 export default defineApiHandler(async (ctx) => {
   // ctx.userId is guaranteed to exist (session checked)
@@ -168,9 +195,9 @@ export default defineApiHandler(async (ctx) => {
 **For endpoints with request body (POST, PUT):**
 
 ```typescript
-import { defineValidatedApiHandler } from '~/server/utils/api-handler'
-import { createProjectSchema } from '~/server/shared/schemas/project'
-import { projectService } from '~/server/services/project-service'
+import { defineValidatedApiHandler } from '../../utils/api-handler'
+import { createProjectSchema } from '#shared/schemas/project'
+import { projectService } from '../../services/project-service'
 
 export default defineValidatedApiHandler(
   createProjectSchema,
@@ -208,14 +235,14 @@ export default defineApiHandler(async (ctx) => {
 
 ### Shared Schemas
 
-**Location:** `server/shared/schemas/`
+**Location:** `shared/schemas/`
 
 ```typescript
-// server/shared/schemas/common.ts
+// shared/schemas/common.ts
 export const idSchema = z.string().cuid()
 export const slugSchema = z.string().min(1).max(100).regex(/^[a-z0-9-]+$/)
 
-// server/shared/schemas/project.ts
+// shared/schemas/project.ts
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().max(1000).optional(),
@@ -228,8 +255,8 @@ export type CreateProjectInput = z.infer<typeof createProjectSchema>
 ### Usage in API Handlers
 
 ```typescript
-import { defineValidatedApiHandler } from '~/server/utils/api-handler'
-import { createProjectSchema } from '~/server/shared/schemas/project'
+import { defineValidatedApiHandler } from '../../utils/api-handler'
+import { createProjectSchema } from '#shared/schemas/project'
 
 export default defineValidatedApiHandler(
   createProjectSchema, // Auto-validates body

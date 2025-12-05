@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { slugSchema } from './common'
-import type { Project } from '../../../prisma/generated/client'
+import type { Project } from '../../prisma/generated/client'
 
 /**
  * Project validation schemas

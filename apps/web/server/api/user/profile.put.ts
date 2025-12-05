@@ -1,5 +1,5 @@
 import { defineValidatedApiHandler } from '../../utils/api-handler'
-import { updateProfileSchema } from '../../shared/schemas/user'
+import { updateProfileSchema } from '#shared/schemas/user'
 import { userService } from '../../services/user-service'
 
 export default defineValidatedApiHandler(
