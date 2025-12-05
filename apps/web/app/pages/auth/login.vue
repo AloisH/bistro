@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
-const { signIn, fetchSession, session, loggedIn } = useAuth()
+const { signIn, fetchSession, loggedIn } = useAuth()
 
 // Redirect if already authenticated (e.g., after OAuth callback)
 onMounted(async () => {

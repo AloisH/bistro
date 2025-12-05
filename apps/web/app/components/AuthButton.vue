@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-const { session, isPending, signOut, client } = useAuth()
+const { session, isPending, client } = useAuth()
 
 async function handleLogout() {
   await client.signOut()
