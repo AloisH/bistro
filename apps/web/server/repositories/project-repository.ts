@@ -55,7 +55,7 @@ export class ProjectRepository extends BaseRepository {
   async update(
     id: string,
     userId: string,
-    data: Prisma.ProjectUpdateInput
+    data: Prisma.ProjectUpdateInput,
   ): Promise<Project | null> {
     // Check ownership first
     const existing = await this.findById(id, userId)

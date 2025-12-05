@@ -30,7 +30,7 @@ export class UserRepository extends BaseRepository {
    */
   async updateProfile(
     id: string,
-    data: { name?: string, image?: string }
+    data: { name?: string, image?: string },
   ): Promise<User> {
     return this.db.user.update({
       where: { id },

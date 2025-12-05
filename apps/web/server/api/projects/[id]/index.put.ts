@@ -12,5 +12,5 @@ export default defineValidatedApiHandler(
 
     const project = await projectService.updateProject(id, ctx.userId, ctx.body!)
     return { project }
-  }
+  },
 )

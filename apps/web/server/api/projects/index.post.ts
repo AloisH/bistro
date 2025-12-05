@@ -7,5 +7,5 @@ export default defineValidatedApiHandler(
   async (ctx) => {
     const project = await projectService.createProject(ctx.userId, ctx.body!)
     return { project }
-  }
+  },
 )

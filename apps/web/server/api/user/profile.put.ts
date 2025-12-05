@@ -7,5 +7,5 @@ export default defineValidatedApiHandler(
   async (ctx) => {
     const profile = await userService.updateProfile(ctx.userId, ctx.body!)
     return { profile }
-  }
+  },
 )

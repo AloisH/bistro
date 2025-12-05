@@ -60,7 +60,7 @@ export class ProjectService {
   async updateProject(
     id: string,
     userId: string,
-    input: UpdateProjectInput
+    input: UpdateProjectInput,
   ): Promise<Project> {
     // Check if slug is being changed and if it's unique
     if (input.slug) {
