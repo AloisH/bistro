@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { nameSchema, passwordSchema } from './common'
 import type { User } from '../../prisma/generated/client'
 
 /**
@@ -6,11 +7,25 @@ import type { User } from '../../prisma/generated/client'
  */
 
 export const updateProfileSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100, 'Name must be 100 characters or less').optional(),
+  name: nameSchema.optional(),
   image: z.string().url('Must be a valid URL').optional(),
 })
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>
+
+export const changePasswordSchema = z.object({
+  currentPassword: passwordSchema,
+  newPassword: passwordSchema,
+  revokeOtherSessions: z.boolean().default(true),
+})
+
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>
+
+export const deleteAccountSchema = z.object({
+  password: z.string().min(1, 'Password required'),
+})
+
+export type DeleteAccountInput = z.infer<typeof deleteAccountSchema>
 
 // Type helper for API responses
 export type UserProfile = Pick<User, 'id' | 'email' | 'name' | 'image' | 'emailVerified' | 'createdAt' | 'updatedAt'>

@@ -10,7 +10,7 @@
 
       <UForm
         :state="state"
-        :schema="schema"
+        :schema="signInSchema"
         @submit="onSubmit"
       >
         <UFormField
@@ -74,26 +74,16 @@
 </template>
 
 <script setup lang="ts">
-import { z } from 'zod'
+import { signInSchema } from '#shared/schemas/auth'
 
-const { signIn, fetchSession, loggedIn } = useAuth()
+const { signIn, fetchSession } = useAuth()
 
 // Redirect if already authenticated (e.g., after OAuth callback)
-onMounted(async () => {
-  await fetchSession()
-  if (loggedIn.value) {
-    await navigateTo('/dashboard')
-  }
-})
+useAuthRedirect()
 
 const state = reactive({
   email: '',
   password: '',
-})
-
-const schema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
 const loading = ref(false)
@@ -116,8 +106,17 @@ async function onSubmit() {
 
     await fetchSession()
     await navigateTo('/dashboard')
-  } catch (e) {
-    error.value = 'An error occurred. Please try again.'
+  } catch (e: unknown) {
+    const err = e as { status?: number }
+    if (e instanceof TypeError && e.message.includes('fetch')) {
+      error.value = 'Network error. Check your connection.'
+    } else if (err?.status === 429) {
+      error.value = 'Too many attempts. Try again later.'
+    } else if (err?.status && err.status >= 500) {
+      error.value = 'Server error. Try again later.'
+    } else {
+      error.value = 'An error occurred. Please try again.'
+    }
     console.error('Login error:', e)
   } finally {
     loading.value = false

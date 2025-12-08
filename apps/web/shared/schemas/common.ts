@@ -18,3 +18,21 @@ export const paginationSchema = z.object({
 })
 
 export type Pagination = z.infer<typeof paginationSchema>
+
+/**
+ * Reusable field validators
+ */
+
+export const emailSchema = z
+  .string()
+  .email('Invalid email address')
+  .toLowerCase()
+
+export const passwordSchema = z
+  .string()
+  .min(8, 'Password must be at least 8 characters')
+
+export const nameSchema = z
+  .string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(100, 'Name must be 100 characters or less')
