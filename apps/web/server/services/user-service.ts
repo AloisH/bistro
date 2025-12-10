@@ -80,8 +80,7 @@ export class UserService {
       return (
         storedBuffer.length === derivedBuffer.length && timingSafeEqual(storedBuffer, derivedBuffer)
       );
-    }
-    catch {
+    } catch {
       return false;
     }
   }

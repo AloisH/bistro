@@ -281,8 +281,7 @@ async function updateProfile() {
       color: 'success',
       icon: 'i-lucide-check',
     });
-  }
-  catch (e: unknown) {
+  } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Update failed',
@@ -290,8 +289,7 @@ async function updateProfile() {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  }
-  finally {
+  } finally {
     profileLoading.value = false;
   }
 }
@@ -313,8 +311,7 @@ async function changePassword() {
       color: 'success',
       icon: 'i-lucide-check',
     });
-  }
-  catch (e: unknown) {
+  } catch (e: unknown) {
     const err = e as { message?: string };
     toast.add({
       title: 'Change failed',
@@ -322,8 +319,7 @@ async function changePassword() {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  }
-  finally {
+  } finally {
     passwordLoading.value = false;
   }
 }
@@ -348,8 +344,7 @@ async function deleteAccount() {
     });
     await signOut();
     await router.push('/auth/login');
-  }
-  catch (e: unknown) {
+  } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Deletion failed',
@@ -357,8 +352,7 @@ async function deleteAccount() {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  }
-  finally {
+  } finally {
     deleteLoading.value = false;
   }
 }

@@ -117,24 +117,19 @@ async function onSubmit() {
 
     await fetchSession();
     await navigateTo('/dashboard');
-  }
-  catch (e: unknown) {
+  } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {
       error.value = 'Network error. Check your connection.';
-    }
-    else if (err?.status === 429) {
+    } else if (err?.status === 429) {
       error.value = 'Too many attempts. Try again later.';
-    }
-    else if (err?.status && err.status >= 500) {
+    } else if (err?.status && err.status >= 500) {
       error.value = 'Server error. Try again later.';
-    }
-    else {
+    } else {
       error.value = 'An error occurred. Please try again.';
     }
     console.error('Signup error:', e);
-  }
-  finally {
+  } finally {
     loading.value = false;
   }
 }

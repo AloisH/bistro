@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { vue } from 'rollup-plugin-vue';
+import vue from '@vitejs/plugin-vue';
 
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui'],
