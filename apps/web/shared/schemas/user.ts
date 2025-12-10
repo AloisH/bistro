@@ -21,11 +21,18 @@ export const changePasswordSchema = z.object({
 
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>
 
-export const deleteAccountSchema = z.object({
+export const deleteAccountPasswordSchema = z.object({
   password: z.string().min(1, 'Password required'),
 })
 
-export type DeleteAccountInput = z.infer<typeof deleteAccountSchema>
+export const deleteAccountEmailSchema = z.object({
+  email: z.string().min(1, 'Email required'),
+})
+
+export type DeleteAccountPasswordInput = z.infer<typeof deleteAccountPasswordSchema>
+export type DeleteAccountEmailInput = z.infer<typeof deleteAccountEmailSchema>
 
 // Type helper for API responses
-export type UserProfile = Pick<User, 'id' | 'email' | 'name' | 'image' | 'emailVerified' | 'createdAt' | 'updatedAt'>
+export type UserProfile = Pick<User, 'id' | 'email' | 'name' | 'image' | 'emailVerified' | 'createdAt' | 'updatedAt'> & {
+  hasPassword: boolean
+}

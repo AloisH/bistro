@@ -70,9 +70,15 @@ const router = useRouter()
 **Nuxt UI components (always available):**
 - Layout: `UApp`, `UHeader`, `UMain`, `UFooter`
 - Forms: `UForm`, `UFormField`, `UInput`, `UButton`
-- Feedback: `UAlert`, `UNotification`
+- Feedback: `UAlert`, `UToast` (via `useToast()`)
 - Navigation: `ULink`, `NuxtLink`
-- Utilities: `UColorModeButton`, `UIcon`
+- Utilities: `UColorModeButton`, `UIcon`, `UModal`
+
+**IMPORTANT: Always check Nuxt UI documentation**
+- Before using any Nuxt UI component, check https://ui.nuxt.com
+- Color props: Use `error`, `success`, `warning`, `info`, `primary`, `neutral` (NOT `red`, `green`, etc.)
+- Modal usage: Use `v-model:open` with `#content` slot
+- Toast notifications: Use `useToast()` composable for success/error feedback
 
 **Testing:**
 ```typescript
@@ -207,10 +213,37 @@ async function onSubmit() {
     <UFormField name="email" label="Email">
       <UInput v-model="state.email" type="email" />
     </UFormField>
-    <UAlert v-if="error" color="red" :title="error" />
     <UButton type="submit" :loading="loading">Submit</UButton>
   </UForm>
 </template>
+```
+
+## Toast Notifications
+
+**Use toast for success/error feedback:**
+```vue
+<script setup lang="ts">
+const toast = useToast()
+
+async function onSubmit() {
+  try {
+    // API call
+    toast.add({
+      title: 'Success',
+      description: 'Action completed',
+      color: 'success',
+      icon: 'i-lucide-check',
+    })
+  } catch (e) {
+    toast.add({
+      title: 'Error',
+      description: 'Something went wrong',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    })
+  }
+}
+</script>
 ```
 
 ## Styling

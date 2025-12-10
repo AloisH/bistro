@@ -20,6 +20,10 @@
           label: 'Dashboard',
           icon: 'i-lucide-layout-dashboard',
           to: '/dashboard',
+        }, {
+          label: 'Profile',
+          icon: 'i-lucide-settings',
+          to: '/profile',
         }],
         [{
           label: 'Logout',

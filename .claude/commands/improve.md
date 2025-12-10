@@ -19,7 +19,7 @@ If no path provided, ask: "Folder to analyze?" (relative to repo root)
    - Type assertions (`as`), non-null (`!`) → use guards
    - Missing async error handling
    - Unused imports/vars
-   - Complex functions (>20 lines)
+   - Complex functions (20+ lines)
 
    **Performance:**
    - Missing pagination/limits

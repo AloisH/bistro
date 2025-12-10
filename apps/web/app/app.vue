@@ -29,8 +29,6 @@ useSeoMeta({
         <NuxtLink to="/">
           <AppLogo class="h-6 w-auto shrink-0" />
         </NuxtLink>
-
-        <TemplateMenu />
       </template>
 
       <template #right>
