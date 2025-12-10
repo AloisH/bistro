@@ -1,3 +1,22 @@
 import { Resend } from 'resend';
 
-export const resend = new Resend(process.env.NUXT_RESEND_API_KEY);
+const globalForResend = globalThis as unknown as {
+  resend: Resend | undefined;
+};
+
+function createResendClient(): Resend | undefined {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.warn('[Resend] RESEND_API_KEY not set - email disabled');
+    return undefined;
+  }
+
+  return new Resend(apiKey);
+}
+
+export const resend = globalForResend.resend ?? createResendClient();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForResend.resend = resend;
+}
