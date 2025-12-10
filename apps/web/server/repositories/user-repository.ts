@@ -1,5 +1,5 @@
-import type { User } from '../../prisma/generated/client'
-import { BaseRepository } from './base-repository'
+import type { User } from '../../prisma/generated/client';
+import { BaseRepository } from './base-repository';
 
 /**
  * User repository
@@ -12,7 +12,7 @@ export class UserRepository extends BaseRepository {
   async findById(id: string): Promise<User | null> {
     return this.db.user.findUnique({
       where: { id },
-    })
+    });
   }
 
   /**
@@ -21,21 +21,18 @@ export class UserRepository extends BaseRepository {
   async findByEmail(email: string): Promise<User | null> {
     return this.db.user.findUnique({
       where: { email },
-    })
+    });
   }
 
   /**
    * Update user profile
    * Only allows updating name and image
    */
-  async updateProfile(
-    id: string,
-    data: { name?: string, image?: string },
-  ): Promise<User> {
+  async updateProfile(id: string, data: { name?: string; image?: string }): Promise<User> {
     return this.db.user.update({
       where: { id },
       data,
-    })
+    });
   }
 
   /**
@@ -45,10 +42,10 @@ export class UserRepository extends BaseRepository {
   async deleteUser(id: string): Promise<boolean> {
     const result = await this.db.user.delete({
       where: { id },
-    })
-    return !!result
+    });
+    return !!result;
   }
 }
 
 // Export singleton instance
-export const userRepository = new UserRepository()
+export const userRepository = new UserRepository();

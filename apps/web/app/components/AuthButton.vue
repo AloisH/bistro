@@ -11,25 +11,32 @@
     <UDropdownMenu
       v-else
       :items="[
-        [{
-          label: session.user?.email || '',
-          icon: 'i-lucide-user',
-          disabled: true,
-        }],
-        [{
-          label: 'Dashboard',
-          icon: 'i-lucide-layout-dashboard',
-          to: '/dashboard',
-        }, {
-          label: 'Profile',
-          icon: 'i-lucide-settings',
-          to: '/profile',
-        }],
-        [{
-          label: 'Logout',
-          icon: 'i-lucide-log-out',
-          onSelect: handleLogout,
-        }],
+        [
+          {
+            label: session.user?.email || '',
+            icon: 'i-lucide-user',
+            disabled: true,
+          },
+        ],
+        [
+          {
+            label: 'Dashboard',
+            icon: 'i-lucide-layout-dashboard',
+            to: '/dashboard',
+          },
+          {
+            label: 'Profile',
+            icon: 'i-lucide-settings',
+            to: '/profile',
+          },
+        ],
+        [
+          {
+            label: 'Logout',
+            icon: 'i-lucide-log-out',
+            onSelect: handleLogout,
+          },
+        ],
       ]"
     >
       <UAvatar
@@ -42,10 +49,10 @@
 </template>
 
 <script setup lang="ts">
-const { session, isPending, client } = useAuth()
+const { session, isPending, client } = useAuth();
 
 async function handleLogout() {
-  await client.signOut()
-  await navigateTo('/')
+  await client.signOut();
+  await navigateTo('/');
 }
 </script>

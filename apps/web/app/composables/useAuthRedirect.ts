@@ -1,10 +1,10 @@
 export const useAuthRedirect = () => {
-  const { fetchSession, loggedIn } = useAuth()
+  const { fetchSession, loggedIn } = useAuth();
 
   onMounted(async () => {
-    await fetchSession()
+    await fetchSession();
     if (loggedIn.value) {
-      await navigateTo('/dashboard')
+      await navigateTo('/dashboard');
     }
-  })
-}
+  });
+};

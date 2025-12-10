@@ -3,9 +3,7 @@
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">Login</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Sign in to your account
-        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Sign in to your account</p>
       </template>
 
       <UForm
@@ -64,9 +62,7 @@
           <NuxtLink
             to="/auth/register"
             class="text-primary hover:underline"
-          >
-            Sign up
-          </NuxtLink>
+          > Sign up </NuxtLink>
         </p>
       </template>
     </UCard>
@@ -74,52 +70,57 @@
 </template>
 
 <script setup lang="ts">
-import { signInSchema } from '#shared/schemas/auth'
+import { signInSchema } from '#shared/schemas/auth';
 
-const { signIn, fetchSession } = useAuth()
+const { signIn, fetchSession } = useAuth();
 
 // Redirect if already authenticated (e.g., after OAuth callback)
-useAuthRedirect()
+useAuthRedirect();
 
 const state = reactive({
   email: '',
   password: '',
-})
+});
 
-const loading = ref(false)
-const error = ref('')
+const loading = ref(false);
+const error = ref('');
 
 async function onSubmit() {
-  loading.value = true
-  error.value = ''
+  loading.value = true;
+  error.value = '';
 
   try {
     const result = await signIn.email({
       email: state.email,
       password: state.password,
-    })
+    });
 
     if (result.error) {
-      error.value = result.error.message || 'Invalid email or password'
-      return
+      error.value = result.error.message || 'Invalid email or password';
+      return;
     }
 
-    await fetchSession()
-    await navigateTo('/dashboard')
-  } catch (e: unknown) {
-    const err = e as { status?: number }
+    await fetchSession();
+    await navigateTo('/dashboard');
+  }
+  catch (e: unknown) {
+    const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {
-      error.value = 'Network error. Check your connection.'
-    } else if (err?.status === 429) {
-      error.value = 'Too many attempts. Try again later.'
-    } else if (err?.status && err.status >= 500) {
-      error.value = 'Server error. Try again later.'
-    } else {
-      error.value = 'An error occurred. Please try again.'
+      error.value = 'Network error. Check your connection.';
     }
-    console.error('Login error:', e)
-  } finally {
-    loading.value = false
+    else if (err?.status === 429) {
+      error.value = 'Too many attempts. Try again later.';
+    }
+    else if (err?.status && err.status >= 500) {
+      error.value = 'Server error. Try again later.';
+    }
+    else {
+      error.value = 'An error occurred. Please try again.';
+    }
+    console.error('Login error:', e);
+  }
+  finally {
+    loading.value = false;
   }
 }
 </script>

@@ -34,6 +34,7 @@ shared/
 ```
 
 **Future expansion:**
+
 - `types/` - Shared TypeScript interfaces
 - `utils/` - Pure utility functions (no side effects)
 - `constants/` - Static configuration data
@@ -70,39 +71,36 @@ shared/
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(200),
   slug: slugSchema,
-})
+});
 ```
 
 ### 2. Infer TypeScript Type
 
 ```typescript
-export type CreateProjectInput = z.infer<typeof createProjectSchema>
+export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 ```
 
 ### 3. Use in Server API Handler
 
 ```typescript
 // server/api/projects/index.post.ts
-import { defineValidatedApiHandler } from '~/server/utils/api-handler'
-import { createProjectSchema } from '~/shared/schemas/project'
+import { defineValidatedApiHandler } from '~/server/utils/api-handler';
+import { createProjectSchema } from '~/shared/schemas/project';
 
-export default defineValidatedApiHandler(
-  createProjectSchema,
-  async (ctx) => {
-    // ctx.body is typed as CreateProjectInput!
-    const project = await projectService.createProject(ctx.userId, ctx.body!)
-    return { project }
-  }
-)
+export default defineValidatedApiHandler(createProjectSchema, async (ctx) => {
+  // ctx.body is typed as CreateProjectInput!
+  const project = await projectService.createProject(ctx.userId, ctx.body!);
+  return { project };
+});
 ```
 
 ### 4. Reuse in Client Forms (Future)
 
 ```vue
 <script setup lang="ts">
-import { createProjectSchema } from '~/shared/schemas/project'
+import { createProjectSchema } from '~/shared/schemas/project';
 
-const result = createProjectSchema.safeParse(formData)
+const result = createProjectSchema.safeParse(formData);
 </script>
 ```
 
@@ -120,11 +118,11 @@ export const titleSchema = z
   .string()
   .min(1, 'Title required')
   .max(200)
-  .transform(val => val.trim())
+  .transform((val) => val.trim());
 
 // Reuse across schemas
-export const createPageSchema = z.object({ title: titleSchema })
-export const updatePageSchema = z.object({ title: titleSchema.optional() })
+export const createPageSchema = z.object({ title: titleSchema });
+export const updatePageSchema = z.object({ title: titleSchema.optional() });
 ```
 
 ### Transform After Validation
@@ -134,12 +132,12 @@ export const updatePageSchema = z.object({ title: titleSchema.optional() })
 z.string()
   .min(2)
   .max(100)
-  .transform(val => val.trim())
+  .transform((val) => val.trim());
 
 // ❌ WRONG: Trim happens before validation
 z.string()
-  .transform(val => val.trim())
-  .min(2)
+  .transform((val) => val.trim())
+  .min(2);
 ```
 
 ### Optional vs Nullable
@@ -156,31 +154,31 @@ z.string()
 
 ```typescript
 // ❌ BANNED
-const data = response as ApiResponse<User>
+const data = response as ApiResponse<User>;
 
 // ✅ CORRECT: Use Zod validation
-const data = apiResponseSchema(userSchema).parse(response)
+const data = apiResponseSchema(userSchema).parse(response);
 ```
 
 ### Always Explicit Types
 
 ```typescript
 // ❌ Implicit any
-content: z.any().optional()
+content: z.any().optional();
 
 // ✅ Explicit schema (define if needed)
-content: tiptapContentSchema.optional()
+content: tiptapContentSchema.optional();
 ```
 
 ### Remove Prisma Dependencies
 
 ```typescript
 // ❌ WRONG: Couples shared to Prisma
-import type { PageStatus } from '@prisma/client'
-export type Status = PageStatus
+import type { PageStatus } from '@prisma/client';
+export type Status = PageStatus;
 
 // ✅ CORRECT: Define locally
-export type PageStatus = 'draft' | 'published' | 'archived'
+export type PageStatus = 'draft' | 'published' | 'archived';
 ```
 
 ---
@@ -207,22 +205,18 @@ describe('createProjectSchema', () => {
     const result = createProjectSchema.parse({
       title: 'My Project',
       slug: 'my-project',
-    })
-    expect(result).toBeDefined()
-  })
+    });
+    expect(result).toBeDefined();
+  });
 
   it('should reject empty title', () => {
-    expect(() =>
-      createProjectSchema.parse({ title: '', slug: 'test' })
-    ).toThrow()
-  })
+    expect(() => createProjectSchema.parse({ title: '', slug: 'test' })).toThrow();
+  });
 
   it('should reject invalid slug', () => {
-    expect(() =>
-      createProjectSchema.parse({ title: 'Test', slug: 'Invalid Slug!' })
-    ).toThrow()
-  })
-})
+    expect(() => createProjectSchema.parse({ title: 'Test', slug: 'Invalid Slug!' })).toThrow();
+  });
+});
 ```
 
 ---
@@ -239,12 +233,16 @@ Define schemas at module level, not inside functions:
 
 ```typescript
 // ✅ CORRECT: Created once
-export const createProjectSchema = z.object({ /* ... */ })
+export const createProjectSchema = z.object({
+  /* ... */
+});
 
 // ❌ WRONG: Created on every call
 export function validateProject(data: unknown) {
-  const schema = z.object({ /* ... */ })
-  return schema.parse(data)
+  const schema = z.object({
+    /* ... */
+  });
+  return schema.parse(data);
 }
 ```
 
@@ -257,8 +255,8 @@ const tiptapContentSchema: z.ZodType<TiptapContent> = z.lazy(() =>
   z.object({
     type: z.string(),
     content: z.array(tiptapContentSchema).optional(),
-  })
-)
+  }),
+);
 ```
 
 ---
@@ -303,7 +301,7 @@ const tiptapContentSchema: z.ZodType<TiptapContent> = z.lazy(() =>
  * - 1-100 chars
  * - No spaces or special characters
  */
-export const slugSchema = z.string().regex(/^[a-z0-9-]+$/)
+export const slugSchema = z.string().regex(/^[a-z0-9-]+$/);
 ```
 
 ---

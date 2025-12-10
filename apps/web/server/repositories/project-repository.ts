@@ -1,5 +1,5 @@
-import type { Project, Prisma } from '../../prisma/generated/client'
-import { BaseRepository } from './base-repository'
+import type { Project, Prisma } from '../../prisma/generated/client';
+import { BaseRepository } from './base-repository';
 
 /**
  * Project repository
@@ -15,7 +15,7 @@ export class ProjectRepository extends BaseRepository {
       where: { userId },
       include: { aiJobs: true },
       orderBy: { createdAt: 'desc' },
-    })
+    });
   }
 
   /**
@@ -26,7 +26,7 @@ export class ProjectRepository extends BaseRepository {
     return this.db.project.findFirst({
       where: { id, userId },
       include: { aiJobs: true },
-    })
+    });
   }
 
   /**
@@ -36,7 +36,7 @@ export class ProjectRepository extends BaseRepository {
   async findBySlug(slug: string, userId: string): Promise<Project | null> {
     return this.db.project.findFirst({
       where: { slug, userId },
-    })
+    });
   }
 
   /**
@@ -45,7 +45,7 @@ export class ProjectRepository extends BaseRepository {
   async create(userId: string, data: Prisma.ProjectCreateInput): Promise<Project> {
     return this.db.project.create({
       data,
-    })
+    });
   }
 
   /**
@@ -58,15 +58,15 @@ export class ProjectRepository extends BaseRepository {
     data: Prisma.ProjectUpdateInput,
   ): Promise<Project | null> {
     // Check ownership first
-    const existing = await this.findById(id, userId)
+    const existing = await this.findById(id, userId);
     if (!existing) {
-      return null
+      return null;
     }
 
     return this.db.project.update({
       where: { id },
       data,
-    })
+    });
   }
 
   /**
@@ -75,16 +75,16 @@ export class ProjectRepository extends BaseRepository {
    */
   async delete(id: string, userId: string): Promise<Project | null> {
     // Check ownership first
-    const existing = await this.findById(id, userId)
+    const existing = await this.findById(id, userId);
     if (!existing) {
-      return null
+      return null;
     }
 
     return this.db.project.delete({
       where: { id },
-    })
+    });
   }
 }
 
 // Export singleton instance
-export const projectRepository = new ProjectRepository()
+export const projectRepository = new ProjectRepository();

@@ -1,18 +1,16 @@
 <template>
   <div>
     <div class="container mx-auto p-8">
-      <UCard class="max-w-2xl mx-auto">
+      <UCard class="mx-auto max-w-2xl">
         <template #header>
           <h1 class="text-3xl font-bold">Profile Settings</h1>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Manage your account settings
-          </p>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account settings</p>
         </template>
 
         <div class="space-y-6">
           <!-- Profile Information -->
           <div>
-            <h2 class="text-xl font-semibold mb-4">Profile Information</h2>
+            <h2 class="mb-4 text-xl font-semibold">Profile Information</h2>
             <UForm
               :state="profileState"
               :schema="updateProfileSchema"
@@ -32,7 +30,11 @@
                 name="email"
                 label="Email"
                 class="mt-4"
-                :description="hasPassword ? 'Email address for your account' : 'Managed by your OAuth provider (GitHub/Google)'"
+                :description="
+                  hasPassword
+                    ? 'Email address for your account'
+                    : 'Managed by your OAuth provider (GitHub/Google)'
+                "
               >
                 <UInput
                   :model-value="user?.email"
@@ -55,8 +57,8 @@
             v-if="hasPassword"
             class="border-t pt-6 dark:border-gray-700"
           >
-            <h2 class="text-xl font-semibold mb-4">Change Password</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <h2 class="mb-4 text-xl font-semibold">Change Password</h2>
+            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
               Update your password to keep your account secure
             </p>
             <UForm
@@ -121,9 +123,10 @@
 
           <!-- Danger Zone -->
           <div class="border-t pt-6 dark:border-gray-700">
-            <h2 class="text-xl font-semibold text-red-600 dark:text-red-400 mb-4">Danger Zone</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              Once you delete your account, there is no going back. All your data including projects and AI jobs will be permanently deleted.
+            <h2 class="mb-4 text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
+            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
+              Once you delete your account, there is no going back. All your data including projects
+              and AI jobs will be permanently deleted.
             </p>
             <UButton
               color="error"
@@ -155,7 +158,7 @@
             <p class="text-sm text-gray-600 dark:text-gray-400">
               The following data will be permanently deleted:
             </p>
-            <ul class="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
+            <ul class="list-inside list-disc space-y-1 text-sm text-gray-600 dark:text-gray-400">
               <li>Your user profile</li>
               <li>All your projects</li>
               <li>All AI jobs and their results</li>
@@ -191,7 +194,7 @@
                 />
               </UFormField>
 
-              <div class="flex gap-2 mt-6">
+              <div class="mt-6 flex gap-2">
                 <UButton
                   color="error"
                   type="submit"
@@ -216,133 +219,147 @@
 </template>
 
 <script setup lang="ts">
-import { updateProfileSchema, changePasswordSchema, deleteAccountPasswordSchema, deleteAccountEmailSchema } from '#shared/schemas/user'
+import {
+  updateProfileSchema,
+  changePasswordSchema,
+  deleteAccountPasswordSchema,
+  deleteAccountEmailSchema,
+} from '#shared/schemas/user';
 
-const { user, client, signOut, fetchSession } = useAuth()
-const router = useRouter()
-const toast = useToast()
+const { user, client, signOut, fetchSession } = useAuth();
+const router = useRouter();
+const toast = useToast();
 
 // Fetch full profile with hasPassword flag
-const { data: profile } = await useFetch('/api/user/profile')
-const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false)
+const { data: profile } = await useFetch('/api/user/profile');
+const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false);
 
 // Profile update state
 const profileState = reactive({
   name: user.value?.name || '',
-})
-const profileLoading = ref(false)
+});
+const profileLoading = ref(false);
 
 // Password change state
 const passwordState = reactive({
   currentPassword: '',
   newPassword: '',
   revokeOtherSessions: true,
-})
-const passwordLoading = ref(false)
+});
+const passwordLoading = ref(false);
 
 // Delete account state
-const showDeleteModal = ref(false)
+const showDeleteModal = ref(false);
 const deleteState = reactive({
   password: '',
   email: '',
-})
-const deleteLoading = ref(false)
+});
+const deleteLoading = ref(false);
 
 // Update profile name when user data changes
-watch(() => user.value?.name, (newName) => {
-  if (newName) {
-    profileState.name = newName
-  }
-})
+watch(
+  () => user.value?.name,
+  (newName) => {
+    if (newName) {
+      profileState.name = newName;
+    }
+  },
+);
 
 // Update profile
 async function updateProfile() {
-  profileLoading.value = true
+  profileLoading.value = true;
   try {
     await $fetch('/api/user/profile', {
       method: 'PUT',
       body: { name: profileState.name },
-    })
-    await fetchSession()
+    });
+    await fetchSession();
     toast.add({
       title: 'Profile updated',
       description: 'Your profile has been updated successfully',
       color: 'success',
       icon: 'i-lucide-check',
-    })
-  } catch (e: unknown) {
-    const err = e as { data?: { message?: string } }
+    });
+  }
+  catch (e: unknown) {
+    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Update failed',
       description: err.data?.message || 'Failed to update profile',
       color: 'error',
       icon: 'i-lucide-alert-triangle',
-    })
-  } finally {
-    profileLoading.value = false
+    });
+  }
+  finally {
+    profileLoading.value = false;
   }
 }
 
 // Change password
 async function changePassword() {
-  passwordLoading.value = true
+  passwordLoading.value = true;
   try {
     await client.changePassword({
       currentPassword: passwordState.currentPassword,
       newPassword: passwordState.newPassword,
       revokeOtherSessions: passwordState.revokeOtherSessions,
-    })
-    passwordState.currentPassword = ''
-    passwordState.newPassword = ''
+    });
+    passwordState.currentPassword = '';
+    passwordState.newPassword = '';
     toast.add({
       title: 'Password changed',
       description: 'Your password has been updated successfully',
       color: 'success',
       icon: 'i-lucide-check',
-    })
-  } catch (e: unknown) {
-    const err = e as { message?: string }
+    });
+  }
+  catch (e: unknown) {
+    const err = e as { message?: string };
     toast.add({
       title: 'Change failed',
       description: err.message || 'Failed to change password',
       color: 'error',
       icon: 'i-lucide-alert-triangle',
-    })
-  } finally {
-    passwordLoading.value = false
+    });
+  }
+  finally {
+    passwordLoading.value = false;
   }
 }
 
 // Delete account
 async function deleteAccount() {
-  deleteLoading.value = true
+  deleteLoading.value = true;
   try {
     const body = hasPassword.value
       ? { password: deleteState.password }
-      : { email: deleteState.email }
+      : { email: deleteState.email };
 
     await $fetch('/api/user/account', {
       method: 'DELETE',
       body,
-    })
+    });
     toast.add({
       title: 'Account deleted',
       description: 'Your account has been permanently deleted',
       color: 'success',
       icon: 'i-lucide-check',
-    })
-    await signOut()
-    await router.push('/auth/login')
-  } catch (e: unknown) {
-    const err = e as { data?: { message?: string } }
+    });
+    await signOut();
+    await router.push('/auth/login');
+  }
+  catch (e: unknown) {
+    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Deletion failed',
       description: err.data?.message || 'Failed to delete account',
       color: 'error',
       icon: 'i-lucide-alert-triangle',
-    })
-  } finally {
-    deleteLoading.value = false
+    });
+  }
+  finally {
+    deleteLoading.value = false;
   }
 }
 </script>

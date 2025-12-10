@@ -30,12 +30,14 @@ app/
 ## Pages (File-Based Routing)
 
 **Convention:**
+
 - `pages/index.vue` → `/`
 - `pages/dashboard.vue` → `/dashboard`
 - `pages/auth/login.vue` → `/auth/login`
 - `pages/user/[id].vue` → `/user/:id`
 
 **Layout:**
+
 ```vue
 <template>
   <div>
@@ -46,17 +48,18 @@ app/
 
 <script setup lang="ts">
 // Auto-import composables
-const { user, loggedIn } = useAuth()
+const { user, loggedIn } = useAuth();
 
 // Auto-import Nuxt functions
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 </script>
 ```
 
 ## Components
 
 **Auto-imported from `components/`:**
+
 ```vue
 <template>
   <!-- No import needed for AppLogo, AuthButton, etc -->
@@ -68,6 +71,7 @@ const router = useRouter()
 ```
 
 **Nuxt UI components (always available):**
+
 - Layout: `UApp`, `UHeader`, `UMain`, `UFooter`
 - Forms: `UForm`, `UFormField`, `UInput`, `UButton`
 - Feedback: `UAlert`, `UToast` (via `useToast()`)
@@ -75,51 +79,55 @@ const router = useRouter()
 - Utilities: `UColorModeButton`, `UIcon`, `UModal`
 
 **IMPORTANT: Always check Nuxt UI documentation**
+
 - Before using any Nuxt UI component, check https://ui.nuxt.com
 - Color props: Use `error`, `success`, `warning`, `info`, `primary`, `neutral` (NOT `red`, `green`, etc.)
 - Modal usage: Use `v-model:open` with `#content` slot
 - Toast notifications: Use `useToast()` composable for success/error feedback
 
 **Testing:**
+
 ```typescript
 // Place next to component: AuthButton.test.ts
-import { describe, it, expect } from 'vitest'
-import { mountSuspended } from '@nuxt/test-utils/runtime'
-import AuthButton from './AuthButton.vue'
+import { describe, it, expect } from 'vitest';
+import { mountSuspended } from '@nuxt/test-utils/runtime';
+import AuthButton from './AuthButton.vue';
 
 describe('AuthButton', () => {
   it('renders', async () => {
-    const wrapper = await mountSuspended(AuthButton)
-    expect(wrapper.html()).toContain('Login')
-  })
-})
+    const wrapper = await mountSuspended(AuthButton);
+    expect(wrapper.html()).toContain('Login');
+  });
+});
 ```
 
 ## Composables (useAuth)
 
 **Pattern:**
+
 ```typescript
 // Auto-imported, no import needed
 const {
-  session,        // Ref<Session | null>
-  user,           // Ref<User | null>
-  loggedIn,       // Computed<boolean>
-  isPending,      // Ref<boolean>
-  signIn,         // { email, social }
-  signUp,         // { email }
-  signOut,        // ({ redirectTo })
-  fetchSession,   // () => Promise<SessionData>
-  client          // Better Auth client
-} = useAuth()
+  session, // Ref<Session | null>
+  user, // Ref<User | null>
+  loggedIn, // Computed<boolean>
+  isPending, // Ref<boolean>
+  signIn, // { email, social }
+  signUp, // { email }
+  signOut, // ({ redirectTo })
+  fetchSession, // () => Promise<SessionData>
+  client, // Better Auth client
+} = useAuth();
 ```
 
 **Usage:**
+
 ```vue
 <script setup lang="ts">
-const { user, loggedIn, signOut } = useAuth()
+const { user, loggedIn, signOut } = useAuth();
 
 async function handleLogout() {
-  await signOut({ redirectTo: '/auth/login' })
+  await signOut({ redirectTo: '/auth/login' });
 }
 </script>
 
@@ -132,24 +140,27 @@ async function handleLogout() {
 ```
 
 **OAuth callback handling:**
+
 ```typescript
 onMounted(async () => {
   // Better Auth redirects to login page after OAuth
-  await fetchSession()  // Fetch updated session
+  await fetchSession(); // Fetch updated session
   if (loggedIn.value) {
-    await navigateTo('/dashboard')
+    await navigateTo('/dashboard');
   }
-})
+});
 ```
 
 ## Middleware (Route Guards)
 
 **Global auth middleware (auth.global.ts):**
+
 - Runs on every route change
 - Reads publicRoutes from nuxt.config.ts
 - Redirects to /auth/login if not authenticated
 
 **Adding public routes:**
+
 ```typescript
 // Update nuxt.config.ts (NOT middleware):
 export default defineNuxtConfig({
@@ -159,51 +170,53 @@ export default defineNuxtConfig({
         '/',
         '/auth/login',
         '/auth/register',
-        '/pricing',  // ← Add new public route here
-      ]
-    }
-  }
-})
+        '/pricing', // ← Add new public route here
+      ],
+    },
+  },
+});
 ```
 
 **Page-specific middleware:**
+
 ```vue
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['auth']  // Apply specific middleware
-})
+  middleware: ['auth'], // Apply specific middleware
+});
 </script>
 ```
 
 ## Forms (Zod Validation)
 
 **Pattern:**
+
 ```vue
 <script setup lang="ts">
-import { z } from 'zod'
+import { z } from 'zod';
 
 const state = reactive({
   email: '',
   password: '',
-})
+});
 
 const schema = z.object({
   email: z.string().email('Invalid email'),
   password: z.string().min(8, 'Min 8 chars'),
-})
+});
 
-const loading = ref(false)
-const error = ref('')
+const loading = ref(false);
+const error = ref('');
 
 async function onSubmit() {
-  loading.value = true
-  error.value = ''
+  loading.value = true;
+  error.value = '';
   try {
     // API call
   } catch (e) {
-    error.value = 'Error occurred'
+    error.value = 'Error occurred';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 </script>
@@ -221,9 +234,10 @@ async function onSubmit() {
 ## Toast Notifications
 
 **Use toast for success/error feedback:**
+
 ```vue
 <script setup lang="ts">
-const toast = useToast()
+const toast = useToast();
 
 async function onSubmit() {
   try {
@@ -233,14 +247,14 @@ async function onSubmit() {
       description: 'Action completed',
       color: 'success',
       icon: 'i-lucide-check',
-    })
+    });
   } catch (e) {
     toast.add({
       title: 'Error',
       description: 'Something went wrong',
       color: 'error',
       icon: 'i-lucide-alert-triangle',
-    })
+    });
   }
 }
 </script>
@@ -249,6 +263,7 @@ async function onSubmit() {
 ## Styling
 
 **Tailwind classes (Nuxt UI v4):**
+
 ```vue
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
@@ -260,6 +275,7 @@ async function onSubmit() {
 ```
 
 **Dark mode:**
+
 - Automatic via `UColorModeButton`
 - Use `dark:` prefix for dark mode styles
 - Example: `text-gray-500 dark:text-gray-400`
@@ -267,13 +283,14 @@ async function onSubmit() {
 ## OAuth Conditional UI
 
 **Pattern (see AuthOAuthButtons.vue):**
+
 ```vue
 <script setup lang="ts">
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 
-const hasOAuth = computed(() =>
-  config.public.oauthGithubEnabled || config.public.oauthGoogleEnabled,
-)
+const hasOAuth = computed(
+  () => config.public.oauthGithubEnabled || config.public.oauthGoogleEnabled,
+);
 </script>
 
 <template>

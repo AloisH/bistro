@@ -27,7 +27,7 @@
 ```typescript
 // ✅ DO: User-scoped queries
 const projects = await db.project.findMany({
-    where: { userId: session.user.id },
+  where: { userId: session.user.id },
 });
 
 // ❌ DON'T: Global queries - WILL LEAK DATA
@@ -49,11 +49,11 @@ const id = z.string().parse(route.params.id);
 const data = myTypeSchema.parse(JSON.parse(json));
 
 // ✅ DO: Proper session check
-const session = await serverAuth().getSession({ headers: event.headers })
+const session = await serverAuth().getSession({ headers: event.headers });
 if (!session?.user) {
-  throw createError({ statusCode: 401 })
+  throw createError({ statusCode: 401 });
 }
-const userId = session.user.id // Safe!
+const userId = session.user.id; // Safe!
 ```
 
 ### Import Patterns
@@ -62,22 +62,23 @@ const userId = session.user.id // Safe!
 
 ```typescript
 // ❌ WRONG: ~/  alias doesn't work in server/
-import { db } from '~/server/utils/db'
-import { createProjectSchema } from '~/shared/schemas/project'
+import { db } from '~/server/utils/db';
+import { createProjectSchema } from '~/shared/schemas/project';
 
 // ✅ CORRECT: Relative for server/, #shared for shared/
 // From server/api/projects/index.post.ts:
-import { defineValidatedApiHandler } from '../../utils/api-handler'
-import { projectService } from '../../services/project-service'
-import { createProjectSchema } from '#shared/schemas/project'
+import { defineValidatedApiHandler } from '../../utils/api-handler';
+import { projectService } from '../../services/project-service';
+import { createProjectSchema } from '#shared/schemas/project';
 
 // From server/services/project-service.ts:
-import type { Project } from '../../prisma/generated/client'
-import type { CreateProjectInput } from '#shared/schemas/project'
-import { projectRepository } from '../repositories/project-repository'
+import type { Project } from '../../prisma/generated/client';
+import type { CreateProjectInput } from '#shared/schemas/project';
+import { projectRepository } from '../repositories/project-repository';
 ```
 
 **Import rules:**
+
 - Server code: Use relative paths (`../../utils/db`)
 - Shared code: Use `#shared` alias (`#shared/schemas/project`)
 - Prisma: Use relative paths (`../../prisma/generated/client`)
@@ -92,16 +93,17 @@ import { projectRepository } from '../repositories/project-repository'
 **CRITICAL:** Never create new PrismaClient instances
 
 ```typescript
-import { db } from '~/server/utils/db'
+import { db } from '~/server/utils/db';
 
 // ✅ Correct
-const users = await db.user.findMany()
+const users = await db.user.findMany();
 
 // ❌ Wrong - creates new connection
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 ```
 
 **Why PrismaPg adapter?**
+
 - Prisma 7 requires driver adapters for better performance
 - pg.Pool manages connections efficiently
 - Global singleton prevents connection pool exhaustion
@@ -113,14 +115,14 @@ const prisma = new PrismaClient()
 ```typescript
 // ✅ DO: Always filter by user
 async function findUserProjects(userId: string) {
-    return db.project.findMany({
-        where: { userId }
-    });
+  return db.project.findMany({
+    where: { userId },
+  });
 }
 
 // ❌ DON'T: Missing user filter
 async function findProjects() {
-    return db.project.findMany(); // DATA LEAK!
+  return db.project.findMany(); // DATA LEAK!
 }
 ```
 
@@ -165,10 +167,10 @@ await db.$transaction(async (tx) => {
 
 ```typescript
 const projects = await db.project.findMany({
-    where: { userId },
-    include: { aiJobs: true },
-    orderBy: { createdAt: 'desc' },
-})
+  where: { userId },
+  include: { aiJobs: true },
+  orderBy: { createdAt: 'desc' },
+});
 ```
 
 ---
@@ -180,14 +182,14 @@ const projects = await db.project.findMany({
 **For endpoints without request body (GET, DELETE):**
 
 ```typescript
-import { defineApiHandler } from '../../utils/api-handler'
-import { projectService } from '../../services/project-service'
+import { defineApiHandler } from '../../utils/api-handler';
+import { projectService } from '../../services/project-service';
 
 export default defineApiHandler(async (ctx) => {
   // ctx.userId is guaranteed to exist (session checked)
-  const projects = await projectService.listProjects(ctx.userId)
-  return { projects }
-})
+  const projects = await projectService.listProjects(ctx.userId);
+  return { projects };
+});
 ```
 
 ### defineValidatedApiHandler (With Body)
@@ -195,35 +197,33 @@ export default defineApiHandler(async (ctx) => {
 **For endpoints with request body (POST, PUT):**
 
 ```typescript
-import { defineValidatedApiHandler } from '../../utils/api-handler'
-import { createProjectSchema } from '#shared/schemas/project'
-import { projectService } from '../../services/project-service'
+import { defineValidatedApiHandler } from '../../utils/api-handler';
+import { createProjectSchema } from '#shared/schemas/project';
+import { projectService } from '../../services/project-service';
 
-export default defineValidatedApiHandler(
-  createProjectSchema,
-  async (ctx) => {
-    // ctx.body is validated and typed!
-    const project = await projectService.createProject(ctx.userId, ctx.body!)
-    return { project }
-  }
-)
+export default defineValidatedApiHandler(createProjectSchema, async (ctx) => {
+  // ctx.body is validated and typed!
+  const project = await projectService.createProject(ctx.userId, ctx.body!);
+  return { project };
+});
 ```
 
 ### Route Params
 
 ```typescript
 export default defineApiHandler(async (ctx) => {
-  const id = getRouterParam(ctx.event, 'id')
+  const id = getRouterParam(ctx.event, 'id');
   if (!id) {
-    throw createError({ statusCode: 400, message: 'ID required' })
+    throw createError({ statusCode: 400, message: 'ID required' });
   }
 
-  const project = await projectService.getProject(id, ctx.userId)
-  return { project }
-})
+  const project = await projectService.getProject(id, ctx.userId);
+  return { project };
+});
 ```
 
 **Benefits:**
+
 - ✅ Auto session check (401 if unauthorized)
 - ✅ Auto Zod validation (400 with error details)
 - ✅ Type-safe context (userId, body typed)
@@ -239,35 +239,40 @@ export default defineApiHandler(async (ctx) => {
 
 ```typescript
 // shared/schemas/common.ts
-export const idSchema = z.string().cuid()
-export const slugSchema = z.string().min(1).max(100).regex(/^[a-z0-9-]+$/)
+export const idSchema = z.string().cuid();
+export const slugSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[a-z0-9-]+$/);
 
 // shared/schemas/project.ts
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().max(1000).optional(),
   slug: slugSchema,
-})
+});
 
-export type CreateProjectInput = z.infer<typeof createProjectSchema>
+export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 ```
 
 ### Usage in API Handlers
 
 ```typescript
-import { defineValidatedApiHandler } from '../../utils/api-handler'
-import { createProjectSchema } from '#shared/schemas/project'
+import { defineValidatedApiHandler } from '../../utils/api-handler';
+import { createProjectSchema } from '#shared/schemas/project';
 
 export default defineValidatedApiHandler(
   createProjectSchema, // Auto-validates body
   async (ctx) => {
     // ctx.body is typed as CreateProjectInput!
-    return await projectService.createProject(ctx.userId, ctx.body!)
-  }
-)
+    return await projectService.createProject(ctx.userId, ctx.body!);
+  },
+);
 ```
 
 **Benefits:**
+
 - ✅ Type inference (Zod → TypeScript)
 - ✅ Shared client/server (future)
 - ✅ Validation errors auto-formatted (400 response)
@@ -284,41 +289,42 @@ export default defineValidatedApiHandler(
 - Trusted origins for CORS
 
 **Conditional OAuth pattern:**
+
 ```typescript
-const socialProviders: Record<string, { clientId: string, clientSecret: string }> = {}
+const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
 
 if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
   socialProviders.github = {
     clientId: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  }
+  };
 }
 
 export const auth = betterAuth({
-  socialProviders,  // Empty object if no env vars
-})
+  socialProviders, // Empty object if no env vars
+});
 ```
 
 ### Session Helper (server/utils/serverAuth.ts)
 
 ```typescript
-import { serverAuth } from '~/server/utils/serverAuth'
+import { serverAuth } from '~/server/utils/serverAuth';
 
 export default defineEventHandler(async (event) => {
-  const session = await serverAuth().getSession({ headers: event.headers })
-  if (!session) throw createError({ statusCode: 401 })
-  return { userId: session.user.id }
-})
+  const session = await serverAuth().getSession({ headers: event.headers });
+  if (!session) throw createError({ statusCode: 401 });
+  return { userId: session.user.id };
+});
 ```
 
 ### Protected Endpoint Pattern
 
 ```typescript
-const session = await serverAuth().getSession({ headers: event.headers })
+const session = await serverAuth().getSession({ headers: event.headers });
 if (!session?.user) {
-  throw createError({ statusCode: 401, message: 'Unauthorized' })
+  throw createError({ statusCode: 401, message: 'Unauthorized' });
 }
-const userId = session.user.id
+const userId = session.user.id;
 ```
 
 ---
@@ -379,7 +385,7 @@ Prisma Client (db singleton)
 ```typescript
 // server/repositories/base-repository.ts
 export abstract class BaseRepository {
-  protected readonly db: PrismaClient
+  protected readonly db: PrismaClient;
   // TypeScript guarantees userId: string at compile time
 }
 ```
@@ -393,7 +399,7 @@ export class ProjectRepository extends BaseRepository {
     return this.db.project.findMany({
       where: { userId }, // Always scoped!
       include: { aiJobs: true },
-    })
+    });
   }
 }
 ```
@@ -407,12 +413,12 @@ export class ProjectRepository extends BaseRepository {
 export class ProjectService {
   async createProject(userId: string, input: CreateProjectInput): Promise<Project> {
     // Check duplicate slug
-    const existing = await projectRepository.findBySlug(input.slug, userId)
+    const existing = await projectRepository.findBySlug(input.slug, userId);
     if (existing) {
-      throw createError({ statusCode: 409, message: 'Slug exists' })
+      throw createError({ statusCode: 409, message: 'Slug exists' });
     }
 
-    return projectRepository.create(userId, { ...input, status: 'draft' })
+    return projectRepository.create(userId, { ...input, status: 'draft' });
   }
 }
 ```
@@ -462,23 +468,23 @@ server/
 
 ```typescript
 // ❌ WRONG - don't import PrismaClient directly
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 // ✅ CORRECT - use singleton
-import { db } from '~/server/utils/db'
+import { db } from '~/server/utils/db';
 ```
 
 ### 2. Missing User Scope
 
 ```typescript
 // ❌ WRONG - no user filter
-const projects = await db.project.findMany()
+const projects = await db.project.findMany();
 
 // ✅ CORRECT - user-scoped
 const projects = await db.project.findMany({
-    where: { userId },
-})
+  where: { userId },
+});
 ```
 
 ### 3. Type Safety
@@ -486,12 +492,12 @@ const projects = await db.project.findMany({
 ```typescript
 // ❌ WRONG - missing return type
 async function getProject(id: string) {
-    return db.project.findUnique({ where: { id } })
+  return db.project.findUnique({ where: { id } });
 }
 
 // ✅ CORRECT - explicit return type
 async function getProject(id: string): Promise<Project | null> {
-    return db.project.findUnique({ where: { id } })
+  return db.project.findUnique({ where: { id } });
 }
 ```
 
@@ -499,13 +505,13 @@ async function getProject(id: string): Promise<Project | null> {
 
 ```typescript
 // ❌ WRONG - using non-null assertion
-const userId = session!.user.id
+const userId = session!.user.id;
 
 // ✅ CORRECT - proper null check
 if (!session?.user) {
-    throw createError({ statusCode: 401 })
+  throw createError({ statusCode: 401 });
 }
-const userId = session.user.id
+const userId = session.user.id;
 ```
 
 ---
@@ -549,6 +555,7 @@ curl -X POST http://localhost:3000/api/projects \
 ## Database Models
 
 **Current schema:**
+
 - `User` - Email, password, OAuth accounts
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
@@ -557,6 +564,7 @@ curl -X POST http://localhost:3000/api/projects \
 - `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
 
 **Relations:**
+
 - User → Projects (one-to-many)
 - Project → AIJobs (one-to-many)
 - User → Accounts (one-to-many, OAuth)
@@ -570,17 +578,17 @@ curl -X POST http://localhost:3000/api/projects \
 
 ```typescript
 // Current pattern - return data directly
-return { project }
-return { projects: [] }
-return { success: true }
+return { project };
+return { projects: [] };
+return { success: true };
 ```
 
 ### Future: Standard ApiResponse<T>
 
 ```typescript
 // Future pattern - wrap in standard format
-return successResponse(data) // { success: true, data: T }
-return errorResponse(error)  // { success: false, error: string }
+return successResponse(data); // { success: true, data: T }
+return errorResponse(error); // { success: false, error: string }
 ```
 
 ---
@@ -590,6 +598,7 @@ return errorResponse(error)  // { success: false, error: string }
 ### "Prisma client errors after schema change"
 
 **Fix:** Regenerate Prisma client:
+
 ```bash
 bun db:generate
 bun db:migrate
@@ -610,17 +619,19 @@ bun db:migrate
 ### "Type error in API handler"
 
 **Fix:** Add explicit return types to all async functions:
+
 ```typescript
 async function getProject(id: string): Promise<Project | null> {
-    // ...
+  // ...
 }
 ```
 
 ### "Connection pool exhausted"
 
 **Fix:** Using multiple PrismaClient instances. Always use `db` singleton:
+
 ```typescript
-import { db } from '~/server/utils/db'
+import { db } from '~/server/utils/db';
 ```
 
 ---
@@ -628,6 +639,7 @@ import { db } from '~/server/utils/db'
 ## API Route Naming
 
 **Convention:**
+
 - `user.get.ts` - GET /api/user
 - `user.post.ts` - POST /api/user
 - `user/[id].get.ts` - GET /api/user/:id
@@ -639,24 +651,27 @@ import { db } from '~/server/utils/db'
 ## Testing Server Code
 
 **Mock Prisma:**
+
 ```typescript
 vi.mock('@prisma/client', () => ({
   PrismaClient: vi.fn(function () {
-    return { $connect: vi.fn(), $disconnect: vi.fn() }
+    return { $connect: vi.fn(), $disconnect: vi.fn() };
   }),
-}))
+}));
 
 vi.mock('@prisma/adapter-pg', () => ({
   PrismaPg: vi.fn(function () {
-    return { provider: 'postgres' }
+    return { provider: 'postgres' };
   }),
-}))
+}));
 
 vi.mock('pg', () => ({
-  default: { Pool: vi.fn(function () {
-    return { connect: vi.fn(), end: vi.fn() }
-  }) },
-}))
+  default: {
+    Pool: vi.fn(function () {
+      return { connect: vi.fn(), end: vi.fn() };
+    }),
+  },
+}));
 ```
 
 **See:** `server/utils/db.test.ts` for example

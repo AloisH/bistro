@@ -1,5 +1,5 @@
-import { auth } from './auth'
+import { auth } from './auth';
 
 export const serverAuth = () => {
-  return auth.api
-}
+  return auth.api;
+};

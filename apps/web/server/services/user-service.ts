@@ -1,9 +1,9 @@
-import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user'
-import { userRepository } from '../repositories/user-repository'
-import { scrypt, timingSafeEqual } from 'node:crypto'
-import { promisify } from 'node:util'
+import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user';
+import { userRepository } from '../repositories/user-repository';
+import { scrypt, timingSafeEqual } from 'node:crypto';
+import { promisify } from 'node:util';
 
-const scryptAsync = promisify(scrypt)
+const scryptAsync = promisify(scrypt);
 
 /**
  * User service
@@ -14,13 +14,13 @@ export class UserService {
    * Get user profile
    */
   async getProfile(userId: string): Promise<UserProfile> {
-    const user = await userRepository.findById(userId)
+    const user = await userRepository.findById(userId);
 
     if (!user) {
       throw createError({
         statusCode: 404,
         message: 'User not found',
-      })
+      });
     }
 
     // Return only public profile fields
@@ -33,14 +33,14 @@ export class UserService {
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
       hasPassword: !!user.password,
-    }
+    };
   }
 
   /**
    * Update user profile
    */
   async updateProfile(userId: string, input: UpdateProfileInput): Promise<UserProfile> {
-    const updated = await userRepository.updateProfile(userId, input)
+    const updated = await userRepository.updateProfile(userId, input);
 
     return {
       id: updated.id,
@@ -51,7 +51,7 @@ export class UserService {
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
       hasPassword: !!updated.password,
-    }
+    };
   }
 
   /**
@@ -61,26 +61,28 @@ export class UserService {
   private async verifyPassword(password: string, hash: string): Promise<boolean> {
     try {
       // Parse Better Auth's scrypt hash format: algorithm:salt:hash
-      const parts = hash.split(':')
+      const parts = hash.split(':');
       if (parts.length !== 3 || parts[0] !== 'scrypt' || !parts[1] || !parts[2]) {
-        return false
+        return false;
       }
 
-      const salt = parts[1]
-      const storedHash = parts[2]
+      const salt = parts[1];
+      const storedHash = parts[2];
 
       // Hash the input password with the same salt
-      const derivedKey = (await scryptAsync(password, salt, 64)) as Buffer
-      const derivedHash = derivedKey.toString('hex')
+      const derivedKey = (await scryptAsync(password, salt, 64)) as Buffer;
+      const derivedHash = derivedKey.toString('hex');
 
       // Timing-safe comparison
-      const storedBuffer = Buffer.from(storedHash, 'hex')
-      const derivedBuffer = Buffer.from(derivedHash, 'hex')
+      const storedBuffer = Buffer.from(storedHash, 'hex');
+      const derivedBuffer = Buffer.from(derivedHash, 'hex');
 
-      return storedBuffer.length === derivedBuffer.length
-        && timingSafeEqual(storedBuffer, derivedBuffer)
-    } catch {
-      return false
+      return (
+        storedBuffer.length === derivedBuffer.length && timingSafeEqual(storedBuffer, derivedBuffer)
+      );
+    }
+    catch {
+      return false;
     }
   }
 
@@ -89,33 +91,33 @@ export class UserService {
    * For password-based accounts
    */
   async deleteAccountWithPassword(userId: string, password: string): Promise<void> {
-    const user = await userRepository.findById(userId)
+    const user = await userRepository.findById(userId);
 
     if (!user) {
       throw createError({
         statusCode: 404,
         message: 'User not found',
-      })
+      });
     }
 
     if (!user.password) {
       throw createError({
         statusCode: 400,
         message: 'Account does not use password authentication',
-      })
+      });
     }
 
     // Verify password
-    const passwordValid = await this.verifyPassword(password, user.password)
+    const passwordValid = await this.verifyPassword(password, user.password);
 
     if (!passwordValid) {
       throw createError({
         statusCode: 401,
         message: 'Invalid password',
-      })
+      });
     }
 
-    await userRepository.deleteUser(userId)
+    await userRepository.deleteUser(userId);
   }
 
   /**
@@ -123,20 +125,20 @@ export class UserService {
    * For OAuth accounts
    */
   async deleteAccountWithEmail(userId: string, email: string): Promise<void> {
-    const user = await userRepository.findById(userId)
+    const user = await userRepository.findById(userId);
 
     if (!user) {
       throw createError({
         statusCode: 404,
         message: 'User not found',
-      })
+      });
     }
 
     if (user.password) {
       throw createError({
         statusCode: 400,
         message: 'Account uses password authentication',
-      })
+      });
     }
 
     // Verify email matches
@@ -144,12 +146,12 @@ export class UserService {
       throw createError({
         statusCode: 401,
         message: 'Email does not match',
-      })
+      });
     }
 
-    await userRepository.deleteUser(userId)
+    await userRepository.deleteUser(userId);
   }
 }
 
 // Export singleton instance
-export const userService = new UserService()
+export const userService = new UserService();

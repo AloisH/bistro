@@ -1,16 +1,16 @@
-import { PrismaPg } from '@prisma/adapter-pg'
-import pg from 'pg'
-import { PrismaClient } from './generated/client'
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
+import { PrismaClient } from './generated/client';
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-})
+});
 
-const adapter = new PrismaPg(pool)
-const prisma = new PrismaClient({ adapter })
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('🌱 Seeding database...')
+  console.log('🌱 Seeding database...');
 
   // Create sample user
   const user = await prisma.user.upsert({
@@ -20,9 +20,9 @@ async function main() {
       email: 'demo@bistro.dev',
       name: 'Demo User',
     },
-  })
+  });
 
-  console.log(`✓ Created user: ${user.email}`)
+  console.log(`✓ Created user: ${user.email}`);
 
   // Create sample project
   const project = await prisma.project.upsert({
@@ -40,19 +40,19 @@ async function main() {
       status: 'active',
       userId: user.id,
     },
-  })
+  });
 
-  console.log(`✓ Created project: ${project.title}`)
+  console.log(`✓ Created project: ${project.title}`);
 
-  console.log('✅ Seeding complete!')
+  console.log('✅ Seeding complete!');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Seeding failed:', e)
-    process.exit(1)
+    console.error('❌ Seeding failed:', e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-    await pool.end()
-  })
+    await prisma.$disconnect();
+    await pool.end();
+  });
