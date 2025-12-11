@@ -119,14 +119,14 @@ async function onSubmit() {
     // Show verification notice
     toast.add({
       title: 'Account created!',
-      description: 'Check your email to verify your account before logging in.',
+      description: 'Check your email for verification link.',
       color: 'success',
       icon: 'i-lucide-mail-check',
     });
 
     // Note: User cannot login until verified (requireEmailVerification: true)
-    // Redirect to login page
-    await navigateTo('/auth/login');
+    // Redirect to verify-email page
+    await navigateTo(`/auth/verify-email?email=${encodeURIComponent(state.email)}`);
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {
