@@ -27,6 +27,23 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }: { user: { email: string; name: string }; url: string }) => {
+      if (!emailService.isConfigured()) {
+        console.warn('[Auth] Password reset disabled - RESEND_API_KEY not set');
+        return;
+      }
+
+      try {
+        await emailService.sendPasswordReset({
+          to: user.email,
+          name: user.name,
+          resetLink: url,
+        });
+        console.log(`[Auth] Password reset email sent to ${user.email}`);
+      } catch (error) {
+        console.error('[Auth] Failed to send password reset email:', error);
+      }
+    },
   },
   emailVerification: {
     sendOnSignUp: true,

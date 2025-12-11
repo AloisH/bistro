@@ -262,4 +262,96 @@ describe('EmailService', () => {
       );
     });
   });
+
+  describe('sendPasswordReset', () => {
+    it('sends password reset email with correct params', async () => {
+      const result = await emailService.sendPasswordReset({
+        to: 'test@example.com',
+        name: 'Test User',
+        resetLink: 'https://example.com/reset?token=abc',
+      });
+
+      expect(result).toEqual({ id: 'test-email-id' });
+      expect(mockRender).toHaveBeenCalled();
+    });
+
+    it('uses correct subject', async () => {
+      await emailService.sendPasswordReset({
+        to: 'test@example.com',
+        name: 'Test User',
+        resetLink: 'https://example.com/reset',
+      });
+
+      expect(mockSend).toHaveBeenCalledWith(
+        expect.objectContaining({
+          subject: 'Reset your Bistro password',
+        }),
+      );
+    });
+
+    it('includes email in props', async () => {
+      await emailService.sendPasswordReset({
+        to: 'user@example.com',
+        name: 'User',
+        resetLink: 'https://example.com/reset',
+      });
+
+      expect(mockRender).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          email: 'user@example.com',
+          name: 'User',
+          resetLink: 'https://example.com/reset',
+        }),
+        expect.anything(),
+      );
+    });
+  });
+
+  describe('sendAccountDeletion', () => {
+    it('sends deletion email with correct subject', async () => {
+      const result = await emailService.sendAccountDeletion({
+        to: 'test@example.com',
+        name: 'Test User',
+      });
+
+      expect(result).toEqual({ id: 'test-email-id' });
+      expect(mockRender).toHaveBeenCalled();
+      expect(mockSend).toHaveBeenCalledWith(
+        expect.objectContaining({
+          subject: 'Your Bistro account has been deleted',
+        }),
+      );
+    });
+
+    it('passes name in props', async () => {
+      await emailService.sendAccountDeletion({
+        to: 'user@example.com',
+        name: 'John Doe',
+      });
+
+      expect(mockRender).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          name: 'John Doe',
+        }),
+        expect.anything(),
+      );
+    });
+
+    it('works without name (optional)', async () => {
+      const result = await emailService.sendAccountDeletion({
+        to: 'user@example.com',
+      });
+
+      expect(mockRender).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          name: undefined,
+        }),
+        expect.anything(),
+      );
+      expect(result).toEqual({ id: 'test-email-id' });
+    });
+  });
 });

@@ -4,6 +4,8 @@ import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/schemas/email';
 import { sendEmailSchema } from '#shared/schemas/email';
 import VerifyEmail from '../mail/template/VerifyEmail.vue';
+import AccountDeletion from '../mail/template/AccountDeletion.vue';
+import ResetPasswordEmail from '../mail/template/ResetPasswordEmail.vue';
 
 interface SendTemplateEmailOptions<TProps> {
   to: string | string[];
@@ -120,6 +122,43 @@ export class EmailService {
         name: options.name,
         verificationLink: options.verificationLink,
         email: options.to,
+      },
+    });
+  }
+
+  /**
+   * Send password reset link
+   */
+  async sendPasswordReset(options: {
+    to: string;
+    name: string;
+    resetLink: string;
+  }): Promise<{ id: string } | null> {
+    return this.sendTemplateEmail({
+      to: options.to,
+      subject: 'Reset your Bistro password',
+      template: ResetPasswordEmail,
+      props: {
+        name: options.name,
+        resetLink: options.resetLink,
+        email: options.to,
+      },
+    });
+  }
+
+  /**
+   * Send account deletion confirmation email
+   */
+  async sendAccountDeletion(options: {
+    to: string;
+    name?: string;
+  }): Promise<{ id: string } | null> {
+    return this.sendTemplateEmail({
+      to: options.to,
+      subject: 'Your Bistro account has been deleted',
+      template: AccountDeletion,
+      props: {
+        name: options.name,
       },
     });
   }
