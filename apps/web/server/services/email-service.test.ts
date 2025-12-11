@@ -231,4 +231,35 @@ describe('EmailService', () => {
       );
     });
   });
+
+  describe('sendEmailVerification', () => {
+    it('sends verification email with correct params', async () => {
+      const result = await emailService.sendEmailVerification({
+        to: 'test@example.com',
+        name: 'Test User',
+        verificationLink: 'https://example.com/verify?token=abc',
+      });
+
+      expect(result).toEqual({ id: 'test-email-id' });
+      expect(mockRender).toHaveBeenCalled();
+    });
+
+    it('includes email in props', async () => {
+      await emailService.sendEmailVerification({
+        to: 'user@example.com',
+        name: 'User',
+        verificationLink: 'https://example.com/verify',
+      });
+
+      expect(mockRender).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          email: 'user@example.com',
+          name: 'User',
+          verificationLink: 'https://example.com/verify',
+        }),
+        expect.anything(),
+      );
+    });
+  });
 });

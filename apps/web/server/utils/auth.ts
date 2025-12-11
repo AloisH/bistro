@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { db } from './db';
+import { emailService } from '../services/email-service';
 
 // Build socialProviders config conditionally based on env vars
 const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
@@ -25,6 +26,30 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    expiresIn: 60 * 60 * 24, // 24 hours
+    sendVerificationEmail: async ({ user, url }) => {
+      if (!emailService.isConfigured()) {
+        console.warn('[Auth] Email verification disabled - RESEND_API_KEY not set');
+        return;
+      }
+
+      try {
+        await emailService.sendEmailVerification({
+          to: user.email,
+          name: user.name,
+          verificationLink: url,
+        });
+        console.log(`[Auth] Verification email sent to ${user.email}`);
+      } catch (error) {
+        console.error('[Auth] Failed to send verification email:', error);
+        // Don't throw - allow registration even if email fails
+      }
+    },
   },
   session: {
     cookieCache: {

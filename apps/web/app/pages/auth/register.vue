@@ -85,7 +85,8 @@
 <script setup lang="ts">
 import { signUpSchema } from '#shared/schemas/auth';
 
-const { signUp, fetchSession } = useAuth();
+const { signUp } = useAuth();
+const toast = useToast();
 
 // Redirect if already authenticated (e.g., after OAuth callback)
 useAuthRedirect();
@@ -115,8 +116,17 @@ async function onSubmit() {
       return;
     }
 
-    await fetchSession();
-    await navigateTo('/dashboard');
+    // Show verification notice
+    toast.add({
+      title: 'Account created!',
+      description: 'Check your email to verify your account before logging in.',
+      color: 'success',
+      icon: 'i-lucide-mail-check',
+    });
+
+    // Note: User cannot login until verified (requireEmailVerification: true)
+    // Redirect to login page
+    await navigateTo('/auth/login');
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {

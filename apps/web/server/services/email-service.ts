@@ -3,6 +3,7 @@ import { render } from '@vue-email/render';
 import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/schemas/email';
 import { sendEmailSchema } from '#shared/schemas/email';
+import VerifyEmail from '../mail/template/VerifyEmail.vue';
 
 interface SendTemplateEmailOptions<TProps> {
   to: string | string[];
@@ -100,6 +101,26 @@ export class EmailService {
       text,
       from: options.from,
       replyTo: options.replyTo,
+    });
+  }
+
+  /**
+   * Send email verification link
+   */
+  async sendEmailVerification(options: {
+    to: string;
+    name: string;
+    verificationLink: string;
+  }): Promise<{ id: string } | null> {
+    return this.sendTemplateEmail({
+      to: options.to,
+      subject: 'Verify your email address',
+      template: VerifyEmail,
+      props: {
+        name: options.name,
+        verificationLink: options.verificationLink,
+        email: options.to,
+      },
     });
   }
 }
