@@ -1,5 +1,6 @@
 import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user';
 import { userRepository } from '../repositories/user-repository';
+import { emailService } from './email-service';
 import { scrypt, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 
@@ -116,6 +117,17 @@ export class UserService {
       });
     }
 
+    // Send deletion confirmation email (graceful degradation if fails)
+    try {
+      await emailService.sendAccountDeletion({
+        to: user.email,
+        name: user.name || undefined,
+      });
+    } catch (error) {
+      console.warn('[UserService] Account deletion email failed:', error);
+      // Continue with deletion - account must be deleted regardless
+    }
+
     await userRepository.deleteUser(userId);
   }
 
@@ -146,6 +158,17 @@ export class UserService {
         statusCode: 401,
         message: 'Email does not match',
       });
+    }
+
+    // Send deletion confirmation email (graceful degradation if fails)
+    try {
+      await emailService.sendAccountDeletion({
+        to: user.email,
+        name: user.name || undefined,
+      });
+    } catch (error) {
+      console.warn('[UserService] Account deletion email failed:', error);
+      // Continue with deletion - account must be deleted regardless
     }
 
     await userRepository.deleteUser(userId);
