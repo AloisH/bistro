@@ -1,6 +1,6 @@
 import type { EventHandlerRequest, H3Event } from 'h3';
 import type { ZodSchema } from 'zod';
-import { serverAuth } from './serverAuth';
+import { serverAuth } from '../features/auth/auth-session';
 
 /**
  * API Handler Context - passed to all handlers

@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { EmailService } from './email-service';
-import { resend } from '../mail/resend';
+import { resend } from './email-client';
 import { render } from '@vue-email/render';
 
 // Mock resend
-vi.mock('../mail/resend', () => ({
+vi.mock('./email-client', () => ({
   resend: {
     emails: {
       send: vi.fn(),

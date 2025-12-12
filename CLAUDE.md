@@ -402,8 +402,9 @@ apps/web/
 │   └── assets/              # Static files
 ├── server/
 │   ├── CLAUDE.md            # Server context (API, auth, DB)
+│   ├── features/            # Domain features (auth, user, project, email)
 │   ├── api/                 # API routes
-│   └── utils/               # auth.ts, serverAuth.ts, db.ts
+│   └── utils/               # Core utilities (db, api-handler)
 ├── lib/                     # auth-client.ts (Better Auth client)
 ├── prisma/
 │   ├── schema.prisma        # Database schema

@@ -1,12 +1,13 @@
-import type { Project, Prisma } from '../../prisma/generated/client';
-import { BaseRepository } from './base-repository';
+import type { Project, Prisma } from '../../../prisma/generated/client';
+import { db } from '../../utils/db';
 
 /**
  * Project repository
  * Handles project-related database queries
  * ALL methods are user-scoped
  */
-export class ProjectRepository extends BaseRepository {
+export class ProjectRepository {
+  protected readonly db = db;
   /**
    * Find all projects for a user
    */
