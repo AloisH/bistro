@@ -30,6 +30,8 @@ export default defineNuxtConfig({
         '/auth/forgot-password',
         '/auth/forgot-password-sent',
         '/auth/reset-password',
+        '/auth/magic-link',
+        '/auth/magic-link-sent',
         '/api/auth/verify-email',
       ],
     },

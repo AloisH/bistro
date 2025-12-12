@@ -65,6 +65,28 @@
 
       <AuthOAuthButtons />
 
+      <!-- Magic Link Option -->
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-200 dark:border-gray-800" />
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white dark:bg-gray-950 text-gray-500">Or</span>
+          </div>
+        </div>
+
+        <UButton
+          to="/auth/magic-link"
+          variant="outline"
+          block
+          class="mt-4"
+          icon="i-lucide-mail"
+        >
+          Login with Magic Link
+        </UButton>
+      </div>
+
       <template #footer>
         <p class="text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?

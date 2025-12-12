@@ -6,6 +6,7 @@ import { sendEmailSchema } from '#shared/schemas/email';
 import VerifyEmail from './templates/VerifyEmail.vue';
 import AccountDeletion from './templates/AccountDeletion.vue';
 import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
+import MagicLinkEmail from './templates/MagicLinkEmail.vue';
 
 interface SendTemplateEmailOptions<TProps> {
   to: string | string[];
@@ -141,6 +142,24 @@ export class EmailService {
       props: {
         name: options.name,
         resetLink: options.resetLink,
+        email: options.to,
+      },
+    });
+  }
+
+  /**
+   * Send magic link authentication email
+   */
+  async sendMagicLink(options: {
+    to: string;
+    magicLink: string;
+  }): Promise<{ id: string } | null> {
+    return this.sendTemplateEmail({
+      to: options.to,
+      subject: 'Your login link for Bistro',
+      template: MagicLinkEmail,
+      props: {
+        magicLink: options.magicLink,
         email: options.to,
       },
     });

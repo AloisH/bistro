@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { magicLink } from 'better-auth/plugins';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
 
@@ -77,4 +78,26 @@ export const auth = betterAuth({
   },
   trustedOrigins: [process.env.AUTH_TRUST_HOST || 'http://localhost:3000'],
   socialProviders,
+  plugins: [
+    magicLink({
+      sendMagicLink: async ({ email, url }) => {
+        if (!emailService.isConfigured()) {
+          console.warn('[Auth] Magic link disabled - RESEND_API_KEY not set');
+          return;
+        }
+
+        try {
+          await emailService.sendMagicLink({
+            to: email,
+            magicLink: url,
+          });
+          console.log(`[Auth] Magic link sent to ${email}`);
+        } catch (error) {
+          console.error('[Auth] Failed to send magic link:', error);
+        }
+      },
+      expiresIn: 60 * 15, // 15 min
+      disableSignUp: false, // Allow new user registration
+    }),
+  ],
 });
