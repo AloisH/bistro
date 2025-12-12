@@ -1,6 +1,6 @@
-import type { Project } from '../../prisma/generated/client';
+import type { Project } from '../../../prisma/generated/client';
 import type { CreateProjectInput, UpdateProjectInput } from '#shared/schemas/project';
-import { projectRepository } from '../repositories/project-repository';
+import { projectRepository } from './project-repository';
 
 /**
  * Project service

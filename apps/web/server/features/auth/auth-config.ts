@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { db } from './db';
-import { emailService } from '../services/email-service';
+import { db } from '../../utils/db';
+import { emailService } from '../email/email-service';
 
 // Build socialProviders config conditionally based on env vars
 const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};

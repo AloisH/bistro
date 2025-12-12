@@ -14,7 +14,7 @@
 **DB:** Prisma 7 + PostgreSQL (dev + prod)
 **Auth:** Better Auth (email/password + OAuth: GitHub, Google)
 **Validation:** Zod schemas in shared/schemas/
-**Architecture:** API handlers → Services → Repositories → Prisma
+**Architecture:** API routes → Features (service + repository) → Prisma
 
 ---
 
@@ -68,13 +68,13 @@ import { createProjectSchema } from '~/shared/schemas/project';
 // ✅ CORRECT: Relative for server/, #shared for shared/
 // From server/api/projects/index.post.ts:
 import { defineValidatedApiHandler } from '../../utils/api-handler';
-import { projectService } from '../../services/project-service';
+import { projectService } from '../../features/project/project-service';
 import { createProjectSchema } from '#shared/schemas/project';
 
-// From server/services/project-service.ts:
-import type { Project } from '../../prisma/generated/client';
+// From server/features/project/project-service.ts:
+import type { Project } from '../../../prisma/generated/client';
 import type { CreateProjectInput } from '#shared/schemas/project';
-import { projectRepository } from '../repositories/project-repository';
+import { projectRepository } from './project-repository';
 ```
 
 **Import rules:**
@@ -364,37 +364,45 @@ POST   /api/jobs/:id/cancel      # Cancel running job
 
 ---
 
-## Architecture Layers
+## Feature-Based Architecture
 
-**Current implementation:**
+**Code organized by domain feature:**
 
 ```
-API Handler (defineApiHandler)
+API routes (api/)
     ↓
-Service (business logic)
+Features (service + repository)
     ↓
-Repository (user-scoped queries)
-    ↓
-Prisma Client (db singleton)
+Core (utils/db)
 ```
 
-### Repository Layer
+**Benefits:**
 
-**Base class provides db singleton:**
+- High cohesion: Related code stays together
+- Clear boundaries: Feature dependencies explicit
+- Easy navigation: All user code in features/user/
+- Scalable: Add features without restructuring
+
+**Features:**
+
+- `features/auth/` - Authentication (Better Auth config, session)
+- `features/user/` - User operations (profile, account deletion)
+- `features/project/` - Project CRUD
+- `features/email/` - Email sending (Resend, templates)
+
+**Cross-feature deps:** Document in feature.md, avoid cycles
+
+### Repository Pattern
+
+**Direct db import (no base class):**
 
 ```typescript
-// server/repositories/base-repository.ts
-export abstract class BaseRepository {
-  protected readonly db: PrismaClient;
-  // TypeScript guarantees userId: string at compile time
-}
-```
+// server/features/project/project-repository.ts
+import { db } from '../../utils/db';
 
-**Example repository:**
+export class ProjectRepository {
+  protected readonly db = db;
 
-```typescript
-// server/repositories/project-repository.ts
-export class ProjectRepository extends BaseRepository {
   async findByUserId(userId: string): Promise<Project[]> {
     return this.db.project.findMany({
       where: { userId }, // Always scoped!
@@ -409,7 +417,7 @@ export class ProjectRepository extends BaseRepository {
 **Business logic + error handling:**
 
 ```typescript
-// server/services/project-service.ts
+// server/features/project/project-service.ts
 export class ProjectService {
   async createProject(userId: string, input: CreateProjectInput): Promise<Project> {
     // Check duplicate slug
@@ -429,7 +437,27 @@ export class ProjectService {
 
 ```
 server/
-├── api/                         # HTTP endpoints (auto-registered)
+├── features/                    # Domain features
+│   ├── auth/
+│   │   ├── auth-config.ts      # Better Auth setup
+│   │   ├── auth-session.ts     # Session helper
+│   │   └── auth.md
+│   ├── user/
+│   │   ├── user-service.ts
+│   │   ├── user-service.test.ts
+│   │   ├── user-repository.ts
+│   │   └── user.md
+│   ├── project/
+│   │   ├── project-service.ts
+│   │   ├── project-repository.ts
+│   │   └── project.md
+│   └── email/
+│       ├── email-service.ts
+│       ├── email-service.test.ts
+│       ├── email-client.ts     # Resend singleton
+│       ├── templates/          # Vue Email
+│       └── email.md
+├── api/                         # HTTP endpoints (Nitro auto-registration)
 │   ├── auth/[...].ts           # Better Auth catch-all
 │   ├── user/
 │   │   ├── profile.get.ts      # GET /api/user/profile
@@ -441,22 +469,13 @@ server/
 │           ├── index.get.ts    # GET /api/projects/:id
 │           ├── index.put.ts    # PUT /api/projects/:id
 │           └── index.delete.ts # DELETE /api/projects/:id
-├── repositories/
-│   ├── base-repository.ts      # Abstract base (db singleton)
-│   ├── user-repository.ts      # User queries
-│   └── project-repository.ts   # Project queries (user-scoped)
-├── services/
-│   ├── user-service.ts         # User business logic
-│   └── project-service.ts      # Project business logic (slug checks)
 ├── shared/
 │   └── schemas/
 │       ├── common.ts           # idSchema, slugSchema, paginationSchema
 │       ├── user.ts             # updateProfileSchema
 │       └── project.ts          # createProjectSchema, updateProjectSchema
-└── utils/
+└── utils/                       # Core utilities
     ├── api-handler.ts          # defineApiHandler, defineValidatedApiHandler
-    ├── auth.ts                 # Better Auth config
-    ├── serverAuth.ts           # Session helper
     └── db.ts                   # Prisma singleton
 ```
 
@@ -682,9 +701,10 @@ vi.mock('pg', () => ({
 
 **Schema changes:** `prisma/schema.prisma` → run migrate
 **API routes:** `server/api/**/*.ts` → auto-registered
-**Shared types:** `shared/*.ts` → Zod schemas (to be added)
-**Services:** `server/services/*.ts` → business logic (to be added)
-**Repositories:** `server/repositories/*.ts` → DB queries (to be added)
+**Shared types:** `shared/*.ts` → Zod schemas
+**Features:** `server/features/*/` → Domain logic (service + repository)
+**Auth:** `server/features/auth/` → Better Auth config
+**Email:** `server/features/email/` → Resend + templates
 **UI components:** See `app/CLAUDE.md` (Vue/Nuxt)
 **Pages:** See `app/CLAUDE.md` (Vue/Nuxt)
 

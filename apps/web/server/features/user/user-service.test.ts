@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { UserService } from './user-service';
-import { userRepository } from '../repositories/user-repository';
-import { emailService } from './email-service';
+import { userRepository } from './user-repository';
+import { emailService } from '../email/email-service';
 
 // Mock userRepository
-vi.mock('../repositories/user-repository', () => ({
+vi.mock('./user-repository', () => ({
   userRepository: {
     findById: vi.fn(),
     updateProfile: vi.fn(),
@@ -13,7 +13,7 @@ vi.mock('../repositories/user-repository', () => ({
 }));
 
 // Mock emailService
-vi.mock('./email-service', () => ({
+vi.mock('../email/email-service', () => ({
   emailService: {
     sendAccountDeletion: vi.fn(),
   },

@@ -1,6 +1,6 @@
 import { defineValidatedApiHandler } from '../../../utils/api-handler';
 import { updateProjectSchema } from '#shared/schemas/project';
-import { projectService } from '../../../services/project-service';
+import { projectService } from '../../../features/project/project-service';
 
 export default defineValidatedApiHandler(updateProjectSchema, async (ctx) => {
   const id = getRouterParam(ctx.event, 'id');

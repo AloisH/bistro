@@ -1,11 +1,12 @@
-import type { User } from '../../prisma/generated/client';
-import { BaseRepository } from './base-repository';
+import type { User } from '../../../prisma/generated/client';
+import { db } from '../../utils/db';
 
 /**
  * User repository
  * Handles user-related database queries
  */
-export class UserRepository extends BaseRepository {
+export class UserRepository {
+  protected readonly db = db;
   /**
    * Find user by ID
    */

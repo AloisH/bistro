@@ -1,11 +1,11 @@
-import { resend } from '../mail/resend';
+import { resend } from './email-client';
 import { render } from '@vue-email/render';
 import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/schemas/email';
 import { sendEmailSchema } from '#shared/schemas/email';
-import VerifyEmail from '../mail/template/VerifyEmail.vue';
-import AccountDeletion from '../mail/template/AccountDeletion.vue';
-import ResetPasswordEmail from '../mail/template/ResetPasswordEmail.vue';
+import VerifyEmail from './templates/VerifyEmail.vue';
+import AccountDeletion from './templates/AccountDeletion.vue';
+import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
 
 interface SendTemplateEmailOptions<TProps> {
   to: string | string[];

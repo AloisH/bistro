@@ -1,6 +1,6 @@
 import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user';
-import { userRepository } from '../repositories/user-repository';
-import { emailService } from './email-service';
+import { userRepository } from './user-repository';
+import { emailService } from '../email/email-service';
 import { scrypt, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 
