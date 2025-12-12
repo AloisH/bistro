@@ -1,214 +1,212 @@
 <template>
-  <div>
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-      <UCard class="mx-auto max-w-4xl w-full">
-        <template #header>
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
-              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account information and preferences</p>
-            </div>
-            <!-- Profile Picture Section - Simplified and Elegant -->
-            <div class="flex items-center gap-3">
-              <UAvatar
-                :src="user?.image || undefined"
-                :alt="user?.name || 'Profile picture'"
-                :text="user?.name ? getInitials(user.name) : 'U'"
-                size="xl"
-                class="shrink-0 ring-2 ring-gray-200 dark:ring-gray-700"
-              />
-            </div>
+  <div class="w-full p-4 sm:p-6 lg:p-8">
+    <UCard class="mx-auto max-w-4xl w-full">
+      <template #header>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account information and preferences</p>
           </div>
-        </template>
-
-        <div class="space-y-8">
-          <!-- Profile Information -->
-          <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
-            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
-            <UForm
-              :state="profileState"
-              :schema="updateProfileSchema"
-              class="space-y-4"
-              @submit="updateProfile"
-            >
-              <UFormField
-                name="name"
-                label="Full Name"
-                description="Your display name that appears on your profile"
-              >
-                <UInput
-                  v-model="profileState.name"
-                  placeholder="Your full name"
-                  size="lg"
-                  class="w-full"
-                />
-              </UFormField>
-
-              <UFormField
-                name="email"
-                label="Email Address"
-                :description="
-                  hasPassword
-                    ? 'Your account email address'
-                    : 'Managed by your OAuth provider (GitHub/Google)'
-                "
-              >
-                <UInput
-                  :model-value="user?.email"
-                  disabled
-                  size="lg"
-                  class="w-full"
-                />
-              </UFormField>
-
-              <div class="pt-4">
-                <UButton
-                  type="submit"
-                  :loading="profileLoading"
-                  size="lg"
-                  class="w-full sm:w-auto"
-                >
-                  <template #leading>
-                    <UIcon
-                      v-if="!profileLoading"
-                      name="i-lucide-save"
-                      class="mr-2"
-                    />
-                  </template>
-                  Save Changes
-                </UButton>
-              </div>
-            </UForm>
-          </div>
-
-          <!-- Change Password (only for password-based accounts) -->
-          <div
-            v-if="hasPassword"
-            class="border-b border-gray-200 dark:border-gray-700 pb-6"
-          >
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-              <div>
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Change Password</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Update your password to keep your account secure
-                </p>
-              </div>
-              <UBadge
-                color="gray"
-                variant="subtle"
-                class="mt-2 sm:mt-0"
-              >
-                Security
-              </UBadge>
-            </div>
-            <UForm
-              :state="passwordState"
-              :schema="changePasswordSchema"
-              class="space-y-4"
-              @submit="changePassword"
-            >
-              <UFormField
-                name="currentPassword"
-                label="Current Password"
-                description="Enter your current password for verification"
-              >
-                <UInput
-                  v-model="passwordState.currentPassword"
-                  type="password"
-                  placeholder="••••••••"
-                  size="lg"
-                />
-              </UFormField>
-
-              <UFormField
-                name="newPassword"
-                label="New Password"
-                description="Choose a strong password with at least 8 characters"
-              >
-                <UInput
-                  v-model="passwordState.newPassword"
-                  type="password"
-                  placeholder="••••••••"
-                  size="lg"
-                />
-              </UFormField>
-
-              <UFormField
-                name="revokeOtherSessions"
-                class="pt-2"
-              >
-                <template #label>
-                  <div class="flex items-center gap-3">
-                    <UCheckbox
-                      id="revoke-sessions"
-                      v-model="passwordState.revokeOtherSessions"
-                    />
-                    <label
-                      for="revoke-sessions"
-                      class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >
-                      Sign out from all other devices
-                    </label>
-                  </div>
-                </template>
-                <template #description>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Recommended for security when changing passwords
-                  </p>
-                </template>
-              </UFormField>
-
-              <div class="pt-4">
-                <UButton
-                  type="submit"
-                  :loading="passwordLoading"
-                  size="lg"
-                  color="primary"
-                  class="w-full sm:w-auto"
-                >
-                  <template #leading>
-                    <UIcon
-                      v-if="!passwordLoading"
-                      name="i-lucide-lock"
-                      class="mr-2"
-                    />
-                  </template>
-                  Update Password
-                </UButton>
-              </div>
-            </UForm>
-          </div>
-
-          <!-- Danger Zone -->
-          <div class="pb-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-              <div>
-                <h2 class="text-lg sm:text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Once you delete your account, there is no going back. All your data including projects
-                  and AI jobs will be permanently deleted.
-                </p>
-              </div>
-            </div>
-            <UButton
-              color="error"
-              variant="solid"
-              size="lg"
-              class="w-full sm:w-auto"
-              @click="showDeleteModal = true"
-            >
-              <template #leading>
-                <UIcon
-                  name="i-lucide-trash-2"
-                  class="mr-2"
-                />
-              </template>
-              Delete Account
-            </UButton>
+          <!-- Profile Picture Section - Simplified and Elegant -->
+          <div class="flex items-center gap-3">
+            <UAvatar
+              :src="user?.image || undefined"
+              :alt="user?.name || 'Profile picture'"
+              :text="user?.name ? getInitials(user.name) : 'U'"
+              size="xl"
+              class="shrink-0 ring-2 ring-gray-200 dark:ring-gray-700"
+            />
           </div>
         </div>
-      </UCard>
-    </div>
+      </template>
+
+      <div class="space-y-8">
+        <!-- Profile Information -->
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
+          <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
+          <UForm
+            :state="profileState"
+            :schema="updateProfileSchema"
+            class="space-y-4"
+            @submit="updateProfile"
+          >
+            <UFormField
+              name="name"
+              label="Full Name"
+              description="Your display name that appears on your profile"
+            >
+              <UInput
+                v-model="profileState.name"
+                placeholder="Your full name"
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+
+            <UFormField
+              name="email"
+              label="Email Address"
+              :description="
+                hasPassword
+                  ? 'Your account email address'
+                  : 'Managed by your OAuth provider (GitHub/Google)'
+              "
+            >
+              <UInput
+                :model-value="user?.email"
+                disabled
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+
+            <div class="pt-4">
+              <UButton
+                type="submit"
+                :loading="profileLoading"
+                size="lg"
+                class="w-full sm:w-auto"
+              >
+                <template #leading>
+                  <UIcon
+                    v-if="!profileLoading"
+                    name="i-lucide-save"
+                    class="mr-2"
+                  />
+                </template>
+                Save Changes
+              </UButton>
+            </div>
+          </UForm>
+        </div>
+
+        <!-- Change Password (only for password-based accounts) -->
+        <div
+          v-if="hasPassword"
+          class="border-b border-gray-200 dark:border-gray-700 pb-6"
+        >
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+            <div>
+              <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Change Password</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Update your password to keep your account secure
+              </p>
+            </div>
+            <UBadge
+              color="gray"
+              variant="subtle"
+              class="mt-2 sm:mt-0"
+            >
+              Security
+            </UBadge>
+          </div>
+          <UForm
+            :state="passwordState"
+            :schema="changePasswordSchema"
+            class="space-y-4"
+            @submit="changePassword"
+          >
+            <UFormField
+              name="currentPassword"
+              label="Current Password"
+              description="Enter your current password for verification"
+            >
+              <UInput
+                v-model="passwordState.currentPassword"
+                type="password"
+                placeholder="••••••••"
+                size="lg"
+              />
+            </UFormField>
+
+            <UFormField
+              name="newPassword"
+              label="New Password"
+              description="Choose a strong password with at least 8 characters"
+            >
+              <UInput
+                v-model="passwordState.newPassword"
+                type="password"
+                placeholder="••••••••"
+                size="lg"
+              />
+            </UFormField>
+
+            <UFormField
+              name="revokeOtherSessions"
+              class="pt-2"
+            >
+              <template #label>
+                <div class="flex items-center gap-3">
+                  <UCheckbox
+                    id="revoke-sessions"
+                    v-model="passwordState.revokeOtherSessions"
+                  />
+                  <label
+                    for="revoke-sessions"
+                    class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Sign out from all other devices
+                  </label>
+                </div>
+              </template>
+              <template #description>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Recommended for security when changing passwords
+                </p>
+              </template>
+            </UFormField>
+
+            <div class="pt-4">
+              <UButton
+                type="submit"
+                :loading="passwordLoading"
+                size="lg"
+                color="primary"
+                class="w-full sm:w-auto"
+              >
+                <template #leading>
+                  <UIcon
+                    v-if="!passwordLoading"
+                    name="i-lucide-lock"
+                    class="mr-2"
+                  />
+                </template>
+                Update Password
+              </UButton>
+            </div>
+          </UForm>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="pb-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+            <div>
+              <h2 class="text-lg sm:text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Once you delete your account, there is no going back. All your data including projects
+                and AI jobs will be permanently deleted.
+              </p>
+            </div>
+          </div>
+          <UButton
+            color="error"
+            variant="solid"
+            size="lg"
+            class="w-full sm:w-auto"
+            @click="showDeleteModal = true"
+          >
+            <template #leading>
+              <UIcon
+                name="i-lucide-trash-2"
+                class="mr-2"
+              />
+            </template>
+            Delete Account
+          </UButton>
+        </div>
+      </div>
+    </UCard>
 
     <!-- Delete Confirmation Modal -->
     <UModal
@@ -342,6 +340,10 @@ import {
   deleteAccountPasswordSchema,
   deleteAccountEmailSchema,
 } from '#shared/schemas/user';
+
+definePageMeta({
+  layout: 'dashboard',
+});
 
 const { user, client, signOut, fetchSession } = useAuth();
 const router = useRouter();

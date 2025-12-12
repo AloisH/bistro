@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto p-8">
+  <div class="w-full p-8">
     <UCard>
       <template #header>
         <h1 class="text-3xl font-bold">Dashboard</h1>
@@ -38,6 +38,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'dashboard',
+});
+
 const { session } = useAuth();
 
 const sessionExpiry = computed(() => {
