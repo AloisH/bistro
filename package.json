@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@types/bun": "1.3.4",
+    "@types/ua-parser-js": "^0.7.39",
     "eslint": "^9.15.0",
     "lint-staged": "^16.0.0",
     "prettier": "^3.7.4",
@@ -54,5 +55,8 @@
   "lint-staged": {
     "apps/web/**/*.{js,ts,vue}": "bun run lint:fix",
     "*.{json,md,css}": "prettier --write"
+  },
+  "dependencies": {
+    "ua-parser-js": "^2.0.7"
   }
 }

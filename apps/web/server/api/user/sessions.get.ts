@@ -1,0 +1,18 @@
+import { defineApiHandler } from '../../utils/api-handler';
+import { sessionService } from '../../features/auth/session-service';
+import { serverAuth } from '../../features/auth/auth-session';
+
+export default defineApiHandler(async (ctx) => {
+  const session = await serverAuth().getSession({ headers: ctx.event.headers });
+  const currentToken = session?.session?.token;
+
+  if (!currentToken) {
+    throw createError({
+      statusCode: 401,
+      message: 'Session token not found',
+    });
+  }
+
+  const sessions = await sessionService.listSessions(ctx.userId, currentToken);
+  return { sessions };
+});
