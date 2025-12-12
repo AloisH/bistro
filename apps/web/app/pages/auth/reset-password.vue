@@ -2,48 +2,41 @@
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
       <template #header>
-        <h2 class="text-2xl font-bold">Login</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Sign in to your account</p>
+        <h2 class="text-2xl font-bold">Create new password</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Enter your new password below
+        </p>
       </template>
 
       <UForm
         :state="state"
-        :schema="signInSchema"
+        :schema="resetPasswordSchema"
         @submit="onSubmit"
       >
         <UFormField
-          name="email"
-          label="Email"
-        >
-          <UInput
-            v-model="state.email"
-            type="email"
-            placeholder="you@example.com"
-            autocomplete="email"
-          />
-        </UFormField>
-
-        <UFormField
           name="password"
-          label="Password"
-          class="mt-4"
+          label="New password"
         >
           <UInput
             v-model="state.password"
             type="password"
             placeholder="••••••••"
-            autocomplete="current-password"
+            autocomplete="new-password"
           />
         </UFormField>
 
-        <div class="mt-2 flex items-center justify-end">
-          <NuxtLink
-            to="/auth/forgot-password"
-            class="text-sm text-primary hover:underline"
-          >
-            Forgot password?
-          </NuxtLink>
-        </div>
+        <UFormField
+          name="confirmPassword"
+          label="Confirm password"
+          class="mt-4"
+        >
+          <UInput
+            v-model="state.confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="new-password"
+          />
+        </UFormField>
 
         <UAlert
           v-if="error"
@@ -59,19 +52,19 @@
           :loading="loading"
           class="mt-6"
         >
-          Sign in
+          Reset password
         </UButton>
       </UForm>
 
-      <AuthOAuthButtons />
-
       <template #footer>
         <p class="text-center text-sm text-gray-600 dark:text-gray-400">
-          Don't have an account?
+          Remember your password?
           <NuxtLink
-            to="/auth/register"
+            to="/auth/login"
             class="text-primary hover:underline"
-          > Sign up </NuxtLink>
+          >
+            Sign in
+          </NuxtLink>
         </p>
       </template>
     </UCard>
@@ -79,16 +72,33 @@
 </template>
 
 <script setup lang="ts">
-import { signInSchema } from '#shared/schemas/auth';
+import { resetPasswordSchema } from '#shared/schemas/auth';
+import { authClient } from '../../../lib/auth-client';
 
-const { signIn, fetchSession } = useAuth();
+const route = useRoute();
+const toast = useToast();
 
-// Redirect if already authenticated (e.g., after OAuth callback)
+// Redirect if already authenticated
 useAuthRedirect();
 
+const token = ref(route.query.token as string);
+
+// Redirect if no token
+onMounted(() => {
+  if (!token.value) {
+    toast.add({
+      title: 'Invalid link',
+      description: 'Password reset link is missing or invalid',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    navigateTo('/auth/forgot-password');
+  }
+});
+
 const state = reactive({
-  email: '',
   password: '',
+  confirmPassword: '',
 });
 
 const loading = ref(false);
@@ -99,30 +109,38 @@ async function onSubmit() {
   error.value = '';
 
   try {
-    const result = await signIn.email({
-      email: state.email,
-      password: state.password,
+    const result = await authClient.resetPassword({
+      newPassword: state.password,
+      token: token.value,
     });
 
     if (result.error) {
-      error.value = result.error.message || 'Invalid email or password';
+      error.value = result.error.message || 'Failed to reset password';
       return;
     }
 
-    await fetchSession();
-    await navigateTo('/dashboard');
+    toast.add({
+      title: 'Password updated',
+      description: 'You can now sign in with your new password',
+      color: 'success',
+      icon: 'i-lucide-check',
+    });
+
+    await navigateTo('/auth/login');
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {
       error.value = 'Network error. Check your connection.';
     } else if (err?.status === 429) {
       error.value = 'Too many attempts. Try again later.';
+    } else if (err?.status === 400) {
+      error.value = 'Invalid or expired reset link';
     } else if (err?.status && err.status >= 500) {
       error.value = 'Server error. Try again later.';
     } else {
       error.value = 'An error occurred. Please try again.';
     }
-    console.error('Login error:', e);
+    console.error('Reset password error:', e);
   } finally {
     loading.value = false;
   }

@@ -96,7 +96,7 @@ export function defineValidatedApiHandler<TBody, TReturn>(
           throw createError({
             statusCode: 400,
             message: 'Validation failed',
-            data: validationResult.error.errors,
+            data: validationResult.error.issues,
           });
         }
 
@@ -117,7 +117,7 @@ export function defineValidatedApiHandler<TBody, TReturn>(
         throw createError({
           statusCode: 400,
           message: 'Validation failed',
-          data: validationResult.error.errors,
+          data: validationResult.error.issues,
         });
       }
 

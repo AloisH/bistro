@@ -2,13 +2,15 @@
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
       <template #header>
-        <h2 class="text-2xl font-bold">Login</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Sign in to your account</p>
+        <h2 class="text-2xl font-bold">Reset password</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Enter your email to receive a reset link
+        </p>
       </template>
 
       <UForm
         :state="state"
-        :schema="signInSchema"
+        :schema="forgotPasswordSchema"
         @submit="onSubmit"
       >
         <UFormField
@@ -22,28 +24,6 @@
             autocomplete="email"
           />
         </UFormField>
-
-        <UFormField
-          name="password"
-          label="Password"
-          class="mt-4"
-        >
-          <UInput
-            v-model="state.password"
-            type="password"
-            placeholder="••••••••"
-            autocomplete="current-password"
-          />
-        </UFormField>
-
-        <div class="mt-2 flex items-center justify-end">
-          <NuxtLink
-            to="/auth/forgot-password"
-            class="text-sm text-primary hover:underline"
-          >
-            Forgot password?
-          </NuxtLink>
-        </div>
 
         <UAlert
           v-if="error"
@@ -59,19 +39,19 @@
           :loading="loading"
           class="mt-6"
         >
-          Sign in
+          Send reset link
         </UButton>
       </UForm>
 
-      <AuthOAuthButtons />
-
       <template #footer>
         <p class="text-center text-sm text-gray-600 dark:text-gray-400">
-          Don't have an account?
+          Remember your password?
           <NuxtLink
-            to="/auth/register"
+            to="/auth/login"
             class="text-primary hover:underline"
-          > Sign up </NuxtLink>
+          >
+            Sign in
+          </NuxtLink>
         </p>
       </template>
     </UCard>
@@ -79,16 +59,17 @@
 </template>
 
 <script setup lang="ts">
-import { signInSchema } from '#shared/schemas/auth';
+import { forgotPasswordSchema } from '#shared/schemas/auth';
+import { authClient } from '../../../lib/auth-client';
 
-const { signIn, fetchSession } = useAuth();
+const toast = useToast();
+const config = useRuntimeConfig();
 
-// Redirect if already authenticated (e.g., after OAuth callback)
+// Redirect if already authenticated
 useAuthRedirect();
 
 const state = reactive({
   email: '',
-  password: '',
 });
 
 const loading = ref(false);
@@ -99,18 +80,24 @@ async function onSubmit() {
   error.value = '';
 
   try {
-    const result = await signIn.email({
+    const result = await authClient.requestPasswordReset({
       email: state.email,
-      password: state.password,
+      redirectTo: `${config.public.appUrl}/auth/reset-password`,
     });
 
     if (result.error) {
-      error.value = result.error.message || 'Invalid email or password';
+      error.value = result.error.message || 'Failed to send reset email';
       return;
     }
 
-    await fetchSession();
-    await navigateTo('/dashboard');
+    toast.add({
+      title: 'Email sent',
+      description: 'Check your inbox for the reset link',
+      color: 'success',
+      icon: 'i-lucide-mail-check',
+    });
+
+    await navigateTo(`/auth/forgot-password-sent?email=${encodeURIComponent(state.email)}`);
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {
@@ -122,7 +109,7 @@ async function onSubmit() {
     } else {
       error.value = 'An error occurred. Please try again.';
     }
-    console.error('Login error:', e);
+    console.error('Forgot password error:', e);
   } finally {
     loading.value = false;
   }
