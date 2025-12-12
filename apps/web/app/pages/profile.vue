@@ -1,137 +1,208 @@
 <template>
   <div>
-    <div class="container mx-auto p-8">
-      <UCard class="mx-auto max-w-2xl">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+      <UCard class="mx-auto max-w-4xl w-full">
         <template #header>
-          <h1 class="text-3xl font-bold">Profile Settings</h1>
-          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account settings</p>
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account information and preferences</p>
+            </div>
+            <!-- Profile Picture Section - Simplified and Elegant -->
+            <div class="flex items-center gap-3">
+              <UAvatar
+                :src="user?.image || undefined"
+                :alt="user?.name || 'Profile picture'"
+                :text="user?.name ? getInitials(user.name) : 'U'"
+                size="xl"
+                class="shrink-0 ring-2 ring-gray-200 dark:ring-gray-700"
+              />
+            </div>
+          </div>
         </template>
 
-        <div class="space-y-6">
+        <div class="space-y-8">
           <!-- Profile Information -->
-          <div>
-            <h2 class="mb-4 text-xl font-semibold">Profile Information</h2>
+          <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
             <UForm
               :state="profileState"
               :schema="updateProfileSchema"
+              class="space-y-4"
               @submit="updateProfile"
             >
               <UFormField
                 name="name"
-                label="Name"
+                label="Full Name"
+                description="Your display name that appears on your profile"
               >
                 <UInput
                   v-model="profileState.name"
-                  placeholder="Your name"
+                  placeholder="Your full name"
+                  size="lg"
+                  class="w-full"
                 />
               </UFormField>
 
               <UFormField
                 name="email"
-                label="Email"
-                class="mt-4"
+                label="Email Address"
                 :description="
                   hasPassword
-                    ? 'Email address for your account'
+                    ? 'Your account email address'
                     : 'Managed by your OAuth provider (GitHub/Google)'
                 "
               >
                 <UInput
                   :model-value="user?.email"
                   disabled
+                  size="lg"
+                  class="w-full"
                 />
               </UFormField>
 
-              <UButton
-                type="submit"
-                :loading="profileLoading"
-                class="mt-6"
-              >
-                Save Changes
-              </UButton>
+              <div class="pt-4">
+                <UButton
+                  type="submit"
+                  :loading="profileLoading"
+                  size="lg"
+                  class="w-full sm:w-auto"
+                >
+                  <template #leading>
+                    <UIcon
+                      v-if="!profileLoading"
+                      name="i-lucide-save"
+                      class="mr-2"
+                    />
+                  </template>
+                  Save Changes
+                </UButton>
+              </div>
             </UForm>
           </div>
 
           <!-- Change Password (only for password-based accounts) -->
           <div
             v-if="hasPassword"
-            class="border-t pt-6 dark:border-gray-700"
+            class="border-b border-gray-200 dark:border-gray-700 pb-6"
           >
-            <h2 class="mb-4 text-xl font-semibold">Change Password</h2>
-            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
-              Update your password to keep your account secure
-            </p>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+              <div>
+                <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Change Password</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  Update your password to keep your account secure
+                </p>
+              </div>
+              <UBadge
+                color="gray"
+                variant="subtle"
+                class="mt-2 sm:mt-0"
+              >
+                Security
+              </UBadge>
+            </div>
             <UForm
               :state="passwordState"
               :schema="changePasswordSchema"
+              class="space-y-4"
               @submit="changePassword"
             >
               <UFormField
                 name="currentPassword"
                 label="Current Password"
+                description="Enter your current password for verification"
               >
                 <UInput
                   v-model="passwordState.currentPassword"
                   type="password"
                   placeholder="••••••••"
+                  size="lg"
                 />
               </UFormField>
 
               <UFormField
                 name="newPassword"
                 label="New Password"
-                class="mt-4"
+                description="Choose a strong password with at least 8 characters"
               >
                 <UInput
                   v-model="passwordState.newPassword"
                   type="password"
                   placeholder="••••••••"
+                  size="lg"
                 />
               </UFormField>
 
               <UFormField
                 name="revokeOtherSessions"
-                class="mt-4"
+                class="pt-2"
               >
                 <template #label>
-                  <div class="flex items-center gap-2">
-                    <input
+                  <div class="flex items-center gap-3">
+                    <UCheckbox
                       id="revoke-sessions"
                       v-model="passwordState.revokeOtherSessions"
-                      type="checkbox"
-                      class="rounded"
-                    >
+                    />
                     <label
                       for="revoke-sessions"
-                      class="text-sm"
+                      class="text-sm font-medium text-gray-700 dark:text-gray-300"
                     >
                       Sign out from all other devices
                     </label>
                   </div>
                 </template>
+                <template #description>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Recommended for security when changing passwords
+                  </p>
+                </template>
               </UFormField>
 
-              <UButton
-                type="submit"
-                :loading="passwordLoading"
-                class="mt-6"
-              >
-                Change Password
-              </UButton>
+              <div class="pt-4">
+                <UButton
+                  type="submit"
+                  :loading="passwordLoading"
+                  size="lg"
+                  color="primary"
+                  class="w-full sm:w-auto"
+                >
+                  <template #leading>
+                    <UIcon
+                      v-if="!passwordLoading"
+                      name="i-lucide-lock"
+                      class="mr-2"
+                    />
+                  </template>
+                  Update Password
+                </UButton>
+              </div>
             </UForm>
           </div>
 
           <!-- Danger Zone -->
-          <div class="border-t pt-6 dark:border-gray-700">
-            <h2 class="mb-4 text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
-            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
-              Once you delete your account, there is no going back. All your data including projects
-              and AI jobs will be permanently deleted.
-            </p>
+          <div class="pb-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+              <div>
+                <h2 class="text-lg sm:text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  Once you delete your account, there is no going back. All your data including projects
+                  and AI jobs will be permanently deleted.
+                </p>
+              </div>
+            </div>
             <UButton
               color="error"
+              variant="solid"
+              size="lg"
+              class="w-full sm:w-auto"
               @click="showDeleteModal = true"
             >
+              <template #leading>
+                <UIcon
+                  name="i-lucide-trash-2"
+                  class="mr-2"
+                />
+              </template>
               Delete Account
             </UButton>
           </div>
@@ -140,79 +211,125 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <UModal v-model:open="showDeleteModal">
-      <template #content>
-        <UCard>
-          <template #header>
-            <h2 class="text-xl font-bold">Confirm Account Deletion</h2>
-          </template>
+    <UModal
+      v-model:open="showDeleteModal"
+      title="Confirm Account Deletion"
+      description="This action cannot be undone. All your data will be permanently deleted."
+      :ui="{
+        footer: { base: 'flex flex-col sm:flex-row gap-3 w-full' },
+      }"
+    >
+      <template #body>
+        <div class="space-y-4">
+          <UAlert
+            color="error"
+            variant="subtle"
+            title="Irreversible Action"
+            description="Once deleted, your account and all associated data cannot be recovered."
+            class="mb-4"
+          />
 
-          <div class="space-y-4">
-            <UAlert
-              color="error"
-              variant="subtle"
-              title="This action cannot be undone"
-              description="All your data will be permanently deleted from our servers."
-            />
-
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+          <div>
+            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               The following data will be permanently deleted:
             </p>
-            <ul class="list-inside list-disc space-y-1 text-sm text-gray-600 dark:text-gray-400">
-              <li>Your user profile</li>
-              <li>All your projects</li>
-              <li>All AI jobs and their results</li>
-              <li>All active sessions</li>
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li class="flex items-start gap-2">
+                <UIcon
+                  name="i-lucide-user"
+                  class="mt-1 text-gray-400 dark:text-gray-500"
+                />
+                <span>Your user profile and account information</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <UIcon
+                  name="i-lucide-folder"
+                  class="mt-1 text-gray-400 dark:text-gray-500"
+                />
+                <span>All your projects and their configurations</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <UIcon
+                  name="i-lucide-bot"
+                  class="mt-1 text-gray-400 dark:text-gray-500"
+                />
+                <span>All AI jobs and their results</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <UIcon
+                  name="i-lucide-globe"
+                  class="mt-1 text-gray-400 dark:text-gray-500"
+                />
+                <span>All active sessions across devices</span>
+              </li>
             </ul>
-
-            <UForm
-              :state="deleteState"
-              :schema="hasPassword ? deleteAccountPasswordSchema : deleteAccountEmailSchema"
-              @submit="deleteAccount"
-            >
-              <UFormField
-                v-if="hasPassword"
-                name="password"
-                label="Enter your password to confirm"
-              >
-                <UInput
-                  v-model="deleteState.password"
-                  type="password"
-                  placeholder="••••••••"
-                />
-              </UFormField>
-
-              <UFormField
-                v-else
-                name="email"
-                label="Enter your email to confirm"
-              >
-                <UInput
-                  v-model="deleteState.email"
-                  type="email"
-                  :placeholder="user?.email"
-                />
-              </UFormField>
-
-              <div class="mt-6 flex gap-2">
-                <UButton
-                  color="error"
-                  type="submit"
-                  :loading="deleteLoading"
-                >
-                  Delete Forever
-                </UButton>
-                <UButton
-                  variant="ghost"
-                  :disabled="deleteLoading"
-                  @click="showDeleteModal = false"
-                >
-                  Cancel
-                </UButton>
-              </div>
-            </UForm>
           </div>
-        </UCard>
+
+          <UForm
+            :state="deleteState"
+            :schema="hasPassword ? deleteAccountPasswordSchema : deleteAccountEmailSchema"
+            class="space-y-4"
+          >
+            <UFormField
+              v-if="hasPassword"
+              name="password"
+              label="Enter your password to confirm"
+              description="This is required for security verification"
+            >
+              <UInput
+                v-model="deleteState.password"
+                type="password"
+                placeholder="••••••••"
+                size="lg"
+              />
+            </UFormField>
+
+            <UFormField
+              v-else
+              name="email"
+              label="Enter your email to confirm"
+              description="Enter your account email address"
+            >
+              <UInput
+                v-model="deleteState.email"
+                type="email"
+                :placeholder="user?.email"
+                size="lg"
+              />
+            </UFormField>
+          </UForm>
+        </div>
+      </template>
+
+      <template #footer="{ close }">
+        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto sm:ml-auto">
+          <UButton
+            variant="ghost"
+            :disabled="deleteLoading"
+            size="lg"
+            class="w-full sm:w-auto"
+            @click="close"
+          >
+            Cancel
+          </UButton>
+          <UButton
+            color="error"
+            type="submit"
+            :loading="deleteLoading"
+            size="lg"
+            class="w-full sm:w-auto"
+            @click="deleteAccount"
+          >
+            <template #leading>
+              <UIcon
+                v-if="!deleteLoading"
+                name="i-lucide-trash-2"
+                class="mr-2"
+              />
+            </template>
+            Delete Forever
+          </UButton>
+        </div>
       </template>
     </UModal>
   </div>
@@ -256,6 +373,14 @@ const deleteState = reactive({
 });
 const deleteLoading = ref(false);
 
+// Helper function to get initials from name
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase())
+    .join('');
+}
+
 // Update profile name when user data changes
 watch(
   () => user.value?.name,
@@ -276,18 +401,18 @@ async function updateProfile() {
     });
     await fetchSession();
     toast.add({
-      title: 'Profile updated',
-      description: 'Your profile has been updated successfully',
+      title: 'Profile Updated',
+      description: 'Your profile information has been saved successfully',
       color: 'success',
-      icon: 'i-lucide-check',
+      icon: 'i-lucide-check-circle',
     });
   } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
-      title: 'Update failed',
-      description: err.data?.message || 'Failed to update profile',
+      title: 'Update Failed',
+      description: err.data?.message || 'Failed to update profile. Please try again.',
       color: 'error',
-      icon: 'i-lucide-alert-triangle',
+      icon: 'i-lucide-alert-circle',
     });
   } finally {
     profileLoading.value = false;
@@ -306,18 +431,18 @@ async function changePassword() {
     passwordState.currentPassword = '';
     passwordState.newPassword = '';
     toast.add({
-      title: 'Password changed',
-      description: 'Your password has been updated successfully',
+      title: 'Password Updated',
+      description: 'Your password has been changed successfully',
       color: 'success',
-      icon: 'i-lucide-check',
+      icon: 'i-lucide-check-circle',
     });
   } catch (e: unknown) {
     const err = e as { message?: string };
     toast.add({
-      title: 'Change failed',
-      description: err.message || 'Failed to change password',
+      title: 'Password Change Failed',
+      description: err.message || 'Failed to change password. Please check your current password.',
       color: 'error',
-      icon: 'i-lucide-alert-triangle',
+      icon: 'i-lucide-alert-circle',
     });
   } finally {
     passwordLoading.value = false;
@@ -337,20 +462,20 @@ async function deleteAccount() {
       body,
     });
     toast.add({
-      title: 'Account deleted',
+      title: 'Account Deleted',
       description: 'Your account has been permanently deleted',
       color: 'success',
-      icon: 'i-lucide-check',
+      icon: 'i-lucide-check-circle',
     });
     await signOut();
     await router.push('/auth/login');
   } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
-      title: 'Deletion failed',
-      description: err.data?.message || 'Failed to delete account',
+      title: 'Deletion Failed',
+      description: err.data?.message || 'Failed to delete account. Please verify your credentials.',
       color: 'error',
-      icon: 'i-lucide-alert-triangle',
+      icon: 'i-lucide-alert-circle',
     });
   } finally {
     deleteLoading.value = false;
