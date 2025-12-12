@@ -13,7 +13,7 @@
       :items="[
         [
           {
-            label: session.user?.email || '',
+            label: user?.email || '',
             icon: 'i-lucide-user',
             disabled: true,
           },
@@ -40,8 +40,9 @@
       ]"
     >
       <UAvatar
-        :alt="session.user?.name || session.user?.email || 'User'"
-        :src="session.user?.image"
+        :alt="user?.name || user?.email || 'User'"
+        :src="user?.image"
+        :text="getUserInitials(user)"
         size="sm"
       />
     </UDropdownMenu>
@@ -49,7 +50,26 @@
 </template>
 
 <script setup lang="ts">
-const { session, isPending, client } = useAuth();
+const { session, user, isPending, client } = useAuth();
+
+// Helper function to get user initials
+function getUserInitials(user: { name?: string; email?: string } | null | undefined): string {
+  if (!user) return 'U';
+
+  const name = user.name || user.email || '';
+  if (!name) return 'U';
+
+  // Extract first letters of each word for names
+  if (name.includes(' ')) {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  // For single names or emails, use first letter
+  return name.charAt(0).toUpperCase();
+}
 
 async function handleLogout() {
   await client.signOut();
