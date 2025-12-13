@@ -7,6 +7,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -14,10 +20,14 @@ model User {
   password      String?
   emailVerified Boolean   @default(false)
   image         String?
+  role          Role      @default(USER)
+  banned        Boolean   @default(false)
 
-  accounts      Account[]
-  sessions      Session[]
-  projects      Project[]
+  accounts                Account[]
+  sessions                Session[]
+  projects                Project[]
+  impersonationsPerformed ImpersonationLog[] @relation("ImpersonationsByAdmin")
+  impersonationsReceived  ImpersonationLog[] @relation("ImpersonationsOfUser")
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -107,4 +117,23 @@ model AIJob {
   updatedAt DateTime @updatedAt
 
   @@map("ai_jobs")
+}
+
+model ImpersonationLog {
+  id           String    @id @default(cuid())
+  adminId      String
+  targetUserId String
+  startedAt    DateTime  @default(now())
+  endedAt      DateTime?
+  reason       String?
+  ipAddress    String?
+  userAgent    String?
+
+  admin      User @relation("ImpersonationsByAdmin", fields: [adminId], references: [id], onDelete: Cascade)
+  targetUser User @relation("ImpersonationsOfUser", fields: [targetUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([targetUserId])
+  @@index([startedAt])
+  @@map("impersonation_logs")
 }

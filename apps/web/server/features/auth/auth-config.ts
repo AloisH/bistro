@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { magicLink } from 'better-auth/plugins';
+import { admin, magicLink } from 'better-auth/plugins';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
 
@@ -79,6 +79,11 @@ export const auth = betterAuth({
   trustedOrigins: [process.env.AUTH_TRUST_HOST || 'http://localhost:3000'],
   socialProviders,
   plugins: [
+    admin({
+      defaultRole: 'USER',
+      impersonationSessionDuration: 60 * 60, // 1 hour
+      allowImpersonatingAdmins: false, // Cannot impersonate other admins
+    }),
     magicLink({
       sendMagicLink: async ({ email, url }) => {
         if (!emailService.isConfigured()) {

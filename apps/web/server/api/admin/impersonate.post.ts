@@ -1,0 +1,33 @@
+import { startImpersonationSchema } from '#shared/schemas/impersonation';
+import { requireRole } from '../../utils/require-role';
+import { impersonationService } from '../../features/impersonation/impersonation-service';
+
+/**
+ * POST /api/admin/impersonate
+ * Start impersonating a user
+ * Requires SUPER_ADMIN role
+ */
+export default defineEventHandler(async (event) => {
+  // Check role
+  const ctx = await requireRole(event, ['SUPER_ADMIN']);
+
+  // Validate body
+  const rawBody = await readBody(event);
+  const validationResult = startImpersonationSchema.safeParse(rawBody);
+
+  if (!validationResult.success) {
+    throw createError({
+      statusCode: 400,
+      message: 'Validation failed',
+      data: validationResult.error.issues,
+    });
+  }
+
+  // Start impersonation
+  const log = await impersonationService.startImpersonation(ctx.userId, validationResult.data, event);
+
+  return {
+    success: true,
+    log,
+  };
+});

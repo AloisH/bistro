@@ -79,12 +79,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.1
- * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+ * Prisma Client JS version: 7.1.0
+ * Query Engine version: ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.1",
-  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
+  client: "7.1.0",
+  engine: "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba"
 }
 
 /**
@@ -388,7 +388,8 @@ export const ModelName = {
   Session: 'Session',
   Verification: 'Verification',
   Project: 'Project',
-  AIJob: 'AIJob'
+  AIJob: 'AIJob',
+  ImpersonationLog: 'ImpersonationLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verification" | "project" | "aIJob"
+    modelProps: "user" | "account" | "session" | "verification" | "project" | "aIJob" | "impersonationLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -852,6 +853,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ImpersonationLog: {
+      payload: Prisma.$ImpersonationLogPayload<ExtArgs>
+      fields: Prisma.ImpersonationLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ImpersonationLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ImpersonationLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ImpersonationLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ImpersonationLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        findMany: {
+          args: Prisma.ImpersonationLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>[]
+        }
+        create: {
+          args: Prisma.ImpersonationLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        createMany: {
+          args: Prisma.ImpersonationLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ImpersonationLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ImpersonationLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        update: {
+          args: Prisma.ImpersonationLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ImpersonationLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ImpersonationLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ImpersonationLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ImpersonationLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImpersonationLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ImpersonationLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateImpersonationLog>
+        }
+        groupBy: {
+          args: Prisma.ImpersonationLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImpersonationLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ImpersonationLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImpersonationLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -898,6 +973,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   emailVerified: 'emailVerified',
   image: 'image',
+  role: 'role',
+  banned: 'banned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -983,6 +1060,20 @@ export const AIJobScalarFieldEnum = {
 export type AIJobScalarFieldEnum = (typeof AIJobScalarFieldEnum)[keyof typeof AIJobScalarFieldEnum]
 
 
+export const ImpersonationLogScalarFieldEnum = {
+  id: 'id',
+  adminId: 'adminId',
+  targetUserId: 'targetUserId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  reason: 'reason',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
+} as const
+
+export type ImpersonationLogScalarFieldEnum = (typeof ImpersonationLogScalarFieldEnum)[keyof typeof ImpersonationLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1055,6 +1146,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Role'
+ */
+export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+/**
+ * Reference to a field of type 'Role[]'
+ */
+export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 
@@ -1162,7 +1267,7 @@ export type PrismaClientOptions = ({
    *  { emit: 'stdout', level: 'error' }
    * 
    * ```
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+   * Read more in our [docs](https://pris.ly/d/logging).
    */
   log?: (LogLevel | LogDefinition)[]
   /**
@@ -1190,6 +1295,22 @@ export type PrismaClientOptions = ({
    * ```
    */
   omit?: GlobalOmitConfig
+  /**
+   * SQL commenter plugins that add metadata to SQL queries as comments.
+   * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   comments: [
+   *     traceContext(),
+   *     queryInsights(),
+   *   ],
+   * })
+   * ```
+   */
+  comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
@@ -1198,6 +1319,7 @@ export type GlobalOmitConfig = {
   verification?: Prisma.VerificationOmit
   project?: Prisma.ProjectOmit
   aIJob?: Prisma.AIJobOmit
+  impersonationLog?: Prisma.ImpersonationLogOmit
 }
 
 /* Types for Logging */

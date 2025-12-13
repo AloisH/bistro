@@ -1,4 +1,4 @@
-import type { User } from '../../../prisma/generated/client';
+import type { Role, User } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
 
 /**
@@ -45,6 +45,27 @@ export class UserRepository {
       where: { id },
     });
     return !!result;
+  }
+
+  /**
+   * Update user role
+   * Only SUPER_ADMIN can change roles
+   */
+  async updateRole(id: string, role: Role): Promise<User> {
+    return this.db.user.update({
+      where: { id },
+      data: { role },
+    });
+  }
+
+  /**
+   * List all users with their roles
+   * Only for admin endpoints
+   */
+  async listAllUsers(): Promise<User[]> {
+    return this.db.user.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 }
 

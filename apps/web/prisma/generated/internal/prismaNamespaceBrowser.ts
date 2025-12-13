@@ -55,7 +55,8 @@ export const ModelName = {
   Session: 'Session',
   Verification: 'Verification',
   Project: 'Project',
-  AIJob: 'AIJob'
+  AIJob: 'AIJob',
+  ImpersonationLog: 'ImpersonationLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,6 +82,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   emailVerified: 'emailVerified',
   image: 'image',
+  role: 'role',
+  banned: 'banned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -164,6 +167,20 @@ export const AIJobScalarFieldEnum = {
 } as const
 
 export type AIJobScalarFieldEnum = (typeof AIJobScalarFieldEnum)[keyof typeof AIJobScalarFieldEnum]
+
+
+export const ImpersonationLogScalarFieldEnum = {
+  id: 'id',
+  adminId: 'adminId',
+  targetUserId: 'targetUserId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  reason: 'reason',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
+} as const
+
+export type ImpersonationLogScalarFieldEnum = (typeof ImpersonationLogScalarFieldEnum)[keyof typeof ImpersonationLogScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -46,3 +46,8 @@ export type Project = Prisma.ProjectModel
  * 
  */
 export type AIJob = Prisma.AIJobModel
+/**
+ * Model ImpersonationLog
+ * 
+ */
+export type ImpersonationLog = Prisma.ImpersonationLogModel

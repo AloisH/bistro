@@ -119,6 +119,13 @@ Only `apps/web` has implementation. Other workspaces are empty directories.
 - Server utils: Explicit imports (`import { db } from '~/server/utils/db'`)
 - Components/composables: Auto-imported (no import needed)
 - External packages: Standard imports
+- Shared schemas: Use `#shared` alias (`import { roleSchema } from '#shared/schemas/role'`)
+
+**Nuxt Aliases:**
+
+- `~` or `@` - Project root (apps/web/)
+- `#shared` - Workspace shared directory (../../shared from apps/web)
+- Auto-configured in nuxt.config.ts for cross-workspace imports
 
 **Banned Patterns:**
 
@@ -421,11 +428,12 @@ See context-specific CLAUDE.md files for detailed guidance.
 
 **Schema models:**
 
-- `User` - Email, password, OAuth accounts
+- `User` - Email, password, OAuth accounts, role (USER/ADMIN/SUPER_ADMIN)
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
 - `Project` - User projects (slug, status)
 - `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
+- `ImpersonationLog` - Admin impersonation audit trail (admin, target, timestamps, reason)
 
 **Import:** Use `server/utils/db.ts` singleton (Prisma Client with dev logging + @prisma/adapter-pg)
 
@@ -481,6 +489,40 @@ Better Auth (email/password implemented, OAuth planned):
 - **Middleware**: `app/middleware/auth.global.ts` (route guard)
 - **Component**: `AuthButton` (header login/avatar dropdown)
 
+## Roles & Permissions
+
+**Role-Based Access Control (RBAC):**
+
+- **Roles**: USER (default), ADMIN, SUPER_ADMIN
+- **Database**: User.role field (Prisma enum)
+- **Server**: `requireRole(['ADMIN', 'SUPER_ADMIN'])` middleware
+- **Client**: `useRole()` composable (hasRole, isSuperAdmin, isAdmin)
+
+**Admin Features:**
+
+- **Impersonation**: SUPER_ADMIN can impersonate users (Better Auth admin plugin)
+  - 1-hour auto-expiration
+  - Audit logging (ImpersonationLog table)
+  - Cannot impersonate other SUPER_ADMINs
+  - Global banner shown during impersonation
+- **User Management**: `/admin/users` - list users, change roles, impersonate
+- **Admin Panel**: Access via AuthButton dropdown (SUPER_ADMIN only)
+
+**First Super Admin Setup:**
+
+```bash
+bun db:studio
+# In Prisma Studio: Update a user's role to SUPER_ADMIN
+```
+
+**Admin API Endpoints:**
+
+- `GET /api/admin/users` - List all users (ADMIN+)
+- `PUT /api/admin/users/:id/role` - Update user role (SUPER_ADMIN)
+- `POST /api/admin/impersonate` - Start impersonation (SUPER_ADMIN)
+- `POST /api/admin/impersonate/stop` - Stop impersonation (SUPER_ADMIN)
+- `GET /api/admin/impersonate/active` - Check active session (SUPER_ADMIN)
+
 ## Payments & Email
 
 **Polar Integration (Placeholder):**
@@ -517,6 +559,8 @@ Using Vercel AI SDK:
 - ✅ Nuxt 4 app structure
 - ✅ Database (Prisma 7 + PostgreSQL)
 - ✅ Auth (Better Auth email/password)
+- ✅ Roles & Permissions (USER/ADMIN/SUPER_ADMIN)
+- ✅ Admin impersonation (Better Auth admin plugin)
 - ✅ Testing (Vitest + coverage)
 - ✅ CI/CD (GitHub Actions)
 - ✅ Docker (dev + prod)

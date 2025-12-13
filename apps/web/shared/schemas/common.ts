@@ -4,7 +4,7 @@ import { z } from 'zod';
  * Common Zod schemas reusable across all models
  */
 
-export const idSchema = z.string().cuid();
+export const idSchema = z.string().min(1);
 
 export const slugSchema = z
   .string()

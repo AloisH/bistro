@@ -10,34 +10,7 @@
 
     <UDropdownMenu
       v-else
-      :items="[
-        [
-          {
-            label: user?.email || '',
-            icon: 'i-lucide-user',
-            disabled: true,
-          },
-        ],
-        [
-          {
-            label: 'Dashboard',
-            icon: 'i-lucide-layout-dashboard',
-            to: '/dashboard',
-          },
-          {
-            label: 'Profile',
-            icon: 'i-lucide-settings',
-            to: '/profile',
-          },
-        ],
-        [
-          {
-            label: 'Logout',
-            icon: 'i-lucide-log-out',
-            onSelect: handleLogout,
-          },
-        ],
-      ]"
+      :items="menuItems"
     >
       <UAvatar
         :alt="user?.name || user?.email || 'User'"
@@ -51,6 +24,7 @@
 
 <script setup lang="ts">
 const { session, user, isPending, client } = useAuth();
+const { isSuperAdmin } = useRole();
 
 // Helper function to get user initials
 function getUserInitials(user: { name?: string; email?: string } | null | undefined): string {
@@ -75,4 +49,51 @@ async function handleLogout() {
   await client.signOut();
   await navigateTo('/');
 }
+
+// Build menu items dynamically based on role
+const menuItems = computed(() => {
+  const items = [
+    [
+      {
+        label: user.value?.email || '',
+        icon: 'i-lucide-user',
+        disabled: true,
+      },
+    ],
+    [
+      {
+        label: 'Dashboard',
+        icon: 'i-lucide-layout-dashboard',
+        to: '/dashboard',
+      },
+      {
+        label: 'Profile',
+        icon: 'i-lucide-settings',
+        to: '/profile',
+      },
+    ],
+  ];
+
+  // Add admin panel link if super admin
+  if (isSuperAdmin.value) {
+    items.push([
+      {
+        label: 'Admin Panel',
+        icon: 'i-lucide-shield',
+        to: '/admin/users',
+      },
+    ]);
+  }
+
+  // Add logout at the end
+  items.push([
+    {
+      label: 'Logout',
+      icon: 'i-lucide-log-out',
+      click: handleLogout,
+    },
+  ]);
+
+  return items;
+});
 </script>

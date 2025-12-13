@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vue from '@vitejs/plugin-vue';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui'],
@@ -7,6 +11,7 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
@@ -37,6 +42,10 @@ export default defineNuxtConfig({
     },
   },
 
+  alias: {
+    '#shared': resolve(__dirname, '../../shared'),
+  },
+
   routeRules: {
     '/': { prerender: true },
   },
@@ -45,6 +54,12 @@ export default defineNuxtConfig({
   nitro: {
     rollupConfig: {
       plugins: [vue()],
+    },
+  },
+
+  typescript: {
+    tsConfig: {
+      include: ['../../shared/**/*.ts'],
     },
   },
   eslint: {
