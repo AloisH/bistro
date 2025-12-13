@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="w-full p-8">
     <div class="mb-6">
       <h1 class="text-2xl font-bold">User Management</h1>
       <p class="text-sm text-gray-600 dark:text-gray-400">Manage users and impersonate for support</p>
@@ -90,6 +90,10 @@
 <script setup lang="ts">
 import { h, resolveComponent } from 'vue';
 import type { User } from '../../../prisma/generated/client';
+
+definePageMeta({
+  layout: 'dashboard',
+});
 
 const { isSuperAdmin } = useRole();
 const { startImpersonation } = useImpersonation();

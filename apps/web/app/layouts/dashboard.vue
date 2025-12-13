@@ -60,53 +60,42 @@
       </template>
 
       <template #footer="{ collapsed }">
-        <div class="w-full">
+        <UDropdownMenu
+          :items="userMenuItems"
+          :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width)' }"
+        >
           <UButton
             v-if="!collapsed"
-            :avatar="{
-              src: session?.user?.image || 'https://github.com/benjamincanac.png',
-            }"
-            :label="session?.user?.name || session?.user?.email || 'User'"
             color="neutral"
             variant="ghost"
-            class="w-full justify-start"
-            :to="'/profile'"
-          />
-
-          <div
-            v-else
-            class="flex flex-col items-center gap-2 p-2"
+            block
           >
-            <UAvatar
-              :src="session?.user?.image || 'https://github.com/benjamincanac.png'"
-              size="md"
-              class="shrink-0"
-            />
-            <UTooltip
-              text="Logout"
-              :shortcuts="['⌘', 'L']"
-            >
-              <UButton
-                icon="i-lucide-log-out"
-                color="neutral"
-                variant="ghost"
-                size="sm"
-                @click="handleLogout"
+            <div class="flex items-center justify-between w-full gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <UAvatar
+                  :src="session?.user?.image || undefined"
+                  :alt="session?.user?.name || session?.user?.email || 'User'"
+                  :text="getUserInitials(session?.user)"
+                  size="xs"
+                />
+                <span class="truncate text-sm">{{ session?.user?.name || session?.user?.email || 'User' }}</span>
+              </div>
+              <UIcon
+                name="i-lucide-chevron-up"
+                class="size-4 shrink-0"
               />
-            </UTooltip>
-          </div>
+            </div>
+          </UButton>
 
-          <UButton
-            v-if="!collapsed"
-            label="Logout"
-            icon="i-lucide-log-out"
-            color="neutral"
-            variant="ghost"
-            class="w-full mt-2 justify-start"
-            :square="false"
-            @click="handleLogout"
+          <UAvatar
+            v-else
+            :src="session?.user?.image || undefined"
+            :alt="session?.user?.name || session?.user?.email || 'User'"
+            :text="getUserInitials(session?.user)"
+            size="md"
+            class="cursor-pointer"
           />
-        </div>
+        </UDropdownMenu>
       </template>
     </UDashboardSidebar>
 
@@ -117,25 +106,37 @@
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui';
+import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 
 const { session, signOut } = useAuth();
+const { isSuperAdmin } = useRole();
 const router = useRouter();
 
-const navigationItems: NavigationMenuItem[][] = [[{
-  label: 'Dashboard',
-  icon: 'i-lucide-house',
-  to: '/dashboard',
-  active: true,
-}, {
-  label: 'Profile',
-  icon: 'i-lucide-user',
-  to: '/profile',
-}, {
-  label: 'Settings',
-  icon: 'i-lucide-settings',
-  to: '/dashboard/settings',
-}]];
+const navigationItems = computed<NavigationMenuItem[][]>(() => {
+  const baseItems: NavigationMenuItem[] = [{
+    label: 'Dashboard',
+    icon: 'i-lucide-house',
+    to: '/dashboard',
+  }, {
+    label: 'Profile',
+    icon: 'i-lucide-user',
+    to: '/profile',
+  }, {
+    label: 'Settings',
+    icon: 'i-lucide-settings',
+    to: '/dashboard/settings',
+  }];
+
+  const adminItems: NavigationMenuItem[] = isSuperAdmin.value
+    ? [{
+        label: 'Admin',
+        icon: 'i-lucide-shield',
+        to: '/admin/users',
+      }]
+    : [];
+
+  return [[...baseItems, ...adminItems]];
+});
 
 const footerItems: NavigationMenuItem[][] = [[{
   label: 'Feedback',
@@ -148,6 +149,47 @@ const footerItems: NavigationMenuItem[][] = [[{
   to: 'https://github.com/nuxt/ui',
   target: '_blank',
 }]];
+
+const userMenuItems = computed<DropdownMenuItem[][]>(() => [
+  [{
+    label: 'Profile',
+    icon: 'i-lucide-user',
+    to: '/profile',
+  }, {
+    label: 'Settings',
+    icon: 'i-lucide-settings',
+    to: '/dashboard/settings',
+  }],
+  [{
+    label: 'Logout',
+    icon: 'i-lucide-log-out',
+    click: handleLogout,
+  }],
+]);
+
+function getUserInitials(user: { name?: string; email?: string } | null | undefined): string {
+  if (!user) return 'U';
+
+  const name = user.name || user.email || '';
+  if (!name) return 'U';
+
+  // For emails, use first letter
+  if (name.includes('@')) {
+    return name.charAt(0).toUpperCase();
+  }
+
+  // For multi-word names, use first letter of each word
+  const words = name.trim().split(/\s+/);
+  if (words.length > 1) {
+    return words
+      .slice(0, 2)
+      .map(word => word.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  // For single names, use first letter
+  return name.charAt(0).toUpperCase();
+}
 
 async function handleLogout() {
   try {
