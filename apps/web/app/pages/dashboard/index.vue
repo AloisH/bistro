@@ -1,5 +1,13 @@
 <template>
-  <div class="w-full p-8">
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardNavbar title="Dashboard">
+        <template #right>
+          <UColorModeButton />
+        </template>
+      </UDashboardNavbar>
+    </template>
+
     <UCard>
       <template #header>
         <h1 class="text-3xl font-bold">Dashboard</h1>
@@ -34,7 +42,7 @@
         </div>
       </div>
     </UCard>
-  </div>
+  </UDashboardPanel>
 </template>
 
 <script setup lang="ts">

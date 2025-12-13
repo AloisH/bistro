@@ -1,5 +1,13 @@
 <template>
-  <div class="w-full p-8">
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardNavbar title="User Management">
+        <template #right>
+          <UColorModeButton />
+        </template>
+      </UDashboardNavbar>
+    </template>
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold">User Management</h1>
       <p class="text-sm text-gray-600 dark:text-gray-400">Manage users and impersonate for support</p>
@@ -84,7 +92,7 @@
         </UCard>
       </template>
     </UModal>
-  </div>
+  </UDashboardPanel>
 </template>
 
 <script setup lang="ts">

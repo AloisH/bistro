@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-svh">
+  <UDashboardGroup>
     <UDashboardSidebar
       resizable
       collapsible
@@ -45,64 +45,66 @@
           </template>
         </UButton>
 
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="navigationItems"
-          orientation="vertical"
-        />
+        <ClientOnly>
+          <UNavigationMenu
+            :collapsed="collapsed"
+            :items="navigationItems"
+            orientation="vertical"
+          />
 
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="footerItems"
-          orientation="vertical"
-          class="mt-auto"
-        />
+          <UNavigationMenu
+            :collapsed="collapsed"
+            :items="footerItems"
+            orientation="vertical"
+            class="mt-auto"
+          />
+        </ClientOnly>
       </template>
 
       <template #footer="{ collapsed }">
-        <UDropdownMenu
-          :items="userMenuItems"
-          :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width)' }"
-        >
-          <UButton
-            v-if="!collapsed"
-            color="neutral"
-            variant="ghost"
-            block
+        <ClientOnly>
+          <UDropdownMenu
+            :items="userMenuItems"
+            :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width)' }"
           >
-            <div class="flex items-center justify-between w-full gap-2">
-              <div class="flex items-center gap-2 min-w-0">
-                <UAvatar
-                  :src="session?.user?.image || undefined"
-                  :alt="session?.user?.name || session?.user?.email || 'User'"
-                  :text="getUserInitials(session?.user)"
-                  size="xs"
+            <UButton
+              v-if="!collapsed"
+              color="neutral"
+              variant="ghost"
+              block
+            >
+              <div class="flex items-center justify-between w-full gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <UAvatar
+                    :src="session?.user?.image || undefined"
+                    :alt="session?.user?.name || session?.user?.email || 'User'"
+                    :text="getUserInitials(session?.user)"
+                    size="xs"
+                  />
+                  <span class="truncate text-sm">{{ session?.user?.name || session?.user?.email || 'User' }}</span>
+                </div>
+                <UIcon
+                  name="i-lucide-chevron-up"
+                  class="size-4 shrink-0"
                 />
-                <span class="truncate text-sm">{{ session?.user?.name || session?.user?.email || 'User' }}</span>
               </div>
-              <UIcon
-                name="i-lucide-chevron-up"
-                class="size-4 shrink-0"
-              />
-            </div>
-          </UButton>
+            </UButton>
 
-          <UAvatar
-            v-else
-            :src="session?.user?.image || undefined"
-            :alt="session?.user?.name || session?.user?.email || 'User'"
-            :text="getUserInitials(session?.user)"
-            size="md"
-            class="cursor-pointer"
-          />
-        </UDropdownMenu>
+            <UAvatar
+              v-else
+              :src="session?.user?.image || undefined"
+              :alt="session?.user?.name || session?.user?.email || 'User'"
+              :text="getUserInitials(session?.user)"
+              size="md"
+              class="cursor-pointer"
+            />
+          </UDropdownMenu>
+        </ClientOnly>
       </template>
     </UDashboardSidebar>
 
-    <div class="flex flex-1 flex-col min-h-svh">
-      <slot />
-    </div>
-  </div>
+    <slot />
+  </UDashboardGroup>
 </template>
 
 <script setup lang="ts">
