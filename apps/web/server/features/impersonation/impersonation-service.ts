@@ -57,18 +57,28 @@ export class ImpersonationService {
       userAgent,
     });
 
-    // Call Better Auth impersonation API
+    // Call Better Auth impersonation API with asResponse to get cookies
     try {
-      await auth.api.impersonateUser({
+      const response = await auth.api.impersonateUser({
         body: { userId: input.userId },
         headers: event.headers,
+        asResponse: true,
       });
-    } catch {
+
+      // Set cookies from Better Auth response to client
+      const cookies = response.headers.getSetCookie();
+      for (const cookie of cookies) {
+        appendResponseHeader(event, 'set-cookie', cookie);
+      }
+    } catch (error) {
+      // Log error for debugging
+      console.error('[Impersonation] Better Auth error:', error);
       // If Better Auth fails, mark log as ended
       await impersonationRepository.endLog(adminId);
       throw createError({
         statusCode: 500,
         message: 'Failed to start impersonation session',
+        data: process.env.NODE_ENV === 'development' ? error : undefined,
       });
     }
 
@@ -77,12 +87,24 @@ export class ImpersonationService {
 
   /**
    * Stop impersonating current user
+   * During impersonation, currentUserId is the impersonated user's ID
    *
    * @throws 400 if no active impersonation
    */
-  async stopImpersonation(adminId: string, event: H3Event): Promise<void> {
-    // Check for active session
-    const activeLog = await impersonationRepository.getActiveSession(adminId);
+  async stopImpersonation(currentUserId: string, event: H3Event): Promise<void> {
+    // Find active impersonation where this user is being impersonated
+    const activeLog = await db.impersonationLog.findFirst({
+      where: {
+        targetUserId: currentUserId,
+        endedAt: null,
+      },
+      include: {
+        admin: {
+          select: { id: true, email: true, name: true },
+        },
+      },
+    });
+
     if (!activeLog) {
       throw createError({
         statusCode: 400,
@@ -90,20 +112,30 @@ export class ImpersonationService {
       });
     }
 
-    // Call Better Auth stop impersonation
+    // Call Better Auth stop impersonation with asResponse to get cookies
     try {
-      await auth.api.stopImpersonating({
+      const response = await auth.api.stopImpersonating({
         headers: event.headers,
+        asResponse: true,
       });
-    } catch {
+
+      // Set cookies from Better Auth response to restore admin session
+      const cookies = response.headers.getSetCookie();
+      for (const cookie of cookies) {
+        appendResponseHeader(event, 'set-cookie', cookie);
+      }
+    } catch (error) {
+      // Log error for debugging
+      console.error('[Impersonation] Better Auth stop error:', error);
       throw createError({
         statusCode: 500,
         message: 'Failed to stop impersonation session',
+        data: process.env.NODE_ENV === 'development' ? error : undefined,
       });
     }
 
     // End audit log
-    await impersonationRepository.endLog(adminId);
+    await impersonationRepository.endLog(activeLog.adminId);
   }
 
   /**

@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink } from 'better-auth/plugins';
+import { ac, roles } from '#shared/auth/access-control';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
 
@@ -25,6 +26,16 @@ export const auth = betterAuth({
   database: prismaAdapter(db, {
     provider: 'postgresql',
   }),
+  user: {
+    additionalFields: {
+      role: {
+        type: 'string',
+        required: true,
+        defaultValue: 'USER',
+        input: false, // Prevent users from setting role during signup
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
@@ -80,9 +91,12 @@ export const auth = betterAuth({
   socialProviders,
   plugins: [
     admin({
+      ac,
+      roles,
       defaultRole: 'USER',
       impersonationSessionDuration: 60 * 60, // 1 hour
       allowImpersonatingAdmins: false, // Cannot impersonate other admins
+      adminRoles: ['SUPER_ADMIN', 'ADMIN'], // Roles that can use admin features
     }),
     magicLink({
       sendMagicLink: async ({ email, url }) => {

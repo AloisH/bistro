@@ -1,4 +1,5 @@
 import { createAuthClient } from 'better-auth/client';
+import { adminClient } from 'better-auth/client/plugins';
 import type {
   InferSessionFromClient,
   InferUserFromClient,
@@ -14,6 +15,9 @@ export const useAuth = () => {
     fetchOptions: {
       headers,
     },
+    plugins: [
+      adminClient(), // Access control not needed on client for impersonation
+    ],
   });
 
   const session = useState<InferSessionFromClient<ClientOptions> | null>(

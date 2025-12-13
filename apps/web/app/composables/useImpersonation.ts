@@ -46,12 +46,15 @@ export function useImpersonation() {
         method: 'POST',
       });
 
-      // Refresh session to get back to admin
-      await fetchSession();
-
-      // Clear state
+      // Clear state immediately
       isImpersonating.value = false;
       impersonatedUser.value = null;
+
+      // Force full page reload to ensure session is updated
+      // This is more reliable than fetchSession() which might be cached
+      if (import.meta.client) {
+        window.location.href = '/admin/users';
+      }
 
       return { success: true };
     } catch (err) {
