@@ -13,6 +13,13 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -35,6 +42,7 @@ model User {
   sessions                Session[]
   impersonationsPerformed ImpersonationLog[] @relation("ImpersonationsByAdmin")
   impersonationsReceived  ImpersonationLog[] @relation("ImpersonationsOfUser")
+  organizationMemberships OrganizationMember[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -108,4 +116,59 @@ model ImpersonationLog {
   @@index([targetUserId])
   @@index([startedAt])
   @@map("impersonation_logs")
+}
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  image       String?
+  planType    String   @default("free")
+
+  members OrganizationMember[]
+  invites OrganizationInvite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String           @id @default(cuid())
+  userId         String
+  organizationId String
+  role           OrganizationRole @default(MEMBER)
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+  @@map("organization_members")
+}
+
+model OrganizationInvite {
+  id             String           @id @default(cuid())
+  email          String
+  organizationId String
+  role           OrganizationRole @default(MEMBER)
+  token          String           @unique
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([organizationId])
+  @@index([token])
+  @@map("organization_invites")
 }
