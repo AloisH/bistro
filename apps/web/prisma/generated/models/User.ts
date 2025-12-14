@@ -269,6 +269,7 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   impersonationsPerformed?: Prisma.ImpersonationLogListRelationFilter
   impersonationsReceived?: Prisma.ImpersonationLogListRelationFilter
+  organizationMemberships?: Prisma.OrganizationMemberListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -292,6 +293,7 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   impersonationsPerformed?: Prisma.ImpersonationLogOrderByRelationAggregateInput
   impersonationsReceived?: Prisma.ImpersonationLogOrderByRelationAggregateInput
+  organizationMemberships?: Prisma.OrganizationMemberOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -318,6 +320,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   impersonationsPerformed?: Prisma.ImpersonationLogListRelationFilter
   impersonationsReceived?: Prisma.ImpersonationLogListRelationFilter
+  organizationMemberships?: Prisma.OrganizationMemberListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -385,6 +388,7 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -408,6 +412,7 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -431,6 +436,7 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -454,6 +460,7 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -649,6 +656,20 @@ export type UserUpdateOneRequiredWithoutImpersonationsReceivedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutImpersonationsReceivedInput, Prisma.UserUpdateWithoutImpersonationsReceivedInput>, Prisma.UserUncheckedUpdateWithoutImpersonationsReceivedInput>
 }
 
+export type UserCreateNestedOneWithoutOrganizationMembershipsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedCreateWithoutOrganizationMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganizationMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedCreateWithoutOrganizationMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganizationMembershipsInput
+  upsert?: Prisma.UserUpsertWithoutOrganizationMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrganizationMembershipsInput, Prisma.UserUpdateWithoutOrganizationMembershipsInput>, Prisma.UserUncheckedUpdateWithoutOrganizationMembershipsInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   email: string
@@ -669,6 +690,7 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -691,6 +713,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -729,6 +752,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -751,6 +775,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -773,6 +798,7 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -795,6 +821,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutAdminInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -833,6 +860,7 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -855,6 +883,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutAdminNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutImpersonationsPerformedInput = {
@@ -877,6 +906,7 @@ export type UserCreateWithoutImpersonationsPerformedInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   impersonationsReceived?: Prisma.ImpersonationLogCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutImpersonationsPerformedInput = {
@@ -899,6 +929,7 @@ export type UserUncheckedCreateWithoutImpersonationsPerformedInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutTargetUserInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutImpersonationsPerformedInput = {
@@ -926,6 +957,7 @@ export type UserCreateWithoutImpersonationsReceivedInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogCreateNestedManyWithoutAdminInput
+  organizationMemberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutImpersonationsReceivedInput = {
@@ -948,6 +980,7 @@ export type UserUncheckedCreateWithoutImpersonationsReceivedInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutAdminInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutImpersonationsReceivedInput = {
@@ -986,6 +1019,7 @@ export type UserUpdateWithoutImpersonationsPerformedInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutImpersonationsPerformedInput = {
@@ -1008,6 +1042,7 @@ export type UserUncheckedUpdateWithoutImpersonationsPerformedInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   impersonationsReceived?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutTargetUserNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutImpersonationsReceivedInput = {
@@ -1041,6 +1076,7 @@ export type UserUpdateWithoutImpersonationsReceivedInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUpdateManyWithoutAdminNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutImpersonationsReceivedInput = {
@@ -1063,6 +1099,115 @@ export type UserUncheckedUpdateWithoutImpersonationsReceivedInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   impersonationsPerformed?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutAdminNestedInput
+  organizationMemberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutOrganizationMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.Role
+  banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  impersonationsPerformed?: Prisma.ImpersonationLogCreateNestedManyWithoutAdminInput
+  impersonationsReceived?: Prisma.ImpersonationLogCreateNestedManyWithoutTargetUserInput
+}
+
+export type UserUncheckedCreateWithoutOrganizationMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.Role
+  banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  impersonationsPerformed?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutAdminInput
+  impersonationsReceived?: Prisma.ImpersonationLogUncheckedCreateNestedManyWithoutTargetUserInput
+}
+
+export type UserCreateOrConnectWithoutOrganizationMembershipsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedCreateWithoutOrganizationMembershipsInput>
+}
+
+export type UserUpsertWithoutOrganizationMembershipsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedUpdateWithoutOrganizationMembershipsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedCreateWithoutOrganizationMembershipsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOrganizationMembershipsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOrganizationMembershipsInput, Prisma.UserUncheckedUpdateWithoutOrganizationMembershipsInput>
+}
+
+export type UserUpdateWithoutOrganizationMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  impersonationsPerformed?: Prisma.ImpersonationLogUpdateManyWithoutAdminNestedInput
+  impersonationsReceived?: Prisma.ImpersonationLogUpdateManyWithoutTargetUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOrganizationMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  impersonationsPerformed?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutAdminNestedInput
+  impersonationsReceived?: Prisma.ImpersonationLogUncheckedUpdateManyWithoutTargetUserNestedInput
 }
 
 
@@ -1075,6 +1220,7 @@ export type UserCountOutputType = {
   sessions: number
   impersonationsPerformed: number
   impersonationsReceived: number
+  organizationMemberships: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1082,6 +1228,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   impersonationsPerformed?: boolean | UserCountOutputTypeCountImpersonationsPerformedArgs
   impersonationsReceived?: boolean | UserCountOutputTypeCountImpersonationsReceivedArgs
+  organizationMemberships?: boolean | UserCountOutputTypeCountOrganizationMembershipsArgs
 }
 
 /**
@@ -1122,6 +1269,13 @@ export type UserCountOutputTypeCountImpersonationsReceivedArgs<ExtArgs extends r
   where?: Prisma.ImpersonationLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOrganizationMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationMemberWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1144,6 +1298,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   impersonationsPerformed?: boolean | Prisma.User$impersonationsPerformedArgs<ExtArgs>
   impersonationsReceived?: boolean | Prisma.User$impersonationsReceivedArgs<ExtArgs>
+  organizationMemberships?: boolean | Prisma.User$organizationMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1210,6 +1365,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   impersonationsPerformed?: boolean | Prisma.User$impersonationsPerformedArgs<ExtArgs>
   impersonationsReceived?: boolean | Prisma.User$impersonationsReceivedArgs<ExtArgs>
+  organizationMemberships?: boolean | Prisma.User$organizationMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1222,6 +1378,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     impersonationsPerformed: Prisma.$ImpersonationLogPayload<ExtArgs>[]
     impersonationsReceived: Prisma.$ImpersonationLogPayload<ExtArgs>[]
+    organizationMemberships: Prisma.$OrganizationMemberPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1638,6 +1795,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   impersonationsPerformed<T extends Prisma.User$impersonationsPerformedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$impersonationsPerformedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImpersonationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   impersonationsReceived<T extends Prisma.User$impersonationsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$impersonationsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImpersonationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  organizationMemberships<T extends Prisma.User$organizationMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2164,6 +2322,30 @@ export type User$impersonationsReceivedArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.ImpersonationLogScalarFieldEnum | Prisma.ImpersonationLogScalarFieldEnum[]
+}
+
+/**
+ * User.organizationMemberships
+ */
+export type User$organizationMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationMember
+   */
+  select?: Prisma.OrganizationMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationMember
+   */
+  omit?: Prisma.OrganizationMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationMemberInclude<ExtArgs> | null
+  where?: Prisma.OrganizationMemberWhereInput
+  orderBy?: Prisma.OrganizationMemberOrderByWithRelationInput | Prisma.OrganizationMemberOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationMemberScalarFieldEnum | Prisma.OrganizationMemberScalarFieldEnum[]
 }
 
 /**

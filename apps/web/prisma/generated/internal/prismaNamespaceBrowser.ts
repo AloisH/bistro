@@ -54,7 +54,10 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   Verification: 'Verification',
-  ImpersonationLog: 'ImpersonationLog'
+  ImpersonationLog: 'ImpersonationLog',
+  Organization: 'Organization',
+  OrganizationMember: 'OrganizationMember',
+  OrganizationInvite: 'OrganizationInvite'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -153,6 +156,47 @@ export const ImpersonationLogScalarFieldEnum = {
 } as const
 
 export type ImpersonationLogScalarFieldEnum = (typeof ImpersonationLogScalarFieldEnum)[keyof typeof ImpersonationLogScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  image: 'image',
+  planType: 'planType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const OrganizationMemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalarFieldEnum)[keyof typeof OrganizationMemberScalarFieldEnum]
+
+
+export const OrganizationInviteScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  organizationId: 'organizationId',
+  role: 'role',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationInviteScalarFieldEnum = (typeof OrganizationInviteScalarFieldEnum)[keyof typeof OrganizationInviteScalarFieldEnum]
 
 
 export const SortOrder = {

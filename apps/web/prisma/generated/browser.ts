@@ -41,3 +41,18 @@ export type Verification = Prisma.VerificationModel
  * 
  */
 export type ImpersonationLog = Prisma.ImpersonationLogModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model OrganizationMember
+ * 
+ */
+export type OrganizationMember = Prisma.OrganizationMemberModel
+/**
+ * Model OrganizationInvite
+ * 
+ */
+export type OrganizationInvite = Prisma.OrganizationInviteModel
