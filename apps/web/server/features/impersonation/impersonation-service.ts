@@ -87,24 +87,15 @@ export class ImpersonationService {
   }
 
   /**
-   * Stop impersonating current user
-   * During impersonation, currentUserId is the impersonated user's ID
+   * Stop impersonating - admin stops their active impersonation session
+   * Handles both active impersonation and orphaned logs (expired sessions)
    *
+   * @param adminId - The admin user's ID
    * @throws 400 if no active impersonation
    */
-  async stopImpersonation(currentUserId: string, event: H3Event): Promise<void> {
-    // Find active impersonation where this user is being impersonated
-    const activeLog = await db.impersonationLog.findFirst({
-      where: {
-        targetUserId: currentUserId,
-        endedAt: null,
-      },
-      include: {
-        admin: {
-          select: { id: true, email: true, name: true },
-        },
-      },
-    });
+  async stopImpersonation(adminId: string, event: H3Event): Promise<void> {
+    // Find active impersonation by adminId (reuse same logic as getActiveImpersonation)
+    const activeLog = await this.getActiveImpersonation(adminId);
 
     if (!activeLog) {
       throw createError({
@@ -113,7 +104,7 @@ export class ImpersonationService {
       });
     }
 
-    // Call Better Auth stop impersonation with asResponse to get cookies
+    // Try to stop Better Auth session (may fail if session already expired/cleared)
     try {
       const response = await auth.api.stopImpersonating({
         headers: event.headers,
@@ -126,17 +117,13 @@ export class ImpersonationService {
         appendResponseHeader(event, 'set-cookie', cookie);
       }
     } catch (error) {
-      // Log error for debugging
-      console.error('[Impersonation] Better Auth stop error:', error);
-      throw createError({
-        statusCode: 500,
-        message: 'Failed to stop impersonation session',
-        data: process.env.NODE_ENV === 'development' ? error : undefined,
-      });
+      // Session may already be expired or cleared - that's ok, just log it
+      console.warn('[Impersonation] Better Auth already stopped:', error);
+      // Continue to end the audit log regardless
     }
 
-    // End audit log
-    await impersonationRepository.endLog(activeLog.adminId);
+    // Always end audit log (even if Better Auth call failed)
+    await impersonationRepository.endLog(adminId);
   }
 
   /**
