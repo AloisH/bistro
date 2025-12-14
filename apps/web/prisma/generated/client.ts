@@ -59,16 +59,6 @@ export type Session = Prisma.SessionModel
  */
 export type Verification = Prisma.VerificationModel
 /**
- * Model Project
- * 
- */
-export type Project = Prisma.ProjectModel
-/**
- * Model AIJob
- * 
- */
-export type AIJob = Prisma.AIJobModel
-/**
  * Model ImpersonationLog
  * 
  */

@@ -58,7 +58,7 @@ export class UserRepository {
 
   /**
    * Delete user
-   * Cascade deletes all related data (sessions, accounts, projects, AI jobs)
+   * Cascade deletes all related data (sessions, accounts)
    */
   async deleteUser(id: string): Promise<boolean> {
     const result = await this.db.user.delete({

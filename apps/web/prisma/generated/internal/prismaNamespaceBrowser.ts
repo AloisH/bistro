@@ -54,8 +54,6 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   Verification: 'Verification',
-  Project: 'Project',
-  AIJob: 'AIJob',
   ImpersonationLog: 'ImpersonationLog'
 } as const
 
@@ -143,39 +141,6 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-export const ProjectScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  slug: 'slug',
-  status: 'status',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
-
-
-export const AIJobScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  status: 'status',
-  input: 'input',
-  output: 'output',
-  error: 'error',
-  model: 'model',
-  tokens: 'tokens',
-  cost: 'cost',
-  duration: 'duration',
-  projectId: 'projectId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AIJobScalarFieldEnum = (typeof AIJobScalarFieldEnum)[keyof typeof AIJobScalarFieldEnum]
-
-
 export const ImpersonationLogScalarFieldEnum = {
   id: 'id',
   adminId: 'adminId',
@@ -204,13 +169,6 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: 'JsonNull'
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

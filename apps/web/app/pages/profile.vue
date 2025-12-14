@@ -365,8 +365,8 @@
                 Danger Zone
               </h2>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Once you delete your account, there is no going back. All your data including
-                projects and AI jobs will be permanently deleted.
+                Once you delete your account, there is no going back. All your data will be
+                permanently deleted.
               </p>
             </div>
           </div>

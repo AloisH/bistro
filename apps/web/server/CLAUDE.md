@@ -340,13 +340,6 @@ POST   /api/auth/[...all]        # Better Auth (sign-in, sign-up, OAuth)
 # User Profile
 GET    /api/user/profile         # Get user profile
 PUT    /api/user/profile         # Update profile (name, image)
-
-# Projects (User-Scoped)
-GET    /api/projects             # List user projects
-POST   /api/projects             # Create project
-GET    /api/projects/:id         # Get project (ownership check)
-PUT    /api/projects/:id         # Update project (ownership check)
-DELETE /api/projects/:id         # Delete project (ownership check)
 ```
 
 ### 🚧 Planned Endpoints
@@ -354,12 +347,6 @@ DELETE /api/projects/:id         # Delete project (ownership check)
 ```bash
 # User Account
 DELETE /api/user/account         # Delete account + all data
-
-# AI Jobs
-GET    /api/projects/:id/jobs    # List project AI jobs
-POST   /api/projects/:id/jobs    # Create AI job
-GET    /api/jobs/:id             # Get job status
-POST   /api/jobs/:id/cancel      # Cancel running job
 ```
 
 ---
@@ -387,7 +374,6 @@ Core (utils/db)
 
 - `features/auth/` - Authentication (Better Auth config, session)
 - `features/user/` - User operations (profile, account deletion)
-- `features/project/` - Project CRUD
 - `features/email/` - Email sending (Resend, templates)
 
 **Cross-feature deps:** Document in feature.md, avoid cycles
@@ -579,13 +565,9 @@ curl -X POST http://localhost:3000/api/projects \
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
 - `Verification` - Email verification tokens
-- `Project` - User projects (title, slug, status)
-- `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
 
 **Relations:**
 
-- User → Projects (one-to-many)
-- Project → AIJobs (one-to-many)
 - User → Accounts (one-to-many, OAuth)
 - User → Sessions (one-to-many)
 

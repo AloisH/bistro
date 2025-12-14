@@ -59,6 +59,7 @@ Bun workspaces:
 Only `apps/web` has implementation. Other workspaces are empty directories.
 
 **CRITICAL - Shared Code Location:**
+
 - ✅ Schemas go in `apps/web/shared/schemas/` (inside web app, next to server/ folder)
 - ❌ NOT in monorepo root `/home/alois/bistro/shared/` (doesn't exist)
 - Import via `#shared/schemas/user` alias (configured in nuxt.config.ts)
@@ -437,8 +438,6 @@ See context-specific CLAUDE.md files for detailed guidance.
 - `User` - Email, password, OAuth accounts, role (USER/ADMIN/SUPER_ADMIN)
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
-- `Project` - User projects (slug, status)
-- `AIJob` - AI tasks (type, input/output, tokens, cost, duration)
 - `ImpersonationLog` - Admin impersonation audit trail (admin, target, timestamps, reason)
 
 **Import:** Use `server/utils/db.ts` singleton (Prisma Client with dev logging + @prisma/adapter-pg)
