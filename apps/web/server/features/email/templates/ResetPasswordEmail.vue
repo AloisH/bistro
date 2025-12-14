@@ -109,12 +109,11 @@ const footer = {
 
         <Heading :style="heading">Reset your password</Heading>
 
-        <Text :style="paragraph">
-          Hi {{ name }},
-        </Text>
+        <Text :style="paragraph"> Hi {{ name }}, </Text>
 
         <Text :style="paragraph">
-          We received a request to reset your password. Click the button below to create a new password.
+          We received a request to reset your password. Click the button below to create a new
+          password.
         </Text>
 
         <div :style="buttonContainer">
@@ -138,7 +137,8 @@ const footer = {
         <Hr :style="hr" />
 
         <Text :style="footer">
-          This password reset link will expire in 1 hour. If you didn't request a password reset, you can safely ignore this email.
+          This password reset link will expire in 1 hour. If you didn't request a password reset,
+          you can safely ignore this email.
         </Text>
 
         <Text

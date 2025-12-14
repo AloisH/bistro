@@ -23,6 +23,14 @@ model User {
   role          Role      @default(USER)
   banned        Boolean   @default(false)
 
+  // Onboarding
+  onboardingCompleted Boolean @default(false)
+  onboardingSteps     Json?
+  bio                 String?
+  company             String?
+  useCase             String?
+  emailNotifications  Boolean   @default(true)
+
   accounts                Account[]
   sessions                Session[]
   projects                Project[]

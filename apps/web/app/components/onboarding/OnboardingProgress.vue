@@ -1,0 +1,54 @@
+<script setup lang="ts">
+defineProps<{
+  currentStep: number;
+  totalSteps: number;
+}>();
+
+const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Complete'];
+</script>
+
+<template>
+  <div class="mb-8 w-full">
+    <!-- Progress bar -->
+    <UProgress
+      :value="(currentStep / totalSteps) * 100"
+      size="sm"
+      class="mb-6"
+    />
+
+    <!-- Step indicators -->
+    <div class="flex items-center justify-between">
+      <div
+        v-for="i in totalSteps"
+        :key="i"
+        class="flex flex-1 flex-col items-center"
+      >
+        <div
+          :class="[
+            'mb-2 flex h-10 w-10 items-center justify-center rounded-full font-semibold transition-colors',
+            i <= currentStep
+              ? 'bg-primary text-white'
+              : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
+          ]"
+        >
+          <UIcon
+            v-if="i < currentStep"
+            name="i-lucide-check"
+            class="h-5 w-5"
+          />
+          <span v-else>{{ i }}</span>
+        </div>
+        <span
+          :class="[
+            'hidden text-center text-xs sm:block',
+            i <= currentStep
+              ? 'font-medium text-gray-900 dark:text-white'
+              : 'text-gray-500 dark:text-gray-400',
+          ]"
+        >
+          {{ stepLabels[i - 1] }}
+        </span>
+      </div>
+    </div>
+  </div>
+</template>

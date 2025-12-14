@@ -43,7 +43,7 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#shared': resolve(__dirname, '../../shared'),
+    '#shared': resolve(__dirname, './shared'),
   },
 
   routeRules: {
@@ -59,7 +59,7 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      include: ['../../shared/**/*.ts'],
+      include: ['./shared/**/*.ts'],
     },
   },
   eslint: {

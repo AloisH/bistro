@@ -1,17 +1,16 @@
 import { z } from 'zod';
 
-export const emailAddressSchema = z.preprocess(
-  val => (typeof val === 'string' ? val.trim().toLowerCase() : val),
-  z.string().email('Invalid email'),
-);
+/**
+ * Email validation schemas
+ */
 
 export const sendEmailSchema = z.object({
-  to: z.union([emailAddressSchema, z.array(emailAddressSchema)]),
-  subject: z.string().min(1).max(200),
-  html: z.string().min(1),
+  to: z.union([z.string().email(), z.array(z.string().email())]),
+  subject: z.string().min(1, 'Subject is required'),
+  html: z.string().min(1, 'HTML content is required'),
   text: z.string().optional(),
-  from: emailAddressSchema.optional(),
-  replyTo: emailAddressSchema.optional(),
+  from: z.string().email().optional(),
+  replyTo: z.string().email().optional(),
 });
 
 export type SendEmailInput = z.infer<typeof sendEmailSchema>;

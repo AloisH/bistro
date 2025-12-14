@@ -44,11 +44,7 @@ export class SessionService {
    * Revoke a specific session
    * Prevents revoking current session
    */
-  async revokeSession(
-    sessionId: string,
-    userId: string,
-    currentToken: string,
-  ): Promise<void> {
+  async revokeSession(sessionId: string, userId: string, currentToken: string): Promise<void> {
     const session = await sessionRepository.findById(sessionId, userId);
 
     if (!session) {

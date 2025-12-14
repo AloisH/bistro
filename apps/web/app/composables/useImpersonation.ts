@@ -72,7 +72,7 @@ export function useImpersonation() {
    */
   const checkImpersonation = async () => {
     try {
-      const response = await $fetch('/api/admin/impersonate/active') as {
+      const response = (await $fetch('/api/admin/impersonate/active')) as {
         active: boolean;
         session: { targetUser?: User } | null;
       };

@@ -1,12 +1,12 @@
-import { resend } from './email-client';
 import { render } from '@vue-email/render';
 import type { Component } from 'vue';
-import type { SendEmailInput } from '#shared/schemas/email';
-import { sendEmailSchema } from '#shared/schemas/email';
-import VerifyEmail from './templates/VerifyEmail.vue';
+import type { SendEmailInput } from '~~/shared/schemas/email';
+import { sendEmailSchema } from '~~/shared/schemas/email';
+import { resend } from './email-client';
 import AccountDeletion from './templates/AccountDeletion.vue';
-import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
 import MagicLinkEmail from './templates/MagicLinkEmail.vue';
+import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
+import VerifyEmail from './templates/VerifyEmail.vue';
 
 interface SendTemplateEmailOptions<TProps> {
   to: string | string[];
@@ -150,10 +150,7 @@ export class EmailService {
   /**
    * Send magic link authentication email
    */
-  async sendMagicLink(options: {
-    to: string;
-    magicLink: string;
-  }): Promise<{ id: string } | null> {
+  async sendMagicLink(options: { to: string; magicLink: string }): Promise<{ id: string } | null> {
     return this.sendTemplateEmail({
       to: options.to,
       subject: 'Your login link for Bistro',

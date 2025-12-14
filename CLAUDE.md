@@ -58,6 +58,12 @@ Bun workspaces:
 
 Only `apps/web` has implementation. Other workspaces are empty directories.
 
+**CRITICAL - Shared Code Location:**
+- ✅ Schemas go in `apps/web/shared/schemas/` (inside web app, next to server/ folder)
+- ❌ NOT in monorepo root `/home/alois/bistro/shared/` (doesn't exist)
+- Import via `#shared/schemas/user` alias (configured in nuxt.config.ts)
+- Alias: `#shared` → `apps/web/shared/`
+
 ## Philosophy
 
 **KISS (Keep It Simple):**
@@ -124,8 +130,8 @@ Only `apps/web` has implementation. Other workspaces are empty directories.
 **Nuxt Aliases:**
 
 - `~` or `@` - Project root (apps/web/)
-- `#shared` - Workspace shared directory (../../shared from apps/web)
-- Auto-configured in nuxt.config.ts for cross-workspace imports
+- `#shared` - Shared directory (./shared from apps/web, next to server/)
+- Auto-configured in nuxt.config.ts
 
 **Banned Patterns:**
 

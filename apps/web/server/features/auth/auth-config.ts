@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink } from 'better-auth/plugins';
-import { ac, roles } from '#shared/auth/access-control';
+import { ac, roles } from '~~/shared/auth/access-control';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
 
@@ -34,12 +34,45 @@ export const auth = betterAuth({
         defaultValue: 'USER',
         input: false, // Prevent users from setting role during signup
       },
+      onboardingCompleted: {
+        type: 'boolean',
+        required: false,
+        defaultValue: false,
+        input: false,
+      },
+      bio: {
+        type: 'string',
+        required: false,
+        input: false,
+      },
+      company: {
+        type: 'string',
+        required: false,
+        input: false,
+      },
+      useCase: {
+        type: 'string',
+        required: false,
+        input: false,
+      },
+      emailNotifications: {
+        type: 'boolean',
+        required: false,
+        defaultValue: true,
+        input: false,
+      },
     },
   },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
-    sendResetPassword: async ({ user, url }: { user: { email: string; name: string }; url: string }) => {
+    sendResetPassword: async ({
+      user,
+      url,
+    }: {
+      user: { email: string; name: string };
+      url: string;
+    }) => {
       if (!emailService.isConfigured()) {
         console.warn('[Auth] Password reset disabled - RESEND_API_KEY not set');
         return;

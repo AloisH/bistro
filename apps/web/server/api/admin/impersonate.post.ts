@@ -1,6 +1,6 @@
-import { startImpersonationSchema } from '#shared/schemas/impersonation';
-import { requireRole } from '../../utils/require-role';
+import { startImpersonationSchema } from '~~/shared/schemas/impersonation';
 import { impersonationService } from '../../features/impersonation/impersonation-service';
+import { requireRole } from '../../utils/require-role';
 
 /**
  * POST /api/admin/impersonate
@@ -24,7 +24,11 @@ export default defineEventHandler(async (event) => {
   }
 
   // Start impersonation
-  const log = await impersonationService.startImpersonation(ctx.userId, validationResult.data, event);
+  const log = await impersonationService.startImpersonation(
+    ctx.userId,
+    validationResult.data,
+    event,
+  );
 
   return {
     success: true,

@@ -1,8 +1,13 @@
-import type { UpdateProfileInput, UserProfile } from '#shared/schemas/user';
-import { userRepository } from './user-repository';
-import { emailService } from '../email/email-service';
 import { scrypt, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
+import type {
+  OnboardingState,
+  UpdateOnboardingInput,
+  UpdateProfileInput,
+  UserProfile,
+} from '~~/shared/schemas/user';
+import { emailService } from '../email/email-service';
+import { userRepository } from './user-repository';
 
 const scryptAsync = promisify(scrypt);
 
@@ -53,6 +58,81 @@ export class UserService {
       updatedAt: updated.updatedAt,
       hasPassword: !!updated.password,
     };
+  }
+
+  /**
+   * Get onboarding state
+   */
+  async getOnboardingState(userId: string): Promise<OnboardingState> {
+    const user = await userRepository.findById(userId);
+
+    if (!user) {
+      throw createError({
+        statusCode: 404,
+        message: 'User not found',
+      });
+    }
+
+    return {
+      completed: user.onboardingCompleted,
+      steps: (user.onboardingSteps as Record<string, boolean>) || {},
+      data: {
+        bio: user.bio,
+        company: user.company,
+        useCase: user.useCase,
+      },
+    };
+  }
+
+  /**
+   * Update onboarding data
+   * Save step data and mark step as complete
+   */
+  async updateOnboarding(userId: string, input: UpdateOnboardingInput): Promise<OnboardingState> {
+    const user = await userRepository.findById(userId);
+
+    if (!user) {
+      throw createError({
+        statusCode: 404,
+        message: 'User not found',
+      });
+    }
+
+    // Merge step completion into onboardingSteps
+    const steps = (user.onboardingSteps as Record<string, boolean>) || {};
+    steps[input.step] = true;
+
+    // Update user with new data
+    const updated = await userRepository.updateOnboarding(userId, {
+      onboardingSteps: steps,
+      ...input.data,
+    });
+
+    return {
+      completed: updated.onboardingCompleted,
+      steps: (updated.onboardingSteps as Record<string, boolean>) || {},
+      data: {
+        bio: updated.bio,
+        company: updated.company,
+        useCase: updated.useCase,
+      },
+    };
+  }
+
+  /**
+   * Complete onboarding
+   * Mark onboarding as completed
+   */
+  async completeOnboarding(userId: string): Promise<void> {
+    await userRepository.updateOnboarding(userId, { onboardingCompleted: true });
+  }
+
+  /**
+   * Skip onboarding
+   * Mark onboarding as completed without saving data
+   */
+  async skipOnboarding(userId: string): Promise<void> {
+    await userRepository.updateOnboarding(userId, { onboardingCompleted: true });
   }
 
   /**

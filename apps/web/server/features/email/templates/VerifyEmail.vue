@@ -113,9 +113,7 @@ const footer = {
           Thanks for signing up! Please verify your email address to get started with Bistro.
         </Text>
 
-        <Text :style="paragraph">
-          Click the button below to verify your email address:
-        </Text>
+        <Text :style="paragraph"> Click the button below to verify your email address: </Text>
 
         <div :style="buttonContainer">
           <Button

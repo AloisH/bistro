@@ -37,6 +37,26 @@ export class UserRepository {
   }
 
   /**
+   * Update onboarding data
+   * Allows updating onboardingCompleted, onboardingSteps, bio, company, useCase
+   */
+  async updateOnboarding(
+    id: string,
+    data: {
+      onboardingCompleted?: boolean;
+      onboardingSteps?: Record<string, boolean>;
+      bio?: string;
+      company?: string;
+      useCase?: string;
+    },
+  ): Promise<User> {
+    return this.db.user.update({
+      where: { id },
+      data,
+    });
+  }
+
+  /**
    * Delete user
    * Cascade deletes all related data (sessions, accounts, projects, AI jobs)
    */

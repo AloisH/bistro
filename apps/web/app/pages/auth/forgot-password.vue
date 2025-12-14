@@ -49,9 +49,7 @@
           <NuxtLink
             to="/auth/login"
             class="text-primary hover:underline"
-          >
-            Sign in
-          </NuxtLink>
+          > Sign in </NuxtLink>
         </p>
       </template>
     </UCard>

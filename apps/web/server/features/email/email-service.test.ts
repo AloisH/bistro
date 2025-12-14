@@ -202,7 +202,12 @@ describe('EmailService', () => {
         { name: 'John' },
         { pretty: expect.any(Boolean) },
       );
-      expect(mockRender).toHaveBeenNthCalledWith(2, mockTemplate, { name: 'John' }, { plainText: true });
+      expect(mockRender).toHaveBeenNthCalledWith(
+        2,
+        mockTemplate,
+        { name: 'John' },
+        { plainText: true },
+      );
 
       // Check email was sent with rendered content
       expect(mockSend).toHaveBeenCalledWith(

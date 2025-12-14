@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /**
  * Start impersonation schema
@@ -6,9 +6,9 @@ import { z } from 'zod'
 export const startImpersonationSchema = z.object({
   userId: z.string().min(1),
   reason: z.string().min(1).max(500).optional(),
-})
+});
 
-export type StartImpersonationInput = z.infer<typeof startImpersonationSchema>
+export type StartImpersonationInput = z.infer<typeof startImpersonationSchema>;
 
 /**
  * Impersonation log response
@@ -22,6 +22,6 @@ export const impersonationLogSchema = z.object({
   reason: z.string().nullable(),
   ipAddress: z.string().nullable(),
   userAgent: z.string().nullable(),
-})
+});
 
-export type ImpersonationLog = z.infer<typeof impersonationLogSchema>
+export type ImpersonationLog = z.infer<typeof impersonationLogSchema>;

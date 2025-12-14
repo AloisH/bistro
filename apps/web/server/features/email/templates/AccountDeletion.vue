@@ -96,8 +96,8 @@ const footer = {
         </Text>
 
         <Text :style="paragraph">
-          This email confirms that your Bistro account and all associated data have been
-          permanently deleted. This action cannot be undone.
+          This email confirms that your Bistro account and all associated data have been permanently
+          deleted. This action cannot be undone.
         </Text>
 
         <Text :style="paragraph">

@@ -39,7 +39,7 @@
         <div class="mt-2 flex items-center justify-end">
           <NuxtLink
             to="/auth/forgot-password"
-            class="text-sm text-primary hover:underline"
+            class="text-primary text-sm hover:underline"
           >
             Forgot password?
           </NuxtLink>
@@ -72,7 +72,7 @@
             <div class="w-full border-t border-gray-200 dark:border-gray-800" />
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white dark:bg-gray-950 text-gray-500">Or</span>
+            <span class="bg-white px-2 text-gray-500 dark:bg-gray-950">Or</span>
           </div>
         </div>
 

@@ -18,7 +18,7 @@
               icon="i-lucide-sun"
               color="neutral"
               variant="ghost"
-              @click="() => $colorMode.preference = 'light'"
+              @click="() => ($colorMode.preference = 'light')"
             >
               Light
             </UButton>
@@ -26,7 +26,7 @@
               icon="i-lucide-moon"
               color="neutral"
               variant="ghost"
-              @click="() => $colorMode.preference = 'dark'"
+              @click="() => ($colorMode.preference = 'dark')"
             >
               Dark
             </UButton>
@@ -34,7 +34,7 @@
               icon="i-lucide-monitor"
               color="neutral"
               variant="ghost"
-              @click="() => $colorMode.preference = 'system'"
+              @click="() => ($colorMode.preference = 'system')"
             >
               System
             </UButton>

@@ -10,7 +10,9 @@
 
     <div class="mb-6">
       <h1 class="text-2xl font-bold">User Management</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">Manage users and impersonate for support</p>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Manage users and impersonate for support
+      </p>
     </div>
 
     <UCard>
@@ -45,9 +47,7 @@
 
           <div class="space-y-4">
             <div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                You are about to impersonate:
-              </p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">You are about to impersonate:</p>
               <p class="mt-1 font-semibold">{{ selectedUser?.name || selectedUser?.email }}</p>
               <p class="text-sm text-gray-500">{{ selectedUser?.email }}</p>
             </div>

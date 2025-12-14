@@ -32,6 +32,11 @@ export type UserMinAggregateOutputType = {
   image: string | null
   role: $Enums.Role | null
   banned: boolean | null
+  onboardingCompleted: boolean | null
+  bio: string | null
+  company: string | null
+  useCase: string | null
+  emailNotifications: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -45,6 +50,11 @@ export type UserMaxAggregateOutputType = {
   image: string | null
   role: $Enums.Role | null
   banned: boolean | null
+  onboardingCompleted: boolean | null
+  bio: string | null
+  company: string | null
+  useCase: string | null
+  emailNotifications: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +68,12 @@ export type UserCountAggregateOutputType = {
   image: number
   role: number
   banned: number
+  onboardingCompleted: number
+  onboardingSteps: number
+  bio: number
+  company: number
+  useCase: number
+  emailNotifications: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -73,6 +89,11 @@ export type UserMinAggregateInputType = {
   image?: true
   role?: true
   banned?: true
+  onboardingCompleted?: true
+  bio?: true
+  company?: true
+  useCase?: true
+  emailNotifications?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -86,6 +107,11 @@ export type UserMaxAggregateInputType = {
   image?: true
   role?: true
   banned?: true
+  onboardingCompleted?: true
+  bio?: true
+  company?: true
+  useCase?: true
+  emailNotifications?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +125,12 @@ export type UserCountAggregateInputType = {
   image?: true
   role?: true
   banned?: true
+  onboardingCompleted?: true
+  onboardingSteps?: true
+  bio?: true
+  company?: true
+  useCase?: true
+  emailNotifications?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -185,6 +217,12 @@ export type UserGroupByOutputType = {
   image: string | null
   role: $Enums.Role
   banned: boolean
+  onboardingCompleted: boolean
+  onboardingSteps: runtime.JsonValue | null
+  bio: string | null
+  company: string | null
+  useCase: string | null
+  emailNotifications: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -219,6 +257,12 @@ export type UserWhereInput = {
   image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   banned?: Prisma.BoolFilter<"User"> | boolean
+  onboardingCompleted?: Prisma.BoolFilter<"User"> | boolean
+  onboardingSteps?: Prisma.JsonNullableFilter<"User">
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  company?: Prisma.StringNullableFilter<"User"> | string | null
+  useCase?: Prisma.StringNullableFilter<"User"> | string | null
+  emailNotifications?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
@@ -237,6 +281,12 @@ export type UserOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
+  onboardingCompleted?: Prisma.SortOrder
+  onboardingSteps?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  company?: Prisma.SortOrderInput | Prisma.SortOrder
+  useCase?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailNotifications?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
@@ -258,6 +308,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   banned?: Prisma.BoolFilter<"User"> | boolean
+  onboardingCompleted?: Prisma.BoolFilter<"User"> | boolean
+  onboardingSteps?: Prisma.JsonNullableFilter<"User">
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  company?: Prisma.StringNullableFilter<"User"> | string | null
+  useCase?: Prisma.StringNullableFilter<"User"> | string | null
+  emailNotifications?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
@@ -276,6 +332,12 @@ export type UserOrderByWithAggregationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
+  onboardingCompleted?: Prisma.SortOrder
+  onboardingSteps?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  company?: Prisma.SortOrderInput | Prisma.SortOrder
+  useCase?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailNotifications?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -295,6 +357,12 @@ export type UserScalarWhereWithAggregatesInput = {
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   banned?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  onboardingCompleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  onboardingSteps?: Prisma.JsonNullableWithAggregatesFilter<"User">
+  bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  company?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  useCase?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailNotifications?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -308,6 +376,12 @@ export type UserCreateInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -326,6 +400,12 @@ export type UserUncheckedCreateInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -344,6 +424,12 @@ export type UserUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -362,6 +448,12 @@ export type UserUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -380,6 +472,12 @@ export type UserCreateManyInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -393,6 +491,12 @@ export type UserUpdateManyMutationInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -406,6 +510,12 @@ export type UserUncheckedUpdateManyInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -419,6 +529,12 @@ export type UserCountOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
+  onboardingCompleted?: Prisma.SortOrder
+  onboardingSteps?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  useCase?: Prisma.SortOrder
+  emailNotifications?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -432,6 +548,11 @@ export type UserMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
+  onboardingCompleted?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  useCase?: Prisma.SortOrder
+  emailNotifications?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -445,6 +566,11 @@ export type UserMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
+  onboardingCompleted?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  useCase?: Prisma.SortOrder
+  emailNotifications?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -553,6 +679,12 @@ export type UserCreateWithoutAccountsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
@@ -570,6 +702,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
@@ -603,6 +741,12 @@ export type UserUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
@@ -620,6 +764,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -637,6 +787,12 @@ export type UserCreateWithoutSessionsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -654,6 +810,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -687,6 +849,12 @@ export type UserUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -704,6 +872,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -721,6 +895,12 @@ export type UserCreateWithoutProjectsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -738,6 +918,12 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -771,6 +957,12 @@ export type UserUpdateWithoutProjectsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -788,6 +980,12 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -805,6 +1003,12 @@ export type UserCreateWithoutImpersonationsPerformedInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -822,6 +1026,12 @@ export type UserUncheckedCreateWithoutImpersonationsPerformedInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -844,6 +1054,12 @@ export type UserCreateWithoutImpersonationsReceivedInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -861,6 +1077,12 @@ export type UserUncheckedCreateWithoutImpersonationsReceivedInput = {
   image?: string | null
   role?: $Enums.Role
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  company?: string | null
+  useCase?: string | null
+  emailNotifications?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -894,6 +1116,12 @@ export type UserUpdateWithoutImpersonationsPerformedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -911,6 +1139,12 @@ export type UserUncheckedUpdateWithoutImpersonationsPerformedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -939,6 +1173,12 @@ export type UserUpdateWithoutImpersonationsReceivedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -956,6 +1196,12 @@ export type UserUncheckedUpdateWithoutImpersonationsReceivedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingSteps?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1040,6 +1286,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   image?: boolean
   role?: boolean
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: boolean
+  bio?: boolean
+  company?: boolean
+  useCase?: boolean
+  emailNotifications?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -1059,6 +1311,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   role?: boolean
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: boolean
+  bio?: boolean
+  company?: boolean
+  useCase?: boolean
+  emailNotifications?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1072,6 +1330,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   role?: boolean
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: boolean
+  bio?: boolean
+  company?: boolean
+  useCase?: boolean
+  emailNotifications?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1085,11 +1349,17 @@ export type UserSelectScalar = {
   image?: boolean
   role?: boolean
   banned?: boolean
+  onboardingCompleted?: boolean
+  onboardingSteps?: boolean
+  bio?: boolean
+  company?: boolean
+  useCase?: boolean
+  emailNotifications?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "emailVerified" | "image" | "role" | "banned" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "emailVerified" | "image" | "role" | "banned" | "onboardingCompleted" | "onboardingSteps" | "bio" | "company" | "useCase" | "emailNotifications" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1119,6 +1389,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     image: string | null
     role: $Enums.Role
     banned: boolean
+    onboardingCompleted: boolean
+    onboardingSteps: runtime.JsonValue | null
+    bio: string | null
+    company: string | null
+    useCase: string | null
+    emailNotifications: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1557,6 +1833,12 @@ export interface UserFieldRefs {
   readonly image: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly banned: Prisma.FieldRef<"User", 'Boolean'>
+  readonly onboardingCompleted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly onboardingSteps: Prisma.FieldRef<"User", 'Json'>
+  readonly bio: Prisma.FieldRef<"User", 'String'>
+  readonly company: Prisma.FieldRef<"User", 'String'>
+  readonly useCase: Prisma.FieldRef<"User", 'String'>
+  readonly emailNotifications: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

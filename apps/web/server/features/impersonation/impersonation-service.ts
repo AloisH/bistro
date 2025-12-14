@@ -1,8 +1,8 @@
-import type { ImpersonationLog } from '../../../prisma/generated/client';
-import type { StartImpersonationInput } from '#shared/schemas/impersonation';
 import type { H3Event } from 'h3';
-import { auth } from '../auth/auth-config';
+import type { StartImpersonationInput } from '~~/shared/schemas/impersonation';
+import type { ImpersonationLog } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
+import { auth } from '../auth/auth-config';
 import { impersonationRepository } from './impersonation-repository';
 
 /**
@@ -45,7 +45,8 @@ export class ImpersonationService {
     await impersonationRepository.endLog(adminId);
 
     // Extract IP and user agent from request
-    const ipAddress = getHeader(event, 'x-forwarded-for') || getHeader(event, 'x-real-ip') || undefined;
+    const ipAddress =
+      getHeader(event, 'x-forwarded-for') || getHeader(event, 'x-real-ip') || undefined;
     const userAgent = getHeader(event, 'user-agent') || undefined;
 
     // Create audit log

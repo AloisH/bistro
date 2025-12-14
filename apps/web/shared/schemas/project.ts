@@ -1,30 +1,26 @@
 import { z } from 'zod';
-import { slugSchema } from './common';
-import type { Project } from '../../prisma/generated/client';
 
 /**
  * Project validation schemas
  */
 
+const slugSchema = z
+  .string()
+  .min(1, 'Slug is required')
+  .max(100, 'Slug too long')
+  .regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens');
+
 export const createProjectSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(200, 'Title must be 200 characters or less'),
-  description: z.string().max(1000, 'Description must be 1000 characters or less').optional(),
+  title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
+  description: z.string().max(1000, 'Description too long').optional(),
   slug: slugSchema,
 });
 
 export const updateProjectSchema = z.object({
-  title: z
-    .string()
-    .min(1, 'Title is required')
-    .max(200, 'Title must be 200 characters or less')
-    .optional(),
-  description: z.string().max(1000, 'Description must be 1000 characters or less').optional(),
-  slug: slugSchema.optional(),
-  status: z.enum(['draft', 'published', 'archived']).optional(),
+  title: z.string().min(1, 'Title is required').max(200, 'Title too long').optional(),
+  description: z.string().max(1000, 'Description too long').optional(),
+  status: z.enum(['draft', 'active', 'archived']).optional(),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 export type UpdateProjectInput = z.infer<typeof updateProjectSchema>;
-
-// Type helper for API responses
-export type ProjectResponse = Omit<Project, 'userId'>;

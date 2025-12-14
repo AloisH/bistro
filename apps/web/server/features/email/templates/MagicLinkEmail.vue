@@ -133,8 +133,8 @@ const footer = {
         <Hr :style="hr" />
 
         <Text :style="footer">
-          This login link will expire in 15 minutes. If you didn't request this link, you can
-          safely ignore this email.
+          This login link will expire in 15 minutes. If you didn't request this link, you can safely
+          ignore this email.
         </Text>
 
         <Text

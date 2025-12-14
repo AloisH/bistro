@@ -3,9 +3,7 @@
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">Create new password</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Enter your new password below
-        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Enter your new password below</p>
       </template>
 
       <UForm
@@ -62,9 +60,7 @@
           <NuxtLink
             to="/auth/login"
             class="text-primary hover:underline"
-          >
-            Sign in
-          </NuxtLink>
+          > Sign in </NuxtLink>
         </p>
       </template>
     </UCard>

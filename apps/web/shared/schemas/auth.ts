@@ -1,37 +1,31 @@
 import { z } from 'zod';
-import { emailSchema, passwordSchema, nameSchema } from './common';
 
 /**
- * Authentication validation schemas
+ * Auth validation schemas
  */
 
 export const signInSchema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 export const signUpSchema = z.object({
-  name: nameSchema,
-  email: emailSchema,
-  password: passwordSchema,
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 export const forgotPasswordSchema = z.object({
-  email: emailSchema,
+  email: z.string().email('Invalid email address'),
 });
 
-export const resetPasswordSchema = z
-  .object({
-    password: passwordSchema,
-    confirmPassword: passwordSchema,
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'Passwords don\'t match',
-    path: ['confirmPassword'],
-  });
+export const resetPasswordSchema = z.object({
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  token: z.string(),
+});
 
 export const magicLinkSchema = z.object({
-  email: emailSchema,
+  email: z.string().email('Invalid email address'),
 });
 
 export type SignInInput = z.infer<typeof signInSchema>;

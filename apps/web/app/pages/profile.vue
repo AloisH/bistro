@@ -1,11 +1,15 @@
 <template>
   <div class="w-full p-4 sm:p-6 lg:p-8">
-    <UCard class="mx-auto max-w-4xl w-full">
+    <UCard class="mx-auto w-full max-w-4xl">
       <template #header>
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account information and preferences</p>
+            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
+              Profile Settings
+            </h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              Manage your account information and preferences
+            </p>
           </div>
           <!-- Profile Picture Section - Simplified and Elegant -->
           <div class="flex items-center gap-3">
@@ -22,8 +26,10 @@
 
       <div class="space-y-8">
         <!-- Profile Information -->
-        <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
-          <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
+        <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
+          <h2 class="mb-6 text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+            Profile Information
+          </h2>
           <UForm
             :state="profileState"
             :schema="updateProfileSchema"
@@ -83,12 +89,14 @@
         <!-- Change Password (only for password-based accounts) -->
         <div
           v-if="hasPassword"
-          class="border-b border-gray-200 dark:border-gray-700 pb-6"
+          class="border-b border-gray-200 pb-6 dark:border-gray-700"
         >
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
             <div>
-              <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Change Password</h2>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <h2 class="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+                Change Password
+              </h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Update your password to keep your account secure
               </p>
             </div>
@@ -151,7 +159,7 @@
                 </div>
               </template>
               <template #description>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                   Recommended for security when changing passwords
                 </p>
               </template>
@@ -179,11 +187,15 @@
         </div>
 
         <!-- Active Sessions -->
-        <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
+          <div
+            class="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"
+          >
             <div class="flex-1">
-              <div class="flex items-center gap-2 mb-1">
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Active Sessions</h2>
+              <div class="mb-1 flex items-center gap-2">
+                <h2 class="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+                  Active Sessions
+                </h2>
                 <UBadge
                   color="primary"
                   variant="subtle"
@@ -206,7 +218,7 @@
 
           <div
             v-if="sessions.length > 1"
-            class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700"
+            class="mt-6 border-t border-gray-200 pt-4 dark:border-gray-700"
           >
             <UButton
               color="error"
@@ -226,14 +238,47 @@
           </div>
         </div>
 
+        <!-- Restart Onboarding -->
+        <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
+          <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+                Restart Onboarding
+              </h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Go through the setup wizard again to update your preferences
+              </p>
+            </div>
+          </div>
+          <UButton
+            color="neutral"
+            variant="outline"
+            size="lg"
+            class="w-full sm:w-auto"
+            :loading="restartOnboardingLoading"
+            @click="restartOnboarding"
+          >
+            <template #leading>
+              <UIcon
+                v-if="!restartOnboardingLoading"
+                name="i-lucide-refresh-cw"
+                class="mr-2"
+              />
+            </template>
+            Restart Onboarding
+          </UButton>
+        </div>
+
         <!-- Danger Zone -->
         <div class="pb-6">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
             <div>
-              <h2 class="text-lg sm:text-xl font-semibold text-red-600 dark:text-red-400">Danger Zone</h2>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Once you delete your account, there is no going back. All your data including projects
-                and AI jobs will be permanently deleted.
+              <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">
+                Danger Zone
+              </h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Once you delete your account, there is no going back. All your data including
+                projects and AI jobs will be permanently deleted.
               </p>
             </div>
           </div>
@@ -277,7 +322,7 @@
       </template>
 
       <template #footer="{ close }">
-        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto sm:ml-auto">
+        <div class="flex w-full flex-col gap-3 sm:ml-auto sm:w-auto sm:flex-row">
           <UButton
             variant="ghost"
             :disabled="revokeLoading"
@@ -328,7 +373,7 @@
           />
 
           <div>
-            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            <p class="mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">
               The following data will be permanently deleted:
             </p>
             <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -400,7 +445,7 @@
       </template>
 
       <template #footer="{ close }">
-        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto sm:ml-auto">
+        <div class="flex w-full flex-col gap-3 sm:ml-auto sm:w-auto sm:flex-row">
           <UButton
             variant="ghost"
             :disabled="deleteLoading"
@@ -492,6 +537,9 @@ const deleteState = reactive({
 });
 const deleteLoading = ref(false);
 
+// Restart onboarding state
+const restartOnboardingLoading = ref(false);
+
 // Helper function to get initials from name
 function getInitials(name: string): string {
   return name
@@ -582,11 +630,18 @@ async function fetchSessions() {
   sessionsLoading.value = true;
   try {
     const data = await $fetch('/api/user/sessions');
-    sessions.value = data.sessions.map((s: Omit<SessionWithMetadata, 'createdAt' | 'lastActive'> & { createdAt: string; lastActive: string }) => ({
-      ...s,
-      createdAt: new Date(s.createdAt),
-      lastActive: new Date(s.lastActive),
-    }));
+    sessions.value = data.sessions.map(
+      (
+        s: Omit<SessionWithMetadata, 'createdAt' | 'lastActive'> & {
+          createdAt: string;
+          lastActive: string;
+        },
+      ) => ({
+        ...s,
+        createdAt: new Date(s.createdAt),
+        lastActive: new Date(s.lastActive),
+      }),
+    );
   } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
@@ -686,6 +741,43 @@ async function deleteAccount() {
     });
   } finally {
     deleteLoading.value = false;
+  }
+}
+
+// Restart onboarding
+async function restartOnboarding() {
+  restartOnboardingLoading.value = true;
+  try {
+    // Reset onboardingCompleted to false
+    await $fetch('/api/user/onboarding/restart', {
+      method: 'POST',
+    });
+
+    // Clear localStorage
+    localStorage.removeItem('bistro:onboarding');
+
+    // Fetch updated session
+    await fetchSession();
+
+    // Redirect to onboarding
+    await router.push('/onboarding');
+
+    toast.add({
+      title: 'Restarting onboarding',
+      description: 'Taking you to the setup wizard',
+      color: 'success',
+      icon: 'i-lucide-refresh-cw',
+    });
+  } catch (e: unknown) {
+    const err = e as { data?: { message?: string } };
+    toast.add({
+      title: 'Error',
+      description: err.data?.message || 'Failed to restart onboarding',
+      color: 'error',
+      icon: 'i-lucide-alert-circle',
+    });
+  } finally {
+    restartOnboardingLoading.value = false;
   }
 }
 </script>
