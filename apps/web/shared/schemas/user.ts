@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 export const updateProfileSchema = z.object({
   name: z.string().min(1, 'Name is required').max(200),
-  image: z.string().url().optional(),
+  image: z.url().optional(),
 });
 
 export const changePasswordSchema = z.object({
@@ -20,12 +20,12 @@ export const deleteAccountPasswordSchema = z.object({
 });
 
 export const deleteAccountEmailSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.email('Invalid email address'),
 });
 
 export const deleteAccountSchema = z.object({
   password: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.email().optional(),
 });
 
 export const updateOnboardingSchema = z.object({

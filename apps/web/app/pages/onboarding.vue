@@ -89,7 +89,10 @@ async function saveCurrentStep() {
   try {
     isLoading.value = true;
 
-    const stepMap: Record<number, { step: 'profile' | 'preferences' | 'useCase'; data: Record<string, unknown> }> = {
+    const stepMap: Record<
+      number,
+      { step: 'profile' | 'preferences' | 'useCase'; data: Record<string, unknown> }
+    > = {
       2: { step: 'profile', data: state.profile },
       3: { step: 'preferences', data: state.preferences },
       4: { step: 'useCase', data: { useCase: state.useCase } },
@@ -106,7 +109,8 @@ async function saveCurrentStep() {
     console.error('Failed to save step:', error);
     toast.add({
       title: 'Error',
-      description: (error as { data?: { message?: string } })?.data?.message || 'Failed to save progress',
+      description:
+        (error as { data?: { message?: string } })?.data?.message || 'Failed to save progress',
       color: 'error',
     });
     throw error;
@@ -141,7 +145,9 @@ async function complete() {
     console.error('Failed to complete onboarding:', error);
     toast.add({
       title: 'Error',
-      description: (error as { data?: { message?: string } })?.data?.message || 'Failed to complete onboarding',
+      description:
+        (error as { data?: { message?: string } })?.data?.message ||
+        'Failed to complete onboarding',
       color: 'error',
     });
   } finally {
@@ -175,7 +181,7 @@ async function complete() {
       </template>
 
       <!-- Step content -->
-      <div class="min-h-[400px]">
+      <div class="min-h-100">
         <Transition
           name="slide-fade"
           mode="out-in"
