@@ -125,7 +125,7 @@ export const auth = betterAuth({
   plugins: [
     admin({
       ac,
-      roles,
+      roles: roles as unknown as Record<string, unknown>,
       defaultRole: 'USER',
       impersonationSessionDuration: 60 * 60, // 1 hour
       allowImpersonatingAdmins: false, // Cannot impersonate other admins

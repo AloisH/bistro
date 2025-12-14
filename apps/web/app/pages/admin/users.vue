@@ -97,7 +97,13 @@
 
 <script setup lang="ts">
 import { h, resolveComponent } from 'vue';
-import type { User } from '../../../prisma/generated/client';
+import type { User as PrismaUser } from '../../../prisma/generated/client';
+
+// Serialized user type (dates are strings after JSON serialization)
+type User = Omit<PrismaUser, 'createdAt' | 'updatedAt'> & {
+  createdAt: string | Date;
+  updatedAt: string | Date;
+};
 
 definePageMeta({
   layout: 'dashboard',

@@ -75,7 +75,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { template, subject } = templateMap[templateId];
+  const templateConfig = templateMap[templateId];
+  if (!templateConfig) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid template ID',
+    });
+  }
+
+  const { template, subject } = templateConfig;
   const props = sampleData[templateId];
 
   await emailService.sendTemplateEmail({

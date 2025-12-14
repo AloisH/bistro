@@ -11,6 +11,7 @@
     <UDropdownMenu
       v-else
       :items="menuItems"
+      @select="onMenuSelect"
     >
       <UAvatar
         :alt="user?.name || user?.email || 'User'"
@@ -90,10 +91,17 @@ const menuItems = computed(() => {
     {
       label: 'Logout',
       icon: 'i-lucide-log-out',
-      click: handleLogout,
-    },
+      id: 'logout',
+    } as unknown as { label: string; icon: string },
   ]);
 
   return items;
 });
+
+// Handle menu item selection
+function onMenuSelect(item: { id?: string }) {
+  if (item.id === 'logout') {
+    handleLogout();
+  }
+}
 </script>
