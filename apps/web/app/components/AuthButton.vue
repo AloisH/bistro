@@ -91,16 +91,16 @@ const menuItems = computed(() => {
     {
       label: 'Logout',
       icon: 'i-lucide-log-out',
-      id: 'logout',
-    } as unknown as { label: string; icon: string },
+      disabled: false,
+    },
   ]);
 
   return items;
 });
 
 // Handle menu item selection
-function onMenuSelect(item: { id?: string }) {
-  if (item.id === 'logout') {
+function onMenuSelect(item: { label?: string }) {
+  if (item.label === 'Logout') {
     handleLogout();
   }
 }

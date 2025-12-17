@@ -125,7 +125,8 @@ export const auth = betterAuth({
   plugins: [
     admin({
       ac,
-      roles: roles as unknown as Record<string, unknown>,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      roles: roles as Record<string, any>,
       defaultRole: 'USER',
       impersonationSessionDuration: 60 * 60, // 1 hour
       allowImpersonatingAdmins: false, // Cannot impersonate other admins
