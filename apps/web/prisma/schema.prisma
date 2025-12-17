@@ -42,7 +42,8 @@ model User {
   sessions                Session[]
   impersonationsPerformed ImpersonationLog[] @relation("ImpersonationsByAdmin")
   impersonationsReceived  ImpersonationLog[] @relation("ImpersonationsOfUser")
-  organizationMemberships OrganizationMember[]
+  organizationMembers     OrganizationMember[]
+  sentInvites             OrganizationInvite[] @relation("SentInvites")
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -157,12 +158,14 @@ model OrganizationInvite {
   id             String           @id @default(cuid())
   email          String
   organizationId String
+  invitedById    String?
   role           OrganizationRole @default(MEMBER)
   token          String           @unique
   expiresAt      DateTime
   acceptedAt     DateTime?
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  invitedBy    User?        @relation("SentInvites", fields: [invitedById], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -170,5 +173,6 @@ model OrganizationInvite {
   @@index([email])
   @@index([organizationId])
   @@index([token])
+  @@index([invitedById])
   @@map("organization_invites")
 }
