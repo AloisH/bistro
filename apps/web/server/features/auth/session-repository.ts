@@ -59,6 +59,33 @@ export class SessionRepository {
     });
     return result.count;
   }
+
+  /**
+   * Update current organization for session
+   */
+  async updateCurrentOrganization(
+    token: string,
+    userId: string,
+    organizationId: string | null,
+  ): Promise<Session> {
+    // Find session by token and user
+    const session = await this.db.session.findFirst({
+      where: { token, userId },
+    });
+
+    if (!session) {
+      throw createError({
+        statusCode: 404,
+        message: 'Session not found',
+      });
+    }
+
+    // Update current organization
+    return this.db.session.update({
+      where: { id: session.id },
+      data: { currentOrganizationId: organizationId },
+    });
+  }
 }
 
 // Export singleton instance

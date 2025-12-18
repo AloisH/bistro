@@ -78,6 +78,34 @@ export class SessionService {
   }
 
   /**
+   * Set current organization in session
+   * Verifies user is member of organization
+   */
+  async setCurrentOrganization(
+    token: string,
+    userId: string,
+    organizationId: string | null,
+  ): Promise<void> {
+    // If setting org (not clearing), verify membership
+    if (organizationId) {
+      const { organizationRepository } = await import(
+        '../organization/organization-repository'
+      );
+      const membership = await organizationRepository.findMembership(userId, organizationId);
+
+      if (!membership) {
+        throw createError({
+          statusCode: 403,
+          message: 'You are not a member of this organization',
+        });
+      }
+    }
+
+    // Update session
+    await sessionRepository.updateCurrentOrganization(token, userId, organizationId);
+  }
+
+  /**
    * Get device type from UA parser result
    */
   private getDeviceType(deviceType?: string): string {
