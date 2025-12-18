@@ -51,9 +51,9 @@ async function switchOrg(slug: string) {
         block
       >
         <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-building-2"
-            class="h-4 w-4"
+          <UAvatar
+            :text="currentOrg.name.charAt(0).toUpperCase()"
+            size="xs"
           />
           <span>{{ currentOrg.name }}</span>
         </div>
