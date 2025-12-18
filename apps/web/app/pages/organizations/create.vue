@@ -2,10 +2,6 @@
 import { createOrganizationSchema } from '#shared/schemas/organization';
 import type { CreateOrganizationInput } from '#shared/schemas/organization';
 
-definePageMeta({
-  middleware: 'auth',
-});
-
 const router = useRouter();
 const toast = useToast();
 

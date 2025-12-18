@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type { Organization } from '~/prisma/generated/client';
 
-definePageMeta({
-  middleware: 'auth',
-});
-
 const router = useRouter();
 
 const { data: organizations, pending, error, refresh } = await useFetch<{ organizations: Organization[] }>('/api/organizations');
