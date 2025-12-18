@@ -1,12 +1,23 @@
 /**
  * Global middleware to ensure user has selected/created an organization
- * Runs after auth.global.ts
+ * Runs after auth.global.ts and onboarding.global.ts
+ * Organization creation is now part of onboarding flow
  */
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { loggedIn } = useAuth();
+  const { loggedIn, user } = useAuth();
 
   // Skip if not logged in (auth middleware handles this)
   if (!loggedIn.value) {
+    return;
+  }
+
+  // Skip if user hasn't completed onboarding (onboarding middleware handles this)
+  if (user.value && 'onboardingCompleted' in user.value && !user.value.onboardingCompleted) {
+    return;
+  }
+
+  // Skip if on onboarding page
+  if (to.path === '/onboarding') {
     return;
   }
 
@@ -27,7 +38,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Skip if on user settings pages
-  if (to.path.startsWith('/user/') || to.path === '/dashboard') {
+  if (to.path.startsWith('/user/')) {
     return;
   }
 
@@ -39,9 +50,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return;
     }
 
-    // If no orgs, redirect to create
+    // If no orgs, redirect to select (which will show create prompt)
     if (data.value.organizations.length === 0) {
-      return navigateTo('/organizations/create');
+      return navigateTo('/organizations/select');
     }
 
     // If has orgs, redirect to select

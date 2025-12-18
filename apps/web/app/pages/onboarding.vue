@@ -4,7 +4,7 @@ definePageMeta({
 });
 
 const STORAGE_KEY = 'bistro:onboarding';
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const { fetchSession } = useAuth();
 const toast = useToast();
@@ -20,6 +20,11 @@ const state = reactive({
     emailNotifications: true,
   },
   useCase: '',
+  organization: {
+    name: '',
+    slug: '',
+    description: '',
+  },
 });
 
 const isLoading = ref(false);
@@ -83,11 +88,20 @@ async function skipStep() {
 }
 
 async function saveCurrentStep() {
-  // Steps 1 and 5 don't save data
-  if (state.currentStep === 1 || state.currentStep === 5) return;
+  // Steps 1 and 6 don't save data
+  if (state.currentStep === 1 || state.currentStep === 6) return;
 
   try {
     isLoading.value = true;
+
+    // Step 5 creates organization
+    if (state.currentStep === 5) {
+      await $fetch('/api/organizations', {
+        method: 'POST',
+        body: state.organization,
+      });
+      return;
+    }
 
     const stepMap: Record<
       number,
@@ -205,9 +219,14 @@ async function complete() {
             :key="4"
             v-model="state.useCase"
           />
-          <OnboardingComplete
+          <OnboardingOrganization
             v-else-if="state.currentStep === 5"
             :key="5"
+            v-model="state.organization"
+          />
+          <OnboardingComplete
+            v-else-if="state.currentStep === 6"
+            :key="6"
           />
         </Transition>
       </div>

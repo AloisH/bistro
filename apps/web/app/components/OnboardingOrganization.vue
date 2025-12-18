@@ -1,0 +1,78 @@
+<script setup lang="ts">
+import { createOrganizationSchema } from '#shared/schemas/organization';
+import type { CreateOrganizationInput } from '#shared/schemas/organization';
+
+const model = defineModel<CreateOrganizationInput>({ required: true });
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+watch(
+  () => model.value.name,
+  (newName) => {
+    if (!model.value.slug || model.value.slug === slugify(model.value.name)) {
+      model.value.slug = slugify(newName);
+    }
+  },
+);
+</script>
+
+<template>
+  <div class="space-y-6">
+    <div>
+      <h3 class="mb-2 text-lg font-semibold">
+        Create Your Organization
+      </h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Organizations help you collaborate with your team
+      </p>
+    </div>
+
+    <UForm
+      :state="model"
+      :schema="createOrganizationSchema"
+    >
+      <div class="space-y-4">
+        <UFormField
+          name="name"
+          label="Organization Name"
+          required
+        >
+          <UInput
+            v-model="model.name"
+            placeholder="My Company"
+          />
+        </UFormField>
+
+        <UFormField
+          name="slug"
+          label="URL Slug"
+          required
+          description="Used in the organization URL"
+        >
+          <UInput
+            v-model="model.slug"
+            placeholder="my-company"
+          />
+        </UFormField>
+
+        <UFormField
+          name="description"
+          label="Description"
+        >
+          <UTextarea
+            v-model="model.description"
+            placeholder="What does your organization do?"
+            :rows="3"
+          />
+        </UFormField>
+      </div>
+    </UForm>
+  </div>
+</template>
