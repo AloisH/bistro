@@ -115,8 +115,39 @@ import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 const { session, signOut } = useAuth();
 const { isAdmin } = useRole();
 const router = useRouter();
+const route = useRoute();
+
+// Detect if on org page and extract slug
+const orgSlug = computed(() => {
+  const match = route.path.match(/^\/org\/([^/]+)/);
+  return match ? match[1] : null;
+});
 
 const navigationItems = computed<NavigationMenuItem[][]>(() => {
+  // If on org page, show org-scoped navigation
+  if (orgSlug.value) {
+    return [
+      [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-house',
+          to: `/org/${orgSlug.value}/dashboard`,
+        },
+        {
+          label: 'Members',
+          icon: 'i-lucide-users',
+          to: `/org/${orgSlug.value}/members`,
+        },
+        {
+          label: 'Settings',
+          icon: 'i-lucide-settings',
+          to: `/org/${orgSlug.value}/settings`,
+        },
+      ],
+    ];
+  }
+
+  // User-level navigation
   const baseItems: NavigationMenuItem[] = [
     {
       label: 'Dashboard',
