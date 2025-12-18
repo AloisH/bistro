@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { OrganizationMember, OrganizationRole } from '~/prisma/generated/client';
 import { inviteMemberSchema } from '#shared/schemas/organization';
+import { h } from 'vue';
 
 const props = defineProps<{
   organizationSlug: string;
@@ -31,6 +32,41 @@ const roleColors = {
   MEMBER: 'primary',
   GUEST: 'neutral',
 } as const;
+
+const columns = [
+  {
+    id: 'name',
+    accessorKey: 'user.name',
+    header: 'Name',
+    cell: ({ row }: { row: { original: OrganizationMember & { user: { name: string; email: string; image: string | null } } } }) => {
+      const user = row.original.user;
+      return h('div', { class: 'flex items-center gap-2' }, [
+        h(resolveComponent('UAvatar'), {
+          src: user.image || undefined,
+          alt: user.name,
+          size: 'xs',
+        }),
+        h('span', user.name),
+      ]);
+    },
+  },
+  {
+    id: 'email',
+    accessorKey: 'user.email',
+    header: 'Email',
+    cell: ({ row }: { row: { original: OrganizationMember & { user: { email: string } } } }) => row.original.user.email,
+  },
+  {
+    id: 'role',
+    accessorKey: 'role',
+    header: 'Role',
+    cell: ({ row }: { row: { original: OrganizationMember } }) => {
+      return h(resolveComponent('UBadge'), {
+        color: roleColors[row.original.role],
+      }, () => row.original.role);
+    },
+  },
+];
 
 async function openInviteModal() {
   inviteModalOpen.value = true;
@@ -85,39 +121,8 @@ async function sendInvite() {
 
     <UTable
       :rows="members"
-      :columns="[
-        { key: 'name', label: 'Name' },
-        { key: 'email', label: 'Email' },
-        { key: 'role', label: 'Role' },
-      ]"
-    >
-      <template #name-data="{ row }">
-        <div class="flex items-center gap-2">
-          <UAvatar
-            v-if="row.user.image"
-            :src="row.user.image"
-            :alt="row.user.name"
-            size="xs"
-          />
-          <UAvatar
-            v-else
-            :alt="row.user.name"
-            size="xs"
-          />
-          <span>{{ row.user.name }}</span>
-        </div>
-      </template>
-
-      <template #email-data="{ row }">
-        {{ row.user.email }}
-      </template>
-
-      <template #role-data="{ row }">
-        <UBadge :color="roleColors[row.role]">
-          {{ row.role }}
-        </UBadge>
-      </template>
-    </UTable>
+      :columns="columns"
+    />
 
     <UModal v-model:open="inviteModalOpen">
       <template #content="{ close }">
