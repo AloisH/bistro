@@ -8,8 +8,9 @@
       }"
     >
       <template #header="{ collapsed }">
+        <OrganizationSwitcher v-if="orgSlug && !collapsed" />
         <AppLogo
-          v-if="!collapsed"
+          v-else-if="!orgSlug && !collapsed"
           class="h-5 w-auto shrink-0"
         />
         <UIcon
