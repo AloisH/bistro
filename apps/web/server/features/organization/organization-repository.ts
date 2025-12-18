@@ -256,6 +256,16 @@ export class OrganizationRepository {
       data: { acceptedAt: new Date() },
     });
   }
+
+  /**
+   * Find all invites for organization
+   */
+  async findInvitesByOrganization(organizationId: string): Promise<OrganizationInvite[]> {
+    return this.db.organizationInvite.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
 }
 
 // Export singleton instance
