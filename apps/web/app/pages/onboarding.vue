@@ -28,6 +28,7 @@ const state = reactive({
 });
 
 const isLoading = ref(false);
+const createdOrgSlug = ref<string | null>(null);
 
 // Computed
 const isFirstStep = computed(() => state.currentStep === 1);
@@ -96,10 +97,11 @@ async function saveCurrentStep() {
 
     // Step 5 creates organization
     if (state.currentStep === 5) {
-      await $fetch('/api/organizations', {
+      const response = await $fetch<{ organization: { slug: string } }>('/api/organizations', {
         method: 'POST',
         body: state.organization,
       });
+      createdOrgSlug.value = response.organization.slug;
       return;
     }
 
@@ -153,8 +155,11 @@ async function complete() {
       color: 'success',
     });
 
-    // Force full page reload to refresh session cache
-    window.location.href = '/dashboard';
+    // Redirect to org dashboard if org was created, otherwise to org select
+    const redirectUrl = createdOrgSlug.value
+      ? `/org/${createdOrgSlug.value}/dashboard`
+      : '/organizations/select';
+    window.location.href = redirectUrl;
   } catch (error) {
     console.error('Failed to complete onboarding:', error);
     toast.add({

@@ -64,7 +64,7 @@ async function selectOrg(slug: string) {
           Create your first organization to get started
         </p>
         <UButton
-          to="/organizations/new"
+          to="/organizations/create"
           icon="i-lucide-plus"
         >
           Create Organization
@@ -107,7 +107,7 @@ async function selectOrg(slug: string) {
         #footer
       >
         <UButton
-          to="/organizations/new"
+          to="/organizations/create"
           variant="soft"
           icon="i-lucide-plus"
           block
