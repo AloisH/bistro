@@ -16,6 +16,18 @@ const currentOrg = computed(() =>
 
 const items = computed(() => [
   [
+    {
+      label: 'Members',
+      icon: 'i-lucide-users',
+      to: `/org/${currentSlug.value}/members`,
+    },
+    {
+      label: 'Settings',
+      icon: 'i-lucide-settings',
+      to: `/org/${currentSlug.value}/settings`,
+    },
+  ],
+  [
     ...organizations.value.map(org => ({
       label: org.name,
       icon: org.slug === currentSlug.value ? 'i-lucide-check' : 'i-lucide-building-2',
