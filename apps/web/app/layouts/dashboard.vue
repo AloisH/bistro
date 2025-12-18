@@ -80,13 +80,13 @@
               <div class="flex w-full items-center justify-between gap-2">
                 <div class="flex min-w-0 items-center gap-2">
                   <UAvatar
-                    :src="session?.user?.image || undefined"
-                    :alt="session?.user?.name || session?.user?.email || 'User'"
-                    :text="getUserInitials(session?.user)"
+                    :src="user?.image || undefined"
+                    :alt="user?.name || user?.email || 'User'"
+                    :text="getUserInitials(user)"
                     size="xs"
                   />
                   <span class="truncate text-sm">{{
-                    session?.user?.name || session?.user?.email || 'User'
+                    user?.name || user?.email || 'User'
                   }}</span>
                 </div>
                 <UIcon
@@ -98,9 +98,9 @@
 
             <UAvatar
               v-else
-              :src="session?.user?.image || undefined"
-              :alt="session?.user?.name || session?.user?.email || 'User'"
-              :text="getUserInitials(session?.user)"
+              :src="user?.image || undefined"
+              :alt="user?.name || user?.email || 'User'"
+              :text="getUserInitials(user)"
               size="md"
               class="cursor-pointer"
             />
@@ -116,7 +116,7 @@
 <script setup lang="ts">
 import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 
-const { session, signOut } = useAuth();
+const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
 const router = useRouter();
 const route = useRoute();
