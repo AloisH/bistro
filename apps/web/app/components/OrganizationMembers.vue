@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OrganizationMember, OrganizationRole } from '~/prisma/generated/client';
 import { inviteMemberSchema } from '#shared/schemas/organization';
-import { h } from 'vue';
+import { h, resolveComponent } from 'vue';
 
 const props = defineProps<{
   organizationSlug: string;
