@@ -15,8 +15,8 @@ function slugify(text: string): string {
 
 watch(
   () => model.value.name,
-  (newName) => {
-    if (!model.value.slug || model.value.slug === slugify(model.value.name)) {
+  (newName, oldName) => {
+    if (!model.value.slug || model.value.slug === slugify(oldName || '')) {
       model.value.slug = slugify(newName);
     }
   },

@@ -25,8 +25,8 @@ function slugify(text: string): string {
 
 watch(
   () => state.name,
-  (newName) => {
-    if (!state.slug || state.slug === slugify(state.name)) {
+  (newName, oldName) => {
+    if (!state.slug || state.slug === slugify(oldName || '')) {
       state.slug = slugify(newName);
     }
   },
