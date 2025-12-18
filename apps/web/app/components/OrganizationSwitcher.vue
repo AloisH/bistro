@@ -39,22 +39,25 @@ async function switchOrg(slug: string) {
 </script>
 
 <template>
-  <UDropdown
-    v-if="currentOrg"
-    :items="items"
-  >
-    <UButton
-      color="neutral"
-      variant="ghost"
-      trailing-icon="i-lucide-chevron-down"
+  <ClientOnly>
+    <UDropdownMenu
+      v-if="currentOrg"
+      :items="items"
     >
-      <div class="flex items-center gap-2">
-        <UIcon
-          name="i-lucide-building-2"
-          class="h-4 w-4"
-        />
-        <span>{{ currentOrg.name }}</span>
-      </div>
-    </UButton>
-  </UDropdown>
+      <UButton
+        color="neutral"
+        variant="ghost"
+        trailing-icon="i-lucide-chevron-down"
+        block
+      >
+        <div class="flex items-center gap-2">
+          <UIcon
+            name="i-lucide-building-2"
+            class="h-4 w-4"
+          />
+          <span>{{ currentOrg.name }}</span>
+        </div>
+      </UButton>
+    </UDropdownMenu>
+  </ClientOnly>
 </template>
