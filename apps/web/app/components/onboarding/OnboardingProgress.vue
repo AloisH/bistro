@@ -4,7 +4,7 @@ defineProps<{
   totalSteps: number;
 }>();
 
-const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Complete'];
+const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organization', 'Complete'];
 </script>
 
 <template>
