@@ -42,7 +42,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  // Check if user has organizations
+  // Skip user-level pages (profile, admin, dashboard)
+  if (to.path.startsWith('/profile') || to.path.startsWith('/admin') || to.path.startsWith('/dashboard')) {
+    return;
+  }
+
+  // Check if user has organizations for non-skipped pages
   try {
     const { data } = await useFetch<{ organizations: unknown[] }>('/api/organizations');
 
@@ -55,7 +60,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return navigateTo('/organizations/select');
     }
 
-    // If has orgs, redirect to select
+    // If has orgs, redirect to select to choose one
     return navigateTo('/organizations/select');
   } catch {
     // If error fetching orgs, allow navigation

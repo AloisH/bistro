@@ -86,9 +86,9 @@ async function sendInvite() {
     <UTable
       :rows="members"
       :columns="[
-        { key: 'name', label: 'Name' },
-        { key: 'email', label: 'Email' },
-        { key: 'role', label: 'Role' },
+        { id: 'name', accessorKey: 'user.name', header: 'Name' },
+        { id: 'email', accessorKey: 'user.email', header: 'Email' },
+        { id: 'role', accessorKey: 'role', header: 'Role' },
       ]"
     >
       <template #name-data="{ row }">
