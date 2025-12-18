@@ -30,7 +30,8 @@ const items = computed(() => [
   [
     ...organizations.value.map(org => ({
       label: org.name,
-      icon: org.slug === currentSlug.value ? 'i-lucide-check' : 'i-lucide-building-2',
+      avatar: { text: org.name.charAt(0).toUpperCase() },
+      trailingIcon: org.slug === currentSlug.value ? 'i-lucide-check' : undefined,
       click: () => switchOrg(org.slug),
     })),
   ],
