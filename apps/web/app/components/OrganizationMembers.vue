@@ -4,20 +4,19 @@ import { inviteMemberSchema } from '#shared/schemas/organization';
 
 const props = defineProps<{
   organizationSlug: string;
-  userRole: OrganizationRole;
 }>();
 
 const toast = useToast();
-
-const isOwner = computed(() => props.userRole === 'OWNER');
 
 const { data: membersData } = await useFetch<{
   members: Array<
     OrganizationMember & { user: { id: string; name: string; email: string; image: string | null } }
   >;
+  currentUserRole: OrganizationRole;
 }>(`/api/organizations/${props.organizationSlug}/members`);
 
 const members = computed(() => membersData.value?.members || []);
+const isOwner = computed(() => membersData.value?.currentUserRole === 'OWNER');
 
 const inviteModalOpen = ref(false);
 const inviteState = reactive({

@@ -13,6 +13,13 @@ export default defineEventHandler(async (event) => {
   );
 
   const members = await organizationRepository.findOrganizationMembers(ctx.organizationId);
+  const currentMember = await organizationRepository.findMembership(
+    ctx.userId,
+    ctx.organizationId,
+  );
 
-  return { members };
+  return {
+    members,
+    currentUserRole: currentMember?.role || 'GUEST',
+  };
 });
