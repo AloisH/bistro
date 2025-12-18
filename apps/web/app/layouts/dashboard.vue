@@ -137,16 +137,6 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
           icon: 'i-lucide-house',
           to: `/org/${orgSlug.value}/dashboard`,
         },
-        {
-          label: 'Members',
-          icon: 'i-lucide-users',
-          to: `/org/${orgSlug.value}/members`,
-        },
-        {
-          label: 'Settings',
-          icon: 'i-lucide-settings',
-          to: `/org/${orgSlug.value}/settings`,
-        },
       ],
     ];
   }
