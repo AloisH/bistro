@@ -61,6 +61,20 @@ export default defineNuxtConfig({
     rollupConfig: {
       plugins: [vue()],
     },
+    externals: {
+      inline: ['@prisma/client'],
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['@prisma/client', '@prisma/adapter-pg'],
+    },
+    resolve: {
+      alias: {
+        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js',
+      },
+    },
   },
 
   typescript: {
