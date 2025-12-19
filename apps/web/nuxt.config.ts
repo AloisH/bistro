@@ -6,7 +6,7 @@ import { dirname, resolve } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/ui'],
+  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui'],
 
   devtools: {
     enabled: true,
@@ -38,6 +38,12 @@ export default defineNuxtConfig({
         '/auth/magic-link',
         '/auth/magic-link-sent',
         '/api/auth/verify-email',
+        '/blog',
+        '/blog/*',
+        '/docs',
+        '/docs/*',
+        '/legal/privacy',
+        '/legal/terms',
       ],
     },
   },
