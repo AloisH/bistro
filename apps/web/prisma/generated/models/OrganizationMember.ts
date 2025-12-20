@@ -248,7 +248,7 @@ export type OrganizationMemberCreateInput = {
   role?: $Enums.OrganizationRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutOrganizationMembershipsInput
+  user: Prisma.UserCreateNestedOneWithoutOrganizationMembersInput
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput
 }
 
@@ -266,7 +266,7 @@ export type OrganizationMemberUpdateInput = {
   role?: Prisma.EnumOrganizationRoleFieldUpdateOperationsInput | $Enums.OrganizationRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutOrganizationMembersNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput
 }
 
@@ -493,7 +493,7 @@ export type OrganizationMemberCreateWithoutOrganizationInput = {
   role?: $Enums.OrganizationRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutOrganizationMembershipsInput
+  user: Prisma.UserCreateNestedOneWithoutOrganizationMembersInput
 }
 
 export type OrganizationMemberUncheckedCreateWithoutOrganizationInput = {
@@ -575,7 +575,7 @@ export type OrganizationMemberUpdateWithoutOrganizationInput = {
   role?: Prisma.EnumOrganizationRoleFieldUpdateOperationsInput | $Enums.OrganizationRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutOrganizationMembersNestedInput
 }
 
 export type OrganizationMemberUncheckedUpdateWithoutOrganizationInput = {

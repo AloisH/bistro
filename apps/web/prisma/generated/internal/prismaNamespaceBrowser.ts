@@ -126,7 +126,8 @@ export const SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  impersonatedBy: 'impersonatedBy'
+  impersonatedBy: 'impersonatedBy',
+  currentOrganizationId: 'currentOrganizationId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -188,6 +189,7 @@ export const OrganizationInviteScalarFieldEnum = {
   id: 'id',
   email: 'email',
   organizationId: 'organizationId',
+  invitedById: 'invitedById',
   role: 'role',
   token: 'token',
   expiresAt: 'expiresAt',
