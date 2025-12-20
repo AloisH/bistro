@@ -60,9 +60,10 @@ export default defineNuxtConfig({
   nitro: {
     rollupConfig: {
       plugins: [vue()],
+      external: [/^@prisma\//, /\.wasm$/],
     },
-    externals: {
-      inline: ['@prisma/client'],
+    experimental: {
+      wasm: true,
     },
   },
 
@@ -72,7 +73,7 @@ export default defineNuxtConfig({
     },
     resolve: {
       alias: {
-        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js',
+        '.prisma/client/index-browser': './node_modules/@prisma/client/index-browser.js',
       },
     },
   },
