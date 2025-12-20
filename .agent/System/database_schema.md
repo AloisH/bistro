@@ -76,6 +76,8 @@ model User {
 - `sessions`: Active sessions (one-to-many)
 - `impersonationsPerformed`: Impersonations performed by this admin (one-to-many)
 - `impersonationsReceived`: Impersonations of this user by admins (one-to-many)
+- `organizationMembers`: Organization memberships (one-to-many)
+- `sentInvites`: Organization invites sent by this user (one-to-many)
 
 ---
 
@@ -192,6 +194,7 @@ model Session {
 - `userAgent`: Client user agent string
 - `userId`: Foreign key to User
 - `impersonatedBy`: If impersonation session, admin user ID
+- `currentOrganizationId`: Active organization for this session
 
 **Relations:**
 
@@ -292,6 +295,164 @@ model ImpersonationLog {
 - Updated when impersonation ends (endedAt set)
 - Audit trail for compliance
 - Cannot impersonate other SUPER_ADMINs
+
+---
+
+### Organization
+
+Multi-tenant organization workspace.
+
+```prisma
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  image       String?
+  planType    String   @default("free")
+
+  members OrganizationMember[]
+  invites OrganizationInvite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("organizations")
+}
+```
+
+**Fields:**
+
+- `id`: CUID primary key
+- `name`: Organization display name
+- `slug`: Unique URL-friendly identifier
+- `description`: Optional description
+- `image`: Organization logo/avatar
+- `planType`: Subscription plan (free, pro, enterprise)
+
+**Relations:**
+
+- `members`: Organization members with roles (one-to-many)
+- `invites`: Pending invitations (one-to-many)
+
+---
+
+### OrganizationRole (Enum)
+
+Role levels within an organization.
+
+```prisma
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+```
+
+**Levels:**
+
+- `OWNER`: Full control, can delete organization
+- `ADMIN`: Can manage members and settings
+- `MEMBER`: Standard access
+- `GUEST`: Limited read-only access
+
+---
+
+### OrganizationMember
+
+User membership in an organization.
+
+```prisma
+model OrganizationMember {
+  id             String           @id @default(cuid())
+  userId         String
+  organizationId String
+  role           OrganizationRole @default(MEMBER)
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+  @@map("organization_members")
+}
+```
+
+**Fields:**
+
+- `id`: CUID primary key
+- `userId`: Foreign key to User
+- `organizationId`: Foreign key to Organization
+- `role`: Member role (OWNER/ADMIN/MEMBER/GUEST)
+
+**Relations:**
+
+- `user`: User who is a member (many-to-one, cascade delete)
+- `organization`: Organization being accessed (many-to-one, cascade delete)
+
+**Constraints:**
+
+- Unique `[userId, organizationId]`: User can only be member once per org
+- Indexed on `userId` and `organizationId` for fast lookups
+
+---
+
+### OrganizationInvite
+
+Pending organization invitation.
+
+```prisma
+model OrganizationInvite {
+  id             String           @id @default(cuid())
+  email          String
+  organizationId String
+  invitedById    String?
+  role           OrganizationRole @default(MEMBER)
+  token          String           @unique
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  invitedBy    User?        @relation("SentInvites", fields: [invitedById], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([organizationId])
+  @@index([token])
+  @@index([invitedById])
+  @@map("organization_invites")
+}
+```
+
+**Fields:**
+
+- `id`: CUID primary key
+- `email`: Email address of invitee
+- `organizationId`: Foreign key to Organization
+- `invitedById`: User who sent invite (nullable)
+- `role`: Role to assign upon acceptance
+- `token`: Unique invite token (for URL)
+- `expiresAt`: Invite expiration timestamp
+- `acceptedAt`: When invite was accepted (null if pending)
+
+**Relations:**
+
+- `organization`: Organization being invited to (many-to-one, cascade delete)
+- `invitedBy`: User who sent invite (many-to-one, set null on delete)
+
+**Indexes:**
+
+- `email`: Find invites by email
+- `organizationId`: List org invites
+- `token`: Validate invite tokens
+- `invitedById`: Track who sent invites
 
 ---
 
@@ -563,34 +724,42 @@ export default {
 ## Schema Diagram
 
 ```
-┌─────────────┐
-│    User     │
-├─────────────┤
-│ id (PK)     │───┐
-│ email       │   │
-│ name        │   │
-│ password    │   │
-│ role        │   │
-│ ...         │   │
-└─────────────┘   │
-                  │
-      ┌───────────┼───────────┬───────────┐
-      │           │           │           │
-      ▼           ▼           ▼           ▼
-┌──────────┐ ┌─────────┐ ┌────────────┐ ┌────────────┐
-│ Account  │ │ Session │ │Impersonate │ │Impersonate │
-│          │ │         │ │Log (admin) │ │Log (target)│
-├──────────┤ ├─────────┤ ├────────────┤ ├────────────┤
-│id (PK)   │ │id (PK)  │ │id (PK)     │ │id (PK)     │
-│userId(FK)│ │userId(FK│ │adminId(FK) │ │targetId(FK)│
-│providerId│ │token    │ │targetId(FK)│ │adminId(FK) │
-│...       │ │...      │ │...         │ │...         │
-└──────────┘ └─────────┘ └────────────┘ └────────────┘
+┌──────────────┐
+│     User     │
+├──────────────┤
+│ id (PK)      │───┐
+│ email        │   │
+│ name         │   │
+│ role         │   │
+│ onboarding...│   │
+└──────────────┘   │
+                   │
+      ┌────────────┼────────────┬───────────┬──────────────┐
+      │            │            │           │              │
+      ▼            ▼            ▼           ▼              ▼
+┌──────────┐ ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+│ Account  │ │ Session │ │Impersona │ │OrgMember │ │OrgInvite │
+│          │ │         │ │tion Log  │ │          │ │          │
+├──────────┤ ├─────────┤ ├──────────┤ ├──────────┤ ├──────────┤
+│userId(FK)│ │userId   │ │adminId   │ │userId(FK)│ │invitedBy │
+│providerId│ │token    │ │targetId  │ │orgId(FK) │ │email     │
+│...       │ │orgId    │ │...       │ │role      │ │orgId(FK) │
+└──────────┘ └─────────┘ └──────────┘ └──────────┘ └──────────┘
+                                            │             │
+                                            │             │
+                                            ▼             ▼
+                                       ┌──────────────────┐
+                                       │  Organization    │
+                                       ├──────────────────┤
+                                       │ id (PK)          │
+                                       │ slug (unique)    │
+                                       │ name             │
+                                       │ planType         │
+                                       └──────────────────┘
 
                    ┌──────────────┐
                    │ Verification │
                    ├──────────────┤
-                   │ id (PK)      │
                    │ identifier   │
                    │ value        │
                    │ expiresAt    │

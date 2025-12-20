@@ -14,9 +14,12 @@ Provides production-ready foundation:
 - Database (Prisma 7 + PostgreSQL)
 - Role-based access control (USER/ADMIN/SUPER_ADMIN)
 - Admin impersonation
+- User onboarding (5-step flow)
+- Organizations (multi-tenant support)
+- Content management (Nuxt Content)
+- Email service (Resend + Vue Email templates)
 - AI workflows (Vercel AI SDK - planned)
 - Payments (Polar - planned)
-- Email (Resend - planned)
 
 ---
 
@@ -26,6 +29,7 @@ Provides production-ready foundation:
 
 - **Nuxt 4**: Vue 3 framework, server-side rendering, file-based routing
 - **Nuxt UI v4**: Component library, built on Tailwind 4
+- **Nuxt Content**: MDC syntax, collections for blog/docs
 - **Tailwind 4**: Utility-first CSS
 - **TypeScript**: Strict mode enabled
 - **Composition API**: Vue 3 `<script setup>` only
@@ -38,8 +42,9 @@ Provides production-ready foundation:
 - **Prisma 7**: ORM with @prisma/adapter-pg
 - **pg**: PostgreSQL driver with connection pooling
 - **Better Auth**: Authentication (email/password + OAuth)
+- **Resend**: Email delivery (transactional emails)
+- **Vue Email**: React-based email templates
 - **Vercel AI SDK**: AI integrations (planned)
-- **Resend**: Email delivery (planned)
 
 ### Infrastructure
 
@@ -86,16 +91,37 @@ apps/web/
 │   │   │   ├── login.vue
 │   │   │   ├── register.vue
 │   │   │   └── verify-email.vue
+│   │   ├── onboarding.vue         # /onboarding (5-step flow)
+│   │   ├── organizations/         # Organization management
+│   │   │   ├── create.vue
+│   │   │   ├── select.vue
+│   │   │   └── invite.vue
+│   │   ├── org/[slug]/            # Organization workspace
+│   │   │   ├── dashboard.vue
+│   │   │   ├── members.vue
+│   │   │   └── settings.vue
 │   │   └── admin/                 # Admin pages (SUPER_ADMIN only)
-│   │       └── users.vue          # User management
+│   │       ├── users.vue          # User management
+│   │       └── email-preview.vue  # Email template preview
 │   ├── components/                # Auto-imported Vue components
 │   │   ├── AppLogo.vue
 │   │   ├── AuthButton.vue         # Login/Avatar dropdown
 │   │   ├── AuthOAuthButtons.vue   # OAuth providers
-│   │   └── TemplateMenu.vue
+│   │   ├── ImpersonationBanner.vue
+│   │   ├── SessionList.vue
+│   │   ├── OrganizationSwitcher.vue
+│   │   ├── OrganizationMembers.vue
+│   │   └── onboarding/            # Onboarding step components
+│   │       ├── OnboardingWelcome.vue
+│   │       ├── OnboardingProfile.vue
+│   │       ├── OnboardingUseCase.vue
+│   │       ├── OnboardingPreferences.vue
+│   │       └── OnboardingComplete.vue
 │   ├── composables/               # Auto-imported composables
 │   │   ├── useAuth.ts             # Auth state (Better Auth client)
-│   │   └── useRole.ts             # RBAC helpers
+│   │   ├── useRole.ts             # RBAC helpers
+│   │   ├── useImpersonation.ts    # Impersonation helpers
+│   │   └── useAuthRedirect.ts     # Auth redirect logic
 │   ├── middleware/                # Route guards
 │   │   └── auth.global.ts         # Global auth check
 │   └── assets/
@@ -108,26 +134,61 @@ apps/web/
 │   │   ├── user/
 │   │   │   ├── user-service.ts    # User operations
 │   │   │   └── user-repository.ts # DB queries
-│   │   └── email/
-│   │       ├── email-service.ts   # Email sending
-│   │       ├── email-client.ts    # Resend singleton
-│   │       └── templates/         # Vue Email templates
+│   │   ├── email/
+│   │   │   ├── email-service.ts   # Email sending
+│   │   │   ├── email-client.ts    # Resend singleton
+│   │   │   └── templates/         # Vue Email templates
+│   │   ├── organization/
+│   │   │   ├── organization-service.ts
+│   │   │   └── organization-repository.ts
+│   │   ├── impersonation/
+│   │   │   ├── impersonation-service.ts
+│   │   │   └── impersonation-repository.ts
+│   │   └── auth/
+│   │       ├── auth-config.ts     # Better Auth setup
+│   │       ├── auth-session.ts    # Session helper
+│   │       ├── session-service.ts
+│   │       └── session-repository.ts
 │   ├── api/                       # HTTP endpoints (auto-registered)
 │   │   ├── auth/[...].ts          # Better Auth catch-all
 │   │   ├── user/                  # User endpoints
 │   │   │   ├── profile.get.ts
 │   │   │   ├── profile.put.ts
+│   │   │   ├── account.delete.ts
 │   │   │   ├── onboarding.get.ts
 │   │   │   ├── onboarding.put.ts
-│   │   │   └── sessions.get.ts
+│   │   │   ├── onboarding/
+│   │   │   │   ├── complete.post.ts
+│   │   │   │   ├── skip.post.ts
+│   │   │   │   └── restart.post.ts
+│   │   │   ├── sessions.get.ts
+│   │   │   ├── sessions/[id].delete.ts
+│   │   │   ├── sessions/revoke-others.post.ts
+│   │   │   └── current-organization.put.ts
+│   │   ├── organizations/         # Organization endpoints
+│   │   │   ├── index.get.ts       # List user orgs
+│   │   │   ├── index.post.ts      # Create org
+│   │   │   ├── [slug]/
+│   │   │   │   ├── index.get.ts   # Get org
+│   │   │   │   ├── index.put.ts   # Update org
+│   │   │   │   ├── index.delete.ts # Delete org
+│   │   │   │   ├── members.get.ts
+│   │   │   │   └── invites/
+│   │   │   │       ├── index.get.ts
+│   │   │   │       └── index.post.ts
+│   │   │   └── invites/
+│   │   │       ├── [token].get.ts
+│   │   │       └── accept.post.ts
 │   │   └── admin/                 # Admin endpoints (SUPER_ADMIN)
 │   │       ├── users/
 │   │       │   ├── index.get.ts   # List users
 │   │       │   └── [id]/role.put.ts # Update role
-│   │       └── impersonate/
-│   │           ├── index.post.ts  # Start impersonation
-│   │           ├── stop.post.ts   # Stop impersonation
-│   │           └── active.get.ts  # Check active
+│   │       ├── impersonate/
+│   │       │   ├── index.post.ts  # Start impersonation
+│   │       │   ├── stop.post.ts   # Stop impersonation
+│   │       │   └── active.get.ts  # Check active
+│   │       ├── email-preview.get.ts
+│   │       └── email-preview/send-test.post.ts
 │   ├── utils/                     # Core utilities
 │   │   ├── db.ts                  # Prisma singleton
 │   │   └── api-handler.ts         # Handler wrappers
@@ -368,13 +429,25 @@ bun db:studio       # Prisma Studio UI
 - Google (optional, if GOOGLE_CLIENT_ID set)
 - Runtime check: `config.public.oauthGithubEnabled`
 
-### Email (Resend - Planned)
+### Email (Resend + Vue Email)
 
 **Integration:**
 
 - `server/features/email/email-client.ts`: Resend singleton
-- `server/features/email/templates/`: Vue Email templates
+- `server/features/email/email-service.ts`: Email sending service
+- `server/features/email/templates/`: Vue Email templates (React-based)
 - Server-only (never client-side)
+
+**Templates:**
+
+- VerifyEmail: Email verification link
+- ResetPasswordEmail: Password reset link
+- MagicLinkEmail: Passwordless login
+- AccountDeletion: Account deletion confirmation
+
+**Preview:**
+
+- `/admin/email-preview`: Live template preview (SUPER_ADMIN)
 
 ### AI (Vercel AI SDK - Planned)
 
@@ -538,10 +611,14 @@ bun docker:prod:logs    # View logs
 
 - ✅ Nuxt 4 app structure
 - ✅ Database (Prisma 7 + PostgreSQL)
-- ✅ Auth (Better Auth email/password)
+- ✅ Auth (Better Auth email/password + OAuth)
 - ✅ Roles & Permissions (USER/ADMIN/SUPER_ADMIN)
 - ✅ Admin impersonation
-- ✅ User onboarding flow (5 steps)
+- ✅ User onboarding (5-step flow)
+- ✅ Organizations (multi-tenant, invites, roles)
+- ✅ Session management (list, revoke)
+- ✅ Email service (Resend + Vue Email templates)
+- ✅ Content management (Nuxt Content)
 - ✅ Testing (Vitest + coverage)
 - ✅ CI/CD (GitHub Actions)
 - ✅ Docker (dev + prod)
@@ -549,9 +626,7 @@ bun docker:prod:logs    # View logs
 
 **Planned:**
 
-- ⏳ OAuth providers (GitHub, Google) - partially implemented
 - ⏳ Payment integration (Polar)
-- ⏳ Email templates (Resend)
 - ⏳ AI workflows (Vercel AI SDK)
 - ⏳ Landing site (`apps/landing`)
 - ⏳ CLI tool (`packages/cli`)

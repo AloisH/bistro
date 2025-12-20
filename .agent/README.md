@@ -11,6 +11,8 @@ New to the project? Start here:
 1. **[Project Architecture](./System/project_architecture.md)** - Project goals, tech stack, structure, patterns
 2. **[Database Schema](./System/database_schema.md)** - Database models, relations, queries
 3. **[Authentication System](./System/authentication_system.md)** - Auth flows, RBAC, impersonation
+4. **[Onboarding System](./System/onboarding_system.md)** - 5-step user onboarding flow
+5. **[Organizations System](./System/organizations_system.md)** - Multi-tenancy, invites, roles
 
 Then refer to SOPs for specific tasks.
 
@@ -62,6 +64,31 @@ Then refer to SOPs for specific tasks.
   - Security features (password hashing, CSRF, rate limiting)
   - Environment variables
   - Troubleshooting
+
+### User Experience
+
+- **[Onboarding System](./System/onboarding_system.md)**
+  - 5-step guided flow
+  - Step components (Welcome, Profile, UseCase, Preferences, Complete)
+  - Progress tracking in database
+  - Skip/resume functionality
+  - API endpoints (get, update, complete, skip, restart)
+  - Middleware integration
+  - Common patterns
+
+### Multi-Tenancy
+
+- **[Organizations System](./System/organizations_system.md)**
+  - Multi-tenant architecture
+  - Organization roles (OWNER, ADMIN, MEMBER, GUEST)
+  - Permission matrix
+  - Invite system (create, accept, revoke)
+  - Member management
+  - Data scoping (CRITICAL: always filter by organizationId)
+  - API endpoints (orgs, members, invites)
+  - Pages (/organizations/_, /org/[slug]/_)
+  - Components (OrganizationSwitcher, OrganizationMembers)
+  - Common patterns
 
 ---
 
@@ -279,7 +306,9 @@ All engineers should contribute to documentation:
 ├── System/                                # Current state of system
 │   ├── project_architecture.md           # Tech stack, structure, patterns
 │   ├── database_schema.md                # DB models, relations, queries
-│   └── authentication_system.md          # Auth flows, RBAC, impersonation
+│   ├── authentication_system.md          # Auth flows, RBAC, impersonation
+│   ├── onboarding_system.md              # 5-step user onboarding
+│   └── organizations_system.md           # Multi-tenancy, invites, roles
 ├── SOP/                                   # Best practices for tasks
 │   ├── database_migrations.md            # Schema changes workflow
 │   ├── adding_api_endpoints.md           # Backend endpoint creation
@@ -290,4 +319,4 @@ All engineers should contribute to documentation:
 
 ---
 
-_Last updated: 2025-12-14_
+_Last updated: 2025-12-20_
