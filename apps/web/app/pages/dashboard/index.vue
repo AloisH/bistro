@@ -15,7 +15,7 @@
 
       <div class="space-y-6">
         <div>
-          <h2 class="mb-2 text-xl font-semibold">Welcome, {{ session?.user?.name || 'User' }}!</h2>
+          <h2 class="mb-2 text-xl font-semibold">Welcome, {{ user?.name || 'User' }}!</h2>
           <p class="text-gray-600 dark:text-gray-400">You're successfully logged in.</p>
         </div>
 
@@ -24,11 +24,11 @@
           <div class="space-y-2 text-sm">
             <div class="flex justify-between">
               <span class="text-gray-600 dark:text-gray-400">User ID:</span>
-              <span class="font-mono">{{ session?.user?.id }}</span>
+              <span class="font-mono">{{ user?.id }}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600 dark:text-gray-400">Email:</span>
-              <span>{{ session?.user?.email }}</span>
+              <span>{{ user?.email }}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600 dark:text-gray-400">Session expires:</span>
@@ -50,7 +50,7 @@ definePageMeta({
   layout: 'dashboard',
 });
 
-const { session } = useAuth();
+const { session, user } = useAuth();
 
 const sessionExpiry = computed(() => {
   if (!session.value?.expiresAt) return 'N/A';

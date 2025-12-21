@@ -6,6 +6,7 @@
       :ui="{
         footer: 'border-t border-default',
       }"
+      class="bg-white/50 dark:bg-gray-950/50 backdrop-blur-sm border-r border-gray-200/80 dark:border-gray-800/80"
     >
       <template #header="{ collapsed }">
         <OrganizationSwitcher
@@ -31,6 +32,7 @@
           variant="outline"
           block
           :square="collapsed"
+          class="group hover:shadow-md hover:border-primary/50 transition-all duration-200"
         >
           <template
             v-if="!collapsed"
@@ -40,10 +42,12 @@
               <UKbd
                 value="meta"
                 variant="subtle"
+                class="transition-transform group-hover:scale-105"
               />
               <UKbd
                 value="K"
                 variant="subtle"
+                class="transition-transform group-hover:scale-105"
               />
             </div>
           </template>
@@ -54,6 +58,9 @@
             :collapsed="collapsed"
             :items="navigationItems"
             orientation="vertical"
+            :ui="{
+              link: 'group relative hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:translate-x-1',
+            }"
           />
 
           <UNavigationMenu
@@ -61,6 +68,9 @@
             :items="footerItems"
             orientation="vertical"
             class="mt-auto"
+            :ui="{
+              link: 'group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:translate-x-1',
+            }"
           />
         </ClientOnly>
       </template>
@@ -69,13 +79,16 @@
         <ClientOnly>
           <UDropdownMenu
             :items="userMenuItems"
-            :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width)' }"
+            :ui="{
+              content: 'w-(--reka-dropdown-menu-trigger-width) shadow-strong backdrop-blur-sm',
+            }"
           >
             <UButton
               v-if="!collapsed"
               color="neutral"
               variant="ghost"
               block
+              class="group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200"
             >
               <div class="flex w-full items-center justify-between gap-2">
                 <div class="flex min-w-0 items-center gap-2">
@@ -84,14 +97,15 @@
                     :alt="user?.name || user?.email || 'User'"
                     :text="getUserInitials(user)"
                     size="xs"
+                    class="ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-primary transition-all"
                   />
-                  <span class="truncate text-sm">{{
+                  <span class="truncate text-sm font-medium">{{
                     user?.name || user?.email || 'User'
                   }}</span>
                 </div>
                 <UIcon
                   name="i-lucide-chevron-up"
-                  class="size-4 shrink-0"
+                  class="size-4 shrink-0 transition-transform group-hover:-translate-y-0.5"
                 />
               </div>
             </UButton>
@@ -102,7 +116,7 @@
               :alt="user?.name || user?.email || 'User'"
               :text="getUserInitials(user)"
               size="md"
-              class="cursor-pointer"
+              class="cursor-pointer ring-2 ring-gray-200 dark:ring-gray-700 hover:ring-primary transition-all hover:scale-110"
             />
           </UDropdownMenu>
         </ClientOnly>

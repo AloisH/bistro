@@ -87,13 +87,15 @@
 </template>
 
 <script setup lang="ts">
+import type { BlogCollectionItem } from '@nuxt/content';
+
 const route = useRoute();
 const { isAdmin } = useRole();
 
 const slug = route.params.slug as string;
 
 // Fetch post
-const { data: post } = await useFetch(`/api/blog/posts/${slug}`, {
+const { data: post } = await useFetch<BlogCollectionItem>(`/api/blog/posts/${slug}`, {
   query: {
     includeDrafts: isAdmin.value,
   },
@@ -119,7 +121,7 @@ useSeoMeta({
 });
 
 // Format date
-const formatDate = (date: Date) => {
+const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',

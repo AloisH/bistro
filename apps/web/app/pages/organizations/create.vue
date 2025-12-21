@@ -77,7 +77,7 @@ async function onSubmit() {
       <UForm
         :state="state"
         :schema="createOrganizationSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <div class="space-y-4">
           <UFormField

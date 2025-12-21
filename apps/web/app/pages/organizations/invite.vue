@@ -9,7 +9,21 @@ if (!token) {
   await router.push('/organizations/select');
 }
 
-const { data: inviteData, error: fetchError } = await useFetch(`/api/organizations/invites/${token}`);
+interface InviteResponse {
+  invite: {
+    id: string;
+    email: string;
+    role: string;
+    organization: {
+      id: string;
+      name: string;
+      slug: string;
+      description?: string;
+    };
+  };
+}
+
+const { data: inviteData, error: fetchError } = await useFetch<InviteResponse>(`/api/organizations/invites/${token}`);
 
 const accepting = ref(false);
 

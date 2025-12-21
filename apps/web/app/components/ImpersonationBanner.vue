@@ -1,19 +1,19 @@
 <template>
   <div
     v-if="isImpersonating"
-    class="bg-warning-100 dark:bg-warning-950 border-warning-200 dark:border-warning-800 fixed top-0 right-0 left-0 z-50 border-b px-4 py-3"
+    class="bg-warning-100 dark:bg-warning-950 border-warning-200 dark:border-warning-800 fixed top-0 right-0 left-0 z-50 border-b px-4 py-3 shadow-strong backdrop-blur-md animate-in slide-in-from-top duration-300"
   >
     <div class="mx-auto flex max-w-screen-2xl items-center justify-between gap-4">
       <div class="flex min-w-0 items-center gap-3">
         <UIcon
           name="i-lucide-alert-triangle"
-          class="text-warning-600 dark:text-warning-400 size-5 shrink-0"
+          class="text-warning-600 dark:text-warning-400 size-5 shrink-0 animate-pulse"
         />
         <div class="min-w-0">
-          <p class="text-warning-900 dark:text-warning-100 truncate font-medium">
+          <p class="text-warning-900 dark:text-warning-100 truncate font-semibold">
             Viewing as {{ impersonatedUser?.name || impersonatedUser?.email || 'User' }}
           </p>
-          <p class="text-warning-700 dark:text-warning-300 text-sm">
+          <p class="text-warning-700 dark:text-warning-300 text-sm font-medium">
             Some actions may be restricted
           </p>
         </div>
@@ -23,7 +23,7 @@
         variant="solid"
         size="sm"
         :loading="loading"
-        class="shrink-0"
+        class="shrink-0 shadow-md hover:shadow-lg hover:scale-105 transition-all font-semibold"
         @click="handleStopImpersonation"
       >
         Stop

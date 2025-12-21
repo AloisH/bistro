@@ -34,7 +34,7 @@
             :state="profileState"
             :schema="updateProfileSchema"
             class="space-y-4"
-            @submit="updateProfile"
+            @submit.prevent="updateProfile"
           >
             <UFormField
               name="name"
@@ -101,7 +101,7 @@
               </p>
             </div>
             <UBadge
-              color="gray"
+              color="neutral"
               variant="subtle"
               class="mt-2 sm:mt-0"
             >
@@ -112,7 +112,7 @@
             :state="passwordState"
             :schema="changePasswordSchema"
             class="space-y-4"
-            @submit="changePassword"
+            @submit.prevent="changePassword"
           >
             <UFormField
               name="currentPassword"
@@ -263,7 +263,7 @@
                       Bio
                     </p>
                     <p class="mt-1 text-sm text-gray-900 dark:text-white">
-                      {{ user?.bio || 'Not provided' }}
+                      {{ (user as any)?.bio || 'Not provided' }}
                     </p>
                   </div>
                 </div>
@@ -281,7 +281,7 @@
                       Company
                     </p>
                     <p class="mt-1 text-sm text-gray-900 dark:text-white">
-                      {{ user?.company || 'Not provided' }}
+                      {{ (user as any)?.company || 'Not provided' }}
                     </p>
                   </div>
                 </div>
@@ -299,7 +299,7 @@
                       Use Case
                     </p>
                     <p class="mt-1 text-sm capitalize text-gray-900 dark:text-white">
-                      {{ user?.useCase || 'Not provided' }}
+                      {{ (user as any)?.useCase || 'Not provided' }}
                     </p>
                   </div>
                 </div>
@@ -317,7 +317,7 @@
                       Email Notifications
                     </p>
                     <p class="mt-1 text-sm text-gray-900 dark:text-white">
-                      {{ user?.emailNotifications ? 'Enabled' : 'Disabled' }}
+                      {{ (user as any)?.emailNotifications ? 'Enabled' : 'Disabled' }}
                     </p>
                   </div>
                 </div>
@@ -395,7 +395,7 @@
       title="Revoke All Other Sessions?"
       description="You will be signed out from all devices except this one."
       :ui="{
-        footer: { base: 'flex flex-col sm:flex-row gap-3 w-full' },
+        footer: 'flex flex-col sm:flex-row gap-3 w-full',
       }"
     >
       <template #body>
@@ -447,7 +447,7 @@
       title="Confirm Account Deletion"
       description="This action cannot be undone. All your data will be permanently deleted."
       :ui="{
-        footer: { base: 'flex flex-col sm:flex-row gap-3 w-full' },
+        footer: 'flex flex-col sm:flex-row gap-3 w-full',
       }"
     >
       <template #body>

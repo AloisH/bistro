@@ -1,25 +1,48 @@
 <template>
   <UApp>
-    <UHeader>
+    <UHeader class="border-b border-gray-200/80 backdrop-blur-md bg-white/80 dark:bg-gray-950/80 dark:border-gray-800/80 sticky top-0 z-50">
       <template #left>
-        <NuxtLink to="/">
-          <AppLogo class="h-6 w-auto shrink-0" />
+        <NuxtLink
+          to="/"
+          class="group flex items-center gap-2 transition-all duration-200 hover:scale-105"
+        >
+          <AppLogo class="h-6 w-auto shrink-0 transition-transform group-hover:rotate-2" />
         </NuxtLink>
+
+        <div class="hidden md:flex items-center gap-1 ml-6">
+          <UButton
+            to="/blog"
+            color="neutral"
+            variant="ghost"
+          >
+            Blog
+          </UButton>
+          <UButton
+            to="/docs"
+            color="neutral"
+            variant="ghost"
+          >
+            Docs
+          </UButton>
+        </div>
       </template>
 
       <template #right>
-        <AuthButton />
+        <div class="flex items-center gap-2">
+          <AuthButton />
 
-        <UColorModeButton />
+          <UColorModeButton class="transition-transform hover:rotate-180 duration-500" />
 
-        <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
-        />
+          <UButton
+            to="https://github.com/nuxt-ui-templates/starter"
+            target="_blank"
+            icon="i-simple-icons-github"
+            aria-label="GitHub"
+            color="neutral"
+            variant="ghost"
+            class="transition-all hover:scale-110"
+          />
+        </div>
       </template>
     </UHeader>
 
@@ -29,12 +52,22 @@
 
     <USeparator icon="i-simple-icons-nuxtdotjs" />
 
-    <UFooter>
+    <UFooter class="border-t border-gray-200/50 dark:border-gray-800/50">
       <template #left>
-        <p class="text-muted text-sm">Built with Nuxt UI • © {{ new Date().getFullYear() }}</p>
+        <p class="text-muted text-sm">
+          Built with <span class="text-primary font-semibold">Nuxt UI</span> • © {{ new Date().getFullYear() }}
+        </p>
       </template>
 
       <template #right>
+        <UButton
+          to="/rss.xml"
+          icon="i-lucide-rss"
+          aria-label="RSS Feed"
+          color="neutral"
+          variant="ghost"
+          class="transition-all hover:scale-110"
+        />
         <UButton
           to="https://github.com/nuxt-ui-templates/starter"
           target="_blank"
@@ -42,6 +75,7 @@
           aria-label="GitHub"
           color="neutral"
           variant="ghost"
+          class="transition-all hover:scale-110"
         />
       </template>
     </UFooter>

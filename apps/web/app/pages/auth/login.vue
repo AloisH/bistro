@@ -9,7 +9,7 @@
       <UForm
         :state="state"
         :schema="signInSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <UFormField
           name="email"
@@ -39,7 +39,7 @@
         <div class="mt-2 flex items-center justify-end">
           <NuxtLink
             to="/auth/forgot-password"
-            class="text-primary text-sm hover:underline"
+            class="text-primary text-sm hover:underline font-medium transition-all hover:translate-x-1"
           >
             Forgot password?
           </NuxtLink>
@@ -47,17 +47,18 @@
 
         <UAlert
           v-if="error"
-          color="red"
+          color="error"
           variant="subtle"
           :title="error"
-          class="mt-4"
+          class="mt-4 animate-in fade-in slide-in-from-top duration-300"
         />
 
         <UButton
           type="submit"
           block
           :loading="loading"
-          class="mt-6"
+          size="xl"
+          class="mt-6 font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] transition-all"
         >
           Sign in
         </UButton>
@@ -88,12 +89,14 @@
       </div>
 
       <template #footer>
-        <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-center text-sm text-muted">
           Don't have an account?
           <NuxtLink
             to="/auth/register"
-            class="text-primary hover:underline"
-          > Sign up </NuxtLink>
+            class="text-primary hover:underline font-semibold transition-all hover:translate-x-1 inline-block"
+          >
+            Sign up
+          </NuxtLink>
         </p>
       </template>
     </UCard>

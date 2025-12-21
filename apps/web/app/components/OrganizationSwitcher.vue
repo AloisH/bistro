@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Organization } from '~/prisma/generated/client';
+import type { Organization } from '../../prisma/generated/client';
 
 const route = useRoute();
 const router = useRouter();
@@ -56,19 +56,24 @@ async function switchOrg(slug: string) {
     <UDropdownMenu
       v-if="currentOrg"
       :items="items"
+      :ui="{
+        content: 'shadow-strong backdrop-blur-sm',
+      }"
     >
       <UButton
         color="neutral"
         variant="ghost"
         trailing-icon="i-lucide-chevron-down"
         block
+        class="group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:shadow-md"
       >
         <div class="flex items-center gap-2">
           <UAvatar
             :text="currentOrg.name.charAt(0).toUpperCase()"
             size="xs"
+            class="ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-primary transition-all"
           />
-          <span>{{ currentOrg.name }}</span>
+          <span class="font-semibold">{{ currentOrg.name }}</span>
         </div>
       </UButton>
     </UDropdownMenu>

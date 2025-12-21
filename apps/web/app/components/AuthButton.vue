@@ -4,20 +4,26 @@
       v-if="!session"
       to="/auth/login"
       label="Login"
-      color="neutral"
-      variant="subtle"
+      color="primary"
+      variant="solid"
+      class="font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+      trailing-icon="i-lucide-arrow-right"
     />
 
     <UDropdownMenu
       v-else
       :items="menuItems"
+      :ui="{
+        content: 'shadow-strong backdrop-blur-sm border border-gray-200/50 dark:border-gray-800/50',
+      }"
       @select="onMenuSelect"
     >
       <UAvatar
         :alt="user?.name || user?.email || 'User'"
-        :src="user?.image"
+        :src="user?.image || undefined"
         :text="getUserInitials(user)"
         size="sm"
+        class="cursor-pointer ring-2 ring-gray-200 dark:ring-gray-700 hover:ring-primary transition-all hover:scale-110 shadow-md"
       />
     </UDropdownMenu>
   </div>

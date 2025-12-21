@@ -11,7 +11,7 @@
       <UForm
         :state="state"
         :schema="forgotPasswordSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <UFormField
           name="email"
@@ -27,7 +27,7 @@
 
         <UAlert
           v-if="error"
-          color="red"
+          color="error"
           variant="subtle"
           :title="error"
           class="mt-4"

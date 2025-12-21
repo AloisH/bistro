@@ -9,7 +9,7 @@
       <UForm
         :state="state"
         :schema="resetPasswordSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <UFormField
           name="password"
@@ -38,7 +38,7 @@
 
         <UAlert
           v-if="error"
-          color="red"
+          color="error"
           variant="subtle"
           :title="error"
           class="mt-4"

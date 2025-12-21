@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OrganizationMember, OrganizationRole } from '~/prisma/generated/client';
+import type { OrganizationMember, OrganizationRole } from '../../prisma/generated/client';
 import { inviteMemberSchema } from '#shared/schemas/organization';
 import { h, resolveComponent } from 'vue';
 
@@ -62,7 +62,7 @@ const columns = [
     header: 'Role',
     cell: ({ row }: { row: { original: OrganizationMember } }) => {
       return h(resolveComponent('UBadge'), {
-        color: roleColors[row.original.role],
+        color: roleColors[row.original.role as keyof typeof roleColors],
       }, () => row.original.role);
     },
   },
@@ -136,7 +136,7 @@ async function sendInvite() {
           <UForm
             :state="inviteState"
             :schema="inviteMemberSchema"
-            @submit="sendInvite"
+            @submit.prevent="sendInvite"
           >
             <div class="space-y-4">
               <UFormField

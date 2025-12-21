@@ -9,7 +9,7 @@
       <UForm
         :state="state"
         :schema="signUpSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <UFormField
           name="name"
@@ -51,7 +51,7 @@
 
         <UAlert
           v-if="error"
-          color="red"
+          color="error"
           variant="subtle"
           :title="error"
           class="mt-4"

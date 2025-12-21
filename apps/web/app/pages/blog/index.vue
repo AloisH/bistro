@@ -50,6 +50,8 @@
 </template>
 
 <script setup lang="ts">
+import type { BlogCollectionItem } from '@nuxt/content';
+
 const route = useRoute();
 const router = useRouter();
 const { isAdmin } = useRole();
@@ -63,7 +65,7 @@ const {
   data: postsData,
   status: _status,
   refresh,
-} = await useFetch('/api/blog/posts', {
+} = await useFetch<{ posts: BlogCollectionItem[]; total: number; page: number; limit: number; totalPages: number }>('/api/blog/posts', {
   query: computed(() => ({
     page: currentPage.value,
     limit,
@@ -73,7 +75,17 @@ const {
   watch: false,
 });
 
-const posts = computed(() => postsData.value?.posts || []);
+const posts = computed(() => {
+  const rawPosts = postsData.value?.posts || [];
+  // Transform authors to match UBlogPosts expected format
+  return rawPosts.map(post => ({
+    ...post,
+    authors: post.authors?.map(a => ({
+      ...a,
+      avatar: a.avatar ? { src: a.avatar } : undefined,
+    })),
+  }));
+});
 const total = computed(() => postsData.value?.total || 0);
 const totalPages = computed(() => postsData.value?.totalPages || 1);
 
@@ -99,7 +111,7 @@ const allTags = computed(() => {
 function filterByTag(tag: string) {
   if (selectedTag.value === tag) {
     // Clear filter
-    selectedTag.value = undefined;
+    selectedTag.value = '';
     router.push({ query: { page: '1' } });
   } else {
     selectedTag.value = tag;

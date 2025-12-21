@@ -49,13 +49,45 @@ const hasOAuth = computed(
   () => config.public.oauthGithubEnabled || config.public.oauthGoogleEnabled,
 );
 
-const signInWithGithub = () => {
+const signInWithGithub = async () => {
   loading.value = 'github';
-  signIn.social({ provider: 'github', callbackURL: '/dashboard' });
+  console.log('[OAuth] Starting GitHub sign-in...');
+  try {
+    const result = await signIn.social({
+      provider: 'github',
+      callbackURL: '/dashboard',
+    });
+    console.log('[OAuth] GitHub result:', result);
+
+    // Check if we need manual redirect
+    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
+      console.log('[OAuth] Redirecting to:', result.url);
+      window.location.href = result.url;
+    }
+  } catch (error) {
+    console.error('[OAuth] GitHub error:', error);
+    loading.value = null;
+  }
 };
 
-const signInWithGoogle = () => {
+const signInWithGoogle = async () => {
   loading.value = 'google';
-  signIn.social({ provider: 'google', callbackURL: '/dashboard' });
+  console.log('[OAuth] Starting Google sign-in...');
+  try {
+    const result = await signIn.social({
+      provider: 'google',
+      callbackURL: '/dashboard',
+    });
+    console.log('[OAuth] Google result:', result);
+
+    // Check if we need manual redirect
+    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
+      console.log('[OAuth] Redirecting to:', result.url);
+      window.location.href = result.url;
+    }
+  } catch (error) {
+    console.error('[OAuth] Google error:', error);
+    loading.value = null;
+  }
 };
 </script>

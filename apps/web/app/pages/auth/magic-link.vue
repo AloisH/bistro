@@ -11,7 +11,7 @@
       <UForm
         :state="state"
         :schema="magicLinkSchema"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <UFormField
           name="email"

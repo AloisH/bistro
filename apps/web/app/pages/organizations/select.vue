@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Organization } from '~/prisma/generated/client';
+import type { Organization } from '../../../prisma/generated/client';
 
 const router = useRouter();
 
@@ -41,7 +41,7 @@ async function selectOrg(slug: string) {
         />
         <UButton
           class="mt-4"
-          @click="refresh"
+          @click="() => refresh()"
         >
           Retry
         </UButton>
