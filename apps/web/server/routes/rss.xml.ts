@@ -1,5 +1,6 @@
+import type { BlogCollectionItem } from '@nuxt/content';
+import { queryCollection } from '@nuxt/content/nitro';
 import { Feed } from 'feed';
-import { serverQueryContent } from '#content/server';
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -23,19 +24,19 @@ export default defineEventHandler(async (event) => {
   });
 
   // Fetch all published posts (exclude drafts)
-  const posts = await serverQueryContent(event, 'blog')
-    .where('draft', { $ne: true })
-    .sort({ date: -1 })
-    .find();
+  const allPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
+
+  // Filter out drafts
+  const posts = allPosts.filter((post: BlogCollectionItem) => !post.draft).reverse();
 
   // Add posts to feed
   for (const post of posts) {
     feed.addItem({
       title: post.title || '',
-      id: `${siteUrl}${post._path}`,
-      link: `${siteUrl}${post._path}`,
+      id: `${siteUrl}${post.path}`,
+      link: `${siteUrl}${post.path}`,
       description: post.description || '',
-      content: post.body,
+      content: '', // Body is a MarkdownRoot object, not a string
       author: post.authors?.map((a: { name: string }) => ({
         name: a.name,
       })),

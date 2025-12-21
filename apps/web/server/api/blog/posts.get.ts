@@ -1,5 +1,6 @@
-import { serverQueryContent } from '#content/server';
-import { requireRole } from '../../utils/serverAuth';
+import type { BlogCollectionItem } from '@nuxt/content';
+import { queryCollection } from '@nuxt/content/nitro';
+import { requireRole } from '../../utils/require-role';
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -11,34 +12,35 @@ export default defineEventHandler(async (event) => {
   // Check if user is admin (for draft posts)
   let isAdmin = false;
   try {
-    const session = await requireRole(['ADMIN', 'SUPER_ADMIN'])(event);
+    const session = await requireRole(event, ['ADMIN', 'SUPER_ADMIN']);
     isAdmin = !!session;
   } catch {
     // Not admin, continue without drafts
   }
 
-  // Build query
-  let queryBuilder = serverQueryContent(event, 'blog').sort({ date: -1 });
+  // Fetch all posts
+  const allPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
 
-  // Filter drafts (unless admin requested them)
-  if (!includeDrafts || !isAdmin) {
-    queryBuilder = queryBuilder.where('draft', { $ne: true });
-  }
+  // Filter drafts and tags in memory
+  const filteredPosts = allPosts.filter((post: BlogCollectionItem) => {
+    // Check draft status
+    if (post.draft && (!includeDrafts || !isAdmin)) {
+      return false;
+    }
 
-  // Filter by tag
-  if (tag) {
-    queryBuilder = queryBuilder.where('tags', { $contains: tag });
-  }
+    // Check tag filter
+    if (tag && (!post.tags || !post.tags.includes(tag))) {
+      return false;
+    }
 
-  // Get total count
-  const allPosts = await queryBuilder.find();
-  const total = allPosts.length;
+    return true;
+  }).reverse(); // Reverse for descending order
+  const total = filteredPosts.length;
 
-  // Apply pagination
-  const posts = await queryBuilder
-    .skip((page - 1) * limit)
-    .limit(limit)
-    .find();
+  // Apply pagination in memory
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const posts = filteredPosts.slice(startIndex, endIndex);
 
   return {
     posts,

@@ -1,5 +1,6 @@
-import { serverQueryContent } from '#content/server';
-import { requireRole } from '../../../utils/serverAuth';
+import type { BlogCollectionItem } from '@nuxt/content';
+import { queryCollection } from '@nuxt/content/nitro';
+import { requireRole } from '../../../utils/require-role';
 
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug');
@@ -9,14 +10,14 @@ export default defineEventHandler(async (event) => {
   // Check if user is admin
   let isAdmin = false;
   try {
-    const session = await requireRole(['ADMIN', 'SUPER_ADMIN'])(event);
+    const session = await requireRole(event, ['ADMIN', 'SUPER_ADMIN']);
     isAdmin = !!session;
   } catch {
     // Not admin
   }
 
   // Fetch post
-  const post = await serverQueryContent(event, 'blog').where('_path', `/blog/${slug}`).findOne();
+  const post = (await queryCollection(event, 'blog').path(`blog/${slug}`).first()) as BlogCollectionItem | null;
 
   // Return 404 if not found
   if (!post) {
