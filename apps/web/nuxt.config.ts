@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const workspaceRoot = resolve(__dirname, '../..');
 
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui'],
@@ -65,9 +66,21 @@ export default defineNuxtConfig({
     experimental: {
       wasm: true,
     },
+    prerender: {
+      routes: ['/rss.xml'],
+    },
   },
 
   vite: {
+    server: {
+      fs: {
+        allow: [workspaceRoot],
+        strict: false,
+      },
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    },
     optimizeDeps: {
       exclude: ['@prisma/client', '@prisma/adapter-pg'],
     },
