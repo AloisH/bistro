@@ -19,6 +19,7 @@ export default defineContentConfig({
           )
           .optional(),
         tags: z.array(z.string()).default([]),
+        draft: z.boolean().default(false),
       }),
     }),
     docs: defineCollection({
