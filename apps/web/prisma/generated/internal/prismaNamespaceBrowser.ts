@@ -55,6 +55,7 @@ export const ModelName = {
   Session: 'Session',
   Verification: 'Verification',
   ImpersonationLog: 'ImpersonationLog',
+  Todo: 'Todo',
   Organization: 'Organization',
   OrganizationMember: 'OrganizationMember',
   OrganizationInvite: 'OrganizationInvite'
@@ -157,6 +158,19 @@ export const ImpersonationLogScalarFieldEnum = {
 } as const
 
 export type ImpersonationLogScalarFieldEnum = (typeof ImpersonationLogScalarFieldEnum)[keyof typeof ImpersonationLogScalarFieldEnum]
+
+
+export const TodoScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  completed: 'completed',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]
 
 
 export const OrganizationScalarFieldEnum = {

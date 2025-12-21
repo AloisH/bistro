@@ -42,6 +42,11 @@ export type Verification = Prisma.VerificationModel
  */
 export type ImpersonationLog = Prisma.ImpersonationLogModel
 /**
+ * Model Todo
+ * 
+ */
+export type Todo = Prisma.TodoModel
+/**
  * Model Organization
  * 
  */
