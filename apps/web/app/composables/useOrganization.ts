@@ -1,4 +1,4 @@
-import type { Organization, OrganizationMember, OrganizationRole } from '~/prisma/generated/client';
+import type { Organization, OrganizationMember, OrganizationRole } from '../../prisma/generated/client';
 
 type MemberWithUser = OrganizationMember & {
   user: { id: string; name: string; email: string; image: string | null };
@@ -14,12 +14,11 @@ export const useOrganization = () => {
 
   // Get route + auth
   const route = useRoute();
-  const { session } = useAuth();
   const router = useRouter();
 
   // Computed - derive from state
   const currentOrgSlug = computed(() => route.params.slug as string);
-  const currentOrgId = computed(() => session.value?.currentOrganizationId ?? null);
+  const currentOrgId = computed(() => currentOrganization.value?.id ?? null);
 
   const currentOrganization = computed(() =>
     organizations.value.find(org => org.slug === currentOrgSlug.value),

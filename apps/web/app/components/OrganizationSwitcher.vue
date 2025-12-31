@@ -19,7 +19,7 @@ const items = computed(() => [
     },
   ],
   [
-    ...organizations.value.map(org => ({
+    ...organizations.value.map((org: typeof organizations.value[0]) => ({
       label: org.name,
       avatar: { text: org.name.charAt(0).toUpperCase() },
       trailingIcon: org.slug === currentOrgSlug.value ? 'i-lucide-check' : undefined,

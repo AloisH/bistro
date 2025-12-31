@@ -116,7 +116,7 @@ async function sendInvite() {
     </div>
 
     <UTable
-      :data="members"
+      :data="[...members]"
       :columns="columns"
     />
 
