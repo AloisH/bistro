@@ -54,9 +54,24 @@
 
     <UFooter class="border-t border-gray-200/50 dark:border-gray-800/50">
       <template #left>
-        <p class="text-muted text-sm">
-          Built with <span class="text-primary font-semibold">Nuxt UI</span> • © {{ new Date().getFullYear() }}
-        </p>
+        <div class="flex items-center gap-4 text-sm">
+          <p class="text-muted">
+            Built with <span class="text-primary font-semibold">Nuxt UI</span> • © {{ new Date().getFullYear() }}
+          </p>
+          <span class="text-gray-300 dark:text-gray-700">•</span>
+          <ULink
+            to="/legal/privacy"
+            class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+          >
+            Privacy
+          </ULink>
+          <ULink
+            to="/legal/terms"
+            class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+          >
+            Terms
+          </ULink>
+        </div>
       </template>
 
       <template #right>
