@@ -8,16 +8,12 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
+const { members, currentUserRole, fetchMembers } = useOrganization();
 
-const { data: membersData } = await useFetch<{
-  members: Array<
-    OrganizationMember & { user: { id: string; name: string; email: string; image: string | null } }
-  >;
-  currentUserRole: OrganizationRole;
-}>(`/api/organizations/${props.organizationSlug}/members`);
+// Fetch members on mount
+onMounted(() => fetchMembers(props.organizationSlug));
 
-const members = computed(() => membersData.value?.members || []);
-const isOwner = computed(() => membersData.value?.currentUserRole === 'OWNER');
+const isOwner = computed(() => currentUserRole.value === 'OWNER');
 
 const inviteModalOpen = ref(false);
 const inviteState = reactive({

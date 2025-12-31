@@ -191,14 +191,32 @@ definePageMeta({
 
 ### Organization Context
 
-**No dedicated composable** - Org context via Better Auth session:
+**useOrganization composable** - Centralized org state:
 
 ```typescript
-const { session } = useAuth();
-const currentOrgId = session.value?.currentOrganizationId;
+const {
+  organizations, // Ref<Organization[]>
+  currentOrganization, // Computed<Organization | undefined>
+  currentOrgSlug, // Computed<string>
+  currentOrgId, // Computed<string | null>
+  members, // Ref<MemberWithUser[]>
+  currentUserRole, // Ref<OrganizationRole | null>
+  canManageMembers, // Computed<boolean>
+  canDeleteOrg, // Computed<boolean>
+  fetchOrganizations, // () => Promise<void>
+  fetchMembers, // (slug: string) => Promise<void>
+  switchOrganization, // (slug: string) => Promise<void>
+  fetching, // Readonly<Ref<boolean>>
+  switching, // Readonly<Ref<boolean>>
+} = useOrganization();
 ```
 
-Session tracks active org. Switch via PUT /api/user/current-organization or route navigation.
+**Usage:**
+
+- Auto-imported, no import needed
+- Call fetch methods on mount
+- Access computed values reactively
+- Session tracking via useAuth integration
 
 ### Organization Routing
 

@@ -1,38 +1,29 @@
 <script setup lang="ts">
-import type { Organization } from '../../prisma/generated/client';
+const { organizations, currentOrganization, currentOrgSlug, switchOrganization, fetchOrganizations } =
+  useOrganization();
 
-const route = useRoute();
-const router = useRouter();
-
-const currentSlug = computed(() => route.params.slug as string);
-
-const { data: orgsData } = await useFetch<{ organizations: Organization[] }>('/api/organizations');
-
-const organizations = computed(() => orgsData.value?.organizations || []);
-
-const currentOrg = computed(() =>
-  organizations.value.find(org => org.slug === currentSlug.value),
-);
+// Fetch orgs on mount
+onMounted(() => fetchOrganizations());
 
 const items = computed(() => [
   [
     {
       label: 'Members',
       icon: 'i-lucide-users',
-      to: `/org/${currentSlug.value}/members`,
+      to: `/org/${currentOrgSlug.value}/members`,
     },
     {
       label: 'Settings',
       icon: 'i-lucide-settings',
-      to: `/org/${currentSlug.value}/settings`,
+      to: `/org/${currentOrgSlug.value}/settings`,
     },
   ],
   [
     ...organizations.value.map(org => ({
       label: org.name,
       avatar: { text: org.name.charAt(0).toUpperCase() },
-      trailingIcon: org.slug === currentSlug.value ? 'i-lucide-check' : undefined,
-      click: () => switchOrg(org.slug),
+      trailingIcon: org.slug === currentOrgSlug.value ? 'i-lucide-check' : undefined,
+      click: () => switchOrganization(org.slug),
     })),
   ],
   [
@@ -43,18 +34,12 @@ const items = computed(() => [
     },
   ],
 ]);
-
-async function switchOrg(slug: string) {
-  if (slug !== currentSlug.value) {
-    await router.push(`/org/${slug}/dashboard`);
-  }
-}
 </script>
 
 <template>
   <ClientOnly>
     <UDropdownMenu
-      v-if="currentOrg"
+      v-if="currentOrganization"
       :items="items"
       :ui="{
         content: 'shadow-strong backdrop-blur-sm',
@@ -69,11 +54,11 @@ async function switchOrg(slug: string) {
       >
         <div class="flex items-center gap-2">
           <UAvatar
-            :text="currentOrg.name.charAt(0).toUpperCase()"
+            :text="currentOrganization.name.charAt(0).toUpperCase()"
             size="xs"
             class="ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-primary transition-all"
           />
-          <span class="font-semibold">{{ currentOrg.name }}</span>
+          <span class="font-semibold">{{ currentOrganization.name }}</span>
         </div>
       </UButton>
     </UDropdownMenu>
