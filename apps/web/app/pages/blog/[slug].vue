@@ -11,78 +11,106 @@
     />
 
     <article v-if="post">
-      <!-- Hero image -->
-      <img
-        v-if="post.image"
-        :src="post.image"
-        :alt="post.title"
-        class="w-full h-64 object-cover rounded-lg mb-8"
-      >
+      <!-- Back button -->
+      <div class="mb-8">
+        <UButton
+          to="/blog"
+          variant="ghost"
+          icon="i-lucide-arrow-left"
+          size="sm"
+          class="group"
+        >
+          <span class="group-hover:-translate-x-1 transition-transform inline-block">
+            Back to Blog
+          </span>
+        </UButton>
+      </div>
 
-      <!-- Title & meta -->
-      <header class="mb-8">
-        <h1 class="text-5xl font-bold mb-4">{{ post.title }}</h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">{{ post.description }}</p>
-
-        <div class="flex items-center gap-4 text-sm text-gray-500">
-          <time :datetime="post.date">
-            {{ formatDate(post.date) }}
-          </time>
-          <div
-            v-if="post.authors?.length"
-            class="flex items-center gap-2"
+      <!-- Hero image with overlay -->
+      <div class="relative -mx-4 sm:mx-0 mb-12">
+        <div class="relative h-[400px] rounded-3xl overflow-hidden">
+          <img
+            v-if="post.image"
+            :src="post.image"
+            :alt="post.title"
+            class="w-full h-full object-cover"
           >
-            <span>by</span>
+          <!-- Gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+
+          <!-- Content overlay -->
+          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <!-- Tags -->
             <div
-              v-for="author in post.authors"
-              :key="author.name"
-              class="flex items-center gap-1"
+              v-if="post.tags?.length"
+              class="flex gap-2 mb-4 flex-wrap"
             >
-              <img
-                v-if="author.avatar"
-                :src="author.avatar"
-                :alt="author.name"
-                class="w-6 h-6 rounded-full"
+              <UBadge
+                v-for="tag in post.tags"
+                :key="tag"
+                :to="`/blog?tag=${tag}`"
+                variant="solid"
+                color="primary"
               >
-              <span>{{ author.name }}</span>
+                {{ tag }}
+              </UBadge>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+              {{ post.title }}
+            </h1>
+
+            <!-- Description -->
+            <p class="text-xl text-gray-200 mb-6 max-w-3xl">
+              {{ post.description }}
+            </p>
+
+            <!-- Meta -->
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2">
+                <UAvatar
+                  v-if="post.authors?.[0]"
+                  :src="post.authors[0].avatar"
+                  :alt="post.authors[0].name"
+                />
+                <span class="font-medium">{{ post.authors?.[0]?.name }}</span>
+              </div>
+              <span>•</span>
+              <time :datetime="post.date">
+                {{ formatDate(post.date) }}
+              </time>
             </div>
           </div>
         </div>
-
-        <!-- Tags -->
-        <div
-          v-if="post.tags?.length"
-          class="mt-4 flex gap-2"
-        >
-          <UBadge
-            v-for="tag in post.tags"
-            :key="tag"
-            color="neutral"
-            :to="`/blog?tag=${tag}`"
-          >
-            {{ tag }}
-          </UBadge>
-        </div>
-      </header>
+      </div>
 
       <!-- Content -->
       <ContentRenderer
         :value="post"
         class="prose dark:prose-invert max-w-none"
       />
-    </article>
 
-    <!-- Back to blog -->
-    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-      <UButton
-        to="/blog"
-        icon="i-lucide-arrow-left"
-        color="neutral"
-        variant="ghost"
-      >
-        Back to Blog
-      </UButton>
-    </div>
+      <!-- Author card -->
+      <UCard class="mt-12 bg-gradient-to-br from-primary-500/5 to-transparent dark:from-primary-400/10">
+        <div class="flex gap-4">
+          <UAvatar
+            v-if="post.authors?.[0]"
+            :src="post.authors[0].avatar"
+            :alt="post.authors[0].name"
+            size="lg"
+          />
+          <div>
+            <div class="font-semibold text-lg text-gray-900 dark:text-white mb-1">
+              {{ post.authors?.[0]?.name }}
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">
+              Author • Full-stack developer
+            </p>
+          </div>
+        </div>
+      </UCard>
+    </article>
   </div>
 </template>
 

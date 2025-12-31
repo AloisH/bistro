@@ -1,33 +1,153 @@
 <template>
   <div class="container mx-auto px-4 py-12">
-    <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Blog</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400">Latest articles and updates</p>
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent dark:from-primary-400/10 dark:via-primary-500/5 rounded-3xl p-12 mb-12">
+      <!-- Decorative gradient orbs -->
+      <div class="absolute top-0 right-0 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl -z-10" />
+      <div class="absolute bottom-0 left-0 w-72 h-72 bg-green-500/10 rounded-full blur-3xl -z-10" />
+
+      <div class="max-w-3xl">
+        <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+          Blog
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+          Thoughts, tutorials, and insights on building modern SaaS applications
+        </p>
+
+        <!-- Stats/highlights -->
+        <div class="flex gap-8 text-sm">
+          <div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">
+              {{ total }}
+            </div>
+            <div class="text-gray-600 dark:text-gray-400">
+              Articles
+            </div>
+          </div>
+          <div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">
+              {{ allTags.length }}
+            </div>
+            <div class="text-gray-600 dark:text-gray-400">
+              Topics
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Tag filters -->
     <div
       v-if="allTags.length"
-      class="mb-6 flex gap-2 flex-wrap"
+      class="mb-8"
     >
-      <UBadge
-        v-for="t in allTags"
-        :key="t.name"
-        :color="selectedTag === t.name ? 'primary' : 'neutral'"
-        class="cursor-pointer"
-        @click="filterByTag(t.name)"
-      >
-        {{ t.name }} ({{ t.count }})
-      </UBadge>
+      <div class="flex items-center gap-3 mb-4">
+        <UIcon
+          name="i-lucide-tag"
+          class="text-gray-400"
+        />
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Filter by topic
+        </h2>
+      </div>
+
+      <div class="flex gap-2 flex-wrap">
+        <!-- All posts badge -->
+        <UBadge
+          variant="subtle"
+          :color="!selectedTag ? 'primary' : 'neutral'"
+          class="cursor-pointer transition-all hover:scale-105"
+          @click="filterByTag('')"
+        >
+          All ({{ total }})
+        </UBadge>
+
+        <!-- Tag badges -->
+        <UBadge
+          v-for="tag in allTags"
+          :key="tag.name"
+          variant="subtle"
+          :color="selectedTag === tag.name ? 'primary' : 'neutral'"
+          class="cursor-pointer transition-all hover:scale-105"
+          @click="filterByTag(tag.name)"
+        >
+          {{ tag.name }} ({{ tag.count }})
+        </UBadge>
+      </div>
     </div>
 
     <!-- Posts grid -->
-    <UBlogPosts
+    <div
       v-if="posts?.length"
-      :posts="posts"
-      orientation="horizontal"
-    />
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+    >
+      <NuxtLink
+        v-for="(post, index) in posts"
+        :key="post.path"
+        :to="post.path"
+        :style="{ animationDelay: `${index * 50}ms` }"
+        class="group block animate-fade-in-up"
+      >
+        <UCard
+          class="h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:shadow-primary-500/10 overflow-hidden"
+        >
+          <!-- Image -->
+          <template #header>
+            <div class="relative overflow-hidden aspect-video -m-6 mb-0">
+              <img
+                :src="post.image"
+                :alt="post.title"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          </template>
+
+          <!-- Content -->
+          <div class="p-6">
+            <!-- Tags -->
+            <div class="flex gap-2 mb-3 flex-wrap">
+              <UBadge
+                v-for="tag in post.tags?.slice(0, 2)"
+                :key="tag"
+                variant="subtle"
+                color="primary"
+                size="xs"
+              >
+                {{ tag }}
+              </UBadge>
+            </div>
+
+            <!-- Title -->
+            <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
+              {{ post.title }}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-4">
+              {{ post.description }}
+            </p>
+
+            <!-- Meta -->
+            <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-500">
+              <div class="flex items-center gap-2">
+                <UAvatar
+                  v-if="post.authors?.[0]"
+                  :src="post.authors[0].avatar?.src"
+                  :alt="post.authors[0].name"
+                  size="xs"
+                />
+                <span>{{ post.authors?.[0]?.name }}</span>
+              </div>
+              <span>•</span>
+              <span>{{ formatDate(post.date) }}</span>
+            </div>
+          </div>
+        </UCard>
+      </NuxtLink>
+    </div>
+
+    <!-- Empty state -->
     <p
       v-else
       class="text-center text-gray-500 py-12"
@@ -77,7 +197,7 @@ const {
 
 const posts = computed(() => {
   const rawPosts = postsData.value?.posts || [];
-  // Transform authors to match UBlogPosts expected format
+  // Transform authors to match expected format
   return rawPosts.map(post => ({
     ...post,
     authors: post.authors?.map(a => ({
@@ -107,9 +227,18 @@ const allTags = computed(() => {
     .sort((a, b) => b.count - a.count);
 });
 
+// Format date helper
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
 // Filter by tag
 function filterByTag(tag: string) {
-  if (selectedTag.value === tag) {
+  if (selectedTag.value === tag || tag === '') {
     // Clear filter
     selectedTag.value = '';
     router.push({ query: { page: '1' } });
@@ -121,14 +250,20 @@ function filterByTag(tag: string) {
   refresh();
 }
 
-// Change page
+// Change page with smooth scroll
 watch(currentPage, (newPage) => {
   const query: Record<string, string> = { page: newPage.toString() };
   if (selectedTag.value) {
     query.tag = selectedTag.value;
   }
   router.push({ query });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   refresh();
+});
+
+// Watch tag changes with smooth scroll
+watch(selectedTag, () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // Watch route changes
@@ -149,3 +284,21 @@ useSeoMeta({
   ogDescription: 'Latest articles and updates from Bistro',
 });
 </script>
+
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+  opacity: 0;
+}
+</style>

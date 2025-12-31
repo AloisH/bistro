@@ -2,10 +2,10 @@
 title: Welcome to Bistro
 description: Free, open-source Nuxt 4 starter for AI-powered SaaS
 date: 2025-01-15
-image: /blog/welcome.png
+image: https://images.unsplash.com/photo-1556155092-490a1ba16284?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxzZWFyY2h8Mnx8c2Fhc3xlbnwwfHx8fDE3NjcxMDEwMjN8MA&ixlib=rb-4.1.0&q=80&w=1080
 authors:
   - name: Bistro Team
-    avatar: /avatars/bistro.png
+    avatar: https://api.dicebear.com/7.x/initials/svg?seed=BT&backgroundColor=10b981
 tags:
   - announcement
   - nuxt

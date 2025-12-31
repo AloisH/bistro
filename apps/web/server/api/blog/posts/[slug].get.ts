@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Fetch post
-  const post = (await queryCollection(event, 'blog').path(`blog/${slug}`).first()) as BlogCollectionItem | null;
+  const post = (await queryCollection(event, 'blog').path(`/blog/${slug}`).first()) as BlogCollectionItem | null;
 
   // Return 404 if not found
   if (!post) {
