@@ -187,6 +187,78 @@ definePageMeta({
 </script>
 ```
 
+## Organization State & Routing
+
+### Organization Context
+
+**No dedicated composable** - Org context via Better Auth session:
+
+```typescript
+const { session } = useAuth();
+const currentOrgId = session.value?.currentOrganizationId;
+```
+
+Session tracks active org. Switch via PUT /api/user/current-organization or route navigation.
+
+### Organization Routing
+
+**Route structure:**
+
+```
+/organizations/
+  ├── create              # Create new org
+  ├── select              # Choose/switch org
+  └── invite?token=...    # Accept invite
+
+/org/[slug]/              # Org-scoped routes (slug from URL)
+  ├── dashboard           # Main page
+  ├── members             # Member management
+  └── settings            # Org settings
+```
+
+**Pattern:** Dynamic `[slug]` segment uses URL-friendly slug (not ID). Extract via `route.params.slug`.
+
+### Organization Components
+
+**OrganizationSwitcher** (`components/OrganizationSwitcher.vue`):
+
+- Dropdown showing user's orgs
+- Click to switch → navigate to /org/[slug]/dashboard
+- "Create Organization" option
+- Uses UDropdownMenu + ClientOnly
+
+**OrganizationMembers** (`components/OrganizationMembers.vue`):
+
+- Props: `organizationSlug: string`
+- Fetches: GET /api/organizations/[slug]/members
+- Invite modal with email + role
+
+**OnboardingOrganization** (`components/OnboardingOrganization.vue`):
+
+- Org creation form for onboarding flow
+- Auto-slugifies org name
+
+### Middleware
+
+**require-organization.global.ts**:
+
+- Redirects to /organizations/select if no org selected
+- Enforces org selection for protected pages
+- Skips for auth/onboarding/user routes
+
+### Data Scoping Pattern
+
+```vue
+<script setup lang="ts">
+const slug = route.params.slug as string;
+
+// Org context implicit from session, validated server-side
+const { data } = await useFetch(`/api/organizations/${slug}/members`);
+</script>
+```
+
+Server validates membership via requireOrgAccess or service layer.
+
 ## Forms (Zod Validation)
 
 **Pattern:**

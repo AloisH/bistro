@@ -62,7 +62,7 @@ Only `apps/web` has implementation. Other workspaces are empty directories.
 
 - ✅ Schemas go in `apps/web/shared/schemas/` (inside web app, next to server/ folder)
 - ❌ NOT in monorepo root `/home/alois/bistro/shared/` (doesn't exist)
-- Import via `#shared/schemas/user` alias (configured in nuxt.config.ts)
+- Import via `#shared/schemas/user` or `#shared/schemas/organization` alias (configured in nuxt.config.ts)
 - Alias: `#shared` → `apps/web/shared/`
 
 ## Philosophy
@@ -439,6 +439,9 @@ See context-specific CLAUDE.md files for detailed guidance.
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
 - `ImpersonationLog` - Admin impersonation audit trail (admin, target, timestamps, reason)
+- `Organization` - Name, slug, planType
+- `OrganizationMember` - User-org link, role (OWNER/ADMIN/MEMBER/GUEST)
+- `OrganizationInvite` - Email invites, token, expiry
 
 **Import:** Use `server/utils/db.ts` singleton (Prisma Client with dev logging + @prisma/adapter-pg)
 
@@ -527,6 +530,24 @@ bun db:studio
 - `POST /api/admin/impersonate` - Start impersonation (SUPER_ADMIN)
 - `POST /api/admin/impersonate/stop` - Stop impersonation (SUPER_ADMIN)
 - `GET /api/admin/impersonate/active` - Check active session (SUPER_ADMIN)
+
+## Multi-Tenancy
+
+Organizations with role-based access. Session tracks currentOrganizationId.
+
+**Models:**
+
+- Organization - Name, slug, planType
+- OrganizationMember - Links users to orgs with roles
+- OrganizationInvite - Token-based email invites (7-day expiry)
+
+**Roles:** OWNER > ADMIN > MEMBER > GUEST
+
+**Server:** requireOrgAccess middleware, service layer permission checks
+**Client:** Session-based org context, /org/[slug]/\* routes
+**Switching:** OrganizationSwitcher component, PUT /api/user/current-organization
+
+See apps/web/server/CLAUDE.md and apps/web/app/CLAUDE.md for patterns.
 
 ## Payments & Email
 

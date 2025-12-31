@@ -329,6 +329,70 @@ const userId = session.user.id;
 
 ---
 
+## Organization Access Control
+
+### requireOrgAccess Middleware
+
+`server/utils/require-org-access.ts` - Validates org access + optional role enforcement
+
+```typescript
+const ctx = await requireOrgAccess(event, {
+  allowedRoles: ['OWNER', 'ADMIN'], // Optional
+});
+// Returns: userId, organizationId, organizationSlug, userRole
+```
+
+**Usage patterns:**
+
+1. **Direct middleware** (read ops):
+   - GET /api/organizations/[slug]/members
+   - Validates membership, enforces roles
+
+2. **Service layer** (complex ops):
+   - PUT /api/organizations/[slug] (checkIsOwnerOrAdmin)
+   - DELETE /api/organizations/[slug] (checkIsOwner)
+   - Service centralizes permission logic
+
+3. **Public** (no check):
+   - POST /api/organizations/invites/accept (token-based)
+
+### Org-Scoped Data Queries
+
+**Repository pattern** (`organization-repository.ts`):
+
+```typescript
+// ✅ Always filter by organizationId
+findOrganizationMembers(organizationId);
+findInvitesByOrganization(organizationId);
+
+// ✅ Verify user membership
+findMembership(userId, organizationId);
+```
+
+**Permission checks** (`organization-service.ts`):
+
+- checkIsMember(userId, orgId)
+- checkIsOwnerOrAdmin(userId, orgId)
+- checkIsOwner(userId, orgId)
+- countOwners(orgId) - prevents removing last owner
+
+**Role hierarchy:** OWNER (full control) > ADMIN (manage settings/invites) > MEMBER (view only) > GUEST (restricted)
+
+### Org-Related Endpoints
+
+- GET /api/organizations - List user's orgs
+- POST /api/organizations - Create org
+- GET /api/organizations/[slug] - Get org details
+- PUT /api/organizations/[slug] - Update org (OWNER/ADMIN)
+- DELETE /api/organizations/[slug] - Delete org (OWNER)
+- GET /api/organizations/[slug]/members - List members
+- PUT /api/organizations/[slug]/members/[id]/role - Update role (OWNER)
+- GET/POST /api/organizations/[slug]/invites - Manage invites (OWNER/ADMIN)
+- POST /api/organizations/invites/accept - Accept invite (token-based)
+- PUT /api/user/current-organization - Switch active org
+
+---
+
 ## API Status
 
 ### ✅ Implemented Endpoints
