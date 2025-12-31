@@ -45,6 +45,8 @@ Provides production-ready foundation:
 - **Resend**: Email delivery (transactional emails)
 - **Vue Email**: React-based email templates
 - **Vercel AI SDK**: AI integrations (planned)
+- **Nuxt Content**: Blog/docs with queryCollection API
+- **Feed**: RSS generation for blog posts
 
 ### Infrastructure
 
@@ -594,14 +596,16 @@ bun docker:prod:logs    # View logs
 
 ## Key Gotchas
 
-1. **Database singleton**: NEVER `new PrismaClient()`, always `import { db } from '~/server/utils/db'`
-2. **User-scoped queries**: ALWAYS filter by userId (data leak prevention)
-3. **OAuth session**: Must call `fetchSession()` after OAuth callback
-4. **Public routes**: Add to `nuxt.config.ts` (NOT middleware)
-5. **Commands from root**: ALWAYS from `/home/alois/bistro`, NOT `apps/web/`
-6. **Prisma regenerate**: After schema changes, run `bun db:generate` before typecheck
-7. **Type safety**: No `as` assertions, no `!` non-null assertions - use Zod validation
-8. **Imports**: Server uses relative paths, shared uses `#shared` alias
+1. **Bun + Vite**: Configure `vite.server.fs.allow: [workspaceRoot]` for .bun directory access - see [SOP/bun_vite_configuration.md](../SOP/bun_vite_configuration.md)
+2. **Database singleton**: NEVER `new PrismaClient()`, always `import { db } from '~/server/utils/db'`
+3. **User-scoped queries**: ALWAYS filter by userId (data leak prevention)
+4. **OAuth session**: Must call `fetchSession()` after OAuth callback
+5. **Public routes**: Add to `nuxt.config.ts` (NOT middleware)
+6. **Commands from root**: ALWAYS from `/home/alois/bistro`, NOT `apps/web/`
+7. **Prisma regenerate**: After schema changes, run `bun db:generate` before typecheck
+8. **Type safety**: No `as` assertions, no `!` non-null assertions - use Zod validation
+9. **Imports**: Server uses relative paths, shared uses `#shared` alias
+10. **Nuxt Content**: Use `queryCollection` from `@nuxt/content/nitro` (not deprecated `serverQueryContent`)
 
 ---
 
@@ -618,7 +622,9 @@ bun docker:prod:logs    # View logs
 - ✅ Organizations (multi-tenant, invites, roles)
 - ✅ Session management (list, revoke)
 - ✅ Email service (Resend + Vue Email templates)
-- ✅ Content management (Nuxt Content)
+- ✅ Content management (Nuxt Content with queryCollection)
+- ✅ Blog system (posts, draft support, RSS feed)
+- ✅ Bun + Vite configuration (FS allow, cache prevention)
 - ✅ Testing (Vitest + coverage)
 - ✅ CI/CD (GitHub Actions)
 - ✅ Docker (dev + prod)

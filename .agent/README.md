@@ -124,6 +124,18 @@ Then refer to SOPs for specific tasks.
   - Common scenarios (pagination, filtering, file upload)
   - Troubleshooting
 
+### Infrastructure
+
+- **[Bun + Vite Configuration](./SOP/bun_vite_configuration.md)**
+  - Critical Vite FS allow setup for Bun's .bun directory
+  - MIME type error fixes
+  - Virtual module export errors
+  - Dependency version conflicts
+  - Nuxt Content migration (serverQueryContent → queryCollection)
+  - Browser cache issues
+  - Development workflow (fresh install, cache clearing)
+  - Troubleshooting checklist
+
 ### Frontend
 
 - **[Adding Pages](./SOP/adding_pages.md)**
@@ -312,11 +324,12 @@ All engineers should contribute to documentation:
 ├── SOP/                                   # Best practices for tasks
 │   ├── database_migrations.md            # Schema changes workflow
 │   ├── adding_api_endpoints.md           # Backend endpoint creation
-│   └── adding_pages.md                   # Frontend page creation
+│   ├── adding_pages.md                   # Frontend page creation
+│   └── bun_vite_configuration.md         # Bun + Vite setup, troubleshooting
 └── Tasks/                                 # PRD + implementation plans
     └── (placeholder)
 ```
 
 ---
 
-_Last updated: 2025-12-20_
+_Last updated: 2025-12-21_
