@@ -31,6 +31,14 @@ export default defineEventHandler(async (event) => {
 
   // Add posts to feed
   for (const post of posts) {
+    // Handle image URL - check if it's already a full URL or a relative path
+    let imageUrl: string | undefined;
+    if (post.image) {
+      imageUrl = post.image.startsWith('http://') || post.image.startsWith('https://')
+        ? post.image
+        : `${siteUrl}${post.image}`;
+    }
+
     feed.addItem({
       title: post.title || '',
       id: `${siteUrl}${post.path}`,
@@ -41,7 +49,7 @@ export default defineEventHandler(async (event) => {
         name: a.name,
       })),
       date: new Date(post.date),
-      image: post.image ? `${siteUrl}${post.image}` : undefined,
+      image: imageUrl,
       category: post.tags?.map((t: string) => ({ name: t })),
     });
   }
