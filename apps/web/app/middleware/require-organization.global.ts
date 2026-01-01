@@ -47,6 +47,21 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
+  // Skip public routes (blog, legal, docs, etc)
+  const config = useRuntimeConfig();
+  const publicRoutes = config.public.publicRoutes as string[];
+  const isPublicRoute = publicRoutes.some((route) => {
+    if (route.endsWith('/*')) {
+      const basePath = route.slice(0, -2);
+      return to.path === basePath || to.path.startsWith(basePath + '/');
+    }
+    return to.path === route;
+  });
+
+  if (isPublicRoute) {
+    return;
+  }
+
   // Check if user has organizations for non-skipped pages
   try {
     const { data } = await useFetch<{ organizations: unknown[] }>('/api/organizations');

@@ -1,0 +1,49 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'docs',
+});
+
+interface DocsPage {
+  title: string;
+  description: string;
+  body: unknown;
+}
+
+const { data: page } = await useFetch<DocsPage>('/api/docs/index');
+
+if (!page.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Documentation not found',
+  });
+}
+
+useSeoMeta({
+  title: page.value.title,
+  description: page.value.description,
+  ogTitle: page.value.title,
+  ogDescription: page.value.description,
+});
+</script>
+
+<template>
+  <UDashboardPage>
+    <div class="max-w-4xl">
+      <article v-if="page">
+        <header class="mb-8">
+          <h1 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            {{ page.title }}
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-400">
+            {{ page.description }}
+          </p>
+        </header>
+
+        <ContentRenderer
+          :value="page"
+          class="prose dark:prose-invert max-w-none"
+        />
+      </article>
+    </div>
+  </UDashboardPage>
+</template>
