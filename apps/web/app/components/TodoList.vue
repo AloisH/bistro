@@ -1,26 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Create form -->
-    <div class="space-y-3">
-      <UInput
-        v-model="newTodoTitle"
-        placeholder="Todo title..."
-        @keyup.enter="handleCreate"
-      />
-      <UTextarea
-        v-model="newTodoDescription"
-        placeholder="Description (optional)"
-        :rows="2"
-      />
-      <UButton
-        icon="i-lucide-plus"
-        :loading="creating"
-        :disabled="!newTodoTitle.trim()"
-        @click="handleCreate"
-      >
-        Add Todo
-      </UButton>
-    </div>
+    <CreateTodoForm />
 
     <!-- Loading state -->
     <div
@@ -101,27 +82,7 @@
 </template>
 
 <script setup lang="ts">
-const { todos, loading, createTodo, toggleTodo, deleteTodo } = useTodos();
-
-const newTodoTitle = ref('');
-const newTodoDescription = ref('');
-const creating = ref(false);
-
-async function handleCreate() {
-  if (!newTodoTitle.value.trim()) return;
-
-  creating.value = true;
-  try {
-    await createTodo({
-      title: newTodoTitle.value.trim(),
-      description: newTodoDescription.value.trim() || undefined,
-    });
-    newTodoTitle.value = '';
-    newTodoDescription.value = '';
-  } finally {
-    creating.value = false;
-  }
-}
+const { todos, loading, toggleTodo, deleteTodo } = useTodos();
 
 async function handleToggle(id: string, completed: string | boolean) {
   await toggleTodo(id, Boolean(completed));
