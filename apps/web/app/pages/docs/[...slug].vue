@@ -32,7 +32,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UDashboardPage>
+  <div class="p-6">
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8">
       <!-- Main content -->
       <article v-if="page">
@@ -66,5 +66,5 @@ useSeoMeta({
         </div>
       </aside>
     </div>
-  </UDashboardPage>
+  </div>
 </template>

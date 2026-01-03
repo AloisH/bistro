@@ -27,7 +27,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UDashboardPage>
+  <div class="p-6">
     <div class="max-w-4xl">
       <article v-if="page">
         <header class="mb-8">
@@ -45,5 +45,5 @@ useSeoMeta({
         />
       </article>
     </div>
-  </UDashboardPage>
+  </div>
 </template>

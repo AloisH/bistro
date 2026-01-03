@@ -3,7 +3,7 @@
     <!-- Left sidebar -->
     <UDashboardSidebar collapsible>
       <template #header="{ collapsed }">
-        <UDashboardNavbarToggle />
+        <UDashboardSidebarToggle />
         <NuxtLink
           v-if="!collapsed"
           to="/"
