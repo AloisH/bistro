@@ -1,13 +1,11 @@
 import type { NavigationMenuItem } from '@nuxt/ui';
 
 interface NavItem {
-  _path: string;
+  path: string;
   title: string;
-  navigation?: {
-    title?: string;
-    icon?: string;
-    order?: number;
-  };
+  stem: string;
+  order?: number;
+  page?: boolean;
   children?: NavItem[];
 }
 
@@ -17,7 +15,7 @@ export function useDocsNavigation() {
   });
 
   const navItems = computed<NavigationMenuItem[][]>(() => {
-    if (!data.value) return [];
+    if (!data.value || !data.value[0]?.children) return [];
 
     // Icon defaults per section
     const iconMap: Record<string, string> = {
@@ -26,31 +24,26 @@ export function useDocsNavigation() {
       'deployment': 'i-lucide-cloud',
     };
 
-    const items = data.value
-      .filter(item => item._path && !item._path.endsWith('/index'))
-      .map((item) => {
-        const section = item._path?.split('/')[2] || 'default';
-        const icon = item.navigation?.icon || iconMap[section] || 'i-lucide-file';
+    // Root is at index 0, we want its children (sections)
+    const sections = data.value[0].children
+      .filter(item => item.page === false) // Only sections, not pages
+      .map((section) => {
+        const sectionName = section.stem?.split('/')[1] || 'default';
+        const icon = iconMap[sectionName] || 'i-lucide-file';
 
         return {
-          label: item.navigation?.title || item.title,
+          label: section.title,
           icon,
-          to: item.children ? undefined : item._path,
-          children: item.children
-            ?.filter(child => child._path)
-            .sort((a, b) => {
-              const orderA = a.navigation?.order ?? 999;
-              const orderB = b.navigation?.order ?? 999;
-              return orderA - orderB;
-            })
+          children: section.children
+            ?.sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
             .map(child => ({
-              label: child.navigation?.title || child.title,
-              to: child._path,
+              label: child.title,
+              to: child.path,
             })),
         };
       });
 
-    return [items];
+    return [sections];
   });
 
   return { navigation: navItems, status, error };
