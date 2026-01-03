@@ -19,6 +19,12 @@ export const toggleTodoSchema = z.object({
   completed: z.boolean(),
 });
 
+export const todoQuerySchema = z.object({
+  filter: z.enum(['all', 'active', 'completed']).default('all'),
+  sort: z.enum(['date', 'title']).default('date'),
+});
+
 export type CreateTodoInput = z.infer<typeof createTodoSchema>;
 export type UpdateTodoInput = z.infer<typeof updateTodoSchema>;
 export type ToggleTodoInput = z.infer<typeof toggleTodoSchema>;
+export type TodoQueryInput = z.infer<typeof todoQuerySchema>;

@@ -4,10 +4,21 @@ import type { Todo, Prisma } from '../../../prisma/generated/client';
 export class TodoRepository {
   protected readonly db = db;
 
-  async findByUserId(userId: string): Promise<Todo[]> {
+  async findByUserId(
+    userId: string,
+    options?: { filter?: 'all' | 'active' | 'completed'; sort?: 'date' | 'title' },
+  ): Promise<Todo[]> {
+    const { filter = 'all', sort = 'date' } = options || {};
+
+    const where: Prisma.TodoWhereInput = { userId };
+    if (filter === 'active') where.completed = false;
+    if (filter === 'completed') where.completed = true;
+
+    const orderBy = sort === 'date' ? { createdAt: 'desc' as const } : { title: 'asc' as const };
+
     return this.db.todo.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
+      where,
+      orderBy,
     });
   }
 

@@ -2,14 +2,24 @@ import type { Todo } from '../../prisma/generated/client';
 import type { CreateTodoInput } from '#shared/schemas/todo';
 
 export function useTodos() {
+  const route = useRoute();
+  const router = useRouter();
   const todos = useState<Todo[]>('todos:list', () => []);
   const loading = useState('todos:loading', () => false);
   const toast = useToast();
 
+  // URL-synced filter and sort state
+  const filter = ref<'all' | 'active' | 'completed'>(
+    (route.query.filter as 'all' | 'active' | 'completed') || 'all',
+  );
+  const sort = ref<'date' | 'title'>((route.query.sort as 'date' | 'title') || 'date');
+
   async function fetchTodos() {
     loading.value = true;
     try {
-      const { todos: data } = await $fetch<{ todos: Todo[] }>('/api/todos');
+      const { todos: data } = await $fetch<{ todos: Todo[] }>('/api/todos', {
+        query: { filter: filter.value, sort: sort.value },
+      });
       todos.value = data;
     } catch {
       toast.add({
@@ -22,6 +32,34 @@ export function useTodos() {
       loading.value = false;
     }
   }
+
+  function setFilter(newFilter: 'all' | 'active' | 'completed') {
+    filter.value = newFilter;
+    const query: Record<string, string> = {};
+    if (newFilter !== 'all') query.filter = newFilter;
+    if (sort.value !== 'date') query.sort = sort.value;
+    router.push({ query });
+    fetchTodos();
+  }
+
+  function setSort(newSort: 'date' | 'title') {
+    sort.value = newSort;
+    const query: Record<string, string> = {};
+    if (filter.value !== 'all') query.filter = filter.value;
+    if (newSort !== 'date') query.sort = newSort;
+    router.push({ query });
+    fetchTodos();
+  }
+
+  // Watch route changes (back/forward navigation)
+  watch(
+    () => route.query,
+    (newQuery) => {
+      filter.value = (newQuery.filter as 'all' | 'active' | 'completed') || 'all';
+      sort.value = (newQuery.sort as 'date' | 'title') || 'date';
+      fetchTodos();
+    },
+  );
 
   async function createTodo(input: CreateTodoInput) {
     try {
@@ -87,7 +125,11 @@ export function useTodos() {
   return {
     todos: readonly(todos),
     loading: readonly(loading),
+    filter: readonly(filter),
+    sort: readonly(sort),
     fetchTodos,
+    setFilter,
+    setSort,
     createTodo,
     toggleTodo,
     deleteTodo,

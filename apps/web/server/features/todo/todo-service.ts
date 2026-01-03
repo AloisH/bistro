@@ -3,8 +3,11 @@ import type { CreateTodoInput, UpdateTodoInput } from '#shared/schemas/todo';
 import type { Todo } from '../../../prisma/generated/client';
 
 export class TodoService {
-  async listTodos(userId: string): Promise<Todo[]> {
-    return todoRepository.findByUserId(userId);
+  async listTodos(
+    userId: string,
+    options?: { filter?: 'all' | 'active' | 'completed'; sort?: 'date' | 'title' },
+  ): Promise<Todo[]> {
+    return todoRepository.findByUserId(userId, options);
   }
 
   async getTodo(id: string, userId: string): Promise<Todo> {

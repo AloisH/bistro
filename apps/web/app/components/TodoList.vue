@@ -3,6 +3,71 @@
     <!-- Create form -->
     <CreateTodoForm />
 
+    <!-- Filter and Sort Controls -->
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+      <!-- Filter tabs -->
+      <div class="flex items-center gap-2">
+        <UIcon
+          name="i-lucide-filter"
+          class="text-gray-400"
+        />
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter:</span>
+        <div class="flex gap-2">
+          <UBadge
+            variant="subtle"
+            :color="filter === 'all' ? 'primary' : 'neutral'"
+            class="cursor-pointer transition-all hover:scale-105"
+            @click="setFilter('all')"
+          >
+            All
+          </UBadge>
+          <UBadge
+            variant="subtle"
+            :color="filter === 'active' ? 'primary' : 'neutral'"
+            class="cursor-pointer transition-all hover:scale-105"
+            @click="setFilter('active')"
+          >
+            Active
+          </UBadge>
+          <UBadge
+            variant="subtle"
+            :color="filter === 'completed' ? 'primary' : 'neutral'"
+            class="cursor-pointer transition-all hover:scale-105"
+            @click="setFilter('completed')"
+          >
+            Completed
+          </UBadge>
+        </div>
+      </div>
+
+      <!-- Sort options -->
+      <div class="flex items-center gap-2">
+        <UIcon
+          name="i-lucide-arrow-up-down"
+          class="text-gray-400"
+        />
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Sort:</span>
+        <div class="flex gap-2">
+          <UBadge
+            variant="subtle"
+            :color="sort === 'date' ? 'primary' : 'neutral'"
+            class="cursor-pointer transition-all hover:scale-105"
+            @click="setSort('date')"
+          >
+            Date
+          </UBadge>
+          <UBadge
+            variant="subtle"
+            :color="sort === 'title' ? 'primary' : 'neutral'"
+            class="cursor-pointer transition-all hover:scale-105"
+            @click="setSort('title')"
+          >
+            Title
+          </UBadge>
+        </div>
+      </div>
+    </div>
+
     <!-- Loading state -->
     <div
       v-if="loading"
@@ -82,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-const { todos, loading, toggleTodo, deleteTodo } = useTodos();
+const { todos, loading, filter, sort, setFilter, setSort, toggleTodo, deleteTodo } = useTodos();
 
 async function handleToggle(id: string, completed: string | boolean) {
   await toggleTodo(id, Boolean(completed));
