@@ -26,15 +26,27 @@
       <template #default>
         <ClientOnly>
           <UNavigationMenu
-            v-if="status === 'success'"
+            v-if="status === 'success' && navigation.length"
             :items="navigation"
             orientation="vertical"
           />
           <div
-            v-else
+            v-else-if="status === 'pending'"
             class="p-4 text-sm text-gray-500"
           >
             Loading...
+          </div>
+          <div
+            v-else-if="status === 'error'"
+            class="p-4 text-sm text-red-500"
+          >
+            Error loading navigation
+          </div>
+          <div
+            v-else
+            class="p-4 text-sm text-gray-500"
+          >
+            No navigation items
           </div>
         </ClientOnly>
       </template>
