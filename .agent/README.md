@@ -13,6 +13,7 @@ New to the project? Start here:
 3. **[Authentication System](./System/authentication_system.md)** - Auth flows, RBAC, impersonation
 4. **[Onboarding System](./System/onboarding_system.md)** - 5-step user onboarding flow
 5. **[Organizations System](./System/organizations_system.md)** - Multi-tenancy, invites, roles
+6. **[Todo System](./System/todos_system.md)** - Example CRUD feature (use as template)
 
 Then refer to SOPs for specific tasks.
 
@@ -89,6 +90,16 @@ Then refer to SOPs for specific tasks.
   - Pages (/organizations/_, /org/[slug]/_)
   - Components (OrganizationSwitcher, OrganizationMembers)
   - Common patterns
+
+### Example Features
+
+- **[Todo System](./System/todos_system.md)**
+  - Reference CRUD implementation
+  - Service + repository pattern
+  - User-scoped queries
+  - Filter/sort with URL persistence
+  - Optimistic UI updates
+  - Use as template for your features
 
 ---
 
@@ -320,7 +331,8 @@ All engineers should contribute to documentation:
 │   ├── database_schema.md                # DB models, relations, queries
 │   ├── authentication_system.md          # Auth flows, RBAC, impersonation
 │   ├── onboarding_system.md              # 5-step user onboarding
-│   └── organizations_system.md           # Multi-tenancy, invites, roles
+│   ├── organizations_system.md           # Multi-tenancy, invites, roles
+│   └── todos_system.md                   # Todo example (CRUD template)
 ├── SOP/                                   # Best practices for tasks
 │   ├── database_migrations.md            # Schema changes workflow
 │   ├── adding_api_endpoints.md           # Backend endpoint creation

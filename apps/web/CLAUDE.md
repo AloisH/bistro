@@ -4,13 +4,14 @@ Main Nuxt 4 application. Entry point for Bistro SaaS starter.
 
 ## Purpose
 
-Production-ready SaaS starter with:
+Production-ready SaaS boilerplate with:
 
 - Authentication (Better Auth: email/password + OAuth)
+- Multi-tenancy (Organizations with RBAC)
 - Database (Prisma 7 + PostgreSQL)
-- AI workflows (Vercel AI SDK - planned)
-- Payments (Polar - planned)
-- Email (Resend - planned)
+- Example feature (Todo CRUD)
+- Testing & CI/CD
+- Docker dev + prod
 
 ## Quick Reference
 
@@ -154,10 +155,10 @@ bun add <pkg>@latest  # Update specific
 - Component interactions
 - Auth flows
 
-**E2E tests (planned):**
+**E2E tests (future):**
 
 - Playwright for critical paths
-- Login → Dashboard → AI workflow
+- Login → Onboarding → Organization → Todos
 
 ## Build & Deployment
 

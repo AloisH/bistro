@@ -36,17 +36,23 @@ Guidance for Claude Code when working in this repository.
 
 ## Project Overview
 
-Bistro - Free MIT-licensed Nuxt 4 starter for AI-powered SaaS. Alternative to paid starters ($149-$349).
+Bistro - Production-ready Nuxt 4 SaaS boilerplate with authentication, multi-tenancy, RBAC, and testing. Todo app included as example feature.
 
 **Stack:**
 
 - Nuxt 4 + Nuxt UI v4 + Tailwind 4
 - PostgreSQL + Prisma 7 (with @prisma/adapter-pg)
 - Better Auth (email/password + OAuth providers)
-- Vercel AI SDK (OpenAI, Anthropic, local models)
-- Polar (payments), Resend (email)
 - Docker Compose (dev + prod)
 - Vitest + Testing Library
+
+**Core Features:**
+
+- Todo example (CRUD with filtering/sorting)
+- Multi-tenant organizations
+- Role-based access control
+- 5-step user onboarding
+- Admin impersonation
 
 ## Monorepo Structure
 
@@ -435,6 +441,7 @@ See context-specific CLAUDE.md files for detailed guidance.
 
 **Schema models:**
 
+- `Todo` - id, title, description, completed, userId (user-scoped)
 - `User` - Email, password, OAuth accounts, role (USER/ADMIN/SUPER_ADMIN)
 - `Account` - OAuth provider links
 - `Session` - Auth sessions (token, expiry, user agent)
@@ -549,57 +556,47 @@ Organizations with role-based access. Session tracks currentOrganizationId.
 
 See apps/web/server/CLAUDE.md and apps/web/app/CLAUDE.md for patterns.
 
-## Payments & Email
+## Example Feature: Todo
 
-**Polar Integration (Placeholder):**
+**Implementation (use as template for your features):**
 
-- Webhook endpoint pattern: `/api/webhooks/polar`
-- Verify webhook signature with POLAR_WEBHOOK_SECRET
-- Handle events: checkout.completed, subscription.created, subscription.updated
-- Update user subscription status in DB
-- Test with Polar CLI webhook forwarding
+- **Backend:** `server/features/todo/` (service + repository pattern)
+- **API:** `/api/todos` (GET list, POST create), `/api/todos/:id` (GET/PUT/DELETE), `/api/todos/:id/toggle` (POST)
+- **Schemas:** `shared/schemas/todo.ts` (Zod validation)
+- **Frontend:** `components/TodoList.vue`, `components/CreateTodoForm.vue`, `composables/useTodos.ts`
+- **Page:** `/org/[slug]/dashboard` displays todo list
 
-**Resend Integration (Placeholder):**
+**Demonstrates patterns:**
 
-- Use server-only import: `import { Resend } from 'resend'`
-- Email templates in `server/emails/` as React components
-- Common emails: welcome, password-reset, receipt
-- Use server API routes, never client-side
-- Test with Resend test API key
+- Full CRUD operations
+- User-scoped queries (filtered by userId)
+- Filter/sort with URL persistence
+- Optimistic UI updates
+- Service + repository architecture
+- Type-safe validation (Zod → Prisma)
 
-## AI Workflows (Planned)
-
-Using Vercel AI SDK:
-
-- Blog post generation
-- Ad creative studio
-- Landing page builder
-- Email funnel designer
-- Brand package creator
-- Product idea validator
+**To add your feature:** Copy todo structure, replace domain model, keep patterns.
 
 ## Project Status
 
 **Implemented:**
 
+- ✅ Todo management (CRUD, filter, sort, URL persistence)
 - ✅ Nuxt 4 app structure
 - ✅ Database (Prisma 7 + PostgreSQL)
-- ✅ Auth (Better Auth email/password)
+- ✅ Auth (Better Auth email/password + OAuth)
+- ✅ Multi-tenancy (Organizations + invites)
 - ✅ Roles & Permissions (USER/ADMIN/SUPER_ADMIN)
 - ✅ Admin impersonation (Better Auth admin plugin)
+- ✅ 5-step onboarding flow
 - ✅ Testing (Vitest + coverage)
 - ✅ CI/CD (GitHub Actions)
 - ✅ Docker (dev + prod)
 - ✅ Git hooks (lint-staged)
 
-**Planned:**
+**Scope:**
 
-- ⏳ OAuth providers (GitHub, Google)
-- ⏳ Payment integration (Polar)
-- ⏳ Email templates (Resend)
-- ⏳ AI workflows (Vercel AI SDK)
-- ⏳ Landing site (`apps/landing`)
-- ⏳ CLI tool (`packages/cli`)
+SaaS boilerplate with production patterns. Todo is example feature - replace with your domain model, keep the architecture.
 
 We keep all important docs in .agent folder and keep updating them, with the following file/folder structure:
 
