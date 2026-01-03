@@ -27,9 +27,9 @@ export function useDocsNavigation() {
     };
 
     const items = data.value
-      .filter(item => !item._path.endsWith('/index'))
+      .filter(item => item._path && !item._path.endsWith('/index'))
       .map((item) => {
-        const section = item._path.split('/')[2] || 'default';
+        const section = item._path?.split('/')[2] || 'default';
         const icon = item.navigation?.icon || iconMap[section] || 'i-lucide-file';
 
         return {
@@ -37,7 +37,8 @@ export function useDocsNavigation() {
           icon,
           to: item.children ? undefined : item._path,
           children: item.children
-            ?.sort((a, b) => {
+            ?.filter(child => child._path)
+            .sort((a, b) => {
               const orderA = a.navigation?.order ?? 999;
               const orderB = b.navigation?.order ?? 999;
               return orderA - orderB;
