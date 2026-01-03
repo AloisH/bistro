@@ -5,6 +5,10 @@ definePageMeta({
 
 const route = useRoute();
 const slug = route.params.slug as string;
+
+const { fetchTodos } = useTodos();
+
+onMounted(() => fetchTodos());
 </script>
 
 <template>
@@ -20,15 +24,11 @@ const slug = route.params.slug as string;
     <UCard>
       <template #header>
         <h1 class="text-3xl font-bold">
-          Organization Dashboard
+          My Todos
         </h1>
       </template>
 
-      <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
-          Welcome to {{ slug }}
-        </p>
-      </div>
+      <TodoList />
     </UCard>
   </UDashboardPanel>
 </template>
