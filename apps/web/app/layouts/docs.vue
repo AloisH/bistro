@@ -26,9 +26,16 @@
       <template #default>
         <ClientOnly>
           <UNavigationMenu
-            :items="docsNavItems"
+            v-if="status === 'success'"
+            :items="navigation"
             orientation="vertical"
           />
+          <div
+            v-else
+            class="p-4 text-sm text-gray-500"
+          >
+            Loading...
+          </div>
         </ClientOnly>
       </template>
     </UDashboardSidebar>
@@ -61,6 +68,7 @@
             >
               Docs
             </UButton>
+            <DocsSearch />
           </div>
           <div class="flex items-center gap-2">
             <UColorModeButton />
@@ -76,26 +84,5 @@
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui';
-
-const docsNavItems: NavigationMenuItem[][] = [
-  [
-    {
-      label: 'Getting Started',
-      icon: 'i-lucide-rocket',
-      children: [
-        { label: 'Installation', to: '/docs/getting-started/installation' },
-        { label: 'Configuration', to: '/docs/getting-started/configuration' },
-      ],
-    },
-    {
-      label: 'Features',
-      icon: 'i-lucide-star',
-      children: [
-        { label: 'Authentication', to: '/docs/features/authentication' },
-        { label: 'Database', to: '/docs/features/database' },
-      ],
-    },
-  ],
-];
+const { navigation, status } = useDocsNavigation();
 </script>
