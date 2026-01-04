@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OrganizationMember, OrganizationRole } from '../../prisma/generated/client';
+import type { OrganizationMember, OrganizationRole } from '../../../prisma/generated/client';
 import { inviteMemberSchema } from '#shared/schemas/organization';
 import { h, resolveComponent } from 'vue';
 

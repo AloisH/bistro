@@ -14,11 +14,14 @@ app/
 │   └── auth/
 │       ├── login.vue    # /auth/login
 │       └── register.vue # /auth/register
-├── components/          # Auto-imported
-│   ├── AppLogo.vue
-│   ├── AuthButton.vue
-│   ├── AuthOAuthButtons.vue
-│   └── TemplateMenu.vue
+├── components/          # Auto-imported (feature-based)
+│   ├── shared/          # AppLogo
+│   ├── auth/            # AuthButton, AuthOAuthButtons
+│   ├── todo/            # TodoList, CreateTodoForm
+│   ├── organization/    # OrganizationMembers, OrganizationSwitcher
+│   ├── admin/           # ImpersonationBanner, SessionList
+│   ├── docs/            # DocsSearch
+│   └── onboarding/      # 7 onboarding components
 ├── composables/         # Auto-imported
 │   └── useAuth.ts       # Auth state & methods
 ├── middleware/          # Route guards
