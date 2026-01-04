@@ -70,6 +70,28 @@ const router = useRouter();
 </template>
 ```
 
+**Nested feature directories:**
+
+Components can be organized in feature-based subdirectories:
+
+```
+components/
+├── auth/
+│   ├── AuthButton.vue          → <AuthButton>
+│   └── AuthOAuthButtons.vue    → <AuthOAuthButtons>
+├── todo/
+│   ├── TodoList.vue            → <TodoList>
+│   └── CreateTodoForm.vue      → <CreateTodoForm>
+└── organization/
+    ├── OrganizationMembers.vue → <OrganizationMembers>
+    └── OrganizationSwitcher.vue → <OrganizationSwitcher>
+```
+
+- Nested components auto-import by filename (NOT parent dir)
+- `components/auth/AuthButton.vue` → `<AuthButton>` (not `<AuthAuthButton>`)
+- Enabled via `pathPrefix: false` in nuxt.config.ts
+- Use feature-prefixed names to avoid conflicts
+
 **Nuxt UI components (always available):**
 
 - Layout: `UApp`, `UHeader`, `UMain`, `UFooter`
@@ -102,6 +124,26 @@ describe('AuthButton', () => {
 ```
 
 ## Composables (useAuth)
+
+**Auto-imported from `composables/`:**
+
+Composables can be organized in feature-based subdirectories:
+
+```
+composables/
+├── auth/
+│   ├── useAuth.ts       → useAuth()
+│   └── useRole.ts       → useRole()
+├── todo/
+│   └── useTodos.ts      → useTodos()
+└── organization/
+    └── useOrganization.ts → useOrganization()
+```
+
+- Nested composables auto-import by filename
+- `composables/auth/useAuth.ts` → `useAuth()` (use anywhere, no import)
+- Requires `composables/**` in nuxt.config.ts imports.dirs
+- Use feature-prefixed names (useAuthSession, useOrgContext)
 
 **Pattern:**
 

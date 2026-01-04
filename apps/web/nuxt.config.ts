@@ -9,6 +9,22 @@ const workspaceRoot = resolve(__dirname, '../..');
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui'],
 
+  // Auto-import components from nested feature directories
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false, // Don't prefix nested components with parent dir
+    },
+  ],
+
+  // Auto-import composables from nested feature directories
+  imports: {
+    dirs: [
+      'composables', // Root composables
+      'composables/**', // Nested composables (auth/, todo/, org/)
+    ],
+  },
+
   devtools: {
     enabled: true,
   },
