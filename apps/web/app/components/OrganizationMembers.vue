@@ -8,14 +8,22 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
-const { members, currentUserRole, fetchMembers } = useOrganization();
+const { user } = useAuth();
+const { members, currentUserRole, fetchMembers, updateMemberRole, removeMember } =
+  useOrganization();
 
 // Fetch members on mount
 onMounted(() => fetchMembers(props.organizationSlug));
 
 const isOwner = computed(() => currentUserRole.value === 'OWNER');
+const canManageMembers = computed(() =>
+  ['OWNER', 'ADMIN'].includes(currentUserRole.value ?? ''),
+);
 
 const inviteModalOpen = ref(false);
+const removeModalOpen = ref(false);
+const memberToRemove = ref<string | null>(null);
+const removing = ref(false);
 const inviteState = reactive({
   email: '',
   role: 'MEMBER' as OrganizationRole,
@@ -62,6 +70,46 @@ const columns = [
       }, () => row.original.role);
     },
   },
+  {
+    id: 'actions',
+    header: 'Actions',
+    cell: ({ row }: { row: { original: OrganizationMember & { user: { id: string } } } }) => {
+      const member = row.original;
+      const currentUserId = user.value?.id;
+      const isSelf = member.userId === currentUserId;
+      const canEdit = isOwner.value && !isSelf;
+      const canRemove = canManageMembers.value && !isSelf;
+
+      return h('div', { class: 'flex gap-2' }, [
+        // Role dropdown (OWNER only, not self)
+        canEdit
+          ? h(resolveComponent('USelect'), {
+              'modelValue': member.role,
+              'options': [
+                { value: 'OWNER', label: 'Owner' },
+                { value: 'ADMIN', label: 'Admin' },
+                { value: 'MEMBER', label: 'Member' },
+                { value: 'GUEST', label: 'Guest' },
+              ],
+              'onUpdate:modelValue': (newRole: OrganizationRole) => handleRoleChange(member.userId, newRole),
+            })
+          : h(resolveComponent('UBadge'), {
+              color: roleColors[member.role as keyof typeof roleColors],
+            }, () => member.role),
+
+        // Remove button (OWNER/ADMIN, not self)
+        canRemove
+          ? h(resolveComponent('UButton'), {
+              icon: 'i-lucide-trash-2',
+              size: 'xs',
+              color: 'error',
+              variant: 'ghost',
+              onClick: () => openRemoveModal(member.userId),
+            })
+          : null,
+      ].filter(Boolean));
+    },
+  },
 ];
 
 async function openInviteModal() {
@@ -96,6 +144,58 @@ async function sendInvite() {
     });
   } finally {
     inviting.value = false;
+  }
+}
+
+async function handleRoleChange(userId: string, role: OrganizationRole) {
+  try {
+    await updateMemberRole(props.organizationSlug, userId, role);
+    toast.add({
+      title: 'Success',
+      description: 'Member role updated',
+      color: 'success',
+      icon: 'i-lucide-check',
+    });
+  } catch (err) {
+    const error = err as { data?: { message?: string } };
+    toast.add({
+      title: 'Error',
+      description: error.data?.message || 'Failed to update role',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+  }
+}
+
+function openRemoveModal(userId: string) {
+  memberToRemove.value = userId;
+  removeModalOpen.value = true;
+}
+
+async function confirmRemove() {
+  if (!memberToRemove.value) return;
+
+  removing.value = true;
+  try {
+    await removeMember(props.organizationSlug, memberToRemove.value);
+    toast.add({
+      title: 'Success',
+      description: 'Member removed',
+      color: 'success',
+      icon: 'i-lucide-check',
+    });
+    removeModalOpen.value = false;
+  } catch (err) {
+    const error = err as { data?: { message?: string } };
+    toast.add({
+      title: 'Error',
+      description: error.data?.message || 'Failed to remove member',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+  } finally {
+    removing.value = false;
+    memberToRemove.value = null;
   }
 }
 </script>
@@ -181,6 +281,39 @@ async function sendInvite() {
               </div>
             </div>
           </UForm>
+        </UCard>
+      </template>
+    </UModal>
+
+    <UModal v-model:open="removeModalOpen">
+      <template #content="{ close }">
+        <UCard>
+          <template #header>
+            <h3 class="text-lg font-semibold">
+              Remove Member
+            </h3>
+          </template>
+
+          <p>Are you sure you want to remove this member?</p>
+
+          <template #footer>
+            <div class="flex gap-2">
+              <UButton
+                color="error"
+                :loading="removing"
+                @click="confirmRemove"
+              >
+                Remove
+              </UButton>
+              <UButton
+                variant="ghost"
+                :disabled="removing"
+                @click="close"
+              >
+                Cancel
+              </UButton>
+            </div>
+          </template>
         </UCard>
       </template>
     </UModal>

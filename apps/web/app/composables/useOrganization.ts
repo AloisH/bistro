@@ -72,6 +72,31 @@ export const useOrganization = () => {
     }
   }
 
+  async function updateMemberRole(slug: string, userId: string, role: OrganizationRole) {
+    try {
+      await $fetch(`/api/organizations/${slug}/members/${userId}/role`, {
+        method: 'PUT',
+        body: { role },
+      });
+      await fetchMembers(slug);
+    } catch (error) {
+      console.error('Failed to update member role:', error);
+      throw error;
+    }
+  }
+
+  async function removeMember(slug: string, userId: string) {
+    try {
+      await $fetch(`/api/organizations/${slug}/members/${userId}`, {
+        method: 'DELETE',
+      });
+      await fetchMembers(slug);
+    } catch (error) {
+      console.error('Failed to remove member:', error);
+      throw error;
+    }
+  }
+
   return {
     // State
     organizations: readonly(organizations),
@@ -89,6 +114,8 @@ export const useOrganization = () => {
     fetchOrganizations,
     fetchMembers,
     switchOrganization,
+    updateMemberRole,
+    removeMember,
 
     // Status
     fetching: readonly(fetching),
