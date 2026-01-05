@@ -104,7 +104,7 @@ async function resendVerification() {
   try {
     await client.sendVerificationEmail({
       email: email.value,
-      callbackURL: '/dashboard',
+      callbackURL: '/organizations/select',
     });
 
     toast.add({

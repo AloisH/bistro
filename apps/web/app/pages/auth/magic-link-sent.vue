@@ -107,7 +107,7 @@ async function resendMagicLink() {
   try {
     await authClient.signIn.magicLink({
       email: email.value,
-      callbackURL: '/dashboard',
+      callbackURL: '/organizations/select',
     });
 
     toast.add({

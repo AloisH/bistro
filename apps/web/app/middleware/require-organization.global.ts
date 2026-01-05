@@ -42,8 +42,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  // Skip user-level pages (profile, admin, dashboard)
-  if (to.path.startsWith('/profile') || to.path.startsWith('/admin') || to.path.startsWith('/dashboard')) {
+  // Skip user-level pages (profile, admin)
+  if (to.path.startsWith('/profile') || to.path.startsWith('/admin')) {
     return;
   }
 

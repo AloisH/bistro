@@ -87,7 +87,7 @@ apps/web/
 │   ├── app.vue                    # Root layout (UApp wrapper)
 │   ├── pages/                     # File-based routes
 │   │   ├── index.vue              # / (landing)
-│   │   ├── dashboard.vue          # /dashboard (protected)
+│   │   ├── dashboard.vue          # /org/[slug]/dashboard (protected)
 │   │   ├── profile.vue            # /profile (protected)
 │   │   ├── auth/                  # Auth flows
 │   │   │   ├── login.vue
@@ -222,7 +222,7 @@ apps/web/
 **File-based routing:**
 
 - `pages/index.vue` → `/`
-- `pages/dashboard.vue` → `/dashboard`
+- `pages/org/[slug]/dashboard.vue` → `/org/[slug]/dashboard`
 - `pages/auth/login.vue` → `/auth/login`
 - `pages/admin/users.vue` → `/admin/users`
 

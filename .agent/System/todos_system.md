@@ -362,7 +362,7 @@ deleteTodo(id); // Optimistic delete
 - Error alert on failure
 - Clears form on success
 
-### Page (`app/pages/org/[slug]/dashboard.vue`)
+### Page (`app/pages/org/[slug]/org/[slug]/dashboard.vue`)
 
 **Purpose:** Organization dashboard with todos
 
@@ -539,7 +539,7 @@ watch(
 - `apps/web/app/composables/useTodos.ts` - State management
 - `apps/web/app/components/TodoList.vue` - List component
 - `apps/web/app/components/CreateTodoForm.vue` - Form component
-- `apps/web/app/pages/org/[slug]/dashboard.vue` - Dashboard page
+- `apps/web/app/pages/org/[slug]/org/[slug]/dashboard.vue` - Dashboard page
 
 **Database:**
 

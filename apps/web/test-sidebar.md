@@ -20,7 +20,7 @@ The server should start on http://localhost:3001/
 
 #### Dashboard Page
 
-- Navigate to http://localhost:3001/dashboard
+- Navigate to http://localhost:3001/org/[slug]/dashboard
 - You should see:
   - A sidebar on the left side
   - Navigation menu with Dashboard, Profile, and Settings
@@ -37,7 +37,7 @@ The server should start on http://localhost:3001/
 
 #### Settings Page
 
-- Navigate to http://localhost:3001/dashboard/settings
+- Navigate to http://localhost:3001/org/[slug]/dashboard/settings
 - You should see:
   - The sidebar with Settings highlighted
   - Theme switching options
@@ -82,7 +82,7 @@ The server should start on http://localhost:3001/
 If the sidebar is not visible:
 
 1. Check that you're logged in
-2. Make sure you're on a dashboard route (/dashboard, /profile, /dashboard/settings)
+2. Make sure you're on a dashboard route (/org/[slug]/dashboard, /profile, /org/[slug]/dashboard/settings)
 3. Check the browser console for errors
 4. Verify that the page has `definePageMeta({ layout: 'dashboard' })`
 
@@ -91,4 +91,4 @@ If the sidebar is not visible:
 - **Layout System**: Uses Nuxt's built-in layout system
 - **Authentication**: Protected by middleware in `apps/web/app/middleware/auth.global.ts`
 - **Sidebar Component**: Uses `@nuxt/ui` DashboardSidebar component
-- **Routing**: Dashboard routes are defined in `apps/web/app/pages/dashboard/`
+- **Routing**: Dashboard routes are defined in `apps/web/app/pages/org/[slug]/dashboard/`

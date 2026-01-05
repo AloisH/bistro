@@ -15,7 +15,7 @@ How to add new pages using Nuxt file-based routing.
 **Convention:**
 
 - `pages/index.vue` → `/`
-- `pages/dashboard.vue` → `/dashboard`
+- `pages/org/[slug]/dashboard.vue` → `/org/[slug]/dashboard`
 - `pages/auth/login.vue` → `/auth/login`
 - `pages/projects/[id].vue` → `/projects/:id`
 - `pages/admin/users.vue` → `/admin/users`
@@ -124,7 +124,7 @@ const { isSuperAdmin } = useRole();
 // Or redirect if not admin
 onMounted(() => {
   if (!isSuperAdmin.value) {
-    navigateTo('/dashboard');
+    navigateTo('/org/[slug]/dashboard');
   }
 });
 </script>
@@ -138,7 +138,7 @@ const { isAdmin } = useRole();
 
 onMounted(() => {
   if (!isAdmin.value) {
-    navigateTo('/dashboard');
+    navigateTo('/org/[slug]/dashboard');
   }
 });
 </script>
@@ -481,7 +481,7 @@ const { signIn, fetchSession } = useAuth();
 async function handleLogin() {
   await signIn.email({ email, password });
   await fetchSession();
-  await navigateTo('/dashboard');
+  await navigateTo('/org/[slug]/dashboard');
 }
 </script>
 ```
@@ -515,7 +515,7 @@ const { isSuperAdmin } = useRole();
 
 onMounted(() => {
   if (!isSuperAdmin.value) {
-    navigateTo('/dashboard');
+    navigateTo('/org/[slug]/dashboard');
   }
 });
 </script>

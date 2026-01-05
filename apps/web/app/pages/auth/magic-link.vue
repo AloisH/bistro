@@ -81,7 +81,7 @@ async function onSubmit() {
   try {
     const result = await authClient.signIn.magicLink({
       email: state.email,
-      callbackURL: '/dashboard',
+      callbackURL: '/organizations/select',
     });
 
     if (result.error) {

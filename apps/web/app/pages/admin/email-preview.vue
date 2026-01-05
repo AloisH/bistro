@@ -157,7 +157,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    navigateTo('/dashboard');
+    navigateTo('/');
   }
 });
 

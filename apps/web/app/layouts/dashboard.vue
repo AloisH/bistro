@@ -158,19 +158,9 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
   // User-level navigation
   const baseItems: NavigationMenuItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'i-lucide-house',
-      to: '/dashboard',
-    },
-    {
       label: 'Profile',
       icon: 'i-lucide-user',
       to: '/profile',
-    },
-    {
-      label: 'Settings',
-      icon: 'i-lucide-settings',
-      to: '/dashboard/settings',
     },
   ];
 
@@ -215,11 +205,6 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => [
       label: 'Profile',
       icon: 'i-lucide-user',
       to: '/profile',
-    },
-    {
-      label: 'Settings',
-      icon: 'i-lucide-settings',
-      to: '/dashboard/settings',
     },
   ],
   [

@@ -106,7 +106,7 @@
 <script setup lang="ts">
 import { signInSchema } from '#shared/schemas/auth';
 
-const { signIn, fetchSession } = useAuth();
+const { signIn, fetchSession, redirectToUserDashboard } = useAuth();
 
 // Redirect if already authenticated (e.g., after OAuth callback)
 useAuthRedirect();
@@ -135,7 +135,7 @@ async function onSubmit() {
     }
 
     await fetchSession();
-    await navigateTo('/dashboard');
+    await redirectToUserDashboard();
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {

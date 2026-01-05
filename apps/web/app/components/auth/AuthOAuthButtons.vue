@@ -55,7 +55,7 @@ const signInWithGithub = async () => {
   try {
     const result = await signIn.social({
       provider: 'github',
-      callbackURL: '/dashboard',
+      callbackURL: '/organizations/select',
     });
     console.log('[OAuth] GitHub result:', result);
 
@@ -76,7 +76,7 @@ const signInWithGoogle = async () => {
   try {
     const result = await signIn.social({
       provider: 'google',
-      callbackURL: '/dashboard',
+      callbackURL: '/organizations/select',
     });
     console.log('[OAuth] Google result:', result);
 

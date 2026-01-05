@@ -52,6 +52,22 @@ export const useAuth = () => {
     });
   }
 
+  const redirectToUserDashboard = async () => {
+    try {
+      const { organizations } = await $fetch<{ organizations: { slug: string }[] }>(
+        '/api/organizations',
+      );
+      const firstOrg = organizations?.[0];
+      if (firstOrg) {
+        return navigateTo(`/org/${firstOrg.slug}/dashboard`);
+      }
+      return navigateTo('/organizations/create');
+    } catch (error) {
+      console.error('Failed to fetch organizations:', error);
+      return navigateTo('/organizations/create');
+    }
+  };
+
   return {
     session,
     user,
@@ -69,6 +85,7 @@ export const useAuth = () => {
       return res;
     },
     fetchSession,
+    redirectToUserDashboard,
     client,
   };
 };

@@ -111,6 +111,7 @@ definePageMeta({
 
 const { isSuperAdmin } = useRole();
 const { startImpersonation } = useImpersonation();
+const { redirectToUserDashboard } = useAuth();
 const toast = useToast();
 
 // Check if user is super admin on mount
@@ -122,7 +123,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    navigateTo('/dashboard');
+    navigateTo('/');
   }
 });
 
@@ -250,7 +251,7 @@ async function handleImpersonate() {
       icon: 'i-lucide-check',
     });
     closeModal();
-    await navigateTo('/dashboard');
+    await redirectToUserDashboard();
   } else {
     toast.add({
       title: 'Error',

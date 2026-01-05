@@ -244,7 +244,7 @@ model OrganizationInvite {
 2. Validate slug uniqueness
 3. Create org via API
 4. Auto-create OWNER membership
-5. Redirect to `/org/[slug]/dashboard`
+5. Redirect to `/org/[slug]/org/[slug]/dashboard`
 
 ### /organizations/select
 
@@ -270,7 +270,7 @@ model OrganizationInvite {
 4. Accept button calls API
 5. Redirect to org dashboard
 
-### /org/[slug]/dashboard
+### /org/[slug]/org/[slug]/dashboard
 
 **Purpose:** Organization workspace
 
@@ -446,7 +446,7 @@ async function acceptInvite() {
     body: { token },
   });
 
-  await navigateTo(`/org/${organization.slug}/dashboard`);
+  await navigateTo(`/org/${organization.slug}/org/[slug]/dashboard`);
 }
 </script>
 ```

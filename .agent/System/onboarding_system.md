@@ -249,7 +249,7 @@ async function nextStep(data: any) {
 
 async function skipOnboarding() {
   await $fetch('/api/user/onboarding/skip', { method: 'POST' });
-  await navigateTo('/dashboard');
+  await navigateTo('/org/[slug]/dashboard');
 }
 </script>
 

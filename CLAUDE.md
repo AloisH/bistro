@@ -335,7 +335,7 @@ GOOGLE_CLIENT_SECRET=...
 // Must call fetchSession() after auth operations:
 await signIn.email({ email, password });
 await fetchSession(); // ← Add this
-await navigateTo('/dashboard');
+await navigateTo('/org/[slug]/dashboard');
 ```
 
 **"Type errors after DB schema change"**
@@ -500,7 +500,7 @@ Better Auth (email/password implemented, OAuth planned):
 
 - **Server**: `server/utils/auth.ts` (Better Auth + Prisma adapter), `server/utils/serverAuth.ts` (session helper)
 - **Client**: `lib/auth-client.ts` (Better Auth client), `app/composables/useAuth.ts` (session state)
-- **Routes**: `/auth/login`, `/auth/register`, `/dashboard` (protected)
+- **Routes**: `/auth/login`, `/auth/register`, `/org/[slug]/dashboard` (org-scoped)
 - **Middleware**: `app/middleware/auth.global.ts` (route guard)
 - **Component**: `AuthButton` (header login/avatar dropdown)
 

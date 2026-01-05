@@ -211,7 +211,7 @@ async function handleLogout() {
    - Creates Session record
    - Sets `better-auth.session_token` cookie
 4. Client calls `fetchSession()` to update state
-5. Client redirects to `/dashboard`
+5. Client redirects to `/org/[slug]/dashboard`
 
 **Code:**
 
@@ -233,7 +233,7 @@ async function handleRegister() {
       name: state.name,
     });
     await fetchSession();
-    await navigateTo('/dashboard');
+    await navigateTo('/org/[slug]/dashboard');
   } catch (e) {
     // Handle error
   }
@@ -254,7 +254,7 @@ async function handleRegister() {
    - Creates Session record
    - Sets `better-auth.session_token` cookie
 4. Client calls `fetchSession()` to update state
-5. Client redirects to `/dashboard`
+5. Client redirects to `/org/[slug]/dashboard`
 
 **Code:**
 
@@ -274,7 +274,7 @@ async function handleLogin() {
       password: state.password,
     });
     await fetchSession();
-    await navigateTo('/dashboard');
+    await navigateTo('/org/[slug]/dashboard');
   } catch (e) {
     // Handle error
   }
@@ -301,7 +301,7 @@ async function handleLogin() {
    - Sets `better-auth.session_token` cookie
    - Redirects to `/auth/login`
 7. Client calls `fetchSession()` to update state
-8. Client redirects to `/dashboard`
+8. Client redirects to `/org/[slug]/dashboard`
 
 **Code:**
 
@@ -321,7 +321,7 @@ onMounted(async () => {
   // Better Auth redirects to login page after OAuth
   await fetchSession(); // Fetch updated session
   if (loggedIn.value) {
-    await navigateTo('/dashboard');
+    await navigateTo('/org/[slug]/dashboard');
   }
 });
 </script>
@@ -628,7 +628,7 @@ async function handleImpersonate(userId: string) {
 
   // Refresh session
   await fetchSession();
-  await navigateTo('/dashboard');
+  await navigateTo('/org/[slug]/dashboard');
 }
 </script>
 ```
@@ -916,7 +916,7 @@ GITHUB_CLIENT_SECRET=...
 ```typescript
 await signIn.email({ email, password });
 await fetchSession(); // ← Add this
-await navigateTo('/dashboard');
+await navigateTo('/org/[slug]/dashboard');
 ```
 
 ### "Cannot impersonate user"

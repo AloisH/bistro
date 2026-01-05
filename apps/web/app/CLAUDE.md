@@ -35,7 +35,7 @@ app/
 **Convention:**
 
 - `pages/index.vue` → `/`
-- `pages/dashboard.vue` → `/dashboard`
+- `pages/org/[slug]/dashboard.vue` → `/org/[slug]/dashboard`
 - `pages/auth/login.vue` → `/auth/login`
 - `pages/user/[id].vue` → `/user/:id`
 
@@ -197,7 +197,7 @@ onMounted(async () => {
   // Better Auth redirects to login page after OAuth
   await fetchSession(); // Fetch updated session
   if (loggedIn.value) {
-    await navigateTo('/dashboard');
+    await navigateTo('/org/[slug]/dashboard');
   }
 });
 ```
