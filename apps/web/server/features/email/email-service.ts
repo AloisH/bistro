@@ -1,7 +1,7 @@
 import { render } from '@vue-email/render';
 import type { Component } from 'vue';
-import type { SendEmailInput } from '#shared/schemas/email';
-import { sendEmailSchema } from '#shared/schemas/email';
+import type { SendEmailInput } from '#shared/email';
+import { sendEmailSchema } from '#shared/email';
 import { resend } from './email-client';
 import AccountDeletion from './templates/AccountDeletion.vue';
 import MagicLinkEmail from './templates/MagicLinkEmail.vue';
