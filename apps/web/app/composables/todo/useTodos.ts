@@ -1,5 +1,5 @@
 import type { Todo } from '../../../prisma/generated/client';
-import type { CreateTodoInput } from '#shared/schemas/todo';
+import type { CreateTodoInput } from '#shared/todo';
 
 export function useTodos() {
   const route = useRoute();

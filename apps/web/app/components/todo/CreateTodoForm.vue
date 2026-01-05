@@ -49,8 +49,8 @@
 </template>
 
 <script setup lang="ts">
-import { createTodoSchema } from '#shared/schemas/todo';
-import type { CreateTodoInput } from '#shared/schemas/todo';
+import { createTodoSchema } from '#shared/todo';
+import type { CreateTodoInput } from '#shared/todo';
 
 const emit = defineEmits<{
   created: [];

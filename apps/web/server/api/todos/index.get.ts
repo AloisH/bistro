@@ -1,6 +1,6 @@
 import { defineApiHandler } from '../../utils/api-handler';
 import { todoService } from '../../features/todo/todo-service';
-import { todoQuerySchema } from '#shared/schemas/todo';
+import { todoQuerySchema } from '#shared/todo';
 
 /**
  * GET /api/todos

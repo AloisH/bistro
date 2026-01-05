@@ -1,5 +1,5 @@
 import { todoRepository } from './todo-repository';
-import type { CreateTodoInput, UpdateTodoInput } from '#shared/schemas/todo';
+import type { CreateTodoInput, UpdateTodoInput } from '#shared/todo';
 import type { Todo } from '../../../prisma/generated/client';
 
 export class TodoService {

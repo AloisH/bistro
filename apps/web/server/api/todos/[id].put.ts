@@ -1,5 +1,5 @@
 import { defineValidatedApiHandler } from '../../utils/api-handler';
-import { updateTodoSchema } from '#shared/schemas/todo';
+import { updateTodoSchema } from '#shared/todo';
 import { todoService } from '../../features/todo/todo-service';
 
 /**
