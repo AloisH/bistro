@@ -1,0 +1,148 @@
+<template>
+  <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
+    <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+          Change Password
+        </h2>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Update your password to keep your account secure
+        </p>
+      </div>
+      <UBadge
+        color="neutral"
+        variant="subtle"
+        class="mt-2 sm:mt-0"
+      >
+        Security
+      </UBadge>
+    </div>
+    <UForm
+      :state="passwordState"
+      :schema="changePasswordSchema"
+      class="space-y-4"
+      @submit.prevent="changePassword"
+    >
+      <UFormField
+        name="currentPassword"
+        label="Current Password"
+        description="Enter your current password for verification"
+      >
+        <UInput
+          v-model="passwordState.currentPassword"
+          type="password"
+          placeholder="••••••••"
+          size="lg"
+        />
+      </UFormField>
+
+      <UFormField
+        name="newPassword"
+        label="New Password"
+        description="Choose a strong password with at least 8 characters"
+      >
+        <UInput
+          v-model="passwordState.newPassword"
+          type="password"
+          placeholder="••••••••"
+          size="lg"
+        />
+      </UFormField>
+
+      <UFormField
+        name="revokeOtherSessions"
+        class="pt-2"
+      >
+        <template #label>
+          <div class="flex items-center gap-3">
+            <UCheckbox
+              id="revoke-sessions"
+              v-model="passwordState.revokeOtherSessions"
+            />
+            <label
+              for="revoke-sessions"
+              class="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Sign out from all other devices
+            </label>
+          </div>
+        </template>
+        <template #description>
+          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            Recommended for security when changing passwords
+          </p>
+        </template>
+      </UFormField>
+
+      <div class="pt-4">
+        <UButton
+          type="submit"
+          :loading="passwordLoading"
+          size="lg"
+          color="primary"
+          class="w-full sm:w-auto"
+        >
+          <template #leading>
+            <UIcon
+              v-if="!passwordLoading"
+              name="i-lucide-lock"
+              class="mr-2"
+            />
+          </template>
+          Update Password
+        </UButton>
+      </div>
+    </UForm>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { changePasswordSchema } from '#shared/user';
+
+const emit = defineEmits<{
+  changed: [];
+}>();
+
+const { client } = useAuth();
+const toast = useToast();
+
+const passwordState = reactive({
+  currentPassword: '',
+  newPassword: '',
+  revokeOtherSessions: true,
+});
+const passwordLoading = ref(false);
+
+async function changePassword() {
+  passwordLoading.value = true;
+  try {
+    await client.changePassword({
+      currentPassword: passwordState.currentPassword,
+      newPassword: passwordState.newPassword,
+      revokeOtherSessions: passwordState.revokeOtherSessions,
+    });
+    passwordState.currentPassword = '';
+    passwordState.newPassword = '';
+    toast.add({
+      title: 'Password Updated',
+      description: 'Your password has been changed successfully',
+      color: 'success',
+      icon: 'i-lucide-check-circle',
+    });
+    // Emit event if sessions were revoked
+    if (passwordState.revokeOtherSessions) {
+      emit('changed');
+    }
+  } catch (e: unknown) {
+    const err = e as { message?: string };
+    toast.add({
+      title: 'Password Change Failed',
+      description: err.message || 'Failed to change password. Please check your current password.',
+      color: 'error',
+      icon: 'i-lucide-alert-circle',
+    });
+  } finally {
+    passwordLoading.value = false;
+  }
+}
+</script>
