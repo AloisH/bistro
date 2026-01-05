@@ -15,6 +15,7 @@ export interface AdminApiHandlerContext {
 /**
  * Require specific role(s) for API endpoint access
  * Checks session and queries user role from database
+ * During impersonation, checks the ADMIN's role, not the impersonated user's role
  *
  * @param allowedRoles - Array of roles that can access the endpoint
  * @returns Context with userId and userRole
@@ -34,9 +35,13 @@ export async function requireRole(
     });
   }
 
+  // During impersonation: session.user.id = impersonated user, session.session.impersonatedBy = original admin
+  // For role checks, use the admin's ID if impersonating
+  const userIdForRoleCheck = session.session?.impersonatedBy || session.user.id;
+
   // Query user role from database
   const user = await db.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: userIdForRoleCheck },
     select: { id: true, role: true },
   });
 
