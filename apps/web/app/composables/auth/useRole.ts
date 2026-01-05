@@ -1,4 +1,4 @@
-import type { Role } from '../../prisma/generated/client';
+import type { Role } from '../../../prisma/generated/client';
 
 /**
  * useRole composable

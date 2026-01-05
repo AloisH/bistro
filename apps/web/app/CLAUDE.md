@@ -135,12 +135,18 @@ Composables can be organized in feature-based subdirectories:
 ```
 composables/
 ├── auth/
-│   ├── useAuth.ts       → useAuth()
-│   └── useRole.ts       → useRole()
+│   ├── useAuth.ts          → useAuth()
+│   ├── useAuthRedirect.ts  → useAuthRedirect()
+│   └── useRole.ts          → useRole()
+├── organization/
+│   └── useOrganization.ts  → useOrganization()
 ├── todo/
-│   └── useTodos.ts      → useTodos()
-└── organization/
-    └── useOrganization.ts → useOrganization()
+│   └── useTodos.ts         → useTodos()
+├── docs/
+│   ├── useDocsNavigation.ts → useDocsNavigation()
+│   └── useDocsSearch.ts    → useDocsSearch()
+└── admin/
+    └── useImpersonation.ts → useImpersonation()
 ```
 
 - Nested composables auto-import by filename

@@ -1,4 +1,4 @@
-import type { Todo } from '../../prisma/generated/client';
+import type { Todo } from '../../../prisma/generated/client';
 import type { CreateTodoInput } from '#shared/schemas/todo';
 
 export function useTodos() {

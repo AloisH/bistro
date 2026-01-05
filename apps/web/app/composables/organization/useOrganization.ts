@@ -1,4 +1,4 @@
-import type { Organization, OrganizationMember, OrganizationRole } from '../../prisma/generated/client';
+import type { Organization, OrganizationMember, OrganizationRole } from '../../../prisma/generated/client';
 
 type MemberWithUser = OrganizationMember & {
   user: { id: string; name: string; email: string; image: string | null };
