@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { resetPasswordSchema } from '#shared/schemas/auth';
+import { resetPasswordSchema } from '#shared/auth';
 import { authClient } from '../../../lib/auth-client';
 
 const route = useRoute();

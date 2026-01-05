@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { magicLinkSchema } from '#shared/schemas/auth';
+import { magicLinkSchema } from '#shared/auth';
 import { authClient } from '../../../lib/auth-client';
 
 const toast = useToast();

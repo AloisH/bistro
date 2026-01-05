@@ -1,5 +1,5 @@
 import { defineValidatedApiHandler } from '../../../../../utils/api-handler';
-import { updateMemberRoleSchema } from '#shared/schemas/organization';
+import { updateMemberRoleSchema } from '#shared/organization';
 import { organizationService } from '../../../../../features/organization/organization-service';
 import { organizationRepository } from '../../../../../features/organization/organization-repository';
 

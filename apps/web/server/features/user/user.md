@@ -11,7 +11,7 @@ User profile and account management.
 
 - Core: `utils/db`
 - Features: `email/email-service` (deletion confirmation)
-- Shared: `#shared/schemas/user`
+- Shared: `#shared/user`
 
 ## API Routes
 

@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { forgotPasswordSchema } from '#shared/schemas/auth';
+import { forgotPasswordSchema } from '#shared/auth';
 import { authClient } from '../../../lib/auth-client';
 
 const toast = useToast();

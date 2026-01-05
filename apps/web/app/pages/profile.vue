@@ -572,7 +572,7 @@ import {
   changePasswordSchema,
   deleteAccountPasswordSchema,
   deleteAccountEmailSchema,
-} from '#shared/schemas/user';
+} from '#shared/user';
 
 definePageMeta({
   layout: 'dashboard',

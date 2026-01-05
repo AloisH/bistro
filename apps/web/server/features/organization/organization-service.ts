@@ -3,7 +3,7 @@ import type {
   CreateOrganizationInput,
   InviteMemberInput,
   UpdateOrganizationInput,
-} from '#shared/schemas/organization';
+} from '#shared/organization';
 import type { Organization, OrganizationInvite, OrganizationMember, OrganizationRole } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
 import { organizationRepository } from './organization-repository';

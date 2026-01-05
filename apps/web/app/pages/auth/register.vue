@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { signUpSchema } from '#shared/schemas/auth';
+import { signUpSchema } from '#shared/auth';
 
 const { signUp } = useAuth();
 const toast = useToast();

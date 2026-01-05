@@ -5,7 +5,7 @@ import type {
   UpdateOnboardingInput,
   UpdateProfileInput,
   UserProfile,
-} from '#shared/schemas/user';
+} from '#shared/user';
 import { emailService } from '../email/email-service';
 import { userRepository } from './user-repository';
 

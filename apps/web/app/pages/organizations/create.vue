@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { createOrganizationSchema } from '#shared/schemas/organization';
-import type { CreateOrganizationInput } from '#shared/schemas/organization';
+import { createOrganizationSchema } from '#shared/organization';
+import type { CreateOrganizationInput } from '#shared/organization';
 
 const router = useRouter();
 const toast = useToast();

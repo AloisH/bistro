@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { signInSchema } from '#shared/schemas/auth';
+import { signInSchema } from '#shared/auth';
 
 const { signIn, fetchSession, redirectToUserDashboard } = useAuth();
 
