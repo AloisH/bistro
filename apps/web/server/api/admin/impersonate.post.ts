@@ -1,4 +1,4 @@
-import { startImpersonationSchema } from '~~/shared/schemas/impersonation';
+import { startImpersonationSchema } from '#shared/schemas/impersonation';
 import { impersonationService } from '../../features/impersonation/impersonation-service';
 import { requireRole } from '../../utils/require-role';
 

@@ -1,4 +1,4 @@
-import { updateOnboardingSchema } from '~~/shared/schemas/user';
+import { updateOnboardingSchema } from '#shared/schemas/user';
 import { userService } from '../../features/user/user-service';
 import { defineValidatedApiHandler } from '../../utils/api-handler';
 

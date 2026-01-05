@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3';
-import type { StartImpersonationInput } from '~~/shared/schemas/impersonation';
+import type { StartImpersonationInput } from '#shared/schemas/impersonation';
 import type { ImpersonationLog } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
 import { auth } from '../auth/auth-config';

@@ -1,0 +1,31 @@
+import { z } from 'zod';
+import { TITLE_MIN_LENGTH, MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH, TODO_FILTERS, TODO_SORT_OPTIONS } from './constants';
+
+/**
+ * Todo validation schemas
+ */
+
+export const createTodoSchema = z.object({
+  title: z.string().min(TITLE_MIN_LENGTH, 'Title is required').max(MAX_TITLE_LENGTH, `Title must be less than ${MAX_TITLE_LENGTH} characters`),
+  description: z.string().max(MAX_DESCRIPTION_LENGTH, `Description must be less than ${MAX_DESCRIPTION_LENGTH} characters`).optional(),
+});
+
+export const updateTodoSchema = z.object({
+  title: z.string().min(TITLE_MIN_LENGTH, 'Title is required').max(MAX_TITLE_LENGTH, `Title must be less than ${MAX_TITLE_LENGTH} characters`).optional(),
+  description: z.string().max(MAX_DESCRIPTION_LENGTH, `Description must be less than ${MAX_DESCRIPTION_LENGTH} characters`).optional(),
+  completed: z.boolean().optional(),
+});
+
+export const toggleTodoSchema = z.object({
+  completed: z.boolean(),
+});
+
+export const todoQuerySchema = z.object({
+  filter: z.enum(TODO_FILTERS).default('all'),
+  sort: z.enum(TODO_SORT_OPTIONS).default('date'),
+});
+
+export type CreateTodoInput = z.infer<typeof createTodoSchema>;
+export type UpdateTodoInput = z.infer<typeof updateTodoSchema>;
+export type ToggleTodoInput = z.infer<typeof toggleTodoSchema>;
+export type TodoQueryInput = z.infer<typeof todoQuerySchema>;

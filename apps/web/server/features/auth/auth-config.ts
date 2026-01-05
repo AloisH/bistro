@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink } from 'better-auth/plugins';
-import { ac, roles } from '~~/shared/auth/access-control';
+import { ac, roles } from '#shared/auth/access-control';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
 
