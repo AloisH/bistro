@@ -16,13 +16,11 @@ Authentication components and state management.
   - `signUp.email(email, password, name)` - Sign up
   - `signOut({ redirectTo })` - Sign out
   - `fetchSession()` - Refresh session (needed after OAuth callback)
+  - `redirectToUserDashboard()` - Redirect to user's first org dashboard
 
 - `composables/auth/useRole.ts` - Role-based access
   - `role`, `isAdmin`, `isSuperAdmin`, `isUser` - Role checks
   - `hasRole(roles)` - Check if user has any of the roles
-
-- `composables/auth/useAuthRedirect.ts` - Post-login redirect logic
-  - `redirectAfterAuth()` - Redirect to intended page or dashboard
 
 ## Dependencies
 
@@ -30,6 +28,8 @@ Authentication components and state management.
 - Composables: Auto-imported
 
 ## Usage
+
+**Basic auth check:**
 
 ```vue
 <script setup lang="ts">
@@ -45,6 +45,22 @@ async function handleLogout() {
   <AuthButton />
   <div v-if="isSuperAdmin">Admin Panel Link</div>
 </template>
+```
+
+**OAuth callback redirect (auth pages):**
+
+```vue
+<script setup lang="ts">
+const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
+
+// Redirect if already authenticated (e.g., after OAuth callback)
+onMounted(async () => {
+  await fetchSession();
+  if (loggedIn.value) {
+    await redirectToUserDashboard();
+  }
+});
+</script>
 ```
 
 **AuthOAuthButtons pattern:**

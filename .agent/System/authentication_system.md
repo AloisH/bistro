@@ -174,6 +174,7 @@ export const useAuth = () => {
 - `signUp.email()`: Email/password registration
 - `signOut()`: Logout
 - `fetchSession()`: Refresh session
+- `redirectToUserDashboard()`: Redirect to user's first org dashboard
 
 **Usage in components:**
 
@@ -675,13 +676,15 @@ async function handleStopImpersonation() {
 **Code:**
 
 ```typescript
+import { isPublicRoute } from '~/app/utils/route';
+
 export default defineNuxtRouteMiddleware(async (to) => {
   // Public routes centralized in nuxt.config.ts
   const config = useRuntimeConfig();
   const publicRoutes = config.public.publicRoutes as string[];
 
-  // Allow access to public routes
-  if (publicRoutes.includes(to.path)) {
+  // Allow access to public routes (supports /* wildcards)
+  if (isPublicRoute(to.path, publicRoutes)) {
     return;
   }
 
@@ -694,6 +697,23 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/auth/login');
   }
 });
+```
+
+**Public route utility:** `app/utils/route.ts`
+
+```typescript
+/**
+ * Check if path matches public route pattern (supports wildcards)
+ */
+export function isPublicRoute(path: string, publicRoutes: string[]): boolean {
+  return publicRoutes.some((route) => {
+    if (route.endsWith('/*')) {
+      const basePath = route.slice(0, -2);
+      return path === basePath || path.startsWith(basePath + '/');
+    }
+    return path === route;
+  });
+}
 ```
 
 ---

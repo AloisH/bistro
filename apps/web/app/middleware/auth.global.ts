@@ -1,18 +1,12 @@
+import { isPublicRoute } from '../utils/route';
+
 export default defineNuxtRouteMiddleware(async (to) => {
   // Public routes centralized in nuxt.config.ts
   const config = useRuntimeConfig();
   const publicRoutes = config.public.publicRoutes as string[];
 
   // Allow access to public routes (with wildcard support)
-  const isPublicRoute = publicRoutes.some((route) => {
-    if (route.endsWith('/*')) {
-      const basePath = route.slice(0, -2);
-      return to.path === basePath || to.path.startsWith(basePath + '/');
-    }
-    return to.path === route;
-  });
-
-  if (isPublicRoute) {
+  if (isPublicRoute(to.path, publicRoutes)) {
     return;
   }
 

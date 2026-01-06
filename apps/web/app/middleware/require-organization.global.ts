@@ -1,3 +1,5 @@
+import { isPublicRoute } from '../utils/route';
+
 /**
  * Global middleware to ensure user has selected/created an organization
  * Runs after auth.global.ts and onboarding.global.ts
@@ -50,15 +52,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Skip public routes (blog, legal, docs, etc)
   const config = useRuntimeConfig();
   const publicRoutes = config.public.publicRoutes as string[];
-  const isPublicRoute = publicRoutes.some((route) => {
-    if (route.endsWith('/*')) {
-      const basePath = route.slice(0, -2);
-      return to.path === basePath || to.path.startsWith(basePath + '/');
-    }
-    return to.path === route;
-  });
-
-  if (isPublicRoute) {
+  if (isPublicRoute(to.path, publicRoutes)) {
     return;
   }
 

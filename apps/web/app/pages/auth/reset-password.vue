@@ -71,16 +71,20 @@
 import { resetPasswordSchema } from '#shared/auth';
 import { authClient } from '../../../lib/auth-client';
 
+const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
 const route = useRoute();
 const toast = useToast();
 
-// Redirect if already authenticated
-useAuthRedirect();
-
 const token = ref(route.query.token as string);
 
-// Redirect if no token
-onMounted(() => {
+// Redirect if already authenticated, or if no token
+onMounted(async () => {
+  await fetchSession();
+  if (loggedIn.value) {
+    await redirectToUserDashboard();
+    return;
+  }
+
   if (!token.value) {
     toast.add({
       title: 'Invalid link',

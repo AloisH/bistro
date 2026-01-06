@@ -9,16 +9,13 @@ const props = defineProps<{
 
 const toast = useToast();
 const { user } = useAuth();
-const { members, currentUserRole, fetchMembers, updateMemberRole, removeMember } =
+const { members, currentUserRole, canManageMembers, fetchMembers, updateMemberRole, removeMember } =
   useOrganization();
 
 // Fetch members on mount
 onMounted(() => fetchMembers(props.organizationSlug));
 
 const isOwner = computed(() => currentUserRole.value === 'OWNER');
-const canManageMembers = computed(() =>
-  ['OWNER', 'ADMIN'].includes(currentUserRole.value ?? ''),
-);
 
 const inviteModalOpen = ref(false);
 const removeModalOpen = ref(false);

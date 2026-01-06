@@ -106,10 +106,15 @@
 <script setup lang="ts">
 import { signInSchema } from '#shared/auth';
 
-const { signIn, fetchSession, redirectToUserDashboard } = useAuth();
+const { signIn, fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
 
 // Redirect if already authenticated (e.g., after OAuth callback)
-useAuthRedirect();
+onMounted(async () => {
+  await fetchSession();
+  if (loggedIn.value) {
+    await redirectToUserDashboard();
+  }
+});
 
 const state = reactive({
   email: '',

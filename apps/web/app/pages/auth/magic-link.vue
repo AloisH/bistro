@@ -62,10 +62,16 @@
 import { magicLinkSchema } from '#shared/auth';
 import { authClient } from '../../../lib/auth-client';
 
+const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
 const toast = useToast();
 
 // Redirect if already authenticated
-useAuthRedirect();
+onMounted(async () => {
+  await fetchSession();
+  if (loggedIn.value) {
+    await redirectToUserDashboard();
+  }
+});
 
 const state = reactive({
   email: '',

@@ -85,11 +85,16 @@
 <script setup lang="ts">
 import { signUpSchema } from '#shared/auth';
 
-const { signUp } = useAuth();
+const { signUp, fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
 const toast = useToast();
 
 // Redirect if already authenticated (e.g., after OAuth callback)
-useAuthRedirect();
+onMounted(async () => {
+  await fetchSession();
+  if (loggedIn.value) {
+    await redirectToUserDashboard();
+  }
+});
 
 const state = reactive({
   name: '',
