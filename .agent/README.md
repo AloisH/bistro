@@ -103,6 +103,42 @@ Then refer to SOPs for specific tasks.
 
 ---
 
+## Component Documentation
+
+**Component-level docs and patterns.**
+
+### Component-Level Docs (CLAUDE.md in feature directories)
+
+- `apps/web/app/components/todo/CLAUDE.md` - Todo CRUD components
+- `apps/web/app/components/auth/CLAUDE.md` - Auth UI components
+- `apps/web/app/components/organization/CLAUDE.md` - Org management
+- `apps/web/app/components/onboarding/CLAUDE.md` - Onboarding flow
+- `apps/web/app/components/profile/CLAUDE.md` - User profile
+- `apps/web/app/components/admin/CLAUDE.md` - Admin features
+- `apps/web/app/components/shared/CLAUDE.md` - Shared utilities
+- `apps/web/app/components/docs/CLAUDE.md` - Docs search
+
+### System-Level Component Docs
+
+- **[Onboarding Components](./System/onboarding_components_system.md)**
+  - 5-step flow architecture (7 components)
+  - Progress tracking, step navigation
+  - Form validation, v-model patterns
+  - API integration, middleware
+
+- **[Profile Components](./System/profile_components_system.md)**
+  - User settings architecture (6 components)
+  - Password management, session control
+  - Account deletion, security patterns
+  - Modal confirmations, form validation
+
+- **[Admin Components](./System/admin_components_system.md)**
+  - Admin RBAC features (2 components)
+  - Impersonation system, audit logging
+  - Session management, security restrictions
+
+---
+
 ## Standard Operating Procedures (SOPs)
 
 **Best practices for common tasks.**
