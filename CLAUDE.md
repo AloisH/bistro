@@ -122,7 +122,9 @@ Only `apps/web` has implementation. Other workspaces are empty directories.
 
 **File Naming:**
 
-- Components: PascalCase (`AuthButton.vue`)
+- Components: PascalCase with feature prefix (`AuthButton.vue`, `ProfileForm.vue`)
+  - Pattern: `FeatureName*` matching folder (auth/ → Auth*, profile/ → Profile*)
+  - Shared utilities can omit prefix (`AppLogo.vue` in shared/)
 - Composables: camelCase with 'use' prefix (`useAuth.ts`)
 - API routes: kebab-case with method suffix (`user.get.ts`)
 - Pages: kebab-case or index.vue

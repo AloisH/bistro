@@ -26,14 +26,14 @@
 
       <div class="space-y-8">
         <ProfileForm :has-password="hasPassword" />
-        <ChangePasswordForm
+        <ProfileChangePasswordForm
           v-if="hasPassword"
           @changed="onPasswordChanged"
         />
-        <SessionManagement ref="sessionManagement" />
-        <OnboardingInfo />
-        <RestartOnboardingButton />
-        <DeleteAccountSection :has-password="hasPassword" />
+        <ProfileSessionManagement ref="sessionManagement" />
+        <ProfileOnboardingInfo />
+        <ProfileRestartOnboardingButton />
+        <ProfileDeleteAccountSection :has-password="hasPassword" />
       </div>
     </UCard>
   </div>
@@ -41,11 +41,11 @@
 
 <script setup lang="ts">
 import ProfileForm from '~/components/profile/ProfileForm.vue';
-import ChangePasswordForm from '~/components/profile/ChangePasswordForm.vue';
-import SessionManagement from '~/components/profile/SessionManagement.vue';
-import OnboardingInfo from '~/components/profile/OnboardingInfo.vue';
-import RestartOnboardingButton from '~/components/profile/RestartOnboardingButton.vue';
-import DeleteAccountSection from '~/components/profile/DeleteAccountSection.vue';
+import ProfileChangePasswordForm from '~/components/profile/ProfileChangePasswordForm.vue';
+import ProfileSessionManagement from '~/components/profile/ProfileSessionManagement.vue';
+import ProfileOnboardingInfo from '~/components/profile/ProfileOnboardingInfo.vue';
+import ProfileRestartOnboardingButton from '~/components/profile/ProfileRestartOnboardingButton.vue';
+import ProfileDeleteAccountSection from '~/components/profile/ProfileDeleteAccountSection.vue';
 
 definePageMeta({
   layout: 'dashboard',
@@ -57,8 +57,8 @@ const { user } = useAuth();
 const { data: profile } = await useFetch('/api/user/profile');
 const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false);
 
-// Ref to SessionManagement component
-const sessionManagement = ref<InstanceType<typeof SessionManagement> | null>(null);
+// Ref to ProfileSessionManagement component
+const sessionManagement = ref<InstanceType<typeof ProfileSessionManagement> | null>(null);
 
 // Helper function to get initials from name
 function getInitials(name: string): string {

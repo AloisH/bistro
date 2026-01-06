@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Create form -->
-    <CreateTodoForm />
+    <TodoCreateForm />
 
     <!-- Filter and Sort Controls -->
     <div class="flex items-center justify-between gap-4 flex-wrap">

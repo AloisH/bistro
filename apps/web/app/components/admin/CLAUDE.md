@@ -4,12 +4,12 @@ SUPER_ADMIN role features (impersonation, user management).
 
 ## Components
 
-- `ImpersonationBanner.vue` - Global banner shown during active impersonation
+- `AdminImpersonationBanner.vue` - Global banner shown during active impersonation
   - Shows target user email
   - "Stop Impersonation" button
   - Auto-hides when not impersonating
 
-- `SessionList.vue` - User session list for admin panel
+- `AdminSessionList.vue` - User session list for admin panel
   - Props: `userId: string`
   - Shows all sessions for a user
   - Device info, last active, revoke capability
@@ -44,11 +44,11 @@ await stopImpersonation();
 
 <template>
   <!-- Global banner (add to app.vue) -->
-  <ImpersonationBanner />
+  <AdminImpersonationBanner />
 
   <!-- Admin panel -->
   <div v-if="isSuperAdmin">
-    <SessionList :user-id="targetUserId" />
+    <AdminSessionList :user-id="targetUserId" />
   </div>
 </template>
 ```

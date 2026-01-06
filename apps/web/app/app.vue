@@ -25,7 +25,7 @@ useSeoMeta({
 <template>
   <div>
     <NuxtLoadingIndicator />
-    <ImpersonationBanner />
+    <AdminImpersonationBanner />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

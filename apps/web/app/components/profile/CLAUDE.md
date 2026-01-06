@@ -7,19 +7,19 @@ User profile and account management components.
 - `ProfileForm.vue` - Edit name and profile image
   - Updates via `/api/user/profile`
 
-- `ChangePasswordForm.vue` - Password change with current/new/confirm fields
+- `ProfileChangePasswordForm.vue` - Password change with current/new/confirm fields
   - Validation: min 8 chars, passwords match
 
-- `DeleteAccountSection.vue` - Account deletion with confirmation modal
+- `ProfileDeleteAccountSection.vue` - Account deletion with confirmation modal
   - Permanent action, deletes all user data
 
-- `OnboardingInfo.vue` - Display onboarding completion status
+- `ProfileOnboardingInfo.vue` - Display onboarding completion status
   - Shows completion date or "Not completed"
 
-- `RestartOnboardingButton.vue` - Reset onboarding flow
+- `ProfileRestartOnboardingButton.vue` - Reset onboarding flow
   - Clears `onboardingCompletedAt`, redirects to `/onboarding`
 
-- `SessionManagement.vue` - Active session list with revoke capability
+- `ProfileSessionManagement.vue` - Active session list with revoke capability
   - Shows device, location, last active
   - Current session highlighted
 
@@ -46,11 +46,11 @@ async function updateProfile(data: { name: string; image?: string }) {
 
 <template>
   <ProfileForm />
-  <ChangePasswordForm />
-  <OnboardingInfo />
-  <RestartOnboardingButton />
-  <SessionManagement />
-  <DeleteAccountSection />
+  <ProfileChangePasswordForm />
+  <ProfileOnboardingInfo />
+  <ProfileRestartOnboardingButton />
+  <ProfileSessionManagement />
+  <ProfileDeleteAccountSection />
 </template>
 ```
 

@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <SessionList
+    <AdminSessionList
       :sessions="sessions"
       :loading="sessionsLoading || revokeLoading"
       @revoke="revokeSession"
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import SessionList from '../admin/SessionList.vue';
+import AdminSessionList from '../admin/AdminSessionList.vue';
 
 interface SessionWithMetadata {
   id: string;

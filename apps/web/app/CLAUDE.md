@@ -17,9 +17,9 @@ app/
 ├── components/          # Auto-imported (feature-based)
 │   ├── shared/          # AppLogo
 │   ├── auth/            # AuthButton, AuthOAuthButtons
-│   ├── todo/            # TodoList, CreateTodoForm
+│   ├── todo/            # TodoList, TodoCreateForm
 │   ├── organization/    # OrganizationMembers, OrganizationSwitcher
-│   ├── admin/           # ImpersonationBanner, SessionList
+│   ├── admin/           # AdminImpersonationBanner, AdminSessionList
 │   ├── docs/            # DocsSearch
 │   └── onboarding/      # 7 onboarding components
 ├── composables/         # Auto-imported
@@ -84,7 +84,7 @@ components/
 │   └── AuthOAuthButtons.vue    → <AuthOAuthButtons>
 ├── todo/
 │   ├── TodoList.vue            → <TodoList>
-│   └── CreateTodoForm.vue      → <CreateTodoForm>
+│   └── TodoCreateForm.vue      → <TodoCreateForm>
 └── organization/
     ├── OrganizationMembers.vue → <OrganizationMembers>
     └── OrganizationSwitcher.vue → <OrganizationSwitcher>
@@ -93,7 +93,23 @@ components/
 - Nested components auto-import by filename (NOT parent dir)
 - `components/auth/AuthButton.vue` → `<AuthButton>` (not `<AuthAuthButton>`)
 - Enabled via `pathPrefix: false` in nuxt.config.ts
-- Use feature-prefixed names to avoid conflicts
+
+**Component Naming Convention:**
+
+**Strict feature prefix pattern:**
+
+- ALL components in feature folders use `FeatureName*` prefix
+- Prefix matches folder: `auth/AuthButton.vue`, `profile/ProfileForm.vue`
+- Auto-import: `<AuthButton>` (filename only, NOT folder)
+- Exception: `shared/` folder for app-wide utilities (AppLogo)
+
+**Examples:**
+
+- ✅ `auth/AuthButton.vue` → `<AuthButton>`
+- ✅ `profile/ProfileForm.vue` → `<ProfileForm>`
+- ✅ `admin/AdminSessionList.vue` → `<AdminSessionList>`
+- ❌ `profile/Form.vue` (missing prefix)
+- ❌ `profile/ProfileProfileForm.vue` (double prefix)
 
 **Nuxt UI components (always available):**
 

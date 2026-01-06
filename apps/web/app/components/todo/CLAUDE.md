@@ -5,7 +5,7 @@ Todo CRUD functionality with filter/sort and URL persistence.
 ## Components
 
 - `TodoList.vue` - Display todos with filter/sort controls, loading/empty states
-- `CreateTodoForm.vue` - Input form for creating new todos
+- `TodoCreateForm.vue` - Input form for creating new todos
 
 ## Composable
 
