@@ -496,6 +496,488 @@ Optional:
 5. **Composition API**: Vue 3 `<script setup>`
 6. **Testing**: Vitest + happy-dom, place `.test.ts` next to files
 
+## Test Infrastructure
+
+Transaction-per-test pattern with fixture factories for integration tests.
+
+### Quick Start Template
+
+```typescript
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { startTransaction, rollbackTransaction, db } from './testDb';
+import { createTestUser, createTestOrg, createTestTodo } from './testFixtures';
+
+describe('Feature Name', () => {
+  beforeEach(async () => {
+    await startTransaction();
+  });
+
+  afterEach(async () => {
+    await rollbackTransaction();
+  });
+
+  it('describes specific behavior', async () => {
+    // Arrange: Create test data
+    const user = await createTestUser();
+
+    // Act: Execute behavior under test
+    const result = await yourService.method(user.id);
+
+    // Assert: Verify outcome
+    expect(result.id).toBeDefined();
+    expect(result.userId).toBe(user.id);
+  });
+});
+```
+
+### Import Structure
+
+**For server tests (features/, utils/, api/):**
+
+```typescript
+// Test framework
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+
+// Test infrastructure (relative imports)
+import { startTransaction, rollbackTransaction, db } from '../../utils/testDb';
+import { createTestUser, createTestOrg, createTestTodo } from '../../utils/testFixtures';
+
+// Module under test (relative import)
+import { todoRepository } from './todo-repository';
+```
+
+**Key points:**
+
+- Use relative imports for server-side test files
+- `testDb` exports: `startTransaction`, `rollbackTransaction`, `db`
+- `testFixtures` exports: `createTestUser`, `createTestOrg`, `createTestTodo`
+- Adjust `../` depth based on file location
+
+### Transaction Lifecycle
+
+**Every integration test MUST use transaction hooks:**
+
+```typescript
+describe('Your Feature', () => {
+  beforeEach(async () => {
+    await startTransaction();
+  });
+
+  afterEach(async () => {
+    await rollbackTransaction();
+  });
+
+  // Tests here automatically roll back
+});
+```
+
+**Why transactions:**
+
+- Complete isolation between tests
+- Automatic cleanup (no manual teardown)
+- Tests can run in any order
+- No test pollution
+
+### Fixture Factories
+
+**Basic usage:**
+
+```typescript
+// Create with defaults
+const user = await createTestUser();
+const org = await createTestOrg();
+const todo = await createTestTodo(user.id);
+```
+
+**Override defaults:**
+
+```typescript
+// User overrides
+const admin = await createTestUser({
+  role: 'ADMIN',
+  email: 'admin@test.com',
+  name: 'Admin User',
+  emailVerified: true,
+});
+
+// Organization overrides
+const premiumOrg = await createTestOrg({
+  planType: 'premium',
+  name: 'Premium Organization',
+});
+
+// Todo overrides
+const completedTodo = await createTestTodo(user.id, {
+  title: 'Completed Task',
+  description: 'This is done',
+  completed: true,
+});
+```
+
+**Building relationships:**
+
+```typescript
+// Create user, org, and link them
+const user = await createTestUser();
+const org = await createTestOrg();
+// Create org member relationship (use actual Prisma if no fixture exists)
+await db.organizationMember.create({
+  data: {
+    userId: user.id,
+    organizationId: org.id,
+    role: 'OWNER',
+  },
+});
+```
+
+**Always use returned IDs:**
+
+```typescript
+// ✅ CORRECT: Use actual generated IDs
+const user = await createTestUser();
+const todo = await createTestTodo(user.id);
+expect(todo.userId).toBe(user.id);
+
+// ❌ WRONG: Never hardcode IDs
+const todo = await createTestTodo('user-123'); // Fails - user doesn't exist
+```
+
+### Repository Testing Pattern
+
+**Complete example:**
+
+```typescript
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { startTransaction, rollbackTransaction } from '../../utils/testDb';
+import { createTestUser, createTestTodo } from '../../utils/testFixtures';
+import { todoRepository } from './todo-repository';
+
+describe('TodoRepository', () => {
+  beforeEach(async () => {
+    await startTransaction();
+  });
+
+  afterEach(async () => {
+    await rollbackTransaction();
+  });
+
+  describe('findByUserId', () => {
+    it('returns todos for specific user', async () => {
+      const user = await createTestUser();
+      const todo1 = await createTestTodo(user.id, { title: 'Task 1' });
+      const todo2 = await createTestTodo(user.id, { title: 'Task 2' });
+
+      const result = await todoRepository.findByUserId(user.id);
+
+      expect(result).toHaveLength(2);
+      expect(result.map((t) => t.id)).toContain(todo1.id);
+      expect(result.map((t) => t.id)).toContain(todo2.id);
+    });
+
+    it('does not return other users todos', async () => {
+      const user1 = await createTestUser();
+      const user2 = await createTestUser();
+      await createTestTodo(user1.id);
+      await createTestTodo(user2.id);
+
+      const result = await todoRepository.findByUserId(user1.id);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].userId).toBe(user1.id);
+    });
+  });
+
+  describe('create', () => {
+    it('creates todo with required fields', async () => {
+      const user = await createTestUser();
+
+      const result = await todoRepository.create(user.id, {
+        title: 'New task',
+        description: 'Details here',
+      });
+
+      expect(result.id).toBeDefined();
+      expect(result.title).toBe('New task');
+      expect(result.userId).toBe(user.id);
+    });
+  });
+});
+```
+
+### Common Patterns
+
+**Testing CRUD operations:**
+
+```typescript
+// CREATE
+it('creates entity', async () => {
+  const user = await createTestUser();
+  const entity = await repository.create(user.id, data);
+  expect(entity.id).toBeDefined();
+});
+
+// READ
+it('finds entity by id', async () => {
+  const user = await createTestUser();
+  const entity = await createEntity(user.id);
+  const found = await repository.findById(entity.id, user.id);
+  expect(found?.id).toBe(entity.id);
+});
+
+// UPDATE
+it('updates entity', async () => {
+  const user = await createTestUser();
+  const entity = await createEntity(user.id);
+  const updated = await repository.update(entity.id, user.id, { title: 'New' });
+  expect(updated.title).toBe('New');
+});
+
+// DELETE
+it('deletes entity', async () => {
+  const user = await createTestUser();
+  const entity = await createEntity(user.id);
+  await repository.delete(entity.id);
+  const found = await repository.findById(entity.id, user.id);
+  expect(found).toBeNull();
+});
+```
+
+**Testing user isolation (CRITICAL):**
+
+```typescript
+it('enforces user data isolation', async () => {
+  const user1 = await createTestUser();
+  const user2 = await createTestUser();
+  const user1Entity = await createEntity(user1.id);
+
+  // user2 should NOT see user1's entity
+  const result = await repository.findById(user1Entity.id, user2.id);
+  expect(result).toBeNull();
+});
+```
+
+**Testing with filters:**
+
+```typescript
+it('filters by status', async () => {
+  const user = await createTestUser();
+  await createTestTodo(user.id, { completed: false });
+  await createTestTodo(user.id, { completed: true });
+
+  const active = await todoRepository.findByUserId(user.id, { filter: 'active' });
+  const completed = await todoRepository.findByUserId(user.id, { filter: 'completed' });
+
+  expect(active).toHaveLength(1);
+  expect(completed).toHaveLength(1);
+  expect(active[0].completed).toBe(false);
+  expect(completed[0].completed).toBe(true);
+});
+```
+
+**Testing error cases:**
+
+```typescript
+it('throws error when entity not found', async () => {
+  const user = await createTestUser();
+
+  await expect(service.getEntity('nonexistent-id', user.id)).rejects.toThrow();
+});
+
+it('returns null for missing entities', async () => {
+  const user = await createTestUser();
+  const result = await repository.findById('nonexistent-id', user.id);
+  expect(result).toBeNull();
+});
+```
+
+### Running Tests
+
+```bash
+# Single file
+bun test apps/web/server/features/todo/todo-repository.test.ts
+
+# With database
+DATABASE_URL="postgresql://bistro:bistro@localhost:5432/bistro" bun test
+
+# Watch mode
+bun test
+
+# All tests
+bun test:run
+
+# With shuffle (verify order independence)
+bun test --sequence.shuffle
+```
+
+### Troubleshooting
+
+**"Cannot find module" errors:**
+
+- Use relative imports (`./testDb`, not `~/server/utils/testDb`)
+- Check import depth (`../../utils/testDb` vs `../utils/testDb`)
+
+**"Unique constraint failed":**
+
+- Fixtures use timestamp + random for uniqueness
+- Ensure transaction hooks are in place (beforeEach/afterEach)
+
+**Tests fail in specific order:**
+
+- Not using transactions properly
+- Data created in `beforeAll` persists (use `beforeEach` instead)
+
+**Slow tests:**
+
+- Target: <50ms per fixture, <1s per test file
+- Check database connection (should use existing pool)
+
+### Edge Cases and Gotchas
+
+**Auto-increment IDs (CRITICAL):**
+
+IDs don't reset on rollback - sequences advance even when transactions roll back.
+
+```typescript
+// ❌ DON'T: Hardcode IDs
+const user = await db.user.findUnique({ where: { id: 'user-1' } });
+expect(todo.userId).toBe('user-1'); // FRAGILE - IDs change between runs
+
+// ✅ DO: Use returned objects
+const user = await createTestUser();
+const todo = await createTestTodo(user.id);
+expect(todo.userId).toBe(user.id); // RELIABLE - always matches
+```
+
+**beforeAll vs beforeEach (CRITICAL):**
+
+Data created in `beforeAll` commits BEFORE transaction hooks run - it persists across all tests.
+
+```typescript
+// ⚠️ WARNING: beforeAll data persists
+let globalUser;
+
+beforeAll(async () => {
+  // Data here commits immediately - survives all tests
+  globalUser = await createTestUser(); // PERSISTS - shared state risk
+});
+
+beforeEach(async () => {
+  await startTransaction();
+  // Data here rolls back after each test
+  const testUser = await createTestUser(); // CLEANED UP ✓
+});
+
+// 🎯 PREFER: Create data in each test for isolation
+it('uses test data', async () => {
+  const user = await createTestUser(); // Clear, isolated, reliable
+  // Test logic
+});
+```
+
+**When to use each:**
+
+- `beforeEach`: Test data (preferred - automatic cleanup)
+- `beforeAll`: Expensive setup that doesn't change (rare - manual cleanup required)
+
+**Async operations (CRITICAL):**
+
+All database operations must be awaited - missing `await` causes race conditions.
+
+```typescript
+// ❌ DON'T: Fire-and-forget
+createTestUser(); // NOT AWAITED - undefined behavior
+const result = await service.getUsers(); // May or may not see user
+
+// ✅ DO: Await all database operations
+const user = await createTestUser();
+const result = await service.getUsers(); // Guaranteed to see user
+```
+
+**Unique constraints:**
+
+Fixtures use timestamp + random for automatic uniqueness. Override when specific values needed.
+
+```typescript
+// ❌ DON'T: Duplicate unique values
+const user1 = await createTestUser({ email: 'test@example.com' });
+const user2 = await createTestUser({ email: 'test@example.com' }); // FAILS
+
+// ✅ DO: Use fixture defaults (automatic uniqueness)
+const user1 = await createTestUser(); // test-1234567890-abc123@example.com
+const user2 = await createTestUser(); // test-1234567891-def456@example.com
+
+// ✅ DO: Explicit unique values when testing specific emails
+const user1 = await createTestUser({ email: 'user1@test.com' });
+const user2 = await createTestUser({ email: 'user2@test.com' });
+```
+
+**Transaction lifecycle:**
+
+Always pair `beforeEach` with `afterEach` - missing `afterEach` leaves transactions open.
+
+```typescript
+// ❌ DON'T: Missing afterEach
+beforeEach(async () => await startTransaction());
+// Tests run but never roll back - data leaks between tests
+
+// ✅ DO: Always pair hooks
+beforeEach(async () => await startTransaction());
+afterEach(async () => await rollbackTransaction());
+```
+
+**Nested transactions:**
+
+Not supported in current implementation - one transaction per test.
+
+```typescript
+// ❌ DON'T: Attempt nesting
+await startTransaction();
+await startTransaction(); // NOT SUPPORTED - undefined behavior
+await rollbackTransaction();
+
+// ✅ DO: One transaction per test (automatic with hooks)
+beforeEach(async () => await startTransaction());
+afterEach(async () => await rollbackTransaction());
+// Each test gets clean transaction automatically
+```
+
+**Relationship handling:**
+
+Foreign keys require parent entities to exist first.
+
+```typescript
+// ❌ DON'T: Create child before parent
+const todo = await createTestTodo('nonexistent-user-id'); // FAILS
+
+// ✅ DO: Create parent first, use returned ID
+const user = await createTestUser();
+const todo = await createTestTodo(user.id);
+```
+
+**Parallel test execution:**
+
+Transactions isolate tests - safe to run in parallel within same file.
+
+```typescript
+// ✅ Safe: Each test has own transaction
+it('test 1', async () => {
+  const user = await createTestUser(); // Isolated
+});
+
+it('test 2', async () => {
+  const user = await createTestUser(); // Different transaction
+});
+```
+
+**Django ORM learnings applied:**
+
+This pattern inspired by Django's `TransactionTestCase`:
+
+- Transaction-per-test for isolation
+- Auto-increment doesn't reset (use returned objects)
+- `beforeAll` equivalent to Django `setUpTestData` (persists)
+- `beforeEach` equivalent to Django `setUp` (per-test)
+
 ## Authentication
 
 Better Auth (email/password implemented, OAuth planned):
