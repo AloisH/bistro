@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = resolve(__dirname, '../..');
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui'],
+  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui', '@nuxt/test-utils/module'],
 
   // Auto-import components from nested feature directories
   components: [
@@ -109,7 +109,7 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      include: ['./shared/**/*.ts'],
+      include: ['./shared/**/*.ts', './server/testing/**/*.ts'],
     },
   },
   eslint: {

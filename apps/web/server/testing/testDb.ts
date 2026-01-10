@@ -1,4 +1,4 @@
-import { db } from './db';
+import { db } from '../utils/db';
 
 /**
  * Start a PostgreSQL transaction for test isolation.
@@ -82,4 +82,4 @@ export async function rollbackTransaction(): Promise<void> {
  * Re-export db singleton for convenience.
  * Tests can import both transaction helpers and db from single module.
  */
-export { db } from './db';
+export { db } from '../utils/db';

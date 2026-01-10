@@ -1,4 +1,12 @@
-import type { User, Organization, Todo, Prisma } from '@prisma/client';
+import type {
+  User,
+  Organization,
+  Todo,
+  Session,
+  OrganizationMember,
+  OrganizationRole,
+  Prisma,
+} from '../../prisma/generated/client';
 import { db } from './testDb';
 
 /**
@@ -161,5 +169,88 @@ export async function createTestTodo(
 
   return await db.todo.create({
     data: { ...defaults, ...overrides },
+  });
+}
+
+/**
+ * Create a test session for authentication.
+ *
+ * Sessions are required for testing authenticated API endpoints. This fixture
+ * creates a valid session linked to a user, which can be passed via cookie
+ * header in test requests.
+ *
+ * **Default Values:**
+ * - token: `test-${Date.now()}-${random}` (unique)
+ * - userId: (from parameter - required)
+ * - expiresAt: 7 days from now
+ * - userAgent: "test-agent"
+ * - ipAddress: "127.0.0.1"
+ *
+ * **Performance:** <50ms per fixture
+ *
+ * @param user - User object that owns this session (required)
+ * @returns Created session object with token for cookie auth
+ * @see CLAUDE.md Test Infrastructure for API testing patterns
+ *
+ * @example
+ * ```typescript
+ * // Create authenticated request
+ * const user = await createTestUser()
+ * const session = await createTestSession(user)
+ * const event = createMockEvent({
+ *   headers: { cookie: `better-auth.session_token=${session.token}` }
+ * })
+ * ```
+ */
+export async function createTestSession(user: User): Promise<Session> {
+  const token = `test-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  return await db.session.create({
+    data: {
+      token,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      userAgent: 'test-agent',
+      ipAddress: '127.0.0.1',
+    },
+  });
+}
+
+/**
+ * Create a test organization member relationship.
+ *
+ * Links a user to an organization with a specific role. Required for testing
+ * organization-scoped endpoints and multi-tenancy features.
+ *
+ * **Default Values:**
+ * - userId: (from parameter - required)
+ * - organizationId: (from parameter - required)
+ * - role: "MEMBER" (can be overridden)
+ *
+ * **Performance:** <50ms per fixture
+ *
+ * @param userId - User ID to add as member (required)
+ * @param organizationId - Organization ID to add user to (required)
+ * @param role - Organization role (OWNER/ADMIN/MEMBER/GUEST, default: MEMBER)
+ * @returns Created organization member relationship
+ * @see CLAUDE.md Test Infrastructure for organization testing patterns
+ *
+ * @example
+ * ```typescript
+ * // Add user as member
+ * const user = await createTestUser()
+ * const org = await createTestOrg()
+ * await createTestOrgMember(user.id, org.id, 'MEMBER')
+ *
+ * // Add user as owner
+ * await createTestOrgMember(user.id, org.id, 'OWNER')
+ * ```
+ */
+export async function createTestOrgMember(
+  userId: string,
+  organizationId: string,
+  role: OrganizationRole = 'MEMBER',
+): Promise<OrganizationMember> {
+  return await db.organizationMember.create({
+    data: { userId, organizationId, role },
   });
 }

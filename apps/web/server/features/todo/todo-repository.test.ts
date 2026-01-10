@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction } from '../../utils/testDb';
-import { createTestUser, createTestTodo } from '../../utils/testFixtures';
+import { startTransaction, rollbackTransaction } from '../../testing/testDb';
+import { createTestUser, createTestTodo } from '../../testing/testFixtures';
 import { todoRepository } from './todo-repository';
 
 describe('TodoRepository (Integration)', () => {
