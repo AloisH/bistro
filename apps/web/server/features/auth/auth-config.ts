@@ -120,7 +120,9 @@ export const auth = betterAuth({
     },
     expiresIn: 60 * 60 * 24 * 7, // 7 days
   },
-  trustedOrigins: [process.env.AUTH_TRUST_HOST || 'http://localhost:3000'],
+  trustedOrigins: process.env.AUTH_TRUSTED_ORIGINS?.split(',').map(s => s.trim()) || [
+    'http://localhost:3000',
+  ],
   socialProviders,
   plugins: [
     admin({
