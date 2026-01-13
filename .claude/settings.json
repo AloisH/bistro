@@ -31,5 +31,8 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "nuxt-skills@nuxt-skills": true
   }
 }
