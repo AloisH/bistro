@@ -263,7 +263,7 @@ Pre-commit: `simple-git-hooks` + `lint-staged` (ESLint fix on .ts/.vue, Prettier
 
 - ❌ `new PrismaClient()` - Creates multiple connections
 - ✅ `import { db } from '~/server/utils/db'` - Use singleton
-- Must use PrismaPg adapter with pg.Pool (Prisma 7 requirement)
+- Must use PrismaPg adapter (Prisma 7 requirement) - handles connection pool internally
 - Run `bun db:generate` after schema changes, before typecheck
 - Generated client in `prisma/generated/`, gitignored
 
@@ -397,7 +397,7 @@ bun dev                # ← Then run command
 
 **Database:**
 
-- Use connection pooling (pg.Pool)
+- Use singleton db (PrismaPg handles pooling internally)
 - Index foreign keys (already in schema)
 - Limit query results (pagination)
 

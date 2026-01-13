@@ -464,16 +464,26 @@ model OrganizationInvite {
 
 ```typescript
 // server/utils/db.ts
-import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
-import pg from 'pg';
+import { PrismaClient } from '../../prisma/generated/client';
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
+const prismaClientSingleton = () => {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) throw new Error('DATABASE_URL not set');
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
+  const adapter = new PrismaPg({ connectionString });
 
-export const db = globalForPrisma.prisma ?? new PrismaClient({ adapter });
+  return new PrismaClient({
+    adapter,
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  });
+};
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClientSingleton | undefined };
+
+export const db = globalForPrisma.prisma ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
 ```
@@ -481,7 +491,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
 **Why:**
 
 - Prisma 7 requires driver adapters (@prisma/adapter-pg)
-- pg.Pool manages connection pooling
+- PrismaPg manages connection pool internally via connectionString
 - Global singleton prevents multiple instances
 - Multiple instances → connection pool exhaustion
 

@@ -105,7 +105,7 @@ const prisma = new PrismaClient();
 **Why PrismaPg adapter?**
 
 - Prisma 7 requires driver adapters for better performance
-- pg.Pool manages connections efficiently
+- PrismaPg manages connection pool internally via connectionString
 - Global singleton prevents connection pool exhaustion
 
 ### User-Scoped Queries
