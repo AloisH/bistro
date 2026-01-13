@@ -146,7 +146,7 @@ async function complete() {
     // Clear localStorage
     localStorage.removeItem(STORAGE_KEY);
 
-    // Fetch updated session
+    // Fetch updated session to refresh onboardingCompleted flag
     await fetchSession();
 
     toast.add({
@@ -159,7 +159,7 @@ async function complete() {
     const redirectUrl = createdOrgSlug.value
       ? `/org/${createdOrgSlug.value}/dashboard`
       : '/organizations/select';
-    window.location.href = redirectUrl;
+    await navigateTo(redirectUrl);
   } catch (error) {
     console.error('Failed to complete onboarding:', error);
     toast.add({
