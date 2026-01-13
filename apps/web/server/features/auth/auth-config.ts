@@ -4,6 +4,7 @@ import { admin, magicLink } from 'better-auth/plugins';
 import { ac, roles } from '#shared/auth/access-control';
 import { db } from '../../utils/db';
 import { emailService } from '../email/email-service';
+import { logAuthEvent } from '../../utils/audit-log';
 
 // Build socialProviders config conditionally based on env vars
 const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
@@ -156,3 +157,6 @@ export const auth = betterAuth({
     }),
   ],
 });
+
+// Export for audit logging utility access
+export { logAuthEvent };
