@@ -63,8 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { authClient } from '../../../lib/auth-client';
-
+const { client } = useAuth();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
@@ -105,7 +104,7 @@ async function resendMagicLink() {
   resending.value = true;
 
   try {
-    await authClient.signIn.magicLink({
+    await client.signIn.magicLink({
       email: email.value,
       callbackURL: '/organizations/select',
     });

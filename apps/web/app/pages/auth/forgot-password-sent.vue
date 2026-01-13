@@ -61,8 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { authClient } from '../../../lib/auth-client';
-
+const { client } = useAuth();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
@@ -104,8 +103,7 @@ async function resendReset() {
   resending.value = true;
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (authClient as any).forgetPassword({
+    await client.requestPasswordReset({
       email: email.value,
       redirectTo: `${config.public.appUrl}/auth/reset-password`,
     });

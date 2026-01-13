@@ -1,5 +1,5 @@
 import { createAuthClient } from 'better-auth/client';
-import { adminClient } from 'better-auth/client/plugins';
+import { adminClient, magicLinkClient } from 'better-auth/client/plugins';
 import type {
   InferSessionFromClient,
   InferUserFromClient,
@@ -17,6 +17,7 @@ export const useAuth = () => {
     },
     plugins: [
       adminClient(), // Access control not needed on client for impersonation
+      magicLinkClient(), // Magic link authentication
     ],
   });
 

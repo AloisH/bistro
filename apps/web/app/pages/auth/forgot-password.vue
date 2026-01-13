@@ -58,9 +58,8 @@
 
 <script setup lang="ts">
 import { forgotPasswordSchema } from '#shared/auth';
-import { authClient } from '../../../lib/auth-client';
 
-const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
+const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
 const toast = useToast();
 const config = useRuntimeConfig();
 
@@ -84,7 +83,7 @@ async function onSubmit() {
   error.value = '';
 
   try {
-    const result = await authClient.requestPasswordReset({
+    const result = await client.requestPasswordReset({
       email: state.email,
       redirectTo: `${config.public.appUrl}/auth/reset-password`,
     });

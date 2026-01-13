@@ -69,9 +69,8 @@
 
 <script setup lang="ts">
 import { resetPasswordSchema } from '#shared/auth';
-import { authClient } from '../../../lib/auth-client';
 
-const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
+const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
 const route = useRoute();
 const toast = useToast();
 
@@ -109,7 +108,7 @@ async function onSubmit() {
   error.value = '';
 
   try {
-    const result = await authClient.resetPassword({
+    const result = await client.resetPassword({
       newPassword: state.password,
       token: token.value,
     });

@@ -60,9 +60,8 @@
 
 <script setup lang="ts">
 import { magicLinkSchema } from '#shared/auth';
-import { authClient } from '../../../lib/auth-client';
 
-const { fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
+const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
 const toast = useToast();
 
 // Redirect if already authenticated
@@ -85,7 +84,7 @@ async function onSubmit() {
   error.value = '';
 
   try {
-    const result = await authClient.signIn.magicLink({
+    const result = await client.signIn.magicLink({
       email: state.email,
       callbackURL: '/organizations/select',
     });
