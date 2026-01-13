@@ -20,10 +20,16 @@ export const forgotPasswordSchema = z.object({
   email: z.email('Invalid email address'),
 });
 
-export const resetPasswordSchema = z.object({
-  password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
-  token: z.string(),
-});
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
+    confirmPassword: z.string(),
+    token: z.string(),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords don\'t match',
+    path: ['confirmPassword'],
+  });
 
 export const magicLinkSchema = z.object({
   email: z.email('Invalid email address'),
