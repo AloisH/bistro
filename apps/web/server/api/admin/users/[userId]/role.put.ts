@@ -12,8 +12,8 @@ export default defineEventHandler(async (event) => {
   const ctx = await requireRole(event, ['SUPER_ADMIN']);
 
   // Get user ID from route params
-  const userId = getRouterParam(event, 'id');
-  if (!userId) {
+  const targetUserId = getRouterParam(event, 'userId');
+  if (!targetUserId) {
     throw createError({
       statusCode: 400,
       message: 'User ID required',
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Prevent self-demotion
-  if (userId === ctx.userId && validationResult.data.role !== 'SUPER_ADMIN') {
+  if (targetUserId === ctx.userId && validationResult.data.role !== 'SUPER_ADMIN') {
     throw createError({
       statusCode: 403,
       message: 'Cannot demote yourself',
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Update role
-  const user = await userRepository.updateRole(userId, validationResult.data.role);
+  const user = await userRepository.updateRole(targetUserId, validationResult.data.role);
 
   return {
     success: true,

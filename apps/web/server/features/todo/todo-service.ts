@@ -1,6 +1,5 @@
 import type { CreateTodoInput, UpdateTodoInput } from '#shared/todo';
 import type { Todo } from '../../../prisma/generated/client';
-import { log } from '../../utils/request-context';
 import { todoRepository } from './todo-repository';
 
 export class TodoService {
@@ -23,7 +22,6 @@ export class TodoService {
   }
 
   async createTodo(userId: string, input: CreateTodoInput): Promise<Todo> {
-    log.info('creating todo');
     return todoRepository.create(userId, input);
   }
 

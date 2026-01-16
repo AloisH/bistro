@@ -6,11 +6,11 @@ import { todoService } from '../../features/todo/todo-service';
  * Get single todo
  */
 export default defineApiHandler(async (ctx) => {
-  const id = getRouterParam(ctx.event, 'id');
-  if (!id) {
-    throw createError({ statusCode: 400, message: 'ID required' });
+  const todoId = getRouterParam(ctx.event, 'todoId');
+  if (!todoId) {
+    throw createError({ statusCode: 400, message: 'Todo ID required' });
   }
 
-  const todo = await todoService.getTodo(id, ctx.userId);
+  const todo = await todoService.getTodo(todoId, ctx.userId);
   return { todo };
 });

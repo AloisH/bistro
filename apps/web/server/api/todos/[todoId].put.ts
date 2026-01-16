@@ -7,11 +7,11 @@ import { todoService } from '../../features/todo/todo-service';
  * Update todo
  */
 export default defineValidatedApiHandler(updateTodoSchema, async (ctx) => {
-  const id = getRouterParam(ctx.event, 'id');
-  if (!id) {
-    throw createError({ statusCode: 400, message: 'ID required' });
+  const todoId = getRouterParam(ctx.event, 'todoId');
+  if (!todoId) {
+    throw createError({ statusCode: 400, message: 'Todo ID required' });
   }
 
-  const todo = await todoService.updateTodo(id, ctx.userId, ctx.body!);
+  const todo = await todoService.updateTodo(todoId, ctx.userId, ctx.body!);
   return { todo };
 });

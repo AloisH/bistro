@@ -3,8 +3,8 @@ import { sessionService } from '../../../features/auth/session-service';
 import { serverAuth } from '../../../features/auth/auth-session';
 
 export default defineApiHandler(async (ctx) => {
-  const id = getRouterParam(ctx.event, 'id');
-  if (!id) {
+  const sessionId = getRouterParam(ctx.event, 'sessionId');
+  if (!sessionId) {
     throw createError({
       statusCode: 400,
       message: 'Session ID required',
@@ -21,6 +21,6 @@ export default defineApiHandler(async (ctx) => {
     });
   }
 
-  await sessionService.revokeSession(id, ctx.userId, currentToken);
+  await sessionService.revokeSession(sessionId, ctx.userId, currentToken);
   return { success: true };
 });
