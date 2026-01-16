@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = resolve(__dirname, '../..');
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui', '@nuxt/test-utils/module', 'nuxt-security'],
 
   // Auto-import components from nested feature directories
   components: [
@@ -119,5 +119,32 @@ export default defineNuxtConfig({
         semi: true,
       },
     },
+  },
+
+  // Security headers
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'default-src': ['\'self\''],
+        'script-src': ['\'self\'', '\'nonce-{{nonce}}\'', '\'strict-dynamic\''],
+        'style-src': ['\'self\'', '\'unsafe-inline\''], // Nuxt UI requires inline styles
+        'img-src': ['\'self\'', 'data:', 'https:'],
+        'font-src': ['\'self\''],
+        'connect-src': ['\'self\''],
+        'frame-ancestors': ['\'none\''],
+        'base-uri': ['\'self\''],
+        'form-action': ['\'self\''],
+      },
+      xFrameOptions: 'DENY',
+      xContentTypeOptions: 'nosniff',
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      permissionsPolicy: {
+        camera: [],
+        microphone: [],
+        geolocation: [],
+      },
+    },
+    // HSTS only in production (requires HTTPS)
+    strict: process.env.NODE_ENV === 'production',
   },
 });
