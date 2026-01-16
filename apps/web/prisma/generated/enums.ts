@@ -25,3 +25,33 @@ export const OrganizationRole = {
 } as const
 
 export type OrganizationRole = (typeof OrganizationRole)[keyof typeof OrganizationRole]
+
+
+export const AuditEvent = {
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+  LOGIN_FAILED: 'LOGIN_FAILED',
+  LOGOUT: 'LOGOUT',
+  PASSWORD_CHANGED: 'PASSWORD_CHANGED',
+  PASSWORD_RESET_REQUESTED: 'PASSWORD_RESET_REQUESTED',
+  PASSWORD_RESET_COMPLETED: 'PASSWORD_RESET_COMPLETED',
+  EMAIL_VERIFIED: 'EMAIL_VERIFIED',
+  OAUTH_CONNECTED: 'OAUTH_CONNECTED',
+  OAUTH_DISCONNECTED: 'OAUTH_DISCONNECTED',
+  ROLE_CHANGED: 'ROLE_CHANGED',
+  ACCOUNT_LOCKED: 'ACCOUNT_LOCKED',
+  ACCOUNT_UNLOCKED: 'ACCOUNT_UNLOCKED',
+  SUSPICIOUS_ACTIVITY: 'SUSPICIOUS_ACTIVITY',
+  TWO_FACTOR_ENABLED: 'TWO_FACTOR_ENABLED',
+  TWO_FACTOR_DISABLED: 'TWO_FACTOR_DISABLED'
+} as const
+
+export type AuditEvent = (typeof AuditEvent)[keyof typeof AuditEvent]
+
+
+export const AuditStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
+} as const
+
+export type AuditStatus = (typeof AuditStatus)[keyof typeof AuditStatus]
