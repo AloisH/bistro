@@ -170,43 +170,25 @@ export function defineValidatedApiHandler<TBody, TReturn>(
             }
           }
 
-          // Read and validate body
-          const rawBody = await readBody(event);
-          const validationResult = schema.safeParse(rawBody);
-
-          if (!validationResult.success) {
-            throw createError({
-              statusCode: 400,
-              message: 'Validation failed',
-              data: validationResult.error.issues,
-            });
-          }
+          // Read and validate body using h3 native helper
+          const body = await readValidatedBody(event, schema.parse);
 
           const context: ApiHandlerContext<TBody> = {
             event,
             userId: session.user.id,
-            body: validationResult.data,
+            body,
           };
 
           return await handler(context);
         }
 
         // No auth required (rare)
-        const rawBody = await readBody(event);
-        const validationResult = schema.safeParse(rawBody);
-
-        if (!validationResult.success) {
-          throw createError({
-            statusCode: 400,
-            message: 'Validation failed',
-            data: validationResult.error.issues,
-          });
-        }
+        const body = await readValidatedBody(event, schema.parse);
 
         const context: ApiHandlerContext<TBody> = {
           event,
           userId: '',
-          body: validationResult.data,
+          body,
         };
 
         return await handler(context);
