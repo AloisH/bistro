@@ -62,6 +62,7 @@
 import { magicLinkSchema } from '#shared/auth';
 
 const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
+const config = useRuntimeConfig();
 const toast = useToast();
 
 // Redirect if already authenticated
@@ -86,7 +87,7 @@ async function onSubmit() {
   try {
     const result = await client.signIn.magicLink({
       email: state.email,
-      callbackURL: '/organizations/select',
+      callbackURL: config.public.authCallbackUrl,
     });
 
     if (result.error) {
