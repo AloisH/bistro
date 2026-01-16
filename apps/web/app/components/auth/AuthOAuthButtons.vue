@@ -59,10 +59,10 @@ const signInWithGithub = async () => {
     });
     console.log('[OAuth] GitHub result:', result);
 
-    // Check if we need manual redirect
+    // Redirect to OAuth provider (external URL)
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
       console.log('[OAuth] Redirecting to:', result.url);
-      window.location.href = result.url;
+      await navigateTo(result.url, { external: true });
     }
   } catch (error) {
     console.error('[OAuth] GitHub error:', error);
@@ -80,10 +80,10 @@ const signInWithGoogle = async () => {
     });
     console.log('[OAuth] Google result:', result);
 
-    // Check if we need manual redirect
+    // Redirect to OAuth provider (external URL)
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
       console.log('[OAuth] Redirecting to:', result.url);
-      window.location.href = result.url;
+      await navigateTo(result.url, { external: true });
     }
   } catch (error) {
     console.error('[OAuth] Google error:', error);

@@ -51,10 +51,8 @@ export function useImpersonation() {
       impersonatedUser.value = null;
 
       // Force full page reload to ensure session is updated
-      // This is more reliable than fetchSession() which might be cached
-      if (import.meta.client) {
-        window.location.href = '/admin/users';
-      }
+      // external: true forces full reload, more reliable than client-side navigation
+      await navigateTo({ name: 'admin-users' }, { external: true });
 
       return { success: true };
     } catch (err) {
