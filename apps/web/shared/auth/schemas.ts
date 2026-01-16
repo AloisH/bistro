@@ -5,15 +5,30 @@ import { PASSWORD_MIN_LENGTH } from './constants';
  * Auth validation schemas
  */
 
+/**
+ * Password schema with complexity requirements
+ * - Min 8 characters
+ * - At least one uppercase letter
+ * - At least one lowercase letter
+ * - At least one number
+ */
+export const passwordSchema = z
+  .string()
+  .min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`)
+  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+  .regex(/[0-9]/, 'Password must contain at least one number');
+
 export const signInSchema = z.object({
   email: z.email('Invalid email address'),
-  password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
+  // Sign in doesn't enforce new complexity (existing users may have weak passwords)
+  password: z.string().min(1, 'Password is required'),
 });
 
 export const signUpSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.email('Invalid email address'),
-  password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
+  password: passwordSchema,
 });
 
 export const forgotPasswordSchema = z.object({
@@ -22,9 +37,8 @@ export const forgotPasswordSchema = z.object({
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
+    password: passwordSchema,
     confirmPassword: z.string(),
-    token: z.string(),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords don\'t match',
