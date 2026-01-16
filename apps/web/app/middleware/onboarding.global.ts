@@ -11,9 +11,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  // Check user onboarding status
-  const { user, fetchSession } = useAuth();
-  await fetchSession();
+  // Check user onboarding status (session already fetched by auth.global.ts)
+  const { user } = useAuth();
 
   // Only redirect authenticated users who haven't completed onboarding
   // User type from Better Auth doesn't include custom fields, so we need to check it exists first
