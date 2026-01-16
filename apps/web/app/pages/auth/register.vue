@@ -131,7 +131,7 @@ async function onSubmit() {
 
     // Note: User cannot login until verified (requireEmailVerification: true)
     // Redirect to verify-email page
-    await navigateTo(`/auth/verify-email?email=${encodeURIComponent(state.email)}`);
+    await navigateTo({ name: 'auth-verify-email', query: { email: state.email } });
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {

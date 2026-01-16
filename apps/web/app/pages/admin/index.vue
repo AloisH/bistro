@@ -6,7 +6,7 @@
 // Redirect to admin users page
 definePageMeta({
   middleware: async () => {
-    return navigateTo('/admin/users');
+    return navigateTo({ name: 'admin-users' });
   },
 });
 </script>

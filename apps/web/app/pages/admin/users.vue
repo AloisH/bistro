@@ -123,7 +123,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    navigateTo('/');
+    navigateTo({ name: 'index' });
   }
 });
 

@@ -91,7 +91,7 @@ onMounted(async () => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    navigateTo('/auth/forgot-password');
+    navigateTo({ name: 'auth-forgot-password' });
   }
 });
 
@@ -125,7 +125,7 @@ async function onSubmit() {
       icon: 'i-lucide-check',
     });
 
-    await navigateTo('/auth/login');
+    await navigateTo({ name: 'auth-login' });
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {

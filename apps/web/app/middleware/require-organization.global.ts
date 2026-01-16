@@ -66,11 +66,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     // If no orgs, redirect to select (which will show create prompt)
     if (data.value.organizations.length === 0) {
-      return navigateTo('/organizations/select');
+      return navigateTo({ name: 'organizations-select' });
     }
 
     // If has orgs, redirect to select to choose one
-    return navigateTo('/organizations/select');
+    return navigateTo({ name: 'organizations-select' });
   } catch {
     // If error fetching orgs, allow navigation
     return;

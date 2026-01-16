@@ -60,12 +60,12 @@ export const useAuth = () => {
       );
       const firstOrg = organizations?.[0];
       if (firstOrg) {
-        return navigateTo(`/org/${firstOrg.slug}/dashboard`);
+        return navigateTo({ name: 'org-slug-dashboard', params: { slug: firstOrg.slug } });
       }
-      return navigateTo('/organizations/create');
+      return navigateTo({ name: 'organizations-create' });
     } catch (error) {
       console.error('Failed to fetch organizations:', error);
-      return navigateTo('/organizations/create');
+      return navigateTo({ name: 'organizations-create' });
     }
   };
 

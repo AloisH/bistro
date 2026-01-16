@@ -18,6 +18,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Only redirect authenticated users who haven't completed onboarding
   // User type from Better Auth doesn't include custom fields, so we need to check it exists first
   if (user.value && 'onboardingCompleted' in user.value && !user.value.onboardingCompleted) {
-    return navigateTo('/onboarding');
+    return navigateTo({ name: 'onboarding' });
   }
 });

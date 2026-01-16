@@ -59,7 +59,7 @@ async function handleStopImpersonation() {
       color: 'success',
       icon: 'i-lucide-check',
     });
-    await navigateTo('/admin/users');
+    await navigateTo({ name: 'admin-users' });
   } else {
     toast.add({
       title: 'Error',

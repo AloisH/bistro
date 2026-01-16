@@ -102,7 +102,7 @@ async function onSubmit() {
       icon: 'i-lucide-mail-check',
     });
 
-    await navigateTo(`/auth/magic-link-sent?email=${encodeURIComponent(state.email)}`);
+    await navigateTo({ name: 'auth-magic-link-sent', query: { email: state.email } });
   } catch (e: unknown) {
     const err = e as { status?: number };
     if (e instanceof TypeError && e.message.includes('fetch')) {

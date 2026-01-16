@@ -54,7 +54,7 @@ function getUserInitials(user: { name?: string; email?: string } | null | undefi
 
 async function handleLogout() {
   await client.signOut();
-  await navigateTo('/');
+  await navigateTo({ name: 'index' });
 }
 
 // Build menu items dynamically based on role

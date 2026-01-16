@@ -156,10 +156,11 @@ async function complete() {
     });
 
     // Redirect to org dashboard if org was created, otherwise to org select
-    const redirectUrl = createdOrgSlug.value
-      ? `/org/${createdOrgSlug.value}/dashboard`
-      : '/organizations/select';
-    await navigateTo(redirectUrl);
+    if (createdOrgSlug.value) {
+      await navigateTo({ name: 'org-slug-dashboard', params: { slug: createdOrgSlug.value } });
+    } else {
+      await navigateTo({ name: 'organizations-select' });
+    }
   } catch (error) {
     console.error('Failed to complete onboarding:', error);
     toast.add({
