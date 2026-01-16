@@ -36,8 +36,7 @@ export const useOrganization = () => {
       fetching.value = true;
       const data = await $fetch<{ organizations: Organization[] }>('/api/organizations');
       organizations.value = data?.organizations ?? [];
-    } catch (error) {
-      console.error('Failed to fetch organizations:', error);
+    } catch {
       organizations.value = [];
     } finally {
       fetching.value = false;
@@ -52,8 +51,7 @@ export const useOrganization = () => {
       );
       members.value = data?.members ?? [];
       currentUserRole.value = data?.currentUserRole ?? null;
-    } catch (error) {
-      console.error('Failed to fetch members:', error);
+    } catch {
       members.value = [];
       currentUserRole.value = null;
     } finally {
@@ -73,28 +71,18 @@ export const useOrganization = () => {
   }
 
   async function updateMemberRole(slug: string, userId: string, role: OrganizationRole) {
-    try {
-      await $fetch(`/api/organizations/${slug}/members/${userId}/role`, {
-        method: 'PUT',
-        body: { role },
-      });
-      await fetchMembers(slug);
-    } catch (error) {
-      console.error('Failed to update member role:', error);
-      throw error;
-    }
+    await $fetch(`/api/organizations/${slug}/members/${userId}/role`, {
+      method: 'PUT',
+      body: { role },
+    });
+    await fetchMembers(slug);
   }
 
   async function removeMember(slug: string, userId: string) {
-    try {
-      await $fetch(`/api/organizations/${slug}/members/${userId}`, {
-        method: 'DELETE',
-      });
-      await fetchMembers(slug);
-    } catch (error) {
-      console.error('Failed to remove member:', error);
-      throw error;
-    }
+    await $fetch(`/api/organizations/${slug}/members/${userId}`, {
+      method: 'DELETE',
+    });
+    await fetchMembers(slug);
   }
 
   return {

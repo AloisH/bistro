@@ -99,7 +99,7 @@ Only `apps/web` has implementation. Other workspaces are empty directories.
 
 **Formatting (Prettier):**
 
-- No semicolons
+- Use semicolons
 - Single quotes
 - Trailing commas (multiline)
 - 100 char line width

@@ -241,12 +241,8 @@ function getUserInitials(user: { name?: string; email?: string } | null | undefi
 }
 
 async function handleLogout() {
-  try {
-    await signOut();
-    await router.push('/auth/login');
-  } catch (error) {
-    console.error('Logout failed:', error);
-  }
+  await signOut();
+  await router.push('/auth/login');
 }
 
 // Add keyboard shortcut for logout

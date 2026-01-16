@@ -152,7 +152,6 @@ async function onSubmit() {
     } else {
       error.value = 'An error occurred. Please try again.';
     }
-    console.error('Login error:', e);
   } finally {
     loading.value = false;
   }

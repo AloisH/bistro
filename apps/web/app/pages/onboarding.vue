@@ -42,7 +42,7 @@ onMounted(() => {
       const parsed = JSON.parse(stored);
       Object.assign(state, parsed);
     } catch {
-      console.warn('Failed to load onboarding state');
+      // Invalid stored state, ignore
     }
   }
 });
@@ -122,7 +122,6 @@ async function saveCurrentStep() {
       });
     }
   } catch (error) {
-    console.error('Failed to save step:', error);
     toast.add({
       title: 'Error',
       description:
@@ -162,7 +161,6 @@ async function complete() {
       await navigateTo({ name: 'organizations-select' });
     }
   } catch (error) {
-    console.error('Failed to complete onboarding:', error);
     toast.add({
       title: 'Error',
       description:

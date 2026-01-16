@@ -63,8 +63,7 @@ export const useAuth = () => {
         return navigateTo({ name: 'org-slug-dashboard', params: { slug: firstOrg.slug } });
       }
       return navigateTo({ name: 'organizations-create' });
-    } catch (error) {
-      console.error('Failed to fetch organizations:', error);
+    } catch {
       return navigateTo({ name: 'organizations-create' });
     }
   };

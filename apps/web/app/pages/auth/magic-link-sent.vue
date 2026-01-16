@@ -142,7 +142,6 @@ async function resendMagicLink() {
         icon: 'i-lucide-alert-triangle',
       });
     }
-    console.error('Resend error:', e);
   } finally {
     resending.value = false;
   }

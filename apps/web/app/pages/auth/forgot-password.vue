@@ -112,7 +112,6 @@ async function onSubmit() {
     } else {
       error.value = 'An error occurred. Please try again.';
     }
-    console.error('Forgot password error:', e);
   } finally {
     loading.value = false;
   }

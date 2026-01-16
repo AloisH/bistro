@@ -51,42 +51,34 @@ const hasOAuth = computed(
 
 const signInWithGithub = async () => {
   loading.value = 'github';
-  console.log('[OAuth] Starting GitHub sign-in...');
   try {
     const result = await signIn.social({
       provider: 'github',
       callbackURL: config.public.authCallbackUrl,
     });
-    console.log('[OAuth] GitHub result:', result);
 
     // Redirect to OAuth provider (external URL)
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
-      console.log('[OAuth] Redirecting to:', result.url);
       await navigateTo(result.url, { external: true });
     }
-  } catch (error) {
-    console.error('[OAuth] GitHub error:', error);
+  } catch {
     loading.value = null;
   }
 };
 
 const signInWithGoogle = async () => {
   loading.value = 'google';
-  console.log('[OAuth] Starting Google sign-in...');
   try {
     const result = await signIn.social({
       provider: 'google',
       callbackURL: config.public.authCallbackUrl,
     });
-    console.log('[OAuth] Google result:', result);
 
     // Redirect to OAuth provider (external URL)
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
-      console.log('[OAuth] Redirecting to:', result.url);
       await navigateTo(result.url, { external: true });
     }
-  } catch (error) {
-    console.error('[OAuth] Google error:', error);
+  } catch {
     loading.value = null;
   }
 };

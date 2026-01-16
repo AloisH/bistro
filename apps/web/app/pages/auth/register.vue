@@ -143,7 +143,6 @@ async function onSubmit() {
     } else {
       error.value = 'An error occurred. Please try again.';
     }
-    console.error('Signup error:', e);
   } finally {
     loading.value = false;
   }

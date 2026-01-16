@@ -56,23 +56,14 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  // Check if user has organizations for non-skipped pages
-  try {
-    const { data } = await useFetch<{ organizations: unknown[] }>('/api/organizations');
+  // Use composable state (cached) instead of re-fetching
+  const { organizations, fetchOrganizations } = useOrganization();
 
-    if (!data.value?.organizations) {
-      return;
-    }
-
-    // If no orgs, redirect to select (which will show create prompt)
-    if (data.value.organizations.length === 0) {
-      return navigateTo({ name: 'organizations-select' });
-    }
-
-    // If has orgs, redirect to select to choose one
-    return navigateTo({ name: 'organizations-select' });
-  } catch {
-    // If error fetching orgs, allow navigation
-    return;
+  // Fetch if not already loaded
+  if (organizations.value.length === 0) {
+    await fetchOrganizations();
   }
+
+  // Redirect to org select (will show create prompt if no orgs)
+  return navigateTo({ name: 'organizations-select' });
 });
