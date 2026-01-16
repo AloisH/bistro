@@ -28,6 +28,8 @@ const baseEnvSchema = z.object({
   S3_ACCESS_KEY_ID: z.string().optional(),
   S3_SECRET_ACCESS_KEY: z.string().optional(),
   S3_BUCKET: z.string().optional(),
+  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).optional().default('info'),
+  LOG_SAMPLE_RATE: z.string().regex(/^0(\.\d+)?$|^1(\.0)?$/).optional().default('0.05'),
 });
 
 // Production schema - adds requirements
@@ -68,4 +70,5 @@ export const OPTIONAL_VAR_GROUPS = {
     'S3_BUCKET',
   ],
   observability: ['SENTRY_DSN', 'SENTRY_AUTH_TOKEN'],
+  logging: ['LOG_LEVEL', 'LOG_SAMPLE_RATE'],
 } as const;

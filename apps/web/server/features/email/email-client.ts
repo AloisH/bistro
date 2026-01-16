@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { getLogger } from '../../utils/logger';
 
 const globalForResend = globalThis as unknown as {
   resend: Resend | undefined;
@@ -8,7 +9,7 @@ function createResendClient(): Resend | undefined {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.warn('[Resend] RESEND_API_KEY not set - email disabled');
+    getLogger().warn('RESEND_API_KEY not set - email disabled');
     return undefined;
   }
 

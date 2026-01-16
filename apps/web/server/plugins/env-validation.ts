@@ -18,37 +18,28 @@ export default defineNitroPlugin((_nitroApp) => {
     throw new Error('Invalid environment configuration');
   }
 
-  // Log optional var status (without values)
-  const missingOptionalVars: string[] = [];
-  const enabledOptionalVars: string[] = [];
+  // Count optional features
+  const enabledGroups: string[] = [];
+  const disabledGroups: string[] = [];
 
   Object.entries(OPTIONAL_VAR_GROUPS).forEach(([group, vars]) => {
-    const missing = vars.filter(v => !process.env[v]);
     const present = vars.filter(v => process.env[v]);
-
-    if (missing.length === vars.length) {
-      // All missing - feature disabled
-      missingOptionalVars.push(`${group}: ${missing.join(', ')}`);
-    } else if (missing.length > 0) {
-      // Partial - some present, some missing
-      missingOptionalVars.push(`${group} (partial): ${missing.join(', ')}`);
-      enabledOptionalVars.push(`${group} (partial): ${present.join(', ')}`);
+    if (present.length === vars.length) {
+      enabledGroups.push(group);
+    } else if (present.length === 0) {
+      disabledGroups.push(group);
     } else {
-      // All present - feature enabled
-      enabledOptionalVars.push(`${group}: ${present.join(', ')}`);
+      enabledGroups.push(`${group} (partial)`);
     }
   });
 
-  console.log('✅ Environment validation passed');
+  const summary = [
+    '✅ Environment validated',
+    enabledGroups.length > 0 ? `[${enabledGroups.join(', ')}]` : null,
+    disabledGroups.length > 0 ? `(disabled: ${disabledGroups.join(', ')})` : null,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  if (enabledOptionalVars.length > 0) {
-    console.log('\n✓ Optional features enabled:\n');
-    enabledOptionalVars.forEach(msg => console.log(`  - ${msg}`));
-  }
-
-  if (missingOptionalVars.length > 0) {
-    console.warn('\n⚠️  Optional features disabled (missing env vars):\n');
-    missingOptionalVars.forEach(msg => console.warn(`  - ${msg}`));
-    console.warn('');
-  }
+  console.log(summary);
 });

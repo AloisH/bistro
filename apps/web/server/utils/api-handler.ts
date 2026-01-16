@@ -1,6 +1,9 @@
 import type { EventHandlerRequest, H3Event } from 'h3';
 import type { ZodSchema } from 'zod';
 import { serverAuth } from '../features/auth/auth-session';
+import { addUserContext, addOrgContext, setRequestContext, runWithContext } from './request-context';
+import { db } from './db';
+import { getLogger } from './logger';
 
 /**
  * API Handler Context - passed to all handlers
@@ -30,38 +33,78 @@ export function defineApiHandler<TReturn>(
   const { requiresAuth = true, logContext } = options;
 
   return defineEventHandler(async (event) => {
-    try {
-      // Auth check
-      if (requiresAuth) {
-        const session = await serverAuth().getSession({ headers: event.headers });
-        if (!session?.user) {
-          throw createError({
-            statusCode: 401,
-            message: 'Unauthorized',
+    return runWithContext(event, async () => {
+      try {
+        // Auth check
+        if (requiresAuth) {
+          const session = await serverAuth().getSession({ headers: event.headers });
+          if (!session?.user) {
+            throw createError({
+              statusCode: 401,
+              message: 'Unauthorized',
+            });
+          }
+
+          // Enrich logging context with user info
+          addUserContext({
+            id: session.user.id,
+            email: session.user.email,
+            role: session.user.role,
           });
+
+          // Check impersonation
+          const sessionData = session.session as
+            | { impersonatedBy?: string; currentOrganizationId?: string }
+            | undefined;
+          if (sessionData?.impersonatedBy) {
+            setRequestContext({
+              isImpersonated: true,
+              impersonatorId: sessionData.impersonatedBy,
+            });
+          }
+
+          // Add org if in session
+          if (sessionData?.currentOrganizationId) {
+            const orgMember = await db.organizationMember.findUnique({
+              where: {
+                userId_organizationId: {
+                  userId: session.user.id,
+                  organizationId: sessionData.currentOrganizationId,
+                },
+              },
+              include: { organization: true },
+            });
+
+            if (orgMember) {
+              addOrgContext(
+                { id: orgMember.organization.id, slug: orgMember.organization.slug },
+                orgMember.role,
+              );
+            }
+          }
+
+          const context: ApiHandlerContext = {
+            event,
+            userId: session.user.id,
+          };
+
+          return await handler(context);
         }
 
+        // No auth required (rare)
         const context: ApiHandlerContext = {
           event,
-          userId: session.user.id,
+          userId: '',
         };
 
         return await handler(context);
+      } catch (error) {
+        if (logContext) {
+          getLogger().error({ context: logContext, error }, `API handler error: ${logContext}`);
+        }
+        throw error;
       }
-
-      // No auth required (rare)
-      const context: ApiHandlerContext = {
-        event,
-        userId: '',
-      };
-
-      return await handler(context);
-    } catch (error) {
-      if (logContext) {
-        console.error(`[${logContext}]`, error);
-      }
-      throw error;
-    }
+    });
   });
 }
 
@@ -77,18 +120,78 @@ export function defineValidatedApiHandler<TBody, TReturn>(
   const { requiresAuth = true, logContext } = options;
 
   return defineEventHandler(async (event) => {
-    try {
-      // Auth check
-      if (requiresAuth) {
-        const session = await serverAuth().getSession({ headers: event.headers });
-        if (!session?.user) {
-          throw createError({
-            statusCode: 401,
-            message: 'Unauthorized',
+    return runWithContext(event, async () => {
+      try {
+        // Auth check
+        if (requiresAuth) {
+          const session = await serverAuth().getSession({ headers: event.headers });
+          if (!session?.user) {
+            throw createError({
+              statusCode: 401,
+              message: 'Unauthorized',
+            });
+          }
+
+          // Enrich logging context with user info
+          addUserContext({
+            id: session.user.id,
+            email: session.user.email,
+            role: session.user.role,
           });
+
+          // Check impersonation
+          const sessionData = session.session as
+            | { impersonatedBy?: string; currentOrganizationId?: string }
+            | undefined;
+          if (sessionData?.impersonatedBy) {
+            setRequestContext({
+              isImpersonated: true,
+              impersonatorId: sessionData.impersonatedBy,
+            });
+          }
+
+          // Add org if in session
+          if (sessionData?.currentOrganizationId) {
+            const orgMember = await db.organizationMember.findUnique({
+              where: {
+                userId_organizationId: {
+                  userId: session.user.id,
+                  organizationId: sessionData.currentOrganizationId,
+                },
+              },
+              include: { organization: true },
+            });
+
+            if (orgMember) {
+              addOrgContext(
+                { id: orgMember.organization.id, slug: orgMember.organization.slug },
+                orgMember.role,
+              );
+            }
+          }
+
+          // Read and validate body
+          const rawBody = await readBody(event);
+          const validationResult = schema.safeParse(rawBody);
+
+          if (!validationResult.success) {
+            throw createError({
+              statusCode: 400,
+              message: 'Validation failed',
+              data: validationResult.error.issues,
+            });
+          }
+
+          const context: ApiHandlerContext<TBody> = {
+            event,
+            userId: session.user.id,
+            body: validationResult.data,
+          };
+
+          return await handler(context);
         }
 
-        // Read and validate body
+        // No auth required (rare)
         const rawBody = await readBody(event);
         const validationResult = schema.safeParse(rawBody);
 
@@ -102,37 +205,17 @@ export function defineValidatedApiHandler<TBody, TReturn>(
 
         const context: ApiHandlerContext<TBody> = {
           event,
-          userId: session.user.id,
+          userId: '',
           body: validationResult.data,
         };
 
         return await handler(context);
+      } catch (error) {
+        if (logContext) {
+          getLogger().error({ context: logContext, error }, `API handler error: ${logContext}`);
+        }
+        throw error;
       }
-
-      // No auth required (rare)
-      const rawBody = await readBody(event);
-      const validationResult = schema.safeParse(rawBody);
-
-      if (!validationResult.success) {
-        throw createError({
-          statusCode: 400,
-          message: 'Validation failed',
-          data: validationResult.error.issues,
-        });
-      }
-
-      const context: ApiHandlerContext<TBody> = {
-        event,
-        userId: '',
-        body: validationResult.data,
-      };
-
-      return await handler(context);
-    } catch (error) {
-      if (logContext) {
-        console.error(`[${logContext}]`, error);
-      }
-      throw error;
-    }
+    });
   });
 }

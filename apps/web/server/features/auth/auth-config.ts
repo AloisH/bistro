@@ -3,6 +3,8 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink } from 'better-auth/plugins';
 import { ac, roles } from '#shared/auth/access-control';
 import { db } from '../../utils/db';
+import { getLogger } from '../../utils/logger';
+import { addWarning } from '../../utils/request-context';
 import { emailService } from '../email/email-service';
 import { logAuthEvent } from '../../utils/audit-log';
 
@@ -75,7 +77,7 @@ export const auth = betterAuth({
       url: string;
     }) => {
       if (!emailService.isConfigured()) {
-        console.warn('[Auth] Password reset disabled - RESEND_API_KEY not set');
+        addWarning('Password reset disabled - email not configured');
         return;
       }
 
@@ -85,9 +87,9 @@ export const auth = betterAuth({
           name: user.name,
           resetLink: url,
         });
-        console.log(`[Auth] Password reset email sent to ${user.email}`);
+        getLogger().info('Password reset email sent');
       } catch (error) {
-        console.error('[Auth] Failed to send password reset email:', error);
+        getLogger().error({ error }, 'Failed to send password reset email');
       }
     },
   },
@@ -97,7 +99,7 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24, // 24 hours
     sendVerificationEmail: async ({ user, url }) => {
       if (!emailService.isConfigured()) {
-        console.warn('[Auth] Email verification disabled - RESEND_API_KEY not set');
+        addWarning('Email verification disabled - email not configured');
         return;
       }
 
@@ -107,9 +109,9 @@ export const auth = betterAuth({
           name: user.name,
           verificationLink: url,
         });
-        console.log(`[Auth] Verification email sent to ${user.email}`);
+        getLogger().info('Verification email sent');
       } catch (error) {
-        console.error('[Auth] Failed to send verification email:', error);
+        getLogger().error({ error }, 'Failed to send verification email');
         // Don't throw - allow registration even if email fails
       }
     },
@@ -138,7 +140,7 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }) => {
         if (!emailService.isConfigured()) {
-          console.warn('[Auth] Magic link disabled - RESEND_API_KEY not set');
+          addWarning('Magic link disabled - email not configured');
           return;
         }
 
@@ -147,9 +149,9 @@ export const auth = betterAuth({
             to: email,
             magicLink: url,
           });
-          console.log(`[Auth] Magic link sent to ${email}`);
+          getLogger().info('Magic link sent');
         } catch (error) {
-          console.error('[Auth] Failed to send magic link:', error);
+          getLogger().error({ error }, 'Failed to send magic link');
         }
       },
       expiresIn: 60 * 15, // 15 min

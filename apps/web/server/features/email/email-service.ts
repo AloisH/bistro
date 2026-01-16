@@ -3,6 +3,8 @@ import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/email';
 import { sendEmailSchema } from '#shared/email';
 import { resend } from './email-client';
+import { getLogger } from '../../utils/logger';
+import { addWarning } from '../../utils/request-context';
 import AccountDeletion from './templates/AccountDeletion.vue';
 import MagicLinkEmail from './templates/MagicLinkEmail.vue';
 import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
@@ -41,7 +43,7 @@ export class EmailService {
    */
   async sendEmail(options: SendEmailInput): Promise<{ id: string } | null> {
     if (!resend) {
-      console.warn('[EmailService] Email not sent - not configured');
+      addWarning('Email not sent - service not configured');
       return null;
     }
 
@@ -58,7 +60,7 @@ export class EmailService {
       });
 
       if (result.error) {
-        console.error('[EmailService] Resend error:', result.error);
+        getLogger().error({ error: result.error }, 'Resend API error');
         throw createError({
           statusCode: 500,
           message: 'Failed to send email',
@@ -68,7 +70,7 @@ export class EmailService {
 
       return { id: result.data.id };
     } catch (error) {
-      console.error('[EmailService] Send failed:', error);
+      getLogger().error({ error }, 'Failed to send email');
       throw createError({
         statusCode: 500,
         message: 'Failed to send email',
@@ -83,7 +85,7 @@ export class EmailService {
     options: SendTemplateEmailOptions<TProps>,
   ): Promise<{ id: string } | null> {
     if (!resend) {
-      console.warn('[EmailService] Email not sent - not configured');
+      addWarning('Email not sent - service not configured');
       return null;
     }
 

@@ -2,6 +2,8 @@ import type { H3Event } from 'h3';
 import type { StartImpersonationInput } from '#shared/impersonation';
 import type { ImpersonationLog } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
+import { getLogger } from '../../utils/logger';
+import { addWarning } from '../../utils/request-context';
 import { auth } from '../auth/auth-config';
 import { impersonationRepository } from './impersonation-repository';
 
@@ -73,7 +75,7 @@ export class ImpersonationService {
       }
     } catch (error) {
       // Log error for debugging
-      console.error('[Impersonation] Better Auth error:', error);
+      getLogger().error({ error, adminId, targetUserId: input.userId }, 'Better Auth impersonation failed');
       // If Better Auth fails, mark log as ended
       await impersonationRepository.endLog(adminId);
       throw createError({
@@ -118,7 +120,7 @@ export class ImpersonationService {
       }
     } catch (error) {
       // Session may already be expired or cleared - that's ok, just log it
-      console.warn('[Impersonation] Better Auth already stopped:', error);
+      addWarning('Better Auth impersonation already stopped', { error, adminId });
       // Continue to end the audit log regardless
     }
 

@@ -1,6 +1,7 @@
 import type { AuditEvent, AuditStatus, Prisma } from '../../prisma/generated/client';
 import type { H3Event } from 'h3';
 import { db } from './db';
+import { getLogger } from './logger';
 
 export interface AuditLogOptions {
   userId?: string;
@@ -32,7 +33,7 @@ export async function logAuthEvent(
     });
   } catch (error) {
     // Don't throw - audit logging should not break auth flow
-    console.error('[AuditLog] Failed to log event:', error);
+    getLogger().error({ error, event, status }, 'Failed to log audit event');
   }
 }
 
