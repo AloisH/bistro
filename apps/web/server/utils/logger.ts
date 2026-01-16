@@ -32,15 +32,18 @@ export interface LogContext {
   dbQueriesCount?: number;
   itemsProcessed?: number;
 
-  // Errors and warnings (accumulated during request)
+  // Error (if request failed)
   error?: {
     message: string;
     stack?: string;
     code?: string;
   };
-  warnings?: Array<{
-    message: string;
-    context?: Record<string, unknown>;
+
+  // Request trace - log entries accumulated during request
+  trace?: Array<{
+    level: 'debug' | 'info' | 'warn';
+    msg: string;
+    at: number; // ms since request start
   }>;
 
   // Tail sampling

@@ -6,7 +6,7 @@ import type {
   UpdateProfileInput,
   UserProfile,
 } from '#shared/user';
-import { addWarning } from '../../utils/request-context';
+import { log } from '../../utils/request-context';
 import { emailService } from '../email/email-service';
 import { userRepository } from './user-repository';
 
@@ -204,8 +204,8 @@ export class UserService {
         to: user.email,
         name: user.name || undefined,
       });
-    } catch (error) {
-      addWarning('Account deletion email failed', { error, userId });
+    } catch {
+      log.warn('Account deletion email failed');
       // Continue with deletion - account must be deleted regardless
     }
 
@@ -247,8 +247,8 @@ export class UserService {
         to: user.email,
         name: user.name || undefined,
       });
-    } catch (error) {
-      addWarning('Account deletion email failed', { error, userId });
+    } catch {
+      log.warn('Account deletion email failed');
       // Continue with deletion - account must be deleted regardless
     }
 

@@ -3,7 +3,7 @@ import type { StartImpersonationInput } from '#shared/impersonation';
 import type { ImpersonationLog } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
 import { getLogger } from '../../utils/logger';
-import { addWarning } from '../../utils/request-context';
+import { log } from '../../utils/request-context';
 import { auth } from '../auth/auth-config';
 import { impersonationRepository } from './impersonation-repository';
 
@@ -118,9 +118,9 @@ export class ImpersonationService {
       for (const cookie of cookies) {
         appendResponseHeader(event, 'set-cookie', cookie);
       }
-    } catch (error) {
+    } catch {
       // Session may already be expired or cleared - that's ok, just log it
-      addWarning('Better Auth impersonation already stopped', { error, adminId });
+      log.warn('Better Auth impersonation already stopped');
       // Continue to end the audit log regardless
     }
 

@@ -4,7 +4,7 @@ import { admin, magicLink } from 'better-auth/plugins';
 import { ac, roles } from '#shared/auth/access-control';
 import { db } from '../../utils/db';
 import { getLogger } from '../../utils/logger';
-import { addWarning } from '../../utils/request-context';
+import { log } from '../../utils/request-context';
 import { emailService } from '../email/email-service';
 import { logAuthEvent } from '../../utils/audit-log';
 
@@ -77,7 +77,7 @@ export const auth = betterAuth({
       url: string;
     }) => {
       if (!emailService.isConfigured()) {
-        addWarning('Password reset disabled - email not configured');
+        log.warn('Password reset disabled - email not configured');
         return;
       }
 
@@ -99,7 +99,7 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24, // 24 hours
     sendVerificationEmail: async ({ user, url }) => {
       if (!emailService.isConfigured()) {
-        addWarning('Email verification disabled - email not configured');
+        log.warn('Email verification disabled - email not configured');
         return;
       }
 
@@ -140,7 +140,7 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }) => {
         if (!emailService.isConfigured()) {
-          addWarning('Magic link disabled - email not configured');
+          log.warn('Magic link disabled - email not configured');
           return;
         }
 

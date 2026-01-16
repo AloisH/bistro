@@ -43,12 +43,19 @@ export function incrementDbQueries(count = 1) {
   }
 }
 
-export function addWarning(message: string, context?: Record<string, unknown>) {
+// Trace helpers - add log entries to request trace
+export function trace(level: 'debug' | 'info' | 'warn', msg: string) {
   const ctx = getRequestContext();
   if (ctx) {
-    if (!ctx.warnings) {
-      ctx.warnings = [];
+    if (!ctx.trace) {
+      ctx.trace = [];
     }
-    ctx.warnings.push({ message, context });
+    ctx.trace.push({ level, msg, at: Date.now() - (ctx.startTime || Date.now()) });
   }
 }
+
+export const log = {
+  debug: (msg: string) => trace('debug', msg),
+  info: (msg: string) => trace('info', msg),
+  warn: (msg: string) => trace('warn', msg),
+};
