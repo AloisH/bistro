@@ -65,7 +65,7 @@ Pages using `layout: 'dashboard'` MUST use `UDashboardPanel` with `#body` slot f
 
 ```vue
 <template>
-  <UDashboardPanel>
+  <UDashboardPanel grow>
     <template #header>
       <UDashboardNavbar title="Page Title">
         <template #right>
@@ -88,8 +88,9 @@ definePageMeta({
 </script>
 ```
 
-**Why `#body` slot is required:**
+**Why `grow` + `#body` slot are required:**
 
+- `grow` prop adds `flex-1` so panel fills space (without it: `shrink-0` + `min-h-svh` breaks scrolling)
 - Default slot bypasses scroll wrapper (no `overflow-y-auto`)
 - `#body` slot has proper padding + scrolling styles
 - See [Nuxt UI docs](https://ui.nuxt.com/components/dashboard-panel)

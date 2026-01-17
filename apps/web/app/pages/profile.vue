@@ -1,5 +1,5 @@
 <template>
-  <UDashboardPanel>
+  <UDashboardPanel grow>
     <template #header>
       <UDashboardNavbar title="Profile">
         <template #right>
