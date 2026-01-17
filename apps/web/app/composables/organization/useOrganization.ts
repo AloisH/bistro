@@ -83,7 +83,9 @@ export const useOrganization = () => {
   }
 
   async function switchOrganization(slug: string) {
-    if (slug === currentOrgSlug.value) return;
+    // Only skip if already on this org's page (URL slug matches)
+    // Always navigate if on non-org page (profile, admin, etc.)
+    if (slug === urlOrgSlug.value) return;
 
     try {
       switching.value = true;
