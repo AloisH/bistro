@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const { organizations, activeOrganization, activeOrgSlug, switchOrganization, fetchOrganizations } =
-  useOrganization();
+const { organizations, activeOrganization, activeOrgSlug, fetchOrganizations } = useOrganization();
 
 // Fetch orgs on mount
 onMounted(() => fetchOrganizations());
@@ -21,9 +20,9 @@ const items = computed(() => [
   [
     ...organizations.value.map((org: (typeof organizations.value)[0]) => ({
       label: org.name,
-      slug: org.slug, // Store slug for onSelect handler
       avatar: { text: org.name.charAt(0).toUpperCase() },
       trailingIcon: org.slug === activeOrgSlug.value ? 'i-lucide-check' : undefined,
+      to: `/org/${org.slug}/dashboard`,
     })),
   ],
   [
@@ -34,13 +33,6 @@ const items = computed(() => [
     },
   ],
 ]);
-
-// Handle org selection from dropdown
-function onSelect(item: { slug?: string }) {
-  if (item.slug) {
-    switchOrganization(item.slug);
-  }
-}
 </script>
 
 <template>
@@ -51,7 +43,6 @@ function onSelect(item: { slug?: string }) {
       :ui="{
         content: '',
       }"
-      @select="onSelect"
     >
       <UButton
         color="neutral"
