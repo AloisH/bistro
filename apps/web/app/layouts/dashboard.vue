@@ -10,18 +10,23 @@
         class="bg-white dark:bg-neutral-950 border-r border-neutral-200 dark:border-neutral-800"
       >
         <template #header="{ collapsed }">
-          <OrganizationSwitcher
-            v-if="orgSlug && !collapsed"
-            class="w-full"
-          />
-          <AppLogo
-            v-else-if="!orgSlug && !collapsed"
-            class="h-5 w-auto shrink-0"
-          />
-          <UIcon
+          <div
+            v-if="!collapsed"
+            class="flex w-full items-center justify-between gap-2"
+          >
+            <OrganizationSwitcher
+              v-if="orgSlug"
+              class="min-w-0 flex-1"
+            />
+            <AppLogo
+              v-else
+              class="h-5 w-auto shrink-0"
+            />
+            <UDashboardSidebarCollapse />
+          </div>
+          <UDashboardSidebarCollapse
             v-else
-            name="i-simple-icons-nuxtdotjs"
-            class="text-primary mx-auto size-5"
+            class="mx-auto"
           />
         </template>
 
