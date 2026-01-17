@@ -21,9 +21,9 @@ const items = computed(() => [
   [
     ...organizations.value.map((org: (typeof organizations.value)[0]) => ({
       label: org.name,
+      slug: org.slug, // Store slug for onSelect handler
       avatar: { text: org.name.charAt(0).toUpperCase() },
       trailingIcon: org.slug === activeOrgSlug.value ? 'i-lucide-check' : undefined,
-      click: () => switchOrganization(org.slug),
     })),
   ],
   [
@@ -34,6 +34,13 @@ const items = computed(() => [
     },
   ],
 ]);
+
+// Handle org selection from dropdown
+function onSelect(item: { slug?: string }) {
+  if (item.slug) {
+    switchOrganization(item.slug);
+  }
+}
 </script>
 
 <template>
@@ -44,6 +51,7 @@ const items = computed(() => [
       :ui="{
         content: '',
       }"
+      @select="onSelect"
     >
       <UButton
         color="neutral"
