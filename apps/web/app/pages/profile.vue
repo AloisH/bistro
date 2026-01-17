@@ -4,10 +4,10 @@
       <template #header>
         <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
+            <h1 class="text-2xl font-bold text-neutral-900 sm:text-3xl dark:text-white">
               Profile Settings
             </h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
               Manage your account information and preferences
             </p>
           </div>
@@ -18,7 +18,7 @@
               :alt="user?.name || 'Profile picture'"
               :text="user?.name ? getInitials(user.name) : 'U'"
               size="xl"
-              class="shrink-0 ring-2 ring-gray-200 dark:ring-gray-700"
+              class="shrink-0 ring-2 ring-neutral-200 dark:ring-neutral-700"
             />
           </div>
         </div>

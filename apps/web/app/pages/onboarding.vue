@@ -175,7 +175,7 @@ async function complete() {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+  <div class="flex min-h-screen items-center justify-center bg-neutral-50 p-4 dark:bg-neutral-900">
     <UCard class="w-full max-w-2xl">
       <template #header>
         <div class="space-y-4">

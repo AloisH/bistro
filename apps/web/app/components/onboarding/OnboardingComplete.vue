@@ -11,11 +11,11 @@
 
     <h1 class="mb-4 text-3xl font-bold">You're all set!</h1>
 
-    <p class="mx-auto mb-8 max-w-md text-lg text-gray-600 dark:text-gray-300">
+    <p class="mx-auto mb-8 max-w-md text-lg text-neutral-600 dark:text-neutral-300">
       Welcome to Bistro. You're ready to start building amazing things.
     </p>
 
-    <div class="mx-auto max-w-md rounded-lg bg-gray-50 p-6 dark:bg-gray-800">
+    <div class="mx-auto max-w-md rounded-lg bg-neutral-50 p-6 dark:bg-neutral-800">
       <h3 class="mb-3 font-semibold">What's next?</h3>
       <ul class="space-y-2 text-left text-sm">
         <li class="flex items-start gap-2">

@@ -23,9 +23,19 @@ export const toggleTodoSchema = z.object({
 export const todoQuerySchema = z.object({
   filter: z.enum(TODO_FILTERS).default('all'),
   sort: z.enum(TODO_SORT_OPTIONS).default('date'),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
 });
 
 export type CreateTodoInput = z.infer<typeof createTodoSchema>;
 export type UpdateTodoInput = z.infer<typeof updateTodoSchema>;
 export type ToggleTodoInput = z.infer<typeof toggleTodoSchema>;
 export type TodoQueryInput = z.infer<typeof todoQuerySchema>;
+
+export interface PaginatedTodos<T = unknown> {
+  todos: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}

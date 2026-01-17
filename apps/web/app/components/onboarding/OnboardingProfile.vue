@@ -20,7 +20,7 @@ const localValue = computed({
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">Set up your profile</h2>
-      <p class="text-gray-600 dark:text-gray-300">
+      <p class="text-neutral-600 dark:text-neutral-300">
         Tell us a bit about yourself (all fields optional)
       </p>
     </div>
@@ -33,7 +33,7 @@ const localValue = computed({
           placeholder="Tell us about yourself..."
           :rows="4"
         />
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+        <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
           {{ localValue.bio?.length || 0 }} / 500
         </p>
       </div>

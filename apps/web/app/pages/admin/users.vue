@@ -10,7 +10,7 @@
 
     <div class="mb-6">
       <h1 class="text-2xl font-bold">User Management</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Manage users and impersonate for support
       </p>
     </div>
@@ -31,7 +31,7 @@
     </UCard>
 
     <UModal v-model:open="isModalOpen">
-      <template #content>
+      <template #content="{ close }">
         <UCard>
           <template #header>
             <div class="flex items-center justify-between">
@@ -40,16 +40,17 @@
                 color="neutral"
                 variant="ghost"
                 icon="i-lucide-x"
-                @click="closeModal"
+                aria-label="Close modal"
+                @click="close"
               />
             </div>
           </template>
 
           <div class="space-y-4">
             <div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">You are about to impersonate:</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">You are about to impersonate:</p>
               <p class="mt-1 font-semibold">{{ selectedUser?.name || selectedUser?.email }}</p>
-              <p class="text-sm text-gray-500">{{ selectedUser?.email }}</p>
+              <p class="text-sm text-neutral-500">{{ selectedUser?.email }}</p>
             </div>
 
             <UFormField
@@ -76,7 +77,7 @@
               <UButton
                 color="neutral"
                 variant="subtle"
-                @click="closeModal"
+                @click="close"
               >
                 Cancel
               </UButton>
@@ -154,7 +155,7 @@ const columns = [
     cell: ({ row }: { row: { original: User } }) =>
       h(
         resolveComponent('UBadge'),
-        { color: getRoleColor(row.original.role) },
+        { color: getRoleColor(row.original.role), icon: getRoleIcon(row.original.role) },
         () => row.original.role,
       ),
   },
@@ -169,7 +170,7 @@ const columns = [
     header: 'Actions',
     cell: ({ row }: { row: { original: User } }) => {
       if (row.original.role === 'SUPER_ADMIN') {
-        return h('span', { class: 'text-xs text-gray-400' }, 'Cannot impersonate');
+        return h('span', { class: 'text-xs text-neutral-400' }, 'Cannot impersonate');
       }
       return h(
         resolveComponent('UButton'),
@@ -218,6 +219,19 @@ function getRoleColor(role: string) {
       return 'neutral';
     default:
       return 'neutral';
+  }
+}
+
+function getRoleIcon(role: string) {
+  switch (role) {
+    case 'SUPER_ADMIN':
+      return 'i-lucide-crown';
+    case 'ADMIN':
+      return 'i-lucide-shield';
+    case 'USER':
+      return 'i-lucide-user';
+    default:
+      return 'i-lucide-user';
   }
 }
 

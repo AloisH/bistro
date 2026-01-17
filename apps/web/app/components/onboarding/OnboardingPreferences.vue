@@ -27,7 +27,7 @@ const colorModeOptions = [
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">Configure preferences</h2>
-      <p class="text-gray-600 dark:text-gray-300">Customize your Bistro experience</p>
+      <p class="text-neutral-600 dark:text-neutral-300">Customize your Bistro experience</p>
     </div>
 
     <div class="space-y-6">
@@ -43,7 +43,7 @@ const colorModeOptions = [
               'flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all',
               colorMode.preference === option.value
                 ? 'border-primary bg-primary/5'
-                : 'border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600',
+                : 'border-neutral-200 hover:border-neutral-300 dark:border-neutral-700 dark:hover:border-neutral-600',
             ]"
             @click="colorMode.preference = option.value as 'light' | 'dark' | 'system'"
           >
@@ -66,7 +66,7 @@ const colorModeOptions = [
           >
             Email notifications
           </label>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
             Receive product updates, tips, and announcements
           </p>
         </div>

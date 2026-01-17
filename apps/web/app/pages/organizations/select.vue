@@ -17,16 +17,26 @@ async function selectOrg(slug: string) {
         <h1 class="text-2xl font-bold">
           Select Organization
         </h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
           Choose an organization to continue
         </p>
       </template>
 
       <div
         v-if="pending"
-        class="py-8 text-center"
+        class="space-y-2"
       >
-        <p class="text-gray-500">Loading organizations...</p>
+        <div
+          v-for="i in 3"
+          :key="i"
+          class="flex items-center gap-3 p-3"
+        >
+          <USkeleton class="h-5 w-5 rounded" />
+          <div class="flex-1 space-y-2">
+            <USkeleton class="h-4 w-32" />
+            <USkeleton class="h-3 w-48" />
+          </div>
+        </div>
       </div>
 
       <div
@@ -47,29 +57,15 @@ async function selectOrg(slug: string) {
         </UButton>
       </div>
 
-      <div
+      <EmptyState
         v-else-if="organizations?.organizations?.length === 0"
-        class="py-12 text-center"
-      >
-        <div class="mb-4">
-          <UIcon
-            name="i-lucide-building-2"
-            class="h-12 w-12 text-gray-400"
-          />
-        </div>
-        <h2 class="mb-2 text-lg font-semibold">
-          No organizations yet
-        </h2>
-        <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
-          Create your first organization to get started
-        </p>
-        <UButton
-          to="/organizations/create"
-          icon="i-lucide-plus"
-        >
-          Create Organization
-        </UButton>
-      </div>
+        icon="i-lucide-building-2"
+        title="No organizations yet"
+        description="Create your first organization to get started"
+        action-label="Create Organization"
+        action-to="/organizations/create"
+        action-icon="i-lucide-plus"
+      />
 
       <div
         v-else
@@ -93,7 +89,7 @@ async function selectOrg(slug: string) {
               </div>
               <div
                 v-if="org.description"
-                class="text-xs text-gray-500"
+                class="text-xs text-neutral-500"
               >
                 {{ org.description }}
               </div>

@@ -8,6 +8,12 @@ export function useTodos() {
   const loading = useState('todos:loading', () => false);
   const toast = useToast();
 
+  // Pagination state
+  const page = ref(Number(route.query.page) || 1);
+  const limit = ref(10);
+  const total = useState('todos:total', () => 0);
+  const totalPages = computed(() => Math.ceil(total.value / limit.value));
+
   // URL-synced filter and sort state
   const filter = ref<'all' | 'active' | 'completed'>(
     (route.query.filter as 'all' | 'active' | 'completed') || 'all',
@@ -17,10 +23,11 @@ export function useTodos() {
   async function fetchTodos() {
     loading.value = true;
     try {
-      const { todos: data } = await $fetch<{ todos: Todo[] }>('/api/todos', {
-        query: { filter: filter.value, sort: sort.value },
+      const data = await $fetch<{ todos: Todo[]; total: number }>('/api/todos', {
+        query: { filter: filter.value, sort: sort.value, page: page.value, limit: limit.value },
       });
-      todos.value = data;
+      todos.value = data.todos;
+      total.value = data.total;
     } catch {
       toast.add({
         title: 'Error',
@@ -33,21 +40,32 @@ export function useTodos() {
     }
   }
 
+  function updateUrl() {
+    const query: Record<string, string | number> = {};
+    if (filter.value !== 'all') query.filter = filter.value;
+    if (sort.value !== 'date') query.sort = sort.value;
+    if (page.value > 1) query.page = page.value;
+    router.push({ query });
+  }
+
   function setFilter(newFilter: 'all' | 'active' | 'completed') {
     filter.value = newFilter;
-    const query: Record<string, string> = {};
-    if (newFilter !== 'all') query.filter = newFilter;
-    if (sort.value !== 'date') query.sort = sort.value;
-    router.push({ query });
+    page.value = 1; // Reset to first page
+    updateUrl();
     fetchTodos();
   }
 
   function setSort(newSort: 'date' | 'title') {
     sort.value = newSort;
-    const query: Record<string, string> = {};
-    if (filter.value !== 'all') query.filter = filter.value;
-    if (newSort !== 'date') query.sort = newSort;
-    router.push({ query });
+    page.value = 1; // Reset to first page
+    updateUrl();
+    fetchTodos();
+  }
+
+  function setPage(newPage: number) {
+    if (newPage < 1 || newPage > totalPages.value) return;
+    page.value = newPage;
+    updateUrl();
     fetchTodos();
   }
 
@@ -57,6 +75,7 @@ export function useTodos() {
     (newQuery) => {
       filter.value = (newQuery.filter as 'all' | 'active' | 'completed') || 'all';
       sort.value = (newQuery.sort as 'date' | 'title') || 'date';
+      page.value = Number(newQuery.page) || 1;
       fetchTodos();
     },
   );
@@ -127,6 +146,12 @@ export function useTodos() {
     loading: readonly(loading),
     filter: readonly(filter),
     sort: readonly(sort),
+    // Pagination
+    page: readonly(page),
+    total: readonly(total),
+    totalPages,
+    setPage,
+    // Actions
     fetchTodos,
     setFilter,
     setSort,

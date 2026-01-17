@@ -37,10 +37,10 @@ useSeoMeta({
       <!-- Main content -->
       <article v-if="page">
         <header class="mb-8">
-          <h1 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
             {{ page.title }}
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400">
+          <p class="text-xl text-neutral-600 dark:text-neutral-400">
             {{ page.description }}
           </p>
         </header>
@@ -51,7 +51,7 @@ useSeoMeta({
         />
 
         <!-- Prev/Next navigation -->
-        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
           <UContentSurround :query="{ path: `/docs/${slug}` }" />
         </div>
       </article>
@@ -59,7 +59,7 @@ useSeoMeta({
       <!-- Right sidebar: Table of Contents (sticky, desktop only) -->
       <aside class="hidden lg:block">
         <div class="sticky top-24">
-          <h3 class="text-sm font-semibold mb-4 text-gray-900 dark:text-white">
+          <h3 class="text-sm font-semibold mb-4 text-neutral-900 dark:text-white">
             On this page
           </h3>
           <UContentToc v-if="page" />

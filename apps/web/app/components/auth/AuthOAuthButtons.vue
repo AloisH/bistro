@@ -5,10 +5,10 @@
   >
     <div class="relative">
       <div class="absolute inset-0 flex items-center">
-        <span class="w-full border-t border-gray-300 dark:border-gray-700" />
+        <span class="w-full border-t border-neutral-300 dark:border-neutral-700" />
       </div>
       <div class="relative flex justify-center text-xs uppercase">
-        <span class="bg-white px-2 text-gray-500 dark:bg-gray-950 dark:text-gray-400">Or continue with</span>
+        <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400">Or continue with</span>
       </div>
     </div>
 

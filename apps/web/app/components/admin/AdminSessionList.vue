@@ -2,7 +2,7 @@
   <div class="space-y-4">
     <div
       v-if="sessions.length === 0"
-      class="py-8 text-center text-gray-500 dark:text-gray-400"
+      class="py-8 text-center text-neutral-500 dark:text-neutral-400"
     >
       <UIcon
         name="i-lucide-shield-off"
@@ -14,17 +14,17 @@
     <div
       v-for="session in sessions"
       :key="session.id"
-      class="rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+      class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
     >
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-1 items-start gap-3">
           <UIcon
             :name="getDeviceIcon(session.device)"
-            class="mt-1 text-2xl text-gray-400 dark:text-gray-500"
+            class="mt-1 text-2xl text-neutral-400 dark:text-neutral-500"
           />
           <div class="min-w-0 flex-1">
             <div class="mb-1 flex items-center gap-2">
-              <h3 class="font-medium text-gray-900 dark:text-white">
+              <h3 class="font-medium text-neutral-900 dark:text-white">
                 {{ session.browser }} on {{ session.os }}
               </h3>
               <UBadge
@@ -35,7 +35,7 @@
                 Current Session
               </UBadge>
             </div>
-            <div class="space-y-1 text-sm text-gray-500 dark:text-gray-400">
+            <div class="space-y-1 text-sm text-neutral-500 dark:text-neutral-400">
               <p v-if="session.ipAddress">
                 <UIcon
                   name="i-lucide-map-pin"

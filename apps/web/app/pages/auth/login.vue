@@ -189,16 +189,7 @@ async function onSubmit() {
     await fetchSession();
     await redirectToUserDashboard();
   } catch (e: unknown) {
-    const err = e as { status?: number };
-    if (e instanceof TypeError && e.message.includes('fetch')) {
-      error.value = 'Network error. Check your connection.';
-    } else if (err?.status === 429) {
-      error.value = 'Too many attempts. Try again later.';
-    } else if (err?.status && err.status >= 500) {
-      error.value = 'Server error. Try again later.';
-    } else {
-      error.value = 'An error occurred. Please try again.';
-    }
+    error.value = getErrorMessage(e);
   } finally {
     loading.value = false;
   }
@@ -224,16 +215,7 @@ async function onMagicLinkSubmit() {
 
     await navigateTo({ name: 'auth-magic-link-sent', query: { email: magicLinkState.email } });
   } catch (e: unknown) {
-    const err = e as { status?: number };
-    if (e instanceof TypeError && e.message.includes('fetch')) {
-      magicLinkError.value = 'Network error. Check your connection.';
-    } else if (err?.status === 429) {
-      magicLinkError.value = 'Too many attempts. Try again later.';
-    } else if (err?.status && err.status >= 500) {
-      magicLinkError.value = 'Server error. Try again later.';
-    } else {
-      magicLinkError.value = 'An error occurred. Please try again.';
-    }
+    magicLinkError.value = getErrorMessage(e);
   } finally {
     magicLinkLoading.value = false;
   }

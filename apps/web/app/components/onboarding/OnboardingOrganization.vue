@@ -29,7 +29,7 @@ watch(
       <h3 class="mb-2 text-lg font-semibold">
         Create Your Organization
       </h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Organizations help you collaborate with your team
       </p>
     </div>

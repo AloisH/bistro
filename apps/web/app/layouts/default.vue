@@ -58,16 +58,16 @@
           <p class="text-muted">
             Built with <span class="text-primary font-semibold">Nuxt UI</span> • © {{ new Date().getFullYear() }}
           </p>
-          <span class="text-gray-300 dark:text-gray-700">•</span>
+          <span class="text-neutral-300 dark:text-neutral-700">•</span>
           <ULink
             to="/legal/privacy"
-            class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+            class="text-neutral-600 dark:text-neutral-400 hover:text-primary transition-colors"
           >
             Privacy
           </ULink>
           <ULink
             to="/legal/terms"
-            class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+            class="text-neutral-600 dark:text-neutral-400 hover:text-primary transition-colors"
           >
             Terms
           </ULink>
@@ -81,7 +81,7 @@
           aria-label="RSS Feed"
           color="neutral"
           variant="ghost"
-          class="transition-all hover:scale-110"
+          class=""
         />
         <UButton
           to="https://github.com/nuxt-ui-templates/starter"
@@ -90,7 +90,7 @@
           aria-label="GitHub"
           color="neutral"
           variant="ghost"
-          class="transition-all hover:scale-110"
+          class=""
         />
       </template>
     </UFooter>

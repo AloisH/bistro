@@ -23,7 +23,7 @@
         variant="solid"
         size="sm"
         :loading="loading"
-        class="shrink-0 shadow-md hover:shadow-lg hover:scale-105 transition-all font-semibold"
+        class="shrink-0 font-semibold"
         @click="handleStopImpersonation"
       >
         Stop

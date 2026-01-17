@@ -11,7 +11,7 @@
           </div>
           <div>
             <h2 class="text-2xl font-bold">Check your email</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Magic link sent</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">Magic link sent</p>
           </div>
         </div>
       </template>
@@ -30,7 +30,7 @@
         </UAlert>
 
         <div class="space-y-2">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Didn't receive the email? Check spam or resend.
           </p>
 
@@ -48,7 +48,7 @@
       </div>
 
       <template #footer>
-        <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
           Prefer a password?
           <NuxtLink
             to="/auth/login"

@@ -23,6 +23,8 @@
         :src="user?.image || undefined"
         :text="getUserInitials(user)"
         size="sm"
+        role="button"
+        aria-label="User menu"
         class="cursor-pointer ring-2 ring-neutral-200 dark:ring-neutral-700 hover:ring-primary transition-colors"
       />
     </UDropdownMenu>
@@ -32,25 +34,6 @@
 <script setup lang="ts">
 const { session, user, isPending, client } = useAuth();
 const { isSuperAdmin } = useRole();
-
-// Helper function to get user initials
-function getUserInitials(user: { name?: string; email?: string } | null | undefined): string {
-  if (!user) return 'U';
-
-  const name = user.name || user.email || '';
-  if (!name) return 'U';
-
-  // Extract first letters of each word for names
-  if (name.includes(' ')) {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase())
-      .join('');
-  }
-
-  // For single names or emails, use first letter
-  return name.charAt(0).toUpperCase();
-}
 
 async function handleLogout() {
   await client.signOut();

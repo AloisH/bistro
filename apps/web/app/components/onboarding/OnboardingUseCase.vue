@@ -44,7 +44,7 @@ const useCases = [
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">What brings you to Bistro?</h2>
-      <p class="text-gray-600 dark:text-gray-300">This helps us tailor your experience</p>
+      <p class="text-neutral-600 dark:text-neutral-300">This helps us tailor your experience</p>
     </div>
 
     <div class="space-y-3">
@@ -56,7 +56,7 @@ const useCases = [
           'flex w-full items-start gap-4 rounded-lg border-2 p-4 text-left transition-all',
           localValue === useCase.value
             ? 'border-primary bg-primary/5'
-            : 'border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600',
+            : 'border-neutral-200 hover:border-neutral-300 dark:border-neutral-700 dark:hover:border-neutral-600',
         ]"
         @click="localValue = useCase.value"
       >
@@ -66,7 +66,7 @@ const useCases = [
               'flex h-5 w-5 items-center justify-center rounded-full border-2',
               localValue === useCase.value
                 ? 'border-primary'
-                : 'border-gray-300 dark:border-gray-600',
+                : 'border-neutral-300 dark:border-neutral-600',
             ]"
           >
             <div
@@ -83,7 +83,7 @@ const useCases = [
             />
             <span class="font-medium">{{ useCase.label }}</span>
           </div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
             {{ useCase.description }}
           </p>
         </div>

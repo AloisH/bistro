@@ -34,6 +34,13 @@ const roleColors = {
   GUEST: 'neutral',
 } as const;
 
+const roleIcons = {
+  OWNER: 'i-lucide-crown',
+  ADMIN: 'i-lucide-shield',
+  MEMBER: 'i-lucide-user',
+  GUEST: 'i-lucide-eye',
+} as const;
+
 const columns = [
   {
     id: 'name',
@@ -64,6 +71,7 @@ const columns = [
     cell: ({ row }: { row: { original: OrganizationMember } }) => {
       return h(resolveComponent('UBadge'), {
         color: roleColors[row.original.role as keyof typeof roleColors],
+        icon: roleIcons[row.original.role as keyof typeof roleIcons],
       }, () => row.original.role);
     },
   },
@@ -92,6 +100,7 @@ const columns = [
             })
           : h(resolveComponent('UBadge'), {
               color: roleColors[member.role as keyof typeof roleColors],
+              icon: roleIcons[member.role as keyof typeof roleIcons],
             }, () => member.role),
 
         // Remove button (OWNER/ADMIN, not self)

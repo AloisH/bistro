@@ -3,7 +3,7 @@
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">Create account</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Sign up to get started</p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">Sign up to get started</p>
       </template>
 
       <UForm
@@ -61,7 +61,8 @@
           type="submit"
           block
           :loading="loading"
-          class="mt-6"
+          size="xl"
+          class="mt-6 font-semibold"
         >
           Create account
         </UButton>
@@ -70,7 +71,7 @@
       <AuthOAuthButtons />
 
       <template #footer>
-        <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
           Already have an account?
           <NuxtLink
             to="/auth/login"
@@ -133,16 +134,7 @@ async function onSubmit() {
     // Redirect to verify-email page
     await navigateTo({ name: 'auth-verify-email', query: { email: state.email } });
   } catch (e: unknown) {
-    const err = e as { status?: number };
-    if (e instanceof TypeError && e.message.includes('fetch')) {
-      error.value = 'Network error. Check your connection.';
-    } else if (err?.status === 429) {
-      error.value = 'Too many attempts. Try again later.';
-    } else if (err?.status && err.status >= 500) {
-      error.value = 'Server error. Try again later.';
-    } else {
-      error.value = 'An error occurred. Please try again.';
-    }
+    error.value = getErrorMessage(e);
   } finally {
     loading.value = false;
   }

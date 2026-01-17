@@ -1,6 +1,6 @@
 <template>
-  <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
-    <h2 class="mb-6 text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+  <div class="border-b border-neutral-200 pb-6 dark:border-neutral-700">
+    <h2 class="mb-6 text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
       Profile Information
     </h2>
     <UForm
@@ -75,14 +75,26 @@ const profileState = reactive({
 });
 const profileLoading = ref(false);
 
+// Track original value for dirty detection
+const originalName = ref(user.value?.name || '');
+const isDirty = computed(() => profileState.name !== originalName.value);
+
 watch(
   () => user.value?.name,
   (newName) => {
     if (newName) {
       profileState.name = newName;
+      originalName.value = newName;
     }
   },
 );
+
+// Warn on navigation with unsaved changes
+onBeforeRouteLeave(() => {
+  if (isDirty.value) {
+    return window.confirm('You have unsaved changes. Leave anyway?');
+  }
+});
 
 async function updateProfile() {
   profileLoading.value = true;
@@ -92,6 +104,7 @@ async function updateProfile() {
       body: { name: profileState.name },
     });
     await fetchSession();
+    originalName.value = profileState.name; // Reset dirty state
     toast.add({
       title: 'Profile Updated',
       description: 'Your profile information has been saved successfully',

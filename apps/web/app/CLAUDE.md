@@ -435,7 +435,7 @@ async function onSubmit() {
 
 - Automatic via `UColorModeButton`
 - Use `dark:` prefix for dark mode styles
-- Example: `text-gray-500 dark:text-gray-400`
+- Example: `text-neutral-500 dark:text-neutral-400`
 
 ## OAuth Conditional UI
 

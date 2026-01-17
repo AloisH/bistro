@@ -5,7 +5,7 @@
         <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">
           Danger Zone
         </h2>
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
           Once you delete your account, there is no going back. All your data will be
           permanently deleted.
         </p>
@@ -47,35 +47,35 @@
           />
 
           <div>
-            <p class="mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <p class="mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
               The following data will be permanently deleted:
             </p>
-            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-user"
-                  class="mt-1 text-gray-400 dark:text-gray-500"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
                 <span>Your user profile and account information</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-folder"
-                  class="mt-1 text-gray-400 dark:text-gray-500"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
                 <span>All your projects and their configurations</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-bot"
-                  class="mt-1 text-gray-400 dark:text-gray-500"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
                 <span>All AI jobs and their results</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-globe"
-                  class="mt-1 text-gray-400 dark:text-gray-500"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
                 <span>All active sessions across devices</span>
               </li>

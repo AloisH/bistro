@@ -32,9 +32,13 @@
           />
           <div
             v-else-if="status === 'pending'"
-            class="p-4 text-sm text-gray-500"
+            class="space-y-2 p-4"
           >
-            Loading...
+            <USkeleton
+              v-for="i in 5"
+              :key="i"
+              class="h-8 w-full"
+            />
           </div>
           <div
             v-else-if="status === 'error'"
@@ -44,7 +48,7 @@
           </div>
           <div
             v-else
-            class="p-4 text-sm text-gray-500"
+            class="p-4 text-sm text-neutral-500"
           >
             No navigation items
           </div>

@@ -6,9 +6,14 @@ export class TodoRepository {
 
   async findByUserId(
     userId: string,
-    options?: { filter?: 'all' | 'active' | 'completed'; sort?: 'date' | 'title' },
-  ): Promise<Todo[]> {
-    const { filter = 'all', sort = 'date' } = options || {};
+    options?: {
+      filter?: 'all' | 'active' | 'completed';
+      sort?: 'date' | 'title';
+      page?: number;
+      limit?: number;
+    },
+  ): Promise<{ todos: Todo[]; total: number }> {
+    const { filter = 'all', sort = 'date', page = 1, limit = 10 } = options || {};
 
     const where: Prisma.TodoWhereInput = { userId };
     if (filter === 'active') where.completed = false;
@@ -16,10 +21,17 @@ export class TodoRepository {
 
     const orderBy = sort === 'date' ? { createdAt: 'desc' as const } : { title: 'asc' as const };
 
-    return this.db.todo.findMany({
-      where,
-      orderBy,
-    });
+    const [todos, total] = await Promise.all([
+      this.db.todo.findMany({
+        where,
+        orderBy,
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.db.todo.count({ where }),
+    ]);
+
+    return { todos, total };
   }
 
   async findById(id: string, userId: string): Promise<Todo | null> {

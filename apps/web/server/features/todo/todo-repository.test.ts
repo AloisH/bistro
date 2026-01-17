@@ -18,11 +18,12 @@ describe('TodoRepository (Integration)', () => {
       const todo1 = await createTestTodo(user.id, { title: 'Task 1' });
       const todo2 = await createTestTodo(user.id, { title: 'Task 2' });
 
-      const result = await todoRepository.findByUserId(user.id);
+      const { todos, total } = await todoRepository.findByUserId(user.id);
 
-      expect(result).toHaveLength(2);
-      expect(result.map(t => t.id)).toContain(todo1.id);
-      expect(result.map(t => t.id)).toContain(todo2.id);
+      expect(todos).toHaveLength(2);
+      expect(total).toBe(2);
+      expect(todos.map(t => t.id)).toContain(todo1.id);
+      expect(todos.map(t => t.id)).toContain(todo2.id);
     });
 
     it('does not return other users todos', async () => {
@@ -31,10 +32,11 @@ describe('TodoRepository (Integration)', () => {
       await createTestTodo(user1.id);
       await createTestTodo(user2.id);
 
-      const result = await todoRepository.findByUserId(user1.id);
+      const { todos, total } = await todoRepository.findByUserId(user1.id);
 
-      expect(result).toHaveLength(1);
-      expect(result[0].userId).toBe(user1.id);
+      expect(todos).toHaveLength(1);
+      expect(total).toBe(1);
+      expect(todos[0].userId).toBe(user1.id);
     });
 
     it('filters active todos', async () => {
@@ -42,10 +44,11 @@ describe('TodoRepository (Integration)', () => {
       await createTestTodo(user.id, { completed: false });
       await createTestTodo(user.id, { completed: true });
 
-      const result = await todoRepository.findByUserId(user.id, { filter: 'active' });
+      const { todos, total } = await todoRepository.findByUserId(user.id, { filter: 'active' });
 
-      expect(result).toHaveLength(1);
-      expect(result[0].completed).toBe(false);
+      expect(todos).toHaveLength(1);
+      expect(total).toBe(1);
+      expect(todos[0].completed).toBe(false);
     });
 
     it('filters completed todos', async () => {
@@ -53,10 +56,11 @@ describe('TodoRepository (Integration)', () => {
       await createTestTodo(user.id, { completed: false });
       await createTestTodo(user.id, { completed: true });
 
-      const result = await todoRepository.findByUserId(user.id, { filter: 'completed' });
+      const { todos, total } = await todoRepository.findByUserId(user.id, { filter: 'completed' });
 
-      expect(result).toHaveLength(1);
-      expect(result[0].completed).toBe(true);
+      expect(todos).toHaveLength(1);
+      expect(total).toBe(1);
+      expect(todos[0].completed).toBe(true);
     });
 
     it('sorts by date descending by default', async () => {
@@ -64,11 +68,11 @@ describe('TodoRepository (Integration)', () => {
       const todo1 = await createTestTodo(user.id, { title: 'First' });
       const todo2 = await createTestTodo(user.id, { title: 'Second' });
 
-      const result = await todoRepository.findByUserId(user.id);
+      const { todos } = await todoRepository.findByUserId(user.id);
 
       // Most recent first (todo2 created after todo1)
-      expect(result[0].id).toBe(todo2.id);
-      expect(result[1].id).toBe(todo1.id);
+      expect(todos[0].id).toBe(todo2.id);
+      expect(todos[1].id).toBe(todo1.id);
     });
 
     it('sorts by title when specified', async () => {
@@ -76,10 +80,25 @@ describe('TodoRepository (Integration)', () => {
       await createTestTodo(user.id, { title: 'Zebra' });
       await createTestTodo(user.id, { title: 'Apple' });
 
-      const result = await todoRepository.findByUserId(user.id, { sort: 'title' });
+      const { todos } = await todoRepository.findByUserId(user.id, { sort: 'title' });
 
-      expect(result[0].title).toBe('Apple');
-      expect(result[1].title).toBe('Zebra');
+      expect(todos[0].title).toBe('Apple');
+      expect(todos[1].title).toBe('Zebra');
+    });
+
+    it('paginates results', async () => {
+      const user = await createTestUser();
+      for (let i = 0; i < 15; i++) {
+        await createTestTodo(user.id, { title: `Task ${i}` });
+      }
+
+      const page1 = await todoRepository.findByUserId(user.id, { page: 1, limit: 10 });
+      const page2 = await todoRepository.findByUserId(user.id, { page: 2, limit: 10 });
+
+      expect(page1.todos).toHaveLength(10);
+      expect(page1.total).toBe(15);
+      expect(page2.todos).toHaveLength(5);
+      expect(page2.total).toBe(15);
     });
   });
 

@@ -56,7 +56,7 @@ const items = computed(() => [
           <UAvatar
             :text="currentOrganization.name.charAt(0).toUpperCase()"
             size="xs"
-            class="ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-primary transition-all"
+            class="ring-2 ring-neutral-200 dark:ring-neutral-700 group-hover:ring-primary transition-all"
           />
           <span class="font-semibold">{{ currentOrganization.name }}</span>
         </div>

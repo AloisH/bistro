@@ -25,14 +25,18 @@ describe('TodoService', () => {
   });
 
   describe('listTodos', () => {
-    it('should return user todos', async () => {
+    it('should return paginated user todos', async () => {
       const mockTodos = [createMockTodo()];
-      vi.mocked(todoRepository.findByUserId).mockResolvedValue(mockTodos);
+      vi.mocked(todoRepository.findByUserId).mockResolvedValue({ todos: mockTodos, total: 1 });
 
       const result = await service.listTodos(mockUserId);
 
-      expect(result).toEqual(mockTodos);
-      expect(todoRepository.findByUserId).toHaveBeenCalledWith(mockUserId);
+      expect(result.todos).toEqual(mockTodos);
+      expect(result.total).toBe(1);
+      expect(result.page).toBe(1);
+      expect(result.limit).toBe(10);
+      expect(result.totalPages).toBe(1);
+      expect(todoRepository.findByUserId).toHaveBeenCalledWith(mockUserId, undefined);
     });
   });
 

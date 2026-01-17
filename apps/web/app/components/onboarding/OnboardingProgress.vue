@@ -28,7 +28,7 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
             'mb-2 flex h-10 w-10 items-center justify-center rounded-full font-semibold transition-colors',
             i <= currentStep
               ? 'bg-primary text-white'
-              : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
+              : 'bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400',
           ]"
         >
           <UIcon
@@ -42,8 +42,8 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
           :class="[
             'hidden text-center text-xs sm:block',
             i <= currentStep
-              ? 'font-medium text-gray-900 dark:text-white'
-              : 'text-gray-500 dark:text-gray-400',
+              ? 'font-medium text-neutral-900 dark:text-white'
+              : 'text-neutral-500 dark:text-neutral-400',
           ]"
         >
           {{ stepLabels[i - 1] }}

@@ -62,7 +62,7 @@
             </h1>
 
             <!-- Description -->
-            <p class="text-xl text-gray-200 mb-6 max-w-3xl">
+            <p class="text-xl text-neutral-200 mb-6 max-w-3xl">
               {{ post.description }}
             </p>
 
@@ -101,10 +101,10 @@
             size="lg"
           />
           <div>
-            <div class="font-semibold text-lg text-gray-900 dark:text-white mb-1">
+            <div class="font-semibold text-lg text-neutral-900 dark:text-white mb-1">
               {{ post.authors?.[0]?.name }}
             </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm">
               Author • Full-stack developer
             </p>
           </div>

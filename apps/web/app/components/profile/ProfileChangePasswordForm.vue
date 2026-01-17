@@ -1,11 +1,11 @@
 <template>
-  <div class="border-b border-gray-200 pb-6 dark:border-gray-700">
+  <div class="border-b border-neutral-200 pb-6 dark:border-neutral-700">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
-        <h2 class="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+        <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
           Change Password
         </h2>
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
           Update your password to keep your account secure
         </p>
       </div>
@@ -61,14 +61,14 @@
             />
             <label
               for="revoke-sessions"
-              class="text-sm font-medium text-gray-700 dark:text-gray-300"
+              class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
             >
               Sign out from all other devices
             </label>
           </div>
         </template>
         <template #description>
-          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
             Recommended for security when changing passwords
           </p>
         </template>

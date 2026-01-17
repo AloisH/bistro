@@ -10,7 +10,7 @@
 
     <div class="mb-6">
       <h1 class="text-2xl font-bold">Email Template Previews</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Preview how email templates appear to recipients
       </p>
     </div>
@@ -24,7 +24,7 @@
       </template>
 
       <div class="space-y-4">
-        <div class="border-b border-gray-200 dark:border-gray-700">
+        <div class="border-b border-neutral-200 dark:border-neutral-700">
           <nav class="-mb-px flex gap-4">
             <button
               v-for="template in templates"
@@ -33,7 +33,7 @@
                 'border-b-2 px-1 py-3 text-sm font-medium transition-colors',
                 selectedTemplateId === template.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200',
+                  : 'border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-neutral-200',
               ]"
               @click="selectedTemplateId = template.id"
             >
@@ -45,10 +45,10 @@
         <div v-if="selectedTemplate">
           <div class="mb-4">
             <h3 class="font-semibold">{{ selectedTemplate.name }}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">
               {{ selectedTemplate.description }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <p class="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">
               Subject: {{ selectedTemplate.subject }}
             </p>
           </div>
@@ -86,7 +86,7 @@
 
           <div
             v-if="viewMode === 'html'"
-            class="rounded-lg border border-gray-200 dark:border-gray-700"
+            class="rounded-lg border border-neutral-200 dark:border-neutral-700"
           >
             <iframe
               :srcdoc="selectedTemplate.html"
@@ -98,14 +98,14 @@
 
           <div
             v-else
-            class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
+            class="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-800"
           >
             <pre class="text-sm whitespace-pre-wrap">{{ selectedTemplate.text }}</pre>
           </div>
 
-          <div class="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+          <div class="mt-4 rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
             <h4 class="mb-2 text-sm font-semibold">Sample Data</h4>
-            <pre class="text-xs text-gray-600 dark:text-gray-400">{{
+            <pre class="text-xs text-neutral-600 dark:text-neutral-400">{{
               JSON.stringify(selectedTemplate.props, null, 2)
             }}</pre>
           </div>
@@ -115,7 +115,7 @@
 
     <UCard v-else-if="loading">
       <div class="flex items-center justify-center py-12">
-        <div class="text-gray-600 dark:text-gray-400">Loading templates...</div>
+        <div class="text-neutral-600 dark:text-neutral-400">Loading templates...</div>
       </div>
     </UCard>
 

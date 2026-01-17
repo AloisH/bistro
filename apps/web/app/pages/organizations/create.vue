@@ -69,7 +69,7 @@ async function onSubmit() {
         <h1 class="text-2xl font-bold">
           Create Organization
         </h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
           Set up your new organization
         </p>
       </template>

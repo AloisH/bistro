@@ -25,7 +25,7 @@ const slug = route.params.slug as string;
       </template>
 
       <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           Settings for {{ slug }}
         </p>
       </div>

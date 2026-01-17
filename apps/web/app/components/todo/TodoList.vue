@@ -9,14 +9,14 @@
       <div class="flex items-center gap-2">
         <UIcon
           name="i-lucide-filter"
-          class="text-gray-400"
+          class="text-neutral-400"
         />
-        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter:</span>
+        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Filter:</span>
         <div class="flex gap-2">
           <UBadge
             variant="subtle"
             :color="filter === 'all' ? 'primary' : 'neutral'"
-            class="cursor-pointer transition-all hover:scale-105"
+            class="cursor-pointer"
             @click="setFilter('all')"
           >
             All
@@ -24,7 +24,7 @@
           <UBadge
             variant="subtle"
             :color="filter === 'active' ? 'primary' : 'neutral'"
-            class="cursor-pointer transition-all hover:scale-105"
+            class="cursor-pointer"
             @click="setFilter('active')"
           >
             Active
@@ -32,7 +32,7 @@
           <UBadge
             variant="subtle"
             :color="filter === 'completed' ? 'primary' : 'neutral'"
-            class="cursor-pointer transition-all hover:scale-105"
+            class="cursor-pointer"
             @click="setFilter('completed')"
           >
             Completed
@@ -44,14 +44,14 @@
       <div class="flex items-center gap-2">
         <UIcon
           name="i-lucide-arrow-up-down"
-          class="text-gray-400"
+          class="text-neutral-400"
         />
-        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Sort:</span>
+        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Sort:</span>
         <div class="flex gap-2">
           <UBadge
             variant="subtle"
             :color="sort === 'date' ? 'primary' : 'neutral'"
-            class="cursor-pointer transition-all hover:scale-105"
+            class="cursor-pointer"
             @click="setSort('date')"
           >
             Date
@@ -59,7 +59,7 @@
           <UBadge
             variant="subtle"
             :color="sort === 'title' ? 'primary' : 'neutral'"
-            class="cursor-pointer transition-all hover:scale-105"
+            class="cursor-pointer"
             @click="setSort('title')"
           >
             Title
@@ -71,28 +71,31 @@
     <!-- Loading state -->
     <div
       v-if="loading"
-      class="py-8 text-center"
+      class="space-y-3"
     >
-      <UIcon
-        name="i-lucide-loader-2"
-        class="mx-auto mb-3 text-4xl animate-spin"
-      />
-      <p class="text-gray-500 dark:text-gray-400">
-        Loading todos...
-      </p>
+      <div
+        v-for="i in 3"
+        :key="i"
+        class="flex items-center justify-between rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
+      >
+        <div class="flex items-center gap-3">
+          <USkeleton class="h-5 w-5 rounded" />
+          <div class="space-y-2">
+            <USkeleton class="h-4 w-48" />
+            <USkeleton class="h-3 w-32" />
+          </div>
+        </div>
+        <USkeleton class="h-8 w-8 rounded" />
+      </div>
     </div>
 
     <!-- Empty state -->
-    <div
+    <EmptyState
       v-else-if="todos.length === 0"
-      class="py-8 text-center text-gray-500 dark:text-gray-400"
-    >
-      <UIcon
-        name="i-lucide-check-circle"
-        class="mx-auto mb-3 text-4xl"
-      />
-      <p>No todos yet. Create your first one!</p>
-    </div>
+      icon="i-lucide-check-circle"
+      title="No todos yet"
+      description="Create your first one to get started!"
+    />
 
     <!-- Todo list -->
     <div
@@ -102,7 +105,7 @@
       <div
         v-for="todo in todos"
         :key="todo.id"
-        class="flex items-start gap-3 rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+        class="flex items-start gap-3 rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
       >
         <UCheckbox
           :model-value="todo.completed"
@@ -113,20 +116,20 @@
           <div
             class="truncate"
             :class="{
-              'line-through text-gray-400 dark:text-gray-500': todo.completed,
-              'font-medium text-gray-900 dark:text-white': !todo.completed,
+              'line-through text-neutral-400 dark:text-neutral-500': todo.completed,
+              'font-medium text-neutral-900 dark:text-white': !todo.completed,
             }"
           >
             {{ todo.title }}
           </div>
           <p
             v-if="todo.description"
-            class="mt-1 text-sm text-gray-600 dark:text-gray-400"
+            class="mt-1 text-sm text-neutral-600 dark:text-neutral-400"
             :class="{ 'line-through': todo.completed }"
           >
             {{ todo.description }}
           </p>
-          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
             <UIcon
               name="i-lucide-clock"
               class="mr-1 inline"
@@ -139,15 +142,60 @@
           color="error"
           variant="ghost"
           size="sm"
+          aria-label="Delete todo"
           @click="handleDelete(todo.id)"
         />
+      </div>
+
+      <!-- Pagination -->
+      <div
+        v-if="totalPages > 1"
+        class="flex items-center justify-between border-t border-neutral-200 pt-4 dark:border-neutral-700"
+      >
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          {{ total }} total
+        </p>
+        <div class="flex items-center gap-2">
+          <UButton
+            icon="i-lucide-chevron-left"
+            variant="outline"
+            size="sm"
+            aria-label="Previous page"
+            :disabled="page === 1"
+            @click="setPage(page - 1)"
+          />
+          <span class="text-sm text-neutral-700 dark:text-neutral-300">
+            {{ page }} / {{ totalPages }}
+          </span>
+          <UButton
+            icon="i-lucide-chevron-right"
+            variant="outline"
+            size="sm"
+            aria-label="Next page"
+            :disabled="page === totalPages"
+            @click="setPage(page + 1)"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { todos, loading, filter, sort, setFilter, setSort, toggleTodo, deleteTodo } = useTodos();
+const {
+  todos,
+  loading,
+  filter,
+  sort,
+  page,
+  total,
+  totalPages,
+  setFilter,
+  setSort,
+  setPage,
+  toggleTodo,
+  deleteTodo,
+} = useTodos();
 
 async function handleToggle(id: string, completed: string | boolean) {
   await toggleTodo(id, Boolean(completed));

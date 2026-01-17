@@ -91,13 +91,13 @@ async function acceptInvite() {
       >
         <div class="space-y-4">
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">
               You have been invited to join
             </p>
             <div class="mt-2 flex items-center gap-3">
               <UIcon
                 name="i-lucide-building-2"
-                class="h-8 w-8 text-gray-400"
+                class="h-8 w-8 text-neutral-400"
               />
               <div>
                 <h2 class="text-xl font-semibold">
@@ -105,7 +105,7 @@ async function acceptInvite() {
                 </h2>
                 <p
                   v-if="inviteData.invite.organization.description"
-                  class="text-sm text-gray-500"
+                  class="text-sm text-neutral-500"
                 >
                   {{ inviteData.invite.organization.description }}
                 </p>
@@ -113,14 +113,14 @@ async function acceptInvite() {
             </div>
           </div>
 
-          <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+          <div class="rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
             <div class="space-y-2 text-sm">
               <div class="flex justify-between">
-                <span class="text-gray-500">Email:</span>
+                <span class="text-neutral-500">Email:</span>
                 <span class="font-medium">{{ inviteData.invite.email }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-500">Role:</span>
+                <span class="text-neutral-500">Role:</span>
                 <span class="font-medium">{{ inviteData.invite.role }}</span>
               </div>
             </div>

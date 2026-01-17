@@ -10,25 +10,25 @@
         <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
           Blog
         </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 mb-8">
           Thoughts, tutorials, and insights on building modern SaaS applications
         </p>
 
         <!-- Stats/highlights -->
         <div class="flex gap-8 text-sm">
           <div>
-            <div class="text-2xl font-bold text-gray-900 dark:text-white">
+            <div class="text-2xl font-bold text-neutral-900 dark:text-white">
               {{ total }}
             </div>
-            <div class="text-gray-600 dark:text-gray-400">
+            <div class="text-neutral-600 dark:text-neutral-400">
               Articles
             </div>
           </div>
           <div>
-            <div class="text-2xl font-bold text-gray-900 dark:text-white">
+            <div class="text-2xl font-bold text-neutral-900 dark:text-white">
               {{ allTags.length }}
             </div>
-            <div class="text-gray-600 dark:text-gray-400">
+            <div class="text-neutral-600 dark:text-neutral-400">
               Topics
             </div>
           </div>
@@ -44,9 +44,9 @@
       <div class="flex items-center gap-3 mb-4">
         <UIcon
           name="i-lucide-tag"
-          class="text-gray-400"
+          class="text-neutral-400"
         />
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+        <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">
           Filter by topic
         </h2>
       </div>
@@ -56,7 +56,7 @@
         <UBadge
           variant="subtle"
           :color="!selectedTag ? 'primary' : 'neutral'"
-          class="cursor-pointer transition-all hover:scale-105"
+          class="cursor-pointer"
           @click="filterByTag('')"
         >
           All ({{ total }})
@@ -68,7 +68,7 @@
           :key="tag.name"
           variant="subtle"
           :color="selectedTag === tag.name ? 'primary' : 'neutral'"
-          class="cursor-pointer transition-all hover:scale-105"
+          class="cursor-pointer"
           @click="filterByTag(tag.name)"
         >
           {{ tag.name }} ({{ tag.count }})
@@ -89,7 +89,7 @@
         class="group block animate-fade-in-up"
       >
         <UCard
-          class="h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:shadow-primary-500/10 overflow-hidden"
+          class="h-full transition-shadow duration-300 hover:shadow-lg overflow-hidden"
         >
           <!-- Image -->
           <template #header>
@@ -97,7 +97,7 @@
               <img
                 :src="post.image"
                 :alt="post.title"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                class="w-full h-full object-cover"
               >
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
@@ -119,17 +119,17 @@
             </div>
 
             <!-- Title -->
-            <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
+            <h3 class="text-xl font-semibold mb-2 text-neutral-900 dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
               {{ post.title }}
             </h3>
 
             <!-- Description -->
-            <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-4">
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm line-clamp-2 mb-4">
               {{ post.description }}
             </p>
 
             <!-- Meta -->
-            <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-500">
+            <div class="flex items-center gap-3 text-xs text-neutral-500 dark:text-neutral-500">
               <div class="flex items-center gap-2">
                 <UAvatar
                   v-if="post.authors?.[0]"
@@ -150,7 +150,7 @@
     <!-- Empty state -->
     <p
       v-else
-      class="text-center text-gray-500 py-12"
+      class="text-center text-neutral-500 py-12"
     >
       No posts found. Check back soon!
     </p>
