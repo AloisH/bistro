@@ -59,26 +59,18 @@ const router = useRouter();
 </script>
 ```
 
-**Dashboard Pages (CRITICAL - Scrolling):**
+**Dashboard Pages (Scrolling handled by layout):**
 
-Pages using `layout: 'dashboard'` MUST use `UDashboardPanel` with `#body` slot for scrollable content:
+Pages using `layout: 'dashboard'` just render content - layout handles panel and scrolling:
 
 ```vue
 <template>
-  <UDashboardPanel>
+  <UCard>
     <template #header>
-      <UDashboardNavbar title="Page Title">
-        <template #right>
-          <UColorModeButton />
-        </template>
-      </UDashboardNavbar>
+      <h1 class="text-3xl font-bold">Page Title</h1>
     </template>
-
-    <template #body>
-      <!-- Content here scrolls properly -->
-      <UCard>...</UCard>
-    </template>
-  </UDashboardPanel>
+    <!-- Content renders inside layout's scrollable container -->
+  </UCard>
 </template>
 
 <script setup lang="ts">
@@ -88,12 +80,12 @@ definePageMeta({
 </script>
 ```
 
-**Why `#body` slot is required:**
+**Layout structure (`layouts/dashboard.vue`):**
 
-- Default slot bypasses scroll wrapper (no `overflow-y-auto`)
-- `#body` slot has proper padding + scrolling styles
-- Global config in `app.config.ts` overrides `min-h-svh` with `h-svh max-h-svh` for proper height constraint
-- See [Nuxt UI docs](https://ui.nuxt.com/components/dashboard-panel)
+- `UDashboardGroup` > `UDashboardSidebar` + `UDashboardPanel`
+- Panel has `class="flex flex-col h-screen w-full"`
+- Content wrapped in `<div class="flex-1 overflow-y-auto p-4 sm:p-6">`
+- Pages render into this scrollable container via `<slot />`
 
 ## Components
 

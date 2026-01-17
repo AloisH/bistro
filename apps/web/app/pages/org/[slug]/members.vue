@@ -8,27 +8,15 @@ const slug = route.params.slug as string;
 </script>
 
 <template>
-  <UDashboardPanel>
+  <UCard>
     <template #header>
-      <UDashboardNavbar title="Members">
-        <template #right>
-          <UColorModeButton />
-        </template>
-      </UDashboardNavbar>
+      <h1 class="text-3xl font-bold">
+        Organization Members
+      </h1>
     </template>
 
-    <template #body>
-      <UCard>
-        <template #header>
-          <h1 class="text-3xl font-bold">
-            Organization Members
-          </h1>
-        </template>
-
-        <div class="space-y-6">
-          <OrganizationMembers :organization-slug="slug" />
-        </div>
-      </UCard>
-    </template>
-  </UDashboardPanel>
+    <div class="space-y-6">
+      <OrganizationMembers :organization-slug="slug" />
+    </div>
+  </UCard>
 </template>

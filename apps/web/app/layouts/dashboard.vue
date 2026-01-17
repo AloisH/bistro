@@ -78,7 +78,22 @@
       </template>
     </UDashboardSidebar>
 
-    <slot />
+    <UDashboardPanel class="flex flex-col h-screen w-full">
+      <template #header>
+        <UDashboardNavbar title="Bistro">
+          <template #leading>
+            <UDashboardSidebarCollapse />
+          </template>
+          <template #right>
+            <UColorModeButton />
+          </template>
+        </UDashboardNavbar>
+      </template>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <slot />
+      </div>
+    </UDashboardPanel>
 
     <AdminImpersonationBanner />
   </UDashboardGroup>
