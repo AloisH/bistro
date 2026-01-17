@@ -30,34 +30,7 @@
       </template>
 
       <template #default="{ collapsed }">
-        <UButton
-          :label="collapsed ? undefined : 'Search...'"
-          :aria-label="collapsed ? 'Search' : undefined"
-          icon="i-lucide-search"
-          color="neutral"
-          variant="outline"
-          block
-          :square="collapsed"
-          class="group"
-        >
-          <template
-            v-if="!collapsed"
-            #trailing
-          >
-            <div class="ms-auto flex items-center gap-0.5">
-              <UKbd
-                value="meta"
-                variant="subtle"
-                class=""
-              />
-              <UKbd
-                value="K"
-                variant="subtle"
-                class=""
-              />
-            </div>
-          </template>
-        </UButton>
+        <UDashboardSearchButton :collapsed="collapsed" />
 
         <ClientOnly>
           <UNavigationMenu
