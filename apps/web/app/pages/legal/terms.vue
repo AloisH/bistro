@@ -28,7 +28,7 @@ useSeoMeta({
   <div class="container mx-auto px-4 py-12 max-w-4xl">
     <article v-if="page">
       <!-- Header -->
-      <header class="mb-8 pb-8 border-b border-neutral-200 dark:border-neutral-800">
+      <header class="mb-8 pb-8 border-b border-default">
         <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
           {{ page.title }}
         </h1>

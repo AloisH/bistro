@@ -7,7 +7,7 @@
         :ui="{
           footer: 'border-t border-default',
         }"
-        class="bg-white dark:bg-neutral-950 border-r border-neutral-200 dark:border-neutral-800"
+        class="bg-default border-r border-default"
       >
         <template #header="{ collapsed }">
           <div

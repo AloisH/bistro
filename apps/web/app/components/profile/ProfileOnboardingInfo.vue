@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-neutral-200 pb-6 dark:border-neutral-700">
+  <div class="border-b border-default pb-6">
     <div class="mb-6">
       <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
         Onboarding Information
@@ -12,7 +12,7 @@
     <div class="space-y-4">
       <div class="grid gap-4 sm:grid-cols-2">
         <!-- Bio -->
-        <div class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700">
+        <div class="rounded-lg border border-default p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-user"
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Company -->
-        <div class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700">
+        <div class="rounded-lg border border-default p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-briefcase"
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Use Case -->
-        <div class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700">
+        <div class="rounded-lg border border-default p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-target"
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Email Notifications -->
-        <div class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700">
+        <div class="rounded-lg border border-default p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-mail"

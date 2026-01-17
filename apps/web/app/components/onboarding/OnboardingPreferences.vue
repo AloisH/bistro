@@ -43,7 +43,7 @@ const colorModeOptions = [
               'flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all',
               colorMode.preference === option.value
                 ? 'border-primary bg-primary/5'
-                : 'border-neutral-200 hover:border-neutral-300 dark:border-neutral-700 dark:hover:border-neutral-600',
+                : 'border-default hover:border-neutral-400 dark:hover:border-neutral-500',
             ]"
             @click="colorMode.preference = option.value as 'light' | 'dark' | 'system'"
           >

@@ -51,7 +51,7 @@ useSeoMeta({
         />
 
         <!-- Prev/Next navigation -->
-        <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+        <div class="mt-12 pt-8 border-t border-default">
           <UContentSurround :query="{ path: `/docs/${slug}` }" />
         </div>
       </article>

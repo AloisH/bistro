@@ -1,6 +1,6 @@
 <template>
   <UApp>
-    <UHeader class="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 sticky top-0 z-50">
+    <UHeader class="border-b border-default bg-default sticky top-0 z-50">
       <template #left>
         <NuxtLink
           to="/"
@@ -52,7 +52,7 @@
 
     <USeparator icon="i-simple-icons-nuxtdotjs" />
 
-    <UFooter class="border-t border-neutral-200 dark:border-neutral-800">
+    <UFooter class="border-t border-default">
       <template #left>
         <div class="flex items-center gap-4 text-sm">
           <p class="text-muted">

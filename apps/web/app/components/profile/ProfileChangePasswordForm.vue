@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-neutral-200 pb-6 dark:border-neutral-700">
+  <div class="border-b border-default pb-6">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
         <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">

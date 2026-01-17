@@ -14,7 +14,7 @@
     <div
       v-for="session in sessions"
       :key="session.id"
-      class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
+      class="rounded-lg border border-default p-4"
     >
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-1 items-start gap-3">

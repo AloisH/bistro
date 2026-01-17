@@ -76,7 +76,7 @@
       <div
         v-for="i in 3"
         :key="i"
-        class="flex items-center justify-between rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
+        class="flex items-center justify-between rounded-lg border border-default p-4"
       >
         <div class="flex items-center gap-3">
           <USkeleton class="h-5 w-5 rounded" />
@@ -105,7 +105,7 @@
       <div
         v-for="todo in todos"
         :key="todo.id"
-        class="flex items-start gap-3 rounded-lg border border-neutral-200 p-4 dark:border-neutral-700"
+        class="flex items-start gap-3 rounded-lg border border-default p-4"
       >
         <UCheckbox
           :model-value="todo.completed"
@@ -150,7 +150,7 @@
       <!-- Pagination -->
       <div
         v-if="totalPages > 1"
-        class="flex items-center justify-between border-t border-neutral-200 pt-4 dark:border-neutral-700"
+        class="flex items-center justify-between border-t border-default pt-4"
       >
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
           {{ total }} total

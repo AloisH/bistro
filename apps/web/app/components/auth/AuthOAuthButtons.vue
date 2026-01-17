@@ -5,7 +5,7 @@
   >
     <div class="relative">
       <div class="absolute inset-0 flex items-center">
-        <span class="w-full border-t border-neutral-300 dark:border-neutral-700" />
+        <span class="w-full border-t border-default" />
       </div>
       <div class="relative flex justify-center text-xs uppercase">
         <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400">Or continue with</span>
