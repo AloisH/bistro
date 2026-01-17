@@ -1,5 +1,5 @@
 <template>
-  <UApp>
+  <div>
     <UHeader class="border-b border-default bg-default sticky top-0 z-50">
       <template #left>
         <NuxtLink
@@ -94,5 +94,5 @@
         />
       </template>
     </UFooter>
-  </UApp>
+  </div>
 </template>

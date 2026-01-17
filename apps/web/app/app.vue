@@ -25,11 +25,11 @@ useSeoMeta({
 </script>
 
 <template>
-  <div>
+  <UApp>
     <NuxtLoadingIndicator />
     <AdminImpersonationBanner />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-  </div>
+  </UApp>
 </template>
