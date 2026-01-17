@@ -40,13 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import ProfileForm from '~/components/profile/ProfileForm.vue';
-import ProfileChangePasswordForm from '~/components/profile/ProfileChangePasswordForm.vue';
-import ProfileSessionManagement from '~/components/profile/ProfileSessionManagement.vue';
-import ProfileOnboardingInfo from '~/components/profile/ProfileOnboardingInfo.vue';
-import ProfileRestartOnboardingButton from '~/components/profile/ProfileRestartOnboardingButton.vue';
-import ProfileDeleteAccountSection from '~/components/profile/ProfileDeleteAccountSection.vue';
-
 definePageMeta({
   layout: 'dashboard',
 });
@@ -58,7 +51,7 @@ const { data: profile } = await useFetch('/api/user/profile');
 const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false);
 
 // Ref to ProfileSessionManagement component
-const sessionManagement = ref<InstanceType<typeof ProfileSessionManagement> | null>(null);
+const sessionManagement = ref<{ fetchSessions: () => void } | null>(null);
 
 // Helper function to get initials from name
 function getInitials(name: string): string {

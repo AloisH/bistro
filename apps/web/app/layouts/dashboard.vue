@@ -6,7 +6,7 @@
       :ui="{
         footer: 'border-t border-default',
       }"
-      class="bg-white/50 dark:bg-gray-950/50 backdrop-blur-sm border-r border-gray-200/80 dark:border-gray-800/80"
+      class="bg-white dark:bg-neutral-950 border-r border-neutral-200 dark:border-neutral-800"
     >
       <template #header="{ collapsed }">
         <OrganizationSwitcher
@@ -32,7 +32,7 @@
           variant="outline"
           block
           :square="collapsed"
-          class="group hover:shadow-md hover:border-primary/50 transition-all duration-200"
+          class="group"
         >
           <template
             v-if="!collapsed"
@@ -42,12 +42,12 @@
               <UKbd
                 value="meta"
                 variant="subtle"
-                class="transition-transform group-hover:scale-105"
+                class=""
               />
               <UKbd
                 value="K"
                 variant="subtle"
-                class="transition-transform group-hover:scale-105"
+                class=""
               />
             </div>
           </template>
@@ -59,7 +59,7 @@
             :items="navigationItems"
             orientation="vertical"
             :ui="{
-              link: 'group relative hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:translate-x-1',
+              link: 'hover:bg-neutral-100 dark:hover:bg-neutral-800',
             }"
           />
 
@@ -69,7 +69,7 @@
             orientation="vertical"
             class="mt-auto"
             :ui="{
-              link: 'group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:translate-x-1',
+              link: 'hover:bg-neutral-100 dark:hover:bg-neutral-800',
             }"
           />
         </ClientOnly>
@@ -80,7 +80,7 @@
           <UDropdownMenu
             :items="userMenuItems"
             :ui="{
-              content: 'w-(--reka-dropdown-menu-trigger-width) shadow-strong backdrop-blur-sm',
+              content: 'w-(--reka-dropdown-menu-trigger-width)',
             }"
           >
             <UButton
@@ -88,7 +88,7 @@
               color="neutral"
               variant="ghost"
               block
-              class="group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200"
+              class="group hover:bg-neutral-100 dark:hover:bg-neutral-800"
             >
               <div class="flex w-full items-center justify-between gap-2">
                 <div class="flex min-w-0 items-center gap-2">
@@ -116,7 +116,7 @@
               :alt="user?.name || user?.email || 'User'"
               :text="getUserInitials(user)"
               size="md"
-              class="cursor-pointer ring-2 ring-gray-200 dark:ring-gray-700 hover:ring-primary transition-all hover:scale-110"
+              class="cursor-pointer ring-2 ring-neutral-200 dark:ring-neutral-700 hover:ring-primary transition-colors"
             />
           </UDropdownMenu>
         </ClientOnly>

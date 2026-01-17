@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="isImpersonating"
-    class="bg-warning-100 dark:bg-warning-950 border-warning-200 dark:border-warning-800 fixed top-0 right-0 left-0 z-50 border-b px-4 py-3 shadow-strong backdrop-blur-md animate-in slide-in-from-top duration-300"
+    class="bg-warning-100 dark:bg-warning-950 border-warning-200 dark:border-warning-800 fixed top-0 right-0 left-0 z-50 border-b px-4 py-3 shadow-sm"
   >
     <div class="mx-auto flex max-w-screen-2xl items-center justify-between gap-4">
       <div class="flex min-w-0 items-center gap-3">

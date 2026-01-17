@@ -42,7 +42,7 @@ const items = computed(() => [
       v-if="currentOrganization"
       :items="items"
       :ui="{
-        content: 'shadow-strong backdrop-blur-sm',
+        content: '',
       }"
     >
       <UButton
@@ -50,7 +50,7 @@ const items = computed(() => [
         variant="ghost"
         trailing-icon="i-lucide-chevron-down"
         block
-        class="group hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 hover:shadow-md"
+        class="group hover:bg-neutral-100 dark:hover:bg-neutral-800"
       >
         <div class="flex items-center gap-2">
           <UAvatar

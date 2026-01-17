@@ -1,12 +1,12 @@
 <template>
   <UApp>
-    <UHeader class="border-b border-gray-200/80 backdrop-blur-md bg-white/80 dark:bg-gray-950/80 dark:border-gray-800/80 sticky top-0 z-50">
+    <UHeader class="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 sticky top-0 z-50">
       <template #left>
         <NuxtLink
           to="/"
-          class="group flex items-center gap-2 transition-all duration-200 hover:scale-105"
+          class="flex items-center gap-2"
         >
-          <AppLogo class="h-6 w-auto shrink-0 transition-transform group-hover:rotate-2" />
+          <AppLogo class="h-6 w-auto shrink-0" />
         </NuxtLink>
 
         <div class="hidden md:flex items-center gap-1 ml-6">
@@ -31,7 +31,7 @@
         <div class="flex items-center gap-2">
           <AuthButton />
 
-          <UColorModeButton class="transition-transform hover:rotate-180 duration-500" />
+          <UColorModeButton />
 
           <UButton
             to="https://github.com/nuxt-ui-templates/starter"
@@ -40,7 +40,7 @@
             aria-label="GitHub"
             color="neutral"
             variant="ghost"
-            class="transition-all hover:scale-110"
+            class=""
           />
         </div>
       </template>
@@ -52,7 +52,7 @@
 
     <USeparator icon="i-simple-icons-nuxtdotjs" />
 
-    <UFooter class="border-t border-gray-200/50 dark:border-gray-800/50">
+    <UFooter class="border-t border-neutral-200 dark:border-neutral-800">
       <template #left>
         <div class="flex items-center gap-4 text-sm">
           <p class="text-muted">
