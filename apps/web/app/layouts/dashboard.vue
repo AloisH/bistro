@@ -65,9 +65,6 @@
               :collapsed="collapsed"
               :items="navigationItems"
               orientation="vertical"
-              :ui="{
-                link: 'hover:bg-neutral-100 dark:hover:bg-neutral-800',
-              }"
             />
 
             <UNavigationMenu
@@ -75,9 +72,6 @@
               :items="footerItems"
               orientation="vertical"
               class="mt-auto"
-              :ui="{
-                link: 'hover:bg-neutral-100 dark:hover:bg-neutral-800',
-              }"
             />
           </ClientOnly>
         </template>
