@@ -57,14 +57,12 @@ async function selectOrg(slug: string) {
         </UButton>
       </div>
 
-      <EmptyState
+      <UEmpty
         v-else-if="organizations?.organizations?.length === 0"
         icon="i-lucide-building-2"
         title="No organizations yet"
         description="Create your first organization to get started"
-        action-label="Create Organization"
-        action-to="/organizations/create"
-        action-icon="i-lucide-plus"
+        :actions="[{ label: 'Create Organization', to: '/organizations/create', icon: 'i-lucide-plus' }]"
       />
 
       <div

@@ -90,7 +90,7 @@
     </div>
 
     <!-- Empty state -->
-    <EmptyState
+    <UEmpty
       v-else-if="todos.length === 0"
       icon="i-lucide-check-circle"
       title="No todos yet"
