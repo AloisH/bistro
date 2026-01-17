@@ -30,7 +30,13 @@
   --shadow-glow: 0 0 20px rgb(0 220 130 / 0.15);
 }
 
-/* Smooth page transitions */
+/* Disable page transitions for dashboard layout - breaks fixed positioning */
+.layout-dashboard-enter-active,
+.layout-dashboard-leave-active {
+  transition: none;
+}
+
+/* Smooth page transitions for non-dashboard layouts */
 .page-enter-active,
 .page-leave-active {
   transition:

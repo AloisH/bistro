@@ -79,6 +79,8 @@
     </UDashboardSidebar>
 
     <slot />
+
+    <AdminImpersonationBanner />
   </UDashboardGroup>
 </template>
 

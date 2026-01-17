@@ -8,7 +8,7 @@ const slug = route.params.slug as string;
 </script>
 
 <template>
-  <UDashboardPanel grow>
+  <UDashboardPanel>
     <template #header>
       <UDashboardNavbar title="Members">
         <template #right>

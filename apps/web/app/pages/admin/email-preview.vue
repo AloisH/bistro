@@ -1,5 +1,5 @@
 <template>
-  <UDashboardPanel grow>
+  <UDashboardPanel>
     <template #header>
       <UDashboardNavbar title="Email Preview">
         <template #right>

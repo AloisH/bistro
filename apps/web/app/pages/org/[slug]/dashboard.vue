@@ -12,7 +12,7 @@ onMounted(() => fetchTodos());
 </script>
 
 <template>
-  <UDashboardPanel grow>
+  <UDashboardPanel>
     <template #header>
       <UDashboardNavbar :title="`${slug} Dashboard`">
         <template #right>
