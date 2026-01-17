@@ -13,14 +13,7 @@
           v-if="!collapsed"
           class="flex w-full items-center justify-between gap-2"
         >
-          <OrganizationSwitcher
-            v-if="orgSlug"
-            class="min-w-0 flex-1"
-          />
-          <AppLogo
-            v-else
-            class="h-5 w-auto shrink-0"
-          />
+          <OrganizationSwitcher class="min-w-0 flex-1" />
           <UDashboardSidebarCollapse />
         </div>
         <UDashboardSidebarCollapse
@@ -99,31 +92,20 @@ import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 
 const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
+const { activeOrgSlug, fetchOrganizations } = useOrganization();
 const router = useRouter();
-const route = useRoute();
 
-// Detect if on org page and extract slug
-const orgSlug = computed(() => {
-  const match = route.path.match(/^\/org\/([^/]+)/);
-  return match ? match[1] : null;
-});
+// Fetch orgs on mount for sidebar
+onMounted(() => fetchOrganizations());
 
+// Unified navigation - always shows all items
 const navigationItems = computed<NavigationMenuItem[][]>(() => {
-  // If on org page, show org-scoped navigation
-  if (orgSlug.value) {
-    return [
-      [
-        {
-          label: 'Dashboard',
-          icon: 'i-lucide-house',
-          to: `/org/${orgSlug.value}/dashboard`,
-        },
-      ],
-    ];
-  }
-
-  // User-level navigation
-  const baseItems: NavigationMenuItem[] = [
+  const mainItems: NavigationMenuItem[] = [
+    {
+      label: 'Dashboard',
+      icon: 'i-lucide-house',
+      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/organizations/select',
+    },
     {
       label: 'Profile',
       icon: 'i-lucide-user',
@@ -146,7 +128,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
       ]
     : [];
 
-  return [[...baseItems, ...adminItems]];
+  return [[...mainItems, ...adminItems]];
 });
 
 const footerItems: NavigationMenuItem[][] = [

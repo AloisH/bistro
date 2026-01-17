@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { organizations, currentOrganization, currentOrgSlug, switchOrganization, fetchOrganizations } =
+const { organizations, activeOrganization, activeOrgSlug, switchOrganization, fetchOrganizations } =
   useOrganization();
 
 // Fetch orgs on mount
@@ -10,19 +10,19 @@ const items = computed(() => [
     {
       label: 'Members',
       icon: 'i-lucide-users',
-      to: `/org/${currentOrgSlug.value}/members`,
+      to: `/org/${activeOrgSlug.value}/members`,
     },
     {
       label: 'Settings',
       icon: 'i-lucide-settings',
-      to: `/org/${currentOrgSlug.value}/settings`,
+      to: `/org/${activeOrgSlug.value}/settings`,
     },
   ],
   [
-    ...organizations.value.map((org: typeof organizations.value[0]) => ({
+    ...organizations.value.map((org: (typeof organizations.value)[0]) => ({
       label: org.name,
       avatar: { text: org.name.charAt(0).toUpperCase() },
-      trailingIcon: org.slug === currentOrgSlug.value ? 'i-lucide-check' : undefined,
+      trailingIcon: org.slug === activeOrgSlug.value ? 'i-lucide-check' : undefined,
       click: () => switchOrganization(org.slug),
     })),
   ],
@@ -39,7 +39,7 @@ const items = computed(() => [
 <template>
   <ClientOnly>
     <UDropdownMenu
-      v-if="currentOrganization"
+      v-if="activeOrganization"
       :items="items"
       :ui="{
         content: '',
@@ -54,13 +54,27 @@ const items = computed(() => [
       >
         <div class="flex items-center gap-2">
           <UAvatar
-            :text="currentOrganization.name.charAt(0).toUpperCase()"
+            :text="activeOrganization.name.charAt(0).toUpperCase()"
             size="xs"
             class="ring-2 ring-neutral-200 dark:ring-neutral-700 group-hover:ring-primary transition-all"
           />
-          <span class="font-semibold">{{ currentOrganization.name }}</span>
+          <span class="font-semibold">{{ activeOrganization.name }}</span>
         </div>
       </UButton>
     </UDropdownMenu>
+    <!-- Fallback when no orgs -->
+    <UButton
+      v-else
+      color="neutral"
+      variant="ghost"
+      to="/organizations/create"
+      block
+      class="hover:bg-neutral-100 dark:hover:bg-neutral-800"
+    >
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-plus" />
+        <span>Create Organization</span>
+      </div>
+    </UButton>
   </ClientOnly>
 </template>

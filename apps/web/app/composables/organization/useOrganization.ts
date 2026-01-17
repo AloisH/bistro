@@ -12,17 +12,40 @@ export const useOrganization = () => {
   const fetching = useState('org:fetching', () => false);
   const switching = useState('org:switching', () => false);
 
-  // Get route + auth
+  // Track last visited org (persists across navigations within session)
+  const lastOrgSlug = useState<string | null>('org:lastSlug', () => null);
+
+  // Get route
   const route = useRoute();
   const router = useRouter();
 
-  // Computed - derive from state
-  const currentOrgSlug = computed(() => route.params.slug as string);
-  const currentOrgId = computed(() => currentOrganization.value?.id ?? null);
+  // URL-based slug (only on /org/[slug]/* routes)
+  const urlOrgSlug = computed(() => route.params.slug as string | undefined);
 
-  const currentOrganization = computed(() =>
-    organizations.value.find(org => org.slug === currentOrgSlug.value),
-  );
+  // Update lastOrgSlug when on org route
+  watch(urlOrgSlug, (slug) => {
+    if (slug) {
+      lastOrgSlug.value = slug;
+    }
+  }, { immediate: true });
+
+  // Active org: prefer URL slug, fallback to last visited, fallback to first org
+  const activeOrganization = computed(() => {
+    if (urlOrgSlug.value) {
+      return organizations.value.find(org => org.slug === urlOrgSlug.value);
+    }
+    if (lastOrgSlug.value) {
+      return organizations.value.find(org => org.slug === lastOrgSlug.value);
+    }
+    return organizations.value[0] ?? null;
+  });
+
+  const activeOrgSlug = computed(() => activeOrganization.value?.slug ?? '');
+
+  // Keep backwards compat aliases
+  const currentOrgSlug = computed(() => urlOrgSlug.value ?? activeOrgSlug.value);
+  const currentOrgId = computed(() => activeOrganization.value?.id ?? null);
+  const currentOrganization = activeOrganization;
 
   const canManageMembers = computed(() =>
     ['OWNER', 'ADMIN'].includes(currentUserRole.value ?? ''),
@@ -92,6 +115,10 @@ export const useOrganization = () => {
     currentOrganization,
     currentOrgSlug,
     currentOrgId,
+
+    // Active org (works without URL slug)
+    activeOrganization,
+    activeOrgSlug,
 
     // Permissions
     currentUserRole,
