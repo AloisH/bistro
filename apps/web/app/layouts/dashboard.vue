@@ -125,7 +125,19 @@
       </template>
     </UDashboardSidebar>
 
-    <slot />
+    <div class="flex flex-1 flex-col overflow-hidden">
+      <UDashboardNavbar
+        title="Bistro"
+        :toggle="{ icon: 'i-lucide-menu' }"
+        class="lg:hidden"
+      >
+        <template #right>
+          <UColorModeButton />
+        </template>
+      </UDashboardNavbar>
+
+      <slot />
+    </div>
   </UDashboardGroup>
 </template>
 
