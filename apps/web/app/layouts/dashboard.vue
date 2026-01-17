@@ -83,32 +83,12 @@
               content: 'w-(--reka-dropdown-menu-trigger-width)',
             }"
           >
-            <UButton
+            <UUser
               v-if="!collapsed"
-              color="neutral"
-              variant="ghost"
-              block
-              class="group hover:bg-neutral-100 dark:hover:bg-neutral-800"
-            >
-              <div class="flex w-full items-center justify-between gap-2">
-                <div class="flex min-w-0 items-center gap-2">
-                  <UAvatar
-                    :src="user?.image || undefined"
-                    :alt="user?.name || user?.email || 'User'"
-                    :text="getUserInitials(user)"
-                    size="xs"
-                    class="ring-2 ring-neutral-200 dark:ring-neutral-700 group-hover:ring-primary transition-all"
-                  />
-                  <span class="truncate text-sm font-medium">{{
-                    user?.name || user?.email || 'User'
-                  }}</span>
-                </div>
-                <UIcon
-                  name="i-lucide-chevron-up"
-                  class="size-4 shrink-0 transition-transform group-hover:-translate-y-0.5"
-                />
-              </div>
-            </UButton>
+              :name="user?.name || user?.email || 'User'"
+              :avatar="{ src: user?.image || undefined, text: getUserInitials(user) }"
+              class="w-full cursor-pointer rounded-md p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            />
 
             <UAvatar
               v-else
