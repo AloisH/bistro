@@ -78,7 +78,7 @@
       </template>
     </UDashboardSidebar>
 
-    <div class="flex flex-1 flex-col overflow-hidden">
+    <UDashboardPanel>
       <UDashboardNavbar
         title="Bistro"
         :toggle="{ icon: 'i-lucide-menu' }"
@@ -90,7 +90,7 @@
       </UDashboardNavbar>
 
       <slot />
-    </div>
+    </UDashboardPanel>
   </UDashboardGroup>
 </template>
 
