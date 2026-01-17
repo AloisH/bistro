@@ -78,19 +78,7 @@
       </template>
     </UDashboardSidebar>
 
-    <UDashboardPanel>
-      <UDashboardNavbar
-        title="Bistro"
-        :toggle="{ icon: 'i-lucide-menu' }"
-        class="lg:hidden"
-      >
-        <template #right>
-          <UColorModeButton />
-        </template>
-      </UDashboardNavbar>
-
-      <slot />
-    </UDashboardPanel>
+    <slot />
   </UDashboardGroup>
 </template>
 

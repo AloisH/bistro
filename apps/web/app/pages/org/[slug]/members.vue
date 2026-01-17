@@ -17,16 +17,18 @@ const slug = route.params.slug as string;
       </UDashboardNavbar>
     </template>
 
-    <UCard>
-      <template #header>
-        <h1 class="text-3xl font-bold">
-          Organization Members
-        </h1>
-      </template>
+    <template #body>
+      <UCard>
+        <template #header>
+          <h1 class="text-3xl font-bold">
+            Organization Members
+          </h1>
+        </template>
 
-      <div class="space-y-6">
-        <OrganizationMembers :organization-slug="slug" />
-      </div>
-    </UCard>
+        <div class="space-y-6">
+          <OrganizationMembers :organization-slug="slug" />
+        </div>
+      </UCard>
+    </template>
   </UDashboardPanel>
 </template>

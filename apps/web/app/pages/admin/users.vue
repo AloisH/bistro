@@ -8,91 +8,93 @@
       </UDashboardNavbar>
     </template>
 
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold">User Management</h1>
-      <p class="text-sm text-neutral-600 dark:text-neutral-400">
-        Manage users and impersonate for support
-      </p>
-    </div>
+    <template #body>
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold">User Management</h1>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          Manage users and impersonate for support
+        </p>
+      </div>
 
-    <UCard>
-      <template #header>
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold">All Users</h2>
-          <UBadge color="neutral">{{ users.length }} users</UBadge>
-        </div>
-      </template>
-
-      <UTable
-        :data="users"
-        :columns="columns"
-        :loading="loading"
-      />
-    </UCard>
-
-    <UModal v-model:open="isModalOpen">
-      <template #content="{ close }">
-        <UCard>
-          <template #header>
-            <div class="flex items-center justify-between">
-              <h3 class="text-lg font-semibold">Impersonate User</h3>
-              <UButton
-                color="neutral"
-                variant="ghost"
-                icon="i-lucide-x"
-                aria-label="Close modal"
-                @click="close"
-              />
-            </div>
-          </template>
-
-          <div class="space-y-4">
-            <div>
-              <p class="text-sm text-neutral-600 dark:text-neutral-400">You are about to impersonate:</p>
-              <p class="mt-1 font-semibold">{{ selectedUser?.name || selectedUser?.email }}</p>
-              <p class="text-sm text-neutral-500">{{ selectedUser?.email }}</p>
-            </div>
-
-            <UFormField
-              label="Reason (optional)"
-              help="Document why you're impersonating this user"
-            >
-              <UTextarea
-                v-model="impersonateReason"
-                placeholder="e.g., Debug checkout issue"
-                :rows="3"
-              />
-            </UFormField>
-
-            <UAlert
-              color="warning"
-              icon="i-lucide-alert-triangle"
-              title="Important"
-              description="Some actions are restricted during impersonation. The session will auto-expire after 1 hour."
-            />
+      <UCard>
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">All Users</h2>
+            <UBadge color="neutral">{{ users.length }} users</UBadge>
           </div>
+        </template>
 
-          <template #footer>
-            <div class="flex justify-end gap-2">
-              <UButton
-                color="neutral"
-                variant="subtle"
-                @click="close"
+        <UTable
+          :data="users"
+          :columns="columns"
+          :loading="loading"
+        />
+      </UCard>
+
+      <UModal v-model:open="isModalOpen">
+        <template #content="{ close }">
+          <UCard>
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold">Impersonate User</h3>
+                <UButton
+                  color="neutral"
+                  variant="ghost"
+                  icon="i-lucide-x"
+                  aria-label="Close modal"
+                  @click="close"
+                />
+              </div>
+            </template>
+
+            <div class="space-y-4">
+              <div>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">You are about to impersonate:</p>
+                <p class="mt-1 font-semibold">{{ selectedUser?.name || selectedUser?.email }}</p>
+                <p class="text-sm text-neutral-500">{{ selectedUser?.email }}</p>
+              </div>
+
+              <UFormField
+                label="Reason (optional)"
+                help="Document why you're impersonating this user"
               >
-                Cancel
-              </UButton>
-              <UButton
+                <UTextarea
+                  v-model="impersonateReason"
+                  placeholder="e.g., Debug checkout issue"
+                  :rows="3"
+                />
+              </UFormField>
+
+              <UAlert
                 color="warning"
-                :loading="impersonating"
-                @click="handleImpersonate"
-              >
-                Start Impersonating
-              </UButton>
+                icon="i-lucide-alert-triangle"
+                title="Important"
+                description="Some actions are restricted during impersonation. The session will auto-expire after 1 hour."
+              />
             </div>
-          </template>
-        </UCard>
-      </template>
-    </UModal>
+
+            <template #footer>
+              <div class="flex justify-end gap-2">
+                <UButton
+                  color="neutral"
+                  variant="subtle"
+                  @click="close"
+                >
+                  Cancel
+                </UButton>
+                <UButton
+                  color="warning"
+                  :loading="impersonating"
+                  @click="handleImpersonate"
+                >
+                  Start Impersonating
+                </UButton>
+              </div>
+            </template>
+          </UCard>
+        </template>
+      </UModal>
+    </template>
   </UDashboardPanel>
 </template>
 

@@ -8,125 +8,127 @@
       </UDashboardNavbar>
     </template>
 
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold">Email Template Previews</h1>
-      <p class="text-sm text-neutral-600 dark:text-neutral-400">
-        Preview how email templates appear to recipients
-      </p>
-    </div>
+    <template #body>
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold">Email Template Previews</h1>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          Preview how email templates appear to recipients
+        </p>
+      </div>
 
-    <UCard v-if="!loading && templates.length > 0">
-      <template #header>
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold">Templates</h2>
-          <UBadge color="neutral">{{ templates.length }} templates</UBadge>
-        </div>
-      </template>
+      <UCard v-if="!loading && templates.length > 0">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Templates</h2>
+            <UBadge color="neutral">{{ templates.length }} templates</UBadge>
+          </div>
+        </template>
 
-      <div class="space-y-4">
-        <div class="border-b border-default">
-          <nav class="-mb-px flex gap-4">
-            <button
-              v-for="template in templates"
-              :key="template.id"
-              :class="[
-                'border-b-2 px-1 py-3 text-sm font-medium transition-colors',
-                selectedTemplateId === template.id
-                  ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                  : 'border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-neutral-200',
-              ]"
-              @click="selectedTemplateId = template.id"
-            >
-              {{ template.name }}
-            </button>
-          </nav>
-        </div>
-
-        <div v-if="selectedTemplate">
-          <div class="mb-4">
-            <h3 class="font-semibold">{{ selectedTemplate.name }}</h3>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">
-              {{ selectedTemplate.description }}
-            </p>
-            <p class="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">
-              Subject: {{ selectedTemplate.subject }}
-            </p>
+        <div class="space-y-4">
+          <div class="border-b border-default">
+            <nav class="-mb-px flex gap-4">
+              <button
+                v-for="template in templates"
+                :key="template.id"
+                :class="[
+                  'border-b-2 px-1 py-3 text-sm font-medium transition-colors',
+                  selectedTemplateId === template.id
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-neutral-200',
+                ]"
+                @click="selectedTemplateId = template.id"
+              >
+                {{ template.name }}
+              </button>
+            </nav>
           </div>
 
-          <div class="mb-4 flex items-center gap-2">
-            <UButton
-              :color="viewMode === 'html' ? 'primary' : 'neutral'"
-              :variant="viewMode === 'html' ? 'solid' : 'outline'"
-              size="sm"
-              @click="viewMode = 'html'"
-            >
-              HTML Preview
-            </UButton>
-            <UButton
-              :color="viewMode === 'text' ? 'primary' : 'neutral'"
-              :variant="viewMode === 'text' ? 'solid' : 'outline'"
-              size="sm"
-              @click="viewMode = 'text'"
-            >
-              Plain Text
-            </UButton>
-            <div class="ml-auto">
+          <div v-if="selectedTemplate">
+            <div class="mb-4">
+              <h3 class="font-semibold">{{ selectedTemplate.name }}</h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                {{ selectedTemplate.description }}
+              </p>
+              <p class="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                Subject: {{ selectedTemplate.subject }}
+              </p>
+            </div>
+
+            <div class="mb-4 flex items-center gap-2">
               <UButton
-                color="success"
-                variant="soft"
+                :color="viewMode === 'html' ? 'primary' : 'neutral'"
+                :variant="viewMode === 'html' ? 'solid' : 'outline'"
                 size="sm"
-                icon="i-lucide-send"
-                :loading="sendingTest"
-                @click="sendTestEmail"
+                @click="viewMode = 'html'"
               >
-                Send Test Email
+                HTML Preview
               </UButton>
+              <UButton
+                :color="viewMode === 'text' ? 'primary' : 'neutral'"
+                :variant="viewMode === 'text' ? 'solid' : 'outline'"
+                size="sm"
+                @click="viewMode = 'text'"
+              >
+                Plain Text
+              </UButton>
+              <div class="ml-auto">
+                <UButton
+                  color="success"
+                  variant="soft"
+                  size="sm"
+                  icon="i-lucide-send"
+                  :loading="sendingTest"
+                  @click="sendTestEmail"
+                >
+                  Send Test Email
+                </UButton>
+              </div>
+            </div>
+
+            <div
+              v-if="viewMode === 'html'"
+              class="rounded-lg border border-default"
+            >
+              <iframe
+                :srcdoc="selectedTemplate.html"
+                class="h-[600px] w-full rounded-lg"
+                title="Email preview"
+                sandbox="allow-same-origin"
+              />
+            </div>
+
+            <div
+              v-else
+              class="rounded-lg border border-default bg-muted p-4"
+            >
+              <pre class="text-sm whitespace-pre-wrap">{{ selectedTemplate.text }}</pre>
+            </div>
+
+            <div class="mt-4 rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
+              <h4 class="mb-2 text-sm font-semibold">Sample Data</h4>
+              <pre class="text-xs text-neutral-600 dark:text-neutral-400">{{
+              JSON.stringify(selectedTemplate.props, null, 2)
+              }}</pre>
             </div>
           </div>
-
-          <div
-            v-if="viewMode === 'html'"
-            class="rounded-lg border border-default"
-          >
-            <iframe
-              :srcdoc="selectedTemplate.html"
-              class="h-[600px] w-full rounded-lg"
-              title="Email preview"
-              sandbox="allow-same-origin"
-            />
-          </div>
-
-          <div
-            v-else
-            class="rounded-lg border border-default bg-muted p-4"
-          >
-            <pre class="text-sm whitespace-pre-wrap">{{ selectedTemplate.text }}</pre>
-          </div>
-
-          <div class="mt-4 rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
-            <h4 class="mb-2 text-sm font-semibold">Sample Data</h4>
-            <pre class="text-xs text-neutral-600 dark:text-neutral-400">{{
-              JSON.stringify(selectedTemplate.props, null, 2)
-            }}</pre>
-          </div>
         </div>
-      </div>
-    </UCard>
+      </UCard>
 
-    <UCard v-else-if="loading">
-      <div class="flex items-center justify-center py-12">
-        <div class="text-neutral-600 dark:text-neutral-400">Loading templates...</div>
-      </div>
-    </UCard>
+      <UCard v-else-if="loading">
+        <div class="flex items-center justify-center py-12">
+          <div class="text-neutral-600 dark:text-neutral-400">Loading templates...</div>
+        </div>
+      </UCard>
 
-    <UCard v-else-if="error">
-      <UAlert
-        color="error"
-        icon="i-lucide-alert-triangle"
-        :title="error"
-        description="Failed to load email templates"
-      />
-    </UCard>
+      <UCard v-else-if="error">
+        <UAlert
+          color="error"
+          icon="i-lucide-alert-triangle"
+          :title="error"
+          description="Failed to load email templates"
+        />
+      </UCard>
+    </template>
   </UDashboardPanel>
 </template>
 
