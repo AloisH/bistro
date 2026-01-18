@@ -22,25 +22,34 @@
           variant: 'subtle',
         },
       ]"
+      :ui="{
+        title: 'animate-gradient-text bg-gradient-to-r from-primary-500 via-green-400 to-primary-600 bg-clip-text text-transparent',
+      }"
     />
 
     <!-- Tech Stack Logos Section -->
-    <UPageSection>
+    <UPageSection
+      ref="techSection"
+      class="scroll-animate"
+    >
       <div class="text-center">
-        <p class="text-sm text-muted mb-6">Built with modern technologies</p>
+        <p class="text-sm text-muted mb-6">
+          Built with modern technologies
+        </p>
         <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
           <NuxtLink
-            v-for="tech in techStack"
+            v-for="(tech, index) in techStack"
             :key="tech.name"
             :to="tech.url"
             target="_blank"
-            class="group flex flex-col items-center gap-2 transition-all"
+            class="group flex flex-col items-center gap-2 transition-all duration-300 hover:scale-110"
+            :style="{ animationDelay: `${index * 100}ms` }"
           >
             <UIcon
               :name="tech.icon"
-              class="size-8 md:size-10 text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors"
+              class="size-8 md:size-10 text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors duration-300"
             />
-            <span class="text-xs text-muted group-hover:text-foreground transition-colors">
+            <span class="text-xs text-muted group-hover:text-foreground transition-colors duration-300">
               {{ tech.name }}
             </span>
           </NuxtLink>
@@ -51,28 +60,35 @@
     <!-- Features Section -->
     <UPageSection
       id="features"
+      ref="featuresSection"
       title="Everything you need, nothing you don't"
       description="Focus on what matters. Bistro keeps task management simple while providing the essentials for personal productivity."
       :features="features"
+      class="scroll-animate"
     />
 
     <!-- Testimonials Section -->
     <UPageSection
+      ref="testimonialsSection"
       title="Loved by developers"
       description="See what others are saying about Bistro."
+      class="scroll-animate"
     >
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <UCard
-          v-for="testimonial in testimonials"
+          v-for="(testimonial, index) in testimonials"
           :key="testimonial.name"
-          class="flex flex-col"
+          class="flex flex-col card-hover"
+          :style="{ animationDelay: `${index * 100}ms` }"
         >
           <div class="flex-1">
             <UIcon
               name="i-lucide-quote"
               class="size-6 text-primary mb-3"
             />
-            <p class="text-muted">{{ testimonial.quote }}</p>
+            <p class="text-muted">
+              {{ testimonial.quote }}
+            </p>
           </div>
           <div class="flex items-center gap-3 mt-4 pt-4 border-t border-default">
             <UAvatar
@@ -80,8 +96,12 @@
               size="md"
             />
             <div>
-              <p class="font-medium text-sm">{{ testimonial.name }}</p>
-              <p class="text-xs text-muted">{{ testimonial.role }}</p>
+              <p class="font-medium text-sm">
+                {{ testimonial.name }}
+              </p>
+              <p class="text-xs text-muted">
+                {{ testimonial.role }}
+              </p>
             </div>
           </div>
         </UCard>
@@ -91,8 +111,10 @@
     <!-- Pricing Section -->
     <UPageSection
       id="pricing"
+      ref="pricingSection"
       title="Simple pricing"
       description="Bistro is free forever. No hidden fees, no premium tiers, no credit card required."
+      class="scroll-animate"
     >
       <div class="flex justify-center">
         <UPricingPlan
@@ -107,7 +129,7 @@
             block: true,
           }"
           highlight
-          class="max-w-sm"
+          class="max-w-sm card-hover"
         />
       </div>
     </UPageSection>
@@ -115,8 +137,10 @@
     <!-- FAQ Section -->
     <UPageSection
       id="faq"
+      ref="faqSection"
       title="Frequently asked questions"
       description="Got questions? We've got answers."
+      class="scroll-animate"
     >
       <UAccordion
         :items="faqItems"
@@ -125,7 +149,11 @@
     </UPageSection>
 
     <!-- Early Access / Newsletter Section -->
-    <UPageSection id="early-access">
+    <UPageSection
+      id="early-access"
+      ref="ctaSection"
+      class="scroll-animate"
+    >
       <UPageCTA
         title="Get early access to new features"
         description="Join our newsletter to be the first to know about updates, new features, and tips to boost your productivity."
@@ -160,6 +188,28 @@
 
 <script setup lang="ts">
 const toast = useToast();
+
+// Refs for scroll animation
+const techSection = ref<HTMLElement | null>(null);
+const featuresSection = ref<HTMLElement | null>(null);
+const testimonialsSection = ref<HTMLElement | null>(null);
+const pricingSection = ref<HTMLElement | null>(null);
+const faqSection = ref<HTMLElement | null>(null);
+const ctaSection = ref<HTMLElement | null>(null);
+
+// Set up scroll animations
+const { observe } = useScrollAnimation();
+
+onMounted(() => {
+  [
+    techSection,
+    featuresSection,
+    testimonialsSection,
+    pricingSection,
+    faqSection,
+    ctaSection,
+  ].forEach(section => observe(section));
+});
 
 // Tech stack logos
 const techStack = [
