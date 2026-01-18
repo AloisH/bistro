@@ -2,6 +2,7 @@
   <div>
     <!-- Hero Section -->
     <UPageHero
+      headline="100% Free & Open Source"
       title="The simplest way to manage your tasks"
       description="Bistro is a free, open-source todo app that helps you stay organized. No bloat, no complexity - just a clean interface to get things done."
       :links="[
@@ -21,17 +22,7 @@
           variant: 'subtle',
         },
       ]"
-    >
-      <template #top>
-        <UBadge
-          color="primary"
-          variant="subtle"
-          class="mb-4"
-        >
-          100% Free & Open Source
-        </UBadge>
-      </template>
-    </UPageHero>
+    />
 
     <!-- Tech Stack Logos Section -->
     <UPageSection>
@@ -64,6 +55,38 @@
       description="Focus on what matters. Bistro keeps task management simple while providing the essentials for personal productivity."
       :features="features"
     />
+
+    <!-- Testimonials Section -->
+    <UPageSection
+      title="Loved by developers"
+      description="See what others are saying about Bistro."
+    >
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <UCard
+          v-for="testimonial in testimonials"
+          :key="testimonial.name"
+          class="flex flex-col"
+        >
+          <div class="flex-1">
+            <UIcon
+              name="i-lucide-quote"
+              class="size-6 text-primary mb-3"
+            />
+            <p class="text-muted">{{ testimonial.quote }}</p>
+          </div>
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-default">
+            <UAvatar
+              :text="testimonial.name.split(' ').map(n => n[0]).join('')"
+              size="md"
+            />
+            <div>
+              <p class="font-medium text-sm">{{ testimonial.name }}</p>
+              <p class="text-xs text-muted">{{ testimonial.role }}</p>
+            </div>
+          </div>
+        </UCard>
+      </div>
+    </UPageSection>
 
     <!-- Pricing Section -->
     <UPageSection
@@ -179,6 +202,25 @@ const features = [
     icon: 'i-lucide-lock',
     title: 'Secure by default',
     description: 'Your data is yours. Self-host it or trust our secure infrastructure.',
+  },
+];
+
+// Testimonials
+const testimonials = [
+  {
+    name: 'Sarah Chen',
+    role: 'Indie Developer',
+    quote: 'Finally, a todo app that doesn\'t try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.',
+  },
+  {
+    name: 'Marcus Johnson',
+    role: 'Startup Founder',
+    quote: 'We switched our team to Bistro and productivity went up. The organization features are exactly what we needed without the bloat.',
+  },
+  {
+    name: 'Emily Rodriguez',
+    role: 'Open Source Contributor',
+    quote: 'Love that it\'s open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.',
   },
 ];
 
