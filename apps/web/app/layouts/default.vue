@@ -54,6 +54,93 @@
     </UMain>
 
     <UFooter>
+      <template #top>
+        <UContainer>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
+            <!-- Product Column -->
+            <div>
+              <h3 class="font-semibold text-sm mb-4 text-foreground">
+                Product
+              </h3>
+              <ul class="space-y-3">
+                <li
+                  v-for="link in footerColumns.product"
+                  :key="link.to"
+                >
+                  <NuxtLink
+                    :to="link.to"
+                    class="text-sm text-muted hover:text-primary transition-colors"
+                  >
+                    {{ link.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Resources Column -->
+            <div>
+              <h3 class="font-semibold text-sm mb-4 text-foreground">
+                Resources
+              </h3>
+              <ul class="space-y-3">
+                <li
+                  v-for="link in footerColumns.resources"
+                  :key="link.to"
+                >
+                  <NuxtLink
+                    :to="link.to"
+                    :target="link.external ? '_blank' : undefined"
+                    class="text-sm text-muted hover:text-primary transition-colors"
+                  >
+                    {{ link.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Legal Column -->
+            <div>
+              <h3 class="font-semibold text-sm mb-4 text-foreground">
+                Legal
+              </h3>
+              <ul class="space-y-3">
+                <li
+                  v-for="link in footerColumns.legal"
+                  :key="link.to"
+                >
+                  <NuxtLink
+                    :to="link.to"
+                    class="text-sm text-muted hover:text-primary transition-colors"
+                  >
+                    {{ link.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Company Column -->
+            <div>
+              <h3 class="font-semibold text-sm mb-4 text-foreground">
+                Company
+              </h3>
+              <ul class="space-y-3">
+                <li
+                  v-for="link in footerColumns.company"
+                  :key="link.to"
+                >
+                  <NuxtLink
+                    :to="link.to"
+                    class="text-sm text-muted hover:text-primary transition-colors"
+                  >
+                    {{ link.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </UContainer>
+      </template>
+
       <template #left>
         <div class="flex items-center gap-2">
           <UIcon
@@ -68,51 +155,9 @@
       </template>
 
       <template #default>
-        <div class="flex gap-6 text-sm flex-wrap justify-center">
-          <NuxtLink
-            to="/#features"
-            class="hover:text-primary transition-colors"
-          >
-            Features
-          </NuxtLink>
-          <NuxtLink
-            to="/#pricing"
-            class="hover:text-primary transition-colors"
-          >
-            Pricing
-          </NuxtLink>
-          <NuxtLink
-            to="/blog"
-            class="hover:text-primary transition-colors"
-          >
-            Blog
-          </NuxtLink>
-          <NuxtLink
-            to="/changelog"
-            class="hover:text-primary transition-colors"
-          >
-            Changelog
-          </NuxtLink>
-          <NuxtLink
-            to="/#faq"
-            class="hover:text-primary transition-colors"
-          >
-            FAQ
-          </NuxtLink>
-          <NuxtLink
-            to="/contact"
-            class="hover:text-primary transition-colors"
-          >
-            Contact
-          </NuxtLink>
-          <NuxtLink
-            to="https://github.com/AloisH/bistro"
-            target="_blank"
-            class="hover:text-primary transition-colors"
-          >
-            GitHub
-          </NuxtLink>
-        </div>
+        <p class="text-sm text-muted">
+          &copy; {{ new Date().getFullYear() }} Bistro. All rights reserved.
+        </p>
       </template>
 
       <template #right>
@@ -124,6 +169,14 @@
             color="neutral"
             variant="ghost"
             aria-label="GitHub"
+          />
+          <UButton
+            to="https://twitter.com"
+            target="_blank"
+            icon="i-simple-icons-x"
+            color="neutral"
+            variant="ghost"
+            aria-label="Twitter/X"
           />
           <UColorModeButton
             color="neutral"
@@ -143,4 +196,26 @@ const navLinks = [
   { label: 'Changelog', to: '/changelog' },
   { label: 'FAQ', to: '/#faq' },
 ];
+
+const footerColumns = {
+  product: [
+    { label: 'Features', to: '/#features' },
+    { label: 'Pricing', to: '/#pricing' },
+    { label: 'Changelog', to: '/changelog' },
+    { label: 'FAQ', to: '/#faq' },
+  ],
+  resources: [
+    { label: 'Documentation', to: '/docs' },
+    { label: 'Blog', to: '/blog' },
+    { label: 'GitHub', to: 'https://github.com/AloisH/bistro', external: true },
+  ],
+  legal: [
+    { label: 'Privacy Policy', to: '/legal/privacy' },
+    { label: 'Terms of Service', to: '/legal/terms' },
+  ],
+  company: [
+    { label: 'About', to: '/#features' },
+    { label: 'Contact', to: '/contact' },
+  ],
+};
 </script>
