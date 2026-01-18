@@ -23,6 +23,20 @@
         </NuxtLink>
       </template>
 
+      <template #left>
+        <nav class="hidden md:flex items-center gap-1 ml-6">
+          <UButton
+            v-for="link in navLinks"
+            :key="link.to"
+            :to="link.to"
+            variant="ghost"
+            color="neutral"
+          >
+            {{ link.label }}
+          </UButton>
+        </nav>
+      </template>
+
       <template #right>
         <UColorModeButton />
         <UButton
