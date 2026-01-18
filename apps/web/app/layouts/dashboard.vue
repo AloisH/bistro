@@ -23,7 +23,10 @@
       </template>
 
       <template #default="{ collapsed }">
-        <UDashboardSearchButton :collapsed="collapsed" />
+        <UDashboardSearchButton
+          :collapsed="collapsed"
+          @click="commandPaletteOpen = true"
+        />
 
         <ClientOnly>
           <UNavigationMenu
@@ -84,6 +87,7 @@
     </UDashboardPanel>
 
     <AdminImpersonationBanner />
+    <DashboardCommandPalette v-model:open="commandPaletteOpen" />
   </UDashboardGroup>
 </template>
 
@@ -93,6 +97,9 @@ import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
 const { activeOrgSlug, fetchOrganizations } = useOrganization();
+
+// Command palette state
+const commandPaletteOpen = ref(false);
 
 // Fetch orgs on mount for sidebar
 onMounted(() => fetchOrganizations());
