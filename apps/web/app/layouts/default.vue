@@ -141,6 +141,6 @@ const navLinks = [
   { label: 'Pricing', to: '/#pricing' },
   { label: 'Blog', to: '/blog' },
   { label: 'Changelog', to: '/changelog' },
-  { label: 'FAQ', to: '/#faq' },
+  { label: 'Contact', to: '/contact' },
 ];
 </script>
