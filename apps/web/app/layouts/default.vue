@@ -1,5 +1,14 @@
 <template>
   <div>
+    <UBanner
+      id="announcement-v1"
+      icon="i-lucide-sparkles"
+      title="New: Command palette search with Cmd+K"
+      to="https://github.com/AloisH/bistro"
+      target="_blank"
+      :close="true"
+    />
+
     <UHeader :links="navLinks">
       <template #title>
         <NuxtLink
