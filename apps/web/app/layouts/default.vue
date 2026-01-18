@@ -70,6 +70,12 @@
             Pricing
           </NuxtLink>
           <NuxtLink
+            to="/blog"
+            class="hover:text-primary transition-colors"
+          >
+            Blog
+          </NuxtLink>
+          <NuxtLink
             to="/#faq"
             class="hover:text-primary transition-colors"
           >
@@ -109,6 +115,7 @@
 const navLinks = [
   { label: 'Features', to: '/#features' },
   { label: 'Pricing', to: '/#pricing' },
+  { label: 'Blog', to: '/blog' },
   { label: 'FAQ', to: '/#faq' },
 ];
 </script>
