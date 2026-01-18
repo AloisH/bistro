@@ -106,6 +106,12 @@
           >
             GitHub
           </NuxtLink>
+          <NuxtLink
+            to="/contact"
+            class="hover:text-primary transition-colors"
+          >
+            Contact
+          </NuxtLink>
         </div>
       </template>
 

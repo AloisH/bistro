@@ -64,6 +64,7 @@ export default defineNuxtConfig({
         '/legal/terms',
         '/changelog',
         '/changelog/*',
+        '/contact',
       ],
     },
   },
