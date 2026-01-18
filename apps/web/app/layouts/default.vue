@@ -67,8 +67,8 @@
         </p>
       </template>
 
-      <template #center>
-        <div class="flex gap-6 text-sm">
+      <template #default>
+        <div class="flex gap-6 text-sm flex-wrap justify-center">
           <NuxtLink
             to="/#features"
             class="hover:text-primary transition-colors"
@@ -100,17 +100,17 @@
             FAQ
           </NuxtLink>
           <NuxtLink
+            to="/contact"
+            class="hover:text-primary transition-colors"
+          >
+            Contact
+          </NuxtLink>
+          <NuxtLink
             to="https://github.com/AloisH/bistro"
             target="_blank"
             class="hover:text-primary transition-colors"
           >
             GitHub
-          </NuxtLink>
-          <NuxtLink
-            to="/contact"
-            class="hover:text-primary transition-colors"
-          >
-            Contact
           </NuxtLink>
         </div>
       </template>
@@ -141,6 +141,6 @@ const navLinks = [
   { label: 'Pricing', to: '/#pricing' },
   { label: 'Blog', to: '/blog' },
   { label: 'Changelog', to: '/changelog' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'FAQ', to: '/#faq' },
 ];
 </script>
