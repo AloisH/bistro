@@ -10,7 +10,7 @@
     />
 
     <UHeader :links="navLinks">
-      <template #title>
+      <template #left>
         <NuxtLink
           to="/"
           class="flex items-center gap-2"
@@ -21,9 +21,7 @@
           />
           <span class="font-bold text-lg">Bistro</span>
         </NuxtLink>
-      </template>
 
-      <template #left>
         <nav class="hidden md:flex items-center gap-1 ml-6">
           <UButton
             v-for="link in navLinks"
