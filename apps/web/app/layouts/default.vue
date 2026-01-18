@@ -22,30 +22,48 @@
           <span class="font-bold text-lg">Bistro</span>
         </NuxtLink>
 
-        <nav class="hidden md:flex items-center gap-1 ml-6">
-          <UButton
-            v-for="link in navLinks"
-            :key="link.to"
-            :to="link.to"
-            variant="ghost"
-            color="neutral"
-          >
-            {{ link.label }}
-          </UButton>
-        </nav>
+        <UNavigationMenu
+          :items="navLinks"
+          class="hidden md:flex ml-6"
+        />
       </template>
 
       <template #right>
-        <UColorModeButton />
+        <UColorModeButton class="hidden md:flex" />
         <UButton
           to="/auth/login"
           variant="ghost"
+          class="hidden sm:flex"
         >
           Sign in
         </UButton>
         <UButton to="/auth/register">
           Get Started
         </UButton>
+      </template>
+
+      <template #body>
+        <UNavigationMenu
+          :items="navLinks"
+          orientation="vertical"
+          class="w-full"
+        />
+        <USeparator class="my-4" />
+        <div class="flex flex-col gap-2">
+          <UButton
+            to="/auth/login"
+            variant="ghost"
+            block
+          >
+            Sign in
+          </UButton>
+          <UButton
+            to="/auth/register"
+            block
+          >
+            Get Started
+          </UButton>
+        </div>
       </template>
     </UHeader>
 
@@ -116,15 +134,44 @@
 </template>
 
 <script setup lang="ts">
-import type { FooterColumn } from '@nuxt/ui';
+import type { FooterColumn, NavigationMenuItem } from '@nuxt/ui';
 
-const navLinks = [
-  { label: 'Features', to: '/#features' },
-  { label: 'Pricing', to: '/#pricing' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Changelog', to: '/changelog' },
-  { label: 'FAQ', to: '/#faq' },
-];
+const route = useRoute();
+
+const navLinks = computed<NavigationMenuItem[][]>(() => [
+  [
+    {
+      label: 'Features',
+      to: '/#features',
+      active: route.hash === '#features',
+    },
+    {
+      label: 'Pricing',
+      to: '/#pricing',
+      active: route.hash === '#pricing',
+    },
+    {
+      label: 'Blog',
+      to: '/blog',
+      active: route.path.startsWith('/blog'),
+    },
+    {
+      label: 'Docs',
+      to: '/docs',
+      active: route.path.startsWith('/docs'),
+    },
+    {
+      label: 'Changelog',
+      to: '/changelog',
+      active: route.path.startsWith('/changelog'),
+    },
+    {
+      label: 'Contact',
+      to: '/contact',
+      active: route.path === '/contact',
+    },
+  ],
+]);
 
 const footerColumns: FooterColumn[] = [
   {
