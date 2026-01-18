@@ -160,7 +160,6 @@ const props = defineProps<{
 }>();
 
 const { user, signOut } = useAuth();
-const router = useRouter();
 const toast = useToast();
 
 const showDeleteModal = ref(false);
@@ -187,8 +186,7 @@ async function deleteAccount() {
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
-    await signOut();
-    await router.push('/auth/login');
+    await signOut({ redirectTo: '/auth/login' });
   } catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({

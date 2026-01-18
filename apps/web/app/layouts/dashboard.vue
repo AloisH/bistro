@@ -93,7 +93,6 @@ import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
 const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
 const { activeOrgSlug, fetchOrganizations } = useOrganization();
-const router = useRouter();
 
 // Fetch orgs on mount for sidebar
 onMounted(() => fetchOrganizations());
@@ -160,13 +159,8 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => [
     {
       label: 'Logout',
       icon: 'i-lucide-log-out',
-      click: handleLogout,
+      onSelect: () => signOut({ redirectTo: '/auth/login' }),
     },
   ],
 ]);
-
-async function handleLogout() {
-  await signOut();
-  await router.push('/auth/login');
-}
 </script>

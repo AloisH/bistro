@@ -76,11 +76,20 @@ export const useAuth = () => {
     signIn: client.signIn,
     signUp: client.signUp,
     async signOut({ redirectTo }: { redirectTo?: string } = {}) {
-      const res = await client.signOut();
+      const res = await client.signOut({
+        fetchOptions: {
+          credentials: 'include',
+        },
+      });
       session.value = null;
       user.value = null;
       if (redirectTo) {
-        await navigateTo(redirectTo);
+        // Hard redirect to clear all cached state (including cookieCache)
+        if (import.meta.client) {
+          window.location.href = redirectTo;
+        } else {
+          await navigateTo(redirectTo);
+        }
       }
       return res;
     },

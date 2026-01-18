@@ -16,7 +16,6 @@
       :ui="{
         content: '',
       }"
-      @select="onMenuSelect"
     >
       <UAvatar
         :alt="user?.name || user?.email || 'User'"
@@ -32,17 +31,14 @@
 </template>
 
 <script setup lang="ts">
-const { session, user, isPending, client } = useAuth();
+import type { DropdownMenuItem } from '@nuxt/ui';
+
+const { session, user, isPending, signOut } = useAuth();
 const { isSuperAdmin } = useRole();
 
-async function handleLogout() {
-  await client.signOut();
-  await navigateTo({ name: 'index' });
-}
-
 // Build menu items dynamically based on role
-const menuItems = computed(() => {
-  const items = [
+const menuItems = computed<DropdownMenuItem[][]>(() => {
+  const items: DropdownMenuItem[][] = [
     [
       {
         label: user.value?.email || '',
@@ -75,17 +71,10 @@ const menuItems = computed(() => {
     {
       label: 'Logout',
       icon: 'i-lucide-log-out',
-      disabled: false,
+      onSelect: () => signOut({ redirectTo: '/' }),
     },
   ]);
 
   return items;
 });
-
-// Handle menu item selection
-function onMenuSelect(item: { label?: string }) {
-  if (item.label === 'Logout') {
-    handleLogout();
-  }
-}
 </script>
