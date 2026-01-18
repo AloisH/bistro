@@ -1,48 +1,30 @@
 <template>
   <div>
-    <UHeader class="border-b border-default bg-default sticky top-0 z-50">
-      <template #left>
+    <UHeader :links="navLinks">
+      <template #title>
         <NuxtLink
           to="/"
           class="flex items-center gap-2"
         >
-          <AppLogo class="h-6 w-auto shrink-0" />
+          <UIcon
+            name="i-lucide-check-square"
+            class="size-6 text-primary"
+          />
+          <span class="font-bold text-lg">Bistro</span>
         </NuxtLink>
-
-        <div class="hidden md:flex items-center gap-1 ml-6">
-          <UButton
-            to="/blog"
-            color="neutral"
-            variant="ghost"
-          >
-            Blog
-          </UButton>
-          <UButton
-            to="/docs"
-            color="neutral"
-            variant="ghost"
-          >
-            Docs
-          </UButton>
-        </div>
       </template>
 
       <template #right>
-        <div class="flex items-center gap-2">
-          <AuthButton />
-
-          <UColorModeButton />
-
-          <UButton
-            to="https://github.com/nuxt-ui-templates/starter"
-            target="_blank"
-            icon="i-simple-icons-github"
-            aria-label="GitHub"
-            color="neutral"
-            variant="ghost"
-            class=""
-          />
-        </div>
+        <UColorModeButton />
+        <UButton
+          to="/auth/login"
+          variant="ghost"
+        >
+          Sign in
+        </UButton>
+        <UButton to="/auth/register">
+          Get Started
+        </UButton>
       </template>
     </UHeader>
 
@@ -50,49 +32,74 @@
       <slot />
     </UMain>
 
-    <USeparator icon="i-simple-icons-nuxtdotjs" />
-
-    <UFooter class="border-t border-default">
+    <UFooter>
       <template #left>
-        <div class="flex items-center gap-4 text-sm">
-          <p class="text-muted">
-            Built with <span class="text-primary font-semibold">Nuxt UI</span> • © {{ new Date().getFullYear() }}
-          </p>
-          <span class="text-neutral-300 dark:text-neutral-700">•</span>
-          <ULink
-            to="/legal/privacy"
-            class="text-neutral-600 dark:text-neutral-400 hover:text-primary transition-colors"
+        <div class="flex items-center gap-2">
+          <UIcon
+            name="i-lucide-check-square"
+            class="size-5 text-primary"
+          />
+          <span class="font-semibold">Bistro</span>
+        </div>
+        <p class="text-sm text-muted mt-1">
+          Open source todo app built with Nuxt.
+        </p>
+      </template>
+
+      <template #center>
+        <div class="flex gap-6 text-sm">
+          <NuxtLink
+            to="/#features"
+            class="hover:text-primary transition-colors"
           >
-            Privacy
-          </ULink>
-          <ULink
-            to="/legal/terms"
-            class="text-neutral-600 dark:text-neutral-400 hover:text-primary transition-colors"
+            Features
+          </NuxtLink>
+          <NuxtLink
+            to="/#pricing"
+            class="hover:text-primary transition-colors"
           >
-            Terms
-          </ULink>
+            Pricing
+          </NuxtLink>
+          <NuxtLink
+            to="/#faq"
+            class="hover:text-primary transition-colors"
+          >
+            FAQ
+          </NuxtLink>
+          <NuxtLink
+            to="https://github.com/AloisH/bistro"
+            target="_blank"
+            class="hover:text-primary transition-colors"
+          >
+            GitHub
+          </NuxtLink>
         </div>
       </template>
 
       <template #right>
-        <UButton
-          to="/rss.xml"
-          icon="i-lucide-rss"
-          aria-label="RSS Feed"
-          color="neutral"
-          variant="ghost"
-          class=""
-        />
-        <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
-          class=""
-        />
+        <div class="flex gap-2">
+          <UButton
+            to="https://github.com/AloisH/bistro"
+            target="_blank"
+            icon="i-simple-icons-github"
+            color="neutral"
+            variant="ghost"
+            aria-label="GitHub"
+          />
+          <UColorModeButton
+            color="neutral"
+            variant="ghost"
+          />
+        </div>
       </template>
     </UFooter>
   </div>
 </template>
+
+<script setup lang="ts">
+const navLinks = [
+  { label: 'Features', to: '/#features' },
+  { label: 'Pricing', to: '/#pricing' },
+  { label: 'FAQ', to: '/#faq' },
+];
+</script>

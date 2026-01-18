@@ -1,19 +1,19 @@
 <template>
   <div>
+    <!-- Hero Section -->
     <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
+      title="The simplest way to manage your tasks"
+      description="Bistro is a free, open-source todo app that helps you stay organized. No bloat, no complexity - just a clean interface to get things done."
       :links="[
         {
-          label: 'Get started',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
+          label: 'Start for free',
+          to: '/auth/register',
           trailingIcon: 'i-lucide-arrow-right',
           size: 'xl',
         },
         {
-          label: 'Use this template',
-          to: 'https://github.com/nuxt-ui-templates/starter',
+          label: 'View on GitHub',
+          to: 'https://github.com/AloisH/bistro',
           target: '_blank',
           icon: 'i-simple-icons-github',
           size: 'xl',
@@ -21,75 +21,228 @@
           variant: 'subtle',
         },
       ]"
-    />
+    >
+      <template #top>
+        <UBadge
+          color="primary"
+          variant="subtle"
+          class="mb-4"
+        >
+          100% Free & Open Source
+        </UBadge>
+      </template>
+    </UPageHero>
 
+    <!-- Tech Stack Logos Section -->
+    <UPageSection>
+      <div class="text-center">
+        <p class="text-sm text-muted mb-6">Built with modern technologies</p>
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <NuxtLink
+            v-for="tech in techStack"
+            :key="tech.name"
+            :to="tech.url"
+            target="_blank"
+            class="group flex flex-col items-center gap-2 transition-all"
+          >
+            <UIcon
+              :name="tech.icon"
+              class="size-8 md:size-10 text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors"
+            />
+            <span class="text-xs text-muted group-hover:text-foreground transition-colors">
+              {{ tech.name }}
+            </span>
+          </NuxtLink>
+        </div>
+      </div>
+    </UPageSection>
+
+    <!-- Features Section -->
     <UPageSection
       id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[
-        {
-          icon: 'i-lucide-rocket',
-          title: 'Production-ready from day one',
-          description:
-            'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.',
-        },
-        {
-          icon: 'i-lucide-palette',
-          title: 'Beautiful by default',
-          description:
-            'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.',
-        },
-        {
-          icon: 'i-lucide-zap',
-          title: 'Lightning fast',
-          description:
-            'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.',
-        },
-        {
-          icon: 'i-lucide-blocks',
-          title: '100+ components included',
-          description:
-            'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.',
-        },
-        {
-          icon: 'i-lucide-code-2',
-          title: 'Developer experience first',
-          description:
-            'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.',
-        },
-        {
-          icon: 'i-lucide-shield-check',
-          title: 'Built for scale',
-          description:
-            'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.',
-        },
-      ]"
+      title="Everything you need, nothing you don't"
+      description="Focus on what matters. Bistro keeps task management simple while providing the essentials for personal productivity."
+      :features="features"
     />
 
-    <UPageSection>
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[
-          {
-            label: 'Start building',
-            to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-            target: '_blank',
-            trailingIcon: 'i-lucide-arrow-right',
-            color: 'neutral',
-          },
-          {
-            label: 'View on GitHub',
-            to: 'https://github.com/nuxt-ui-templates/starter',
-            target: '_blank',
-            icon: 'i-simple-icons-github',
-            color: 'neutral',
-            variant: 'outline',
-          },
-        ]"
+    <!-- Pricing Section -->
+    <UPageSection
+      id="pricing"
+      title="Simple pricing"
+      description="Bistro is free forever. No hidden fees, no premium tiers, no credit card required."
+    >
+      <div class="flex justify-center">
+        <UPricingPlan
+          title="Free"
+          description="Everything you need to stay productive"
+          price="$0"
+          tagline="Forever free"
+          :features="pricingFeatures"
+          :button="{
+            label: 'Get started',
+            to: '/auth/register',
+            block: true,
+          }"
+          highlight
+          class="max-w-sm"
+        />
+      </div>
+    </UPageSection>
+
+    <!-- FAQ Section -->
+    <UPageSection
+      id="faq"
+      title="Frequently asked questions"
+      description="Got questions? We've got answers."
+    >
+      <UAccordion
+        :items="faqItems"
+        class="max-w-2xl mx-auto"
       />
+    </UPageSection>
+
+    <!-- Early Access / Newsletter Section -->
+    <UPageSection id="early-access">
+      <UPageCTA
+        title="Get early access to new features"
+        description="Join our newsletter to be the first to know about updates, new features, and tips to boost your productivity."
+        variant="subtle"
+      >
+        <template #links>
+          <form
+            class="flex flex-col sm:flex-row gap-3 w-full max-w-md"
+            @submit.prevent="handleSubscribe"
+          >
+            <UInput
+              v-model="email"
+              type="email"
+              placeholder="Enter your email"
+              size="lg"
+              class="flex-1"
+              required
+            />
+            <UButton
+              type="submit"
+              size="lg"
+              :loading="subscribing"
+            >
+              Subscribe
+            </UButton>
+          </form>
+        </template>
+      </UPageCTA>
     </UPageSection>
   </div>
 </template>
+
+<script setup lang="ts">
+const toast = useToast();
+
+// Tech stack logos
+const techStack = [
+  { name: 'Nuxt', icon: 'i-simple-icons-nuxtdotjs', url: 'https://nuxt.com' },
+  { name: 'Vue', icon: 'i-simple-icons-vuedotjs', url: 'https://vuejs.org' },
+  { name: 'Tailwind', icon: 'i-simple-icons-tailwindcss', url: 'https://tailwindcss.com' },
+  { name: 'Prisma', icon: 'i-simple-icons-prisma', url: 'https://prisma.io' },
+  { name: 'PostgreSQL', icon: 'i-simple-icons-postgresql', url: 'https://postgresql.org' },
+  { name: 'TypeScript', icon: 'i-simple-icons-typescript', url: 'https://typescriptlang.org' },
+];
+
+// Features data
+const features = [
+  {
+    icon: 'i-lucide-list-checks',
+    title: 'Simple task management',
+    description: 'Create, organize, and complete tasks with an intuitive interface. No learning curve required.',
+  },
+  {
+    icon: 'i-lucide-filter',
+    title: 'Smart filtering',
+    description: 'Filter tasks by status, sort by date or priority. Find what you need instantly.',
+  },
+  {
+    icon: 'i-lucide-users',
+    title: 'Team collaboration',
+    description: 'Create organizations, invite team members, and manage tasks together.',
+  },
+  {
+    icon: 'i-lucide-moon',
+    title: 'Dark mode',
+    description: 'Easy on the eyes with automatic dark mode support. Work comfortably day or night.',
+  },
+  {
+    icon: 'i-lucide-smartphone',
+    title: 'Works everywhere',
+    description: 'Fully responsive design that works beautifully on desktop, tablet, and mobile.',
+  },
+  {
+    icon: 'i-lucide-lock',
+    title: 'Secure by default',
+    description: 'Your data is yours. Self-host it or trust our secure infrastructure.',
+  },
+];
+
+// Pricing features
+const pricingFeatures = [
+  'Unlimited tasks',
+  'Unlimited organizations',
+  'Team collaboration',
+  'Dark mode',
+  'Mobile responsive',
+  'Open source',
+];
+
+// FAQ items
+const faqItems = [
+  {
+    label: 'Is Bistro really free?',
+    content: 'Yes! Bistro is 100% free and open source. There are no premium tiers, no hidden fees, and no credit card required. You can use all features without any limitations.',
+  },
+  {
+    label: 'Can I self-host Bistro?',
+    content: 'Absolutely. Bistro is open source and designed to be self-hosted. Check out our GitHub repository for deployment instructions using Docker or your preferred hosting platform.',
+  },
+  {
+    label: 'How do organizations work?',
+    content: 'Organizations allow you to collaborate with others. Create an organization, invite team members via email, and assign roles (Owner, Admin, Member, Guest) to control access levels.',
+  },
+  {
+    label: 'Is my data secure?',
+    content: 'Security is a priority. We use industry-standard encryption, secure authentication, and never share your data with third parties. For maximum control, you can always self-host.',
+  },
+  {
+    label: 'What tech stack does Bistro use?',
+    content: 'Bistro is built with Nuxt 4, Vue 3, Tailwind CSS, Prisma, and PostgreSQL. It uses Better Auth for authentication and Nuxt UI for the component library.',
+  },
+];
+
+// Newsletter subscription
+const email = ref('');
+const subscribing = ref(false);
+
+async function handleSubscribe() {
+  if (!email.value) return;
+
+  subscribing.value = true;
+  try {
+    // TODO: Implement actual subscription API
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.add({
+      title: 'Subscribed!',
+      description: 'Thanks for subscribing. We\'ll keep you posted.',
+      color: 'success',
+      icon: 'i-lucide-check',
+    });
+    email.value = '';
+  } catch {
+    toast.add({
+      title: 'Error',
+      description: 'Something went wrong. Please try again.',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+  } finally {
+    subscribing.value = false;
+  }
+}
+</script>
