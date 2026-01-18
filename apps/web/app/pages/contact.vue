@@ -22,46 +22,54 @@
             <UFormField
               name="name"
               label="Name"
+              class="w-full"
             >
               <UInput
                 v-model="state.name"
                 placeholder="Your name"
                 icon="i-lucide-user"
+                class="w-full"
               />
             </UFormField>
 
             <UFormField
               name="email"
               label="Email"
+              class="w-full"
             >
               <UInput
                 v-model="state.email"
                 type="email"
                 placeholder="you@example.com"
                 icon="i-lucide-mail"
+                class="w-full"
               />
             </UFormField>
 
             <UFormField
               name="subject"
               label="Subject"
+              class="w-full"
             >
               <USelect
                 v-model="state.subject"
                 :items="subjectOptions"
                 placeholder="Select a subject"
                 icon="i-lucide-message-square"
+                class="w-full"
               />
             </UFormField>
 
             <UFormField
               name="message"
               label="Message"
+              class="w-full"
             >
               <UTextarea
                 v-model="state.message"
                 placeholder="How can we help?"
                 :rows="5"
+                class="w-full"
               />
             </UFormField>
 
