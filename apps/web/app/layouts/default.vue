@@ -88,6 +88,12 @@
             Blog
           </NuxtLink>
           <NuxtLink
+            to="/changelog"
+            class="hover:text-primary transition-colors"
+          >
+            Changelog
+          </NuxtLink>
+          <NuxtLink
             to="/#faq"
             class="hover:text-primary transition-colors"
           >
@@ -128,6 +134,7 @@ const navLinks = [
   { label: 'Features', to: '/#features' },
   { label: 'Pricing', to: '/#pricing' },
   { label: 'Blog', to: '/blog' },
+  { label: 'Changelog', to: '/changelog' },
   { label: 'FAQ', to: '/#faq' },
 ];
 </script>

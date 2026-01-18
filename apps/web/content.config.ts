@@ -46,5 +46,24 @@ export default defineContentConfig({
         lastUpdated: z.coerce.date(),
       }),
     }),
+    changelog: defineCollection({
+      type: 'page',
+      source: 'changelog/**/*.md',
+      schema: z.object({
+        version: z.string(),
+        date: z.coerce.date(),
+        title: z.string(),
+        description: z.string(),
+        type: z.enum(['major', 'minor', 'patch']).default('minor'),
+        changes: z
+          .array(
+            z.object({
+              type: z.enum(['feature', 'fix', 'improvement']),
+              description: z.string(),
+            }),
+          )
+          .default([]),
+      }),
+    }),
   },
 });
