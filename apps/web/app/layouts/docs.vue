@@ -1,32 +1,41 @@
 <template>
   <UDashboardGroup>
     <!-- Left sidebar -->
-    <UDashboardSidebar collapsible>
+    <UDashboardSidebar
+      collapsible
+      class="bg-default border-r border-default"
+    >
       <template #header="{ collapsed }">
-        <UDashboardSidebarToggle />
-        <NuxtLink
-          v-if="!collapsed"
-          to="/"
-          class="flex items-center gap-2 px-4 py-3"
-        >
-          <AppLogo class="h-5 w-auto shrink-0" />
-        </NuxtLink>
         <div
-          v-else
-          class="flex items-center justify-center py-3"
+          v-if="!collapsed"
+          class="flex w-full items-center justify-between gap-2"
         >
-          <UIcon
-            name="i-simple-icons-nuxtdotjs"
-            class="text-primary size-5"
-          />
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-2"
+          >
+            <UIcon
+              name="i-lucide-check-square"
+              class="size-5 text-primary"
+            />
+            <span class="font-semibold">Bistro</span>
+          </NuxtLink>
+          <UDashboardSidebarCollapse />
         </div>
+        <UDashboardSidebarCollapse
+          v-else
+          class="mx-auto"
+        />
       </template>
 
       <!-- Navigation -->
-      <template #default>
+      <template #default="{ collapsed }">
+        <DocsSearch v-if="!collapsed" />
+
         <ClientOnly>
           <UNavigationMenu
             v-if="status === 'success' && navigation.length"
+            :collapsed="collapsed"
             :items="navigation"
             orientation="vertical"
           />
@@ -56,11 +65,10 @@
       </template>
     </UDashboardSidebar>
 
-    <!-- Main content - DIRECT CHILD -->
-    <UDashboardPanel>
-      <template #header>
-        <!-- Navbar (full width, managed by UDashboardPanel) -->
-        <div class="flex items-center justify-between">
+    <!-- Main content -->
+    <UDashboardPanel class="flex flex-col h-screen w-full">
+      <UDashboardNavbar>
+        <template #left>
           <div class="flex items-center gap-2">
             <UButton
               to="/"
@@ -84,17 +92,19 @@
             >
               Docs
             </UButton>
-            <DocsSearch />
           </div>
-          <div class="flex items-center gap-2">
-            <UColorModeButton />
-            <AuthButton />
-          </div>
-        </div>
-      </template>
+        </template>
 
-      <!-- Page content (scrollable) -->
-      <slot />
+        <template #right>
+          <UColorModeButton />
+          <AuthButton />
+        </template>
+      </UDashboardNavbar>
+
+      <!-- Scrollable content area -->
+      <div class="flex-1 overflow-y-auto">
+        <slot />
+      </div>
     </UDashboardPanel>
   </UDashboardGroup>
 </template>

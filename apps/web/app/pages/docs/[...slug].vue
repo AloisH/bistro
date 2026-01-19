@@ -3,10 +3,21 @@ definePageMeta({
   layout: 'docs',
 });
 
+interface TocLink {
+  id: string;
+  text: string;
+  depth: number;
+  children?: TocLink[];
+}
+
 interface DocsPage {
   title: string;
   description: string;
-  body: unknown;
+  body: {
+    toc?: {
+      links?: TocLink[];
+    };
+  };
 }
 
 const route = useRoute();
@@ -23,6 +34,8 @@ if (!page.value) {
   });
 }
 
+const tocLinks = computed(() => page.value?.body?.toc?.links || []);
+
 useSeoMeta({
   title: page.value.title,
   description: page.value.description,
@@ -32,8 +45,8 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="p-6">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8">
+  <div class="p-4 sm:p-6">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8 max-w-6xl mx-auto">
       <!-- Main content -->
       <article v-if="page">
         <header class="mb-8">
@@ -58,11 +71,21 @@ useSeoMeta({
 
       <!-- Right sidebar: Table of Contents (sticky, desktop only) -->
       <aside class="hidden lg:block">
-        <div class="sticky top-24">
+        <div class="sticky top-6">
           <h3 class="text-sm font-semibold mb-4 text-neutral-900 dark:text-white">
             On this page
           </h3>
-          <UContentToc v-if="page" />
+          <UContentToc
+            v-if="tocLinks.length"
+            :links="tocLinks"
+            highlight
+          />
+          <p
+            v-else
+            class="text-sm text-neutral-500"
+          >
+            No sections
+          </p>
         </div>
       </aside>
     </div>
