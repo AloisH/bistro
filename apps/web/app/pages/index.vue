@@ -113,23 +113,24 @@
       id="pricing"
       ref="pricingSection"
       title="Simple pricing"
-      description="Bistro is free forever. No hidden fees, no premium tiers, no credit card required."
+      description="Start free, scale as you grow. No hidden fees."
       class="scroll-animate"
     >
+      <!-- Billing Toggle -->
+      <div class="flex justify-center mb-8">
+        <UTabs
+          v-model="billingPeriod"
+          :items="billingOptions"
+          size="lg"
+        />
+      </div>
+
+      <!-- Pricing Plans -->
       <div class="flex justify-center">
-        <UPricingPlan
-          title="Free"
-          description="Everything you need to stay productive"
-          price="$0"
-          tagline="Forever free"
-          :features="pricingFeatures"
-          :button="{
-            label: 'Get started',
-            to: '/auth/register',
-            block: true,
-          }"
-          highlight
-          class="max-w-sm card-hover"
+        <UPricingPlans
+          :plans="currentPlans"
+          compact
+          class="max-w-sm"
         />
       </div>
     </UPageSection>
@@ -274,15 +275,67 @@ const testimonials = [
   },
 ];
 
-// Pricing features
-const pricingFeatures = [
-  'Unlimited tasks',
-  'Unlimited organizations',
-  'Team collaboration',
-  'Dark mode',
-  'Mobile responsive',
-  'Open source',
+// Billing toggle
+const billingPeriod = ref('monthly');
+const billingOptions = [
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Yearly', value: 'yearly', badge: 'Save 20%' },
 ];
+
+// Pricing plans
+const plans = {
+  free: {
+    title: 'Free',
+    description: 'Everything you need to stay productive',
+    tagline: 'Forever free',
+    features: [
+      'Unlimited tasks',
+      'Unlimited organizations',
+      'Team collaboration',
+      'Dark mode',
+      'Mobile responsive',
+      'Open source',
+    ],
+    button: {
+      label: 'Get started',
+      to: '/auth/register',
+    },
+    highlight: true,
+    monthly: { price: '$0', discount: '' },
+    yearly: { price: '$0', discount: '' },
+  },
+  // Future: Pro tier
+  // pro: {
+  //   title: 'Pro',
+  //   description: 'For power users and small teams',
+  //   tagline: '/month',
+  //   features: [
+  //     'Everything in Free',
+  //     'Priority support',
+  //     'Advanced analytics',
+  //     'API access',
+  //     'Custom integrations',
+  //   ],
+  //   button: { label: 'Start trial', to: '/auth/register?plan=pro' },
+  //   highlight: false,
+  //   monthly: { price: '$12', discount: '' },
+  //   yearly: { price: '$10', discount: '$12' },
+  // },
+};
+
+const currentPlans = computed(() => {
+  const period = billingPeriod.value as 'monthly' | 'yearly';
+  return Object.values(plans).map(plan => ({
+    title: plan.title,
+    description: plan.description,
+    tagline: plan.tagline,
+    price: plan[period].price,
+    discount: plan[period].discount,
+    features: plan.features,
+    button: plan.button,
+    highlight: plan.highlight,
+  }));
+});
 
 // FAQ items
 const faqItems = [
