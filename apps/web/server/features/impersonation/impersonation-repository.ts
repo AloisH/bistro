@@ -1,5 +1,18 @@
-import type { ImpersonationLog } from '../../../prisma/generated/client';
+import type { ImpersonationLog, Prisma } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
+
+/** ImpersonationLog with targetUser relation */
+type ImpersonationLogWithTargetUser = Prisma.ImpersonationLogGetPayload<{
+  include: { targetUser: { select: { id: true; email: true; name: true } } };
+}>;
+
+/** ImpersonationLog with admin and targetUser relations */
+type ImpersonationLogWithRelations = Prisma.ImpersonationLogGetPayload<{
+  include: {
+    admin: { select: { id: true; email: true; name: true } };
+    targetUser: { select: { id: true; email: true; name: true } };
+  };
+}>;
 
 /**
  * Repository for impersonation log database operations
@@ -48,7 +61,7 @@ export class ImpersonationRepository {
    * Get active impersonation session for admin
    * Returns most recent log with null endedAt
    */
-  async getActiveSession(adminId: string): Promise<ImpersonationLog | null> {
+  async getActiveSession(adminId: string): Promise<ImpersonationLogWithTargetUser | null> {
     return this.db.impersonationLog.findFirst({
       where: {
         adminId,
@@ -70,7 +83,7 @@ export class ImpersonationRepository {
     adminId?: string;
     targetUserId?: string;
     limit?: number;
-  }): Promise<ImpersonationLog[]> {
+  }): Promise<ImpersonationLogWithRelations[]> {
     return this.db.impersonationLog.findMany({
       where: {
         adminId: filters?.adminId,

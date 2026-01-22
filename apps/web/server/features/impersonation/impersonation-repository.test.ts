@@ -112,8 +112,7 @@ describe('ImpersonationRepository', () => {
 
       expect(active?.adminId).toBe(admin.id);
       expect(active?.endedAt).toBeNull();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((active as any)?.targetUser?.name).toBe('Target User');
+      expect(active?.targetUser?.name).toBe('Target User');
     });
 
     it('returns null if no active session', async () => {
@@ -209,10 +208,7 @@ describe('ImpersonationRepository', () => {
       expect(logs).toHaveLength(1);
       expect(logs[0].adminId).toBe(admin.id);
       expect(logs[0].targetUserId).toBe(target.id);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((logs[0] as any).admin?.name).toBe('Admin');
-      // Note: targetUser relation may be null in transaction context
-      // The relation is tested separately in getActiveSession tests
+      expect(logs[0].admin?.name).toBe('Admin');
     });
   });
 });

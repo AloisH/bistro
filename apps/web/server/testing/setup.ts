@@ -4,6 +4,9 @@
  * Only defines createError if not already available (Nuxt provides it)
  */
 
+// Make this file a module so declare global works
+export {};
+
 interface ErrorOptions {
   statusCode?: number;
   statusMessage?: string;
@@ -25,10 +28,14 @@ class H3Error extends Error {
   }
 }
 
+// Type declaration for test globals
+declare global {
+  var createError: ((input: string | ErrorOptions) => H3Error) | undefined;
+}
+
 // Only define createError if not already available (Nuxt auto-imports it)
-const g = globalThis as unknown as Record<string, unknown>;
-if (typeof g.createError === 'undefined') {
-  g.createError = (input: string | ErrorOptions): H3Error => {
+if (typeof globalThis.createError === 'undefined') {
+  globalThis.createError = (input: string | ErrorOptions): H3Error => {
     if (typeof input === 'string') {
       return new H3Error(input);
     }

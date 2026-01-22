@@ -1,13 +1,98 @@
-import type { H3Event, EventHandlerRequest } from 'h3';
+import { createEvent, type H3Event, type EventHandlerRequest } from 'h3';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { User } from '../../prisma/generated/client';
 import { createTestSession } from './testFixtures';
 
 /**
+ * Mock event options for createMockEvent.
+ */
+export interface MockEventOptions {
+  method?: string;
+  headers?: Record<string, string>;
+  body?: unknown;
+  params?: Record<string, string>;
+  query?: Record<string, string>;
+}
+
+/**
+ * Creates a minimal mock IncomingMessage for h3 event creation.
+ * Implements only the properties that h3 utilities actually read.
+ */
+function createMockIncomingMessage(
+  method: string,
+  headers: Record<string, string>,
+): IncomingMessage {
+  return {
+    headers: {
+      ...headers,
+      'content-type': headers['content-type'] || 'application/json',
+    },
+    method,
+    url: '/',
+    // Required by IncomingMessage interface but not used by h3
+    httpVersion: '1.1',
+    httpVersionMajor: 1,
+    httpVersionMinor: 1,
+    complete: true,
+    rawHeaders: Object.entries(headers).flat(),
+    rawTrailers: [],
+    trailers: {},
+    aborted: false,
+    socket: null,
+    // Minimal stream implementation
+    readable: false,
+    readableAborted: false,
+    readableDidRead: false,
+    readableEncoding: null,
+    readableEnded: true,
+    readableFlowing: null,
+    readableHighWaterMark: 0,
+    readableLength: 0,
+    readableObjectMode: false,
+    destroyed: false,
+    closed: false,
+    errored: null,
+  } as IncomingMessage;
+}
+
+/**
+ * Creates a minimal mock ServerResponse for h3 event creation.
+ * Implements only the properties that h3 utilities actually read.
+ */
+function createMockServerResponse(): ServerResponse {
+  return {
+    statusCode: 200,
+    statusMessage: 'OK',
+    headersSent: false,
+    finished: false,
+    // Minimal writable stream implementation
+    writable: true,
+    writableEnded: false,
+    writableFinished: false,
+    writableHighWaterMark: 0,
+    writableLength: 0,
+    writableObjectMode: false,
+    writableCorked: 0,
+    destroyed: false,
+    closed: false,
+    errored: null,
+    // Stub methods that handlers might call
+    setHeader: () => {},
+    getHeader: () => undefined,
+    getHeaders: () => ({}),
+    hasHeader: () => false,
+    removeHeader: () => {},
+    write: () => true,
+    end: () => {},
+    flushHeaders: () => {},
+  } as unknown as ServerResponse;
+}
+
+/**
  * Create a mock H3 event for testing API handlers.
  *
- * Provides minimal H3Event implementation needed for handler testing. Most
- * handlers only need headers, params, query, and body - this mock focuses
- * on those essential properties.
+ * Uses h3's createEvent with minimal mock IncomingMessage/ServerResponse.
+ * This ensures the event has the correct class structure that h3 utilities expect.
  *
  * **Supported Options:**
  * - method: HTTP method (GET/POST/PUT/DELETE)
@@ -19,7 +104,7 @@ import { createTestSession } from './testFixtures';
  * **Usage:** For authenticated requests, use createAuthEvent() instead.
  *
  * @param options - Event configuration options
- * @returns Minimal H3Event mock for testing
+ * @returns H3Event instance for testing
  * @see createAuthEvent for authenticated requests
  *
  * @example
@@ -35,44 +120,30 @@ import { createTestSession } from './testFixtures';
  * })
  * ```
  */
-export function createMockEvent(options: {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: unknown;
-  params?: Record<string, string>;
-  query?: Record<string, string>;
-}): H3Event<EventHandlerRequest> {
-  const { method = 'GET', headers = {}, body, params = {} } = options;
+export function createMockEvent(options: MockEventOptions): H3Event<EventHandlerRequest> {
+  const { method = 'GET', headers = {}, body, params = {}, query = {} } = options;
 
-  // Store body and params for getRouterParam and readBody
-  const context: Record<string, unknown> = {
-    _body: body,
-    _params: params,
-  };
+  // Create mock req/res for h3's createEvent
+  const mockReq = createMockIncomingMessage(method, headers);
+  const mockRes = createMockServerResponse();
 
-  // Minimal H3Event mock
-  const event = {
-    // Node.js request/response (not used by our handlers)
-    node: {
-      req: {},
-      res: {},
-    },
+  // Use h3's official createEvent to get a proper H3Event instance
+  const event = createEvent(mockReq, mockRes);
 
-    // Headers (used by serverAuth for session cookie)
-    headers: new Headers(headers),
+  // Set up context for h3 utilities (getRouterParam, getQuery)
+  event.context.params = params;
 
-    // Method
-    method,
+  // Store body in context for handlers that use readBody
+  // (actual readBody reads from stream, but our handlers use defineValidatedApiHandler
+  // which has its own body handling)
+  if (body !== undefined) {
+    event.context._body = body;
+  }
 
-    // Context storage (used by H3 utilities)
-    context,
-
-    // Path (not critical for our tests)
-    path: '/',
-
-    // Minimal event properties
-    handled: false,
-  } as unknown as H3Event<EventHandlerRequest>;
+  // Store query in context
+  if (Object.keys(query).length > 0) {
+    event.context._query = query;
+  }
 
   return event;
 }

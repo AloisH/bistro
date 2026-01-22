@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import type { Component } from 'vue';
 
 import { EmailService } from './email-service';
 import { resend } from './email-client';
@@ -177,8 +178,7 @@ describe('EmailService', () => {
   });
 
   describe('sendTemplateEmail', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mockTemplate = { name: 'TestTemplate' } as any;
+    const mockTemplate = { name: 'TestTemplate' } as Component;
 
     it('renders template and sends email', async () => {
       mockRender
