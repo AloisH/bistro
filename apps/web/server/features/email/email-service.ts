@@ -1,4 +1,4 @@
-import { render } from '@vue-email/render';
+import { render, type ExtractComponentProps } from '@vue-email/render';
 import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/email';
 import { sendEmailSchema } from '#shared/email';
@@ -10,11 +10,11 @@ import MagicLinkEmail from './templates/MagicLinkEmail.vue';
 import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';
 import VerifyEmail from './templates/VerifyEmail.vue';
 
-interface SendTemplateEmailOptions<TProps> {
+interface SendTemplateEmailOptions<T extends Component> {
   to: string | string[];
   subject: string;
-  template: Component;
-  props: TProps;
+  template: T;
+  props: ExtractComponentProps<T>;
   from?: string;
   replyTo?: string;
 }
@@ -81,21 +81,19 @@ export class EmailService {
   /**
    * Send email with vue-email template
    */
-  async sendTemplateEmail<TProps = Record<string, unknown>>(
-    options: SendTemplateEmailOptions<TProps>,
+  async sendTemplateEmail<T extends Component>(
+    options: SendTemplateEmailOptions<T>,
   ): Promise<{ id: string } | null> {
     if (!resend) {
       log.warn('Email not sent - service not configured');
       return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const html = await render(options.template, options.props as any, {
+    const html = await render(options.template, options.props, {
       pretty: process.env.NODE_ENV !== 'production',
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const text = await render(options.template, options.props as any, {
+    const text = await render(options.template, options.props, {
       plainText: true,
     });
 
