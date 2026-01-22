@@ -57,7 +57,9 @@ describe('UserRepository', () => {
     it('updates image', async () => {
       const user = await createTestUser();
 
-      const result = await userRepository.updateProfile(user.id, { image: 'https://example.com/avatar.png' });
+      const result = await userRepository.updateProfile(user.id, {
+        image: 'https://example.com/avatar.png',
+      });
 
       expect(result.image).toBe('https://example.com/avatar.png');
     });

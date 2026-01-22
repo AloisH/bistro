@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
 import { createTestUser } from '../../testing/testFixtures';
-import { impersonationService } from './impersonation-service';
 import { impersonationRepository } from './impersonation-repository';
+import { impersonationService } from './impersonation-service';
 
 // Mock Better Auth
 vi.mock('../auth/auth-config', () => ({
@@ -69,8 +69,10 @@ describe('ImpersonationService', () => {
 
       // Mock successful Better Auth response
       const { auth } = await import('../auth/auth-config');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({ headers: { getSetCookie: () => [] } } as any);
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
+        headers: { getSetCookie: () => [] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -91,8 +93,11 @@ describe('ImpersonationService', () => {
       const admin = await createTestUser({ role: 'ADMIN' });
 
       const { auth } = await import('../auth/auth-config');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({ headers: { getSetCookie: () => [] } } as any);
+
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
+        headers: { getSetCookie: () => [] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -120,18 +125,17 @@ describe('ImpersonationService', () => {
       });
 
       const { auth } = await import('../auth/auth-config');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({ headers: { getSetCookie: () => [] } } as any);
+
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
+        headers: { getSetCookie: () => [] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
       >[2];
 
-      await impersonationService.startImpersonation(
-        admin.id,
-        { userId: target2.id },
-        mockEvent,
-      );
+      await impersonationService.startImpersonation(admin.id, { userId: target2.id }, mockEvent);
 
       // First session should be ended
       const logs = await db.impersonationLog.findMany({
@@ -149,8 +153,11 @@ describe('ImpersonationService', () => {
       const target = await createTestUser({ role: 'USER' });
 
       const { auth } = await import('../auth/auth-config');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({ headers: { getSetCookie: () => [] } } as any);
+
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
+        headers: { getSetCookie: () => [] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -209,8 +216,11 @@ describe('ImpersonationService', () => {
       });
 
       const { auth } = await import('../auth/auth-config');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      vi.mocked(auth.api.stopImpersonating).mockResolvedValue({ headers: { getSetCookie: () => [] } } as any);
+
+      vi.mocked(auth.api.stopImpersonating).mockResolvedValue({
+        headers: { getSetCookie: () => [] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.stopImpersonation

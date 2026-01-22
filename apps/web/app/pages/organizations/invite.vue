@@ -23,7 +23,9 @@ interface InviteResponse {
   };
 }
 
-const { data: inviteData, error: fetchError } = await useFetch<InviteResponse>(`/api/organizations/invites/${token}`);
+const { data: inviteData, error: fetchError } = await useFetch<InviteResponse>(
+  `/api/organizations/invites/${token}`,
+);
 
 const accepting = ref(false);
 
@@ -61,9 +63,7 @@ async function acceptInvite() {
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
       <template #header>
-        <h1 class="text-2xl font-bold">
-          Organization Invitation
-        </h1>
+        <h1 class="text-2xl font-bold">Organization Invitation</h1>
       </template>
 
       <div

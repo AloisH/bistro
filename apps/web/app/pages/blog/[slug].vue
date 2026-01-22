@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-12 max-w-4xl">
+  <div class="container mx-auto max-w-4xl px-4 py-12">
     <!-- Draft badge for admins -->
     <UAlert
       v-if="post?.draft && isAdmin"
@@ -20,30 +20,30 @@
           size="sm"
           class="group"
         >
-          <span class="group-hover:-translate-x-1 transition-transform inline-block">
+          <span class="inline-block transition-transform group-hover:-translate-x-1">
             Back to Blog
           </span>
         </UButton>
       </div>
 
       <!-- Hero image with overlay -->
-      <div class="relative -mx-4 sm:mx-0 mb-12">
-        <div class="relative h-[400px] rounded-3xl overflow-hidden">
+      <div class="relative -mx-4 mb-12 sm:mx-0">
+        <div class="relative h-[400px] overflow-hidden rounded-3xl">
           <img
             v-if="post.image"
             :src="post.image"
             :alt="post.title"
-            class="w-full h-full object-cover"
+            class="h-full w-full object-cover"
           >
           <!-- Gradient overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
           <!-- Content overlay -->
-          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div class="absolute right-0 bottom-0 left-0 p-8 text-white">
             <!-- Tags -->
             <div
               v-if="post.tags?.length"
-              class="flex gap-2 mb-4 flex-wrap"
+              class="mb-4 flex flex-wrap gap-2"
             >
               <UBadge
                 v-for="tag in post.tags"
@@ -57,12 +57,12 @@
             </div>
 
             <!-- Title -->
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            <h1 class="mb-4 text-4xl font-bold md:text-5xl">
               {{ post.title }}
             </h1>
 
             <!-- Description -->
-            <p class="text-xl text-neutral-200 mb-6 max-w-3xl">
+            <p class="mb-6 max-w-3xl text-xl text-neutral-200">
               {{ post.description }}
             </p>
 
@@ -92,7 +92,9 @@
       />
 
       <!-- Author card -->
-      <UCard class="mt-12 bg-gradient-to-br from-primary-500/5 to-transparent dark:from-primary-400/10">
+      <UCard
+        class="from-primary-500/5 dark:from-primary-400/10 mt-12 bg-gradient-to-br to-transparent"
+      >
         <div class="flex gap-4">
           <UAvatar
             v-if="post.authors?.[0]"
@@ -101,10 +103,10 @@
             size="lg"
           />
           <div>
-            <div class="font-semibold text-lg text-neutral-900 dark:text-white mb-1">
+            <div class="mb-1 text-lg font-semibold text-neutral-900 dark:text-white">
               {{ post.authors?.[0]?.name }}
             </div>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">
               Author • Full-stack developer
             </p>
           </div>

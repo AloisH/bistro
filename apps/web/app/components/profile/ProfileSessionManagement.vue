@@ -1,8 +1,6 @@
 <template>
-  <div class="border-b border-default pb-6">
-    <div
-      class="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"
-    >
+  <div class="border-default border-b pb-6">
+    <div class="mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
       <div class="flex-1">
         <div class="mb-1 flex items-center gap-2">
           <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
@@ -30,7 +28,7 @@
 
     <div
       v-if="sessions.length > 1"
-      class="mt-6 border-t border-default pt-4"
+      class="border-default mt-6 border-t pt-4"
     >
       <UButton
         color="error"

@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-default pb-6">
+  <div class="border-default border-b pb-6">
     <div class="mb-6">
       <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
         Onboarding Information
@@ -12,16 +12,14 @@
     <div class="space-y-4">
       <div class="grid gap-4 sm:grid-cols-2">
         <!-- Bio -->
-        <div class="rounded-lg border border-default p-4">
+        <div class="border-default rounded-lg border p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-user"
               class="text-primary mt-0.5 h-5 w-5 shrink-0"
             />
             <div class="min-w-0 flex-1">
-              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Bio
-              </p>
+              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Bio</p>
               <p class="mt-1 text-sm text-neutral-900 dark:text-white">
                 {{ (user as any)?.bio || 'Not provided' }}
               </p>
@@ -30,16 +28,14 @@
         </div>
 
         <!-- Company -->
-        <div class="rounded-lg border border-default p-4">
+        <div class="border-default rounded-lg border p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-briefcase"
               class="text-primary mt-0.5 h-5 w-5 shrink-0"
             />
             <div class="min-w-0 flex-1">
-              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Company
-              </p>
+              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Company</p>
               <p class="mt-1 text-sm text-neutral-900 dark:text-white">
                 {{ (user as any)?.company || 'Not provided' }}
               </p>
@@ -48,17 +44,15 @@
         </div>
 
         <!-- Use Case -->
-        <div class="rounded-lg border border-default p-4">
+        <div class="border-default rounded-lg border p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-target"
               class="text-primary mt-0.5 h-5 w-5 shrink-0"
             />
             <div class="min-w-0 flex-1">
-              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Use Case
-              </p>
-              <p class="mt-1 text-sm capitalize text-neutral-900 dark:text-white">
+              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Use Case</p>
+              <p class="mt-1 text-sm text-neutral-900 capitalize dark:text-white">
                 {{ (user as any)?.useCase || 'Not provided' }}
               </p>
             </div>
@@ -66,7 +60,7 @@
         </div>
 
         <!-- Email Notifications -->
-        <div class="rounded-lg border border-default p-4">
+        <div class="border-default rounded-lg border p-4">
           <div class="flex items-start gap-3">
             <UIcon
               name="i-lucide-mail"

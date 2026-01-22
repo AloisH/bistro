@@ -24,7 +24,7 @@
         size="sm"
         role="button"
         aria-label="User menu"
-        class="cursor-pointer ring-2 ring-neutral-200 dark:ring-neutral-700 hover:ring-primary transition-colors"
+        class="hover:ring-primary cursor-pointer ring-2 ring-neutral-200 transition-colors dark:ring-neutral-700"
       />
     </UDropdownMenu>
   </div>

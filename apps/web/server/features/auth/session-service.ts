@@ -88,9 +88,7 @@ export class SessionService {
   ): Promise<void> {
     // If setting org (not clearing), verify membership
     if (organizationId) {
-      const { organizationRepository } = await import(
-        '../organization/organization-repository'
-      );
+      const { organizationRepository } = await import('../organization/organization-repository');
       const membership = await organizationRepository.findMembership(userId, organizationId);
 
       if (!membership) {

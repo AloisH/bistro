@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
-import { createTestUser, createTestSession, createTestOrg, createTestOrgMember } from '../../testing/testFixtures';
+import {
+  createTestUser,
+  createTestSession,
+  createTestOrg,
+  createTestOrgMember,
+} from '../../testing/testFixtures';
 import { sessionService } from './session-service';
 
 describe('SessionService', () => {

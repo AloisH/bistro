@@ -6,7 +6,7 @@
       :ui="{
         footer: 'border-t border-default',
       }"
-      class="bg-default border-r border-default"
+      class="bg-default border-default border-r"
     >
       <template #header="{ collapsed }">
         <div
@@ -67,14 +67,14 @@
               size="md"
               role="button"
               aria-label="User menu"
-              class="cursor-pointer ring-2 ring-neutral-200 dark:ring-neutral-700 hover:ring-primary transition-colors"
+              class="hover:ring-primary cursor-pointer ring-2 ring-neutral-200 transition-colors dark:ring-neutral-700"
             />
           </UDropdownMenu>
         </ClientOnly>
       </template>
     </UDashboardSidebar>
 
-    <UDashboardPanel class="flex flex-col h-screen w-full">
+    <UDashboardPanel class="flex h-screen w-full flex-col">
       <UDashboardNavbar title="Bistro">
         <template #right>
           <UColorModeButton />

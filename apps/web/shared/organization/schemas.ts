@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { SLUG_MIN_LENGTH, SLUG_MAX_LENGTH, ORG_NAME_MIN_LENGTH, ORG_NAME_MAX_LENGTH, ORG_DESCRIPTION_MAX_LENGTH, SLUG_REGEX, ORG_ROLES } from './constants';
+import {
+  SLUG_MIN_LENGTH,
+  SLUG_MAX_LENGTH,
+  ORG_NAME_MIN_LENGTH,
+  ORG_NAME_MAX_LENGTH,
+  ORG_DESCRIPTION_MAX_LENGTH,
+  SLUG_REGEX,
+  ORG_ROLES,
+} from './constants';
 
 /**
  * Organization validation schemas
@@ -28,9 +36,18 @@ export const slugSchema = z
  * Create organization schema
  */
 export const createOrganizationSchema = z.object({
-  name: z.string().min(ORG_NAME_MIN_LENGTH, 'Name is required').max(ORG_NAME_MAX_LENGTH, `Name must be at most ${ORG_NAME_MAX_LENGTH} characters`),
+  name: z
+    .string()
+    .min(ORG_NAME_MIN_LENGTH, 'Name is required')
+    .max(ORG_NAME_MAX_LENGTH, `Name must be at most ${ORG_NAME_MAX_LENGTH} characters`),
   slug: slugSchema,
-  description: z.string().max(ORG_DESCRIPTION_MAX_LENGTH, `Description must be at most ${ORG_DESCRIPTION_MAX_LENGTH} characters`).optional(),
+  description: z
+    .string()
+    .max(
+      ORG_DESCRIPTION_MAX_LENGTH,
+      `Description must be at most ${ORG_DESCRIPTION_MAX_LENGTH} characters`,
+    )
+    .optional(),
 });
 
 export type CreateOrganizationInput = z.infer<typeof createOrganizationSchema>;

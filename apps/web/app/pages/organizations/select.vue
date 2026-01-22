@@ -3,7 +3,12 @@ import type { Organization } from '../../../prisma/generated/client';
 
 const router = useRouter();
 
-const { data: organizations, pending, error, refresh } = await useFetch<{ organizations: Organization[] }>('/api/organizations');
+const {
+  data: organizations,
+  pending,
+  error,
+  refresh,
+} = await useFetch<{ organizations: Organization[] }>('/api/organizations');
 
 async function selectOrg(slug: string) {
   await router.push(`/org/${slug}/dashboard`);
@@ -14,9 +19,7 @@ async function selectOrg(slug: string) {
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-2xl">
       <template #header>
-        <h1 class="text-2xl font-bold">
-          Select Organization
-        </h1>
+        <h1 class="text-2xl font-bold">Select Organization</h1>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
           Choose an organization to continue
         </p>
@@ -62,7 +65,9 @@ async function selectOrg(slug: string) {
         icon="i-lucide-building-2"
         title="No organizations yet"
         description="Create your first organization to get started"
-        :actions="[{ label: 'Create Organization', to: '/organizations/create', icon: 'i-lucide-plus' }]"
+        :actions="[
+          { label: 'Create Organization', to: '/organizations/create', icon: 'i-lucide-plus' },
+        ]"
       />
 
       <div

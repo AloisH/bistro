@@ -45,9 +45,7 @@ import { db } from './testDb';
  * const todo = await createTestTodo(user.id)
  * ```
  */
-export async function createTestUser(
-  overrides?: Partial<Prisma.UserCreateInput>,
-): Promise<User> {
+export async function createTestUser(overrides?: Partial<Prisma.UserCreateInput>): Promise<User> {
   const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   const defaults: Prisma.UserCreateInput = {
     email: `test-${uniqueSuffix}@example.com`,

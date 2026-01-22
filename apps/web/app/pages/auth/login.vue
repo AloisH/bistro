@@ -50,7 +50,7 @@
               <div class="mt-2 flex items-center justify-end">
                 <NuxtLink
                   to="/auth/forgot-password"
-                  class="text-primary text-sm hover:underline font-medium"
+                  class="text-primary text-sm font-medium hover:underline"
                 >
                   Forgot password?
                 </NuxtLink>
@@ -128,11 +128,11 @@
       <AuthOAuthButtons />
 
       <template #footer>
-        <p class="text-center text-sm text-muted">
+        <p class="text-muted text-center text-sm">
           Don't have an account?
           <NuxtLink
             to="/auth/register"
-            class="text-primary hover:underline font-semibold"
+            class="text-primary font-semibold hover:underline"
           >
             Sign up
           </NuxtLink>

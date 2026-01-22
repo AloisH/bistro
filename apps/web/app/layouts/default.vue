@@ -17,14 +17,14 @@
         >
           <UIcon
             name="i-lucide-check-square"
-            class="size-6 text-primary"
+            class="text-primary size-6"
           />
-          <span class="font-bold text-lg">Bistro</span>
+          <span class="text-lg font-bold">Bistro</span>
         </NuxtLink>
 
         <UNavigationMenu
           :items="navLinks"
-          class="hidden md:flex ml-6"
+          class="ml-6 hidden md:flex"
         />
       </template>
 
@@ -37,9 +37,7 @@
         >
           Sign in
         </UButton>
-        <UButton to="/auth/register">
-          Get Started
-        </UButton>
+        <UButton to="/auth/register"> Get Started </UButton>
       </template>
 
       <template #body>
@@ -77,9 +75,7 @@
           <UFooterColumns :columns="footerColumns">
             <template #right>
               <div class="flex flex-col gap-4">
-                <p class="font-semibold text-sm">
-                  Follow us
-                </p>
+                <p class="text-sm font-semibold">Follow us</p>
                 <div class="flex gap-2">
                   <UButton
                     to="https://github.com/AloisH/bistro"
@@ -108,17 +104,15 @@
         <div class="flex items-center gap-2">
           <UIcon
             name="i-lucide-check-square"
-            class="size-5 text-primary"
+            class="text-primary size-5"
           />
           <span class="font-semibold">Bistro</span>
         </div>
-        <p class="text-sm text-muted mt-1">
-          Open source todo app built with Nuxt.
-        </p>
+        <p class="text-muted mt-1 text-sm">Open source todo app built with Nuxt.</p>
       </template>
 
       <template #default>
-        <p class="text-sm text-muted">
+        <p class="text-muted text-sm">
           &copy; {{ new Date().getFullYear() }} Bistro. All rights reserved.
         </p>
       </template>

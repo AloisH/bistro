@@ -1,7 +1,10 @@
 /**
  * Extract user-friendly error message from API errors
  */
-export function getErrorMessage(e: unknown, defaultMessage = 'An error occurred. Please try again.'): string {
+export function getErrorMessage(
+  e: unknown,
+  defaultMessage = 'An error occurred. Please try again.',
+): string {
   // Network error
   if (e instanceof TypeError && e.message.includes('fetch')) {
     return 'Network error. Check your connection.';

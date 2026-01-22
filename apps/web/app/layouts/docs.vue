@@ -3,7 +3,7 @@
     <!-- Left sidebar -->
     <UDashboardSidebar
       collapsible
-      class="bg-default border-r border-default"
+      class="bg-default border-default border-r"
     >
       <template #header="{ collapsed }">
         <div
@@ -16,7 +16,7 @@
           >
             <UIcon
               name="i-lucide-check-square"
-              class="size-5 text-primary"
+              class="text-primary size-5"
             />
             <span class="font-semibold">Bistro</span>
           </NuxtLink>
@@ -66,7 +66,7 @@
     </UDashboardSidebar>
 
     <!-- Main content -->
-    <UDashboardPanel class="flex flex-col h-screen w-full">
+    <UDashboardPanel class="flex h-screen w-full flex-col">
       <UDashboardNavbar>
         <template #left>
           <div class="flex items-center gap-2">

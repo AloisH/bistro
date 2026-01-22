@@ -1,12 +1,16 @@
 <template>
   <div class="container mx-auto px-4 py-12">
     <!-- Hero Section -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent dark:from-primary-400/10 dark:via-primary-500/5 rounded-3xl p-12 mb-12">
-      <div class="absolute top-0 right-0 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl -z-10" />
-      <div class="absolute bottom-0 left-0 w-72 h-72 bg-green-500/10 rounded-full blur-3xl -z-10" />
+    <div
+      class="from-primary-500/10 via-primary-600/5 dark:from-primary-400/10 dark:via-primary-500/5 relative mb-12 overflow-hidden rounded-3xl bg-gradient-to-br to-transparent p-12"
+    >
+      <div class="bg-primary-500/20 absolute top-0 right-0 -z-10 h-96 w-96 rounded-full blur-3xl" />
+      <div class="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-green-500/10 blur-3xl" />
 
       <div class="max-w-3xl">
-        <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+        <h1
+          class="mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-5xl font-bold text-transparent dark:from-white dark:to-gray-400"
+        >
           Changelog
         </h1>
         <p class="text-xl text-neutral-600 dark:text-neutral-400">
@@ -17,17 +21,15 @@
 
     <!-- Type filters -->
     <div class="mb-8">
-      <div class="flex items-center gap-3 mb-4">
+      <div class="mb-4 flex items-center gap-3">
         <UIcon
           name="i-lucide-filter"
           class="text-neutral-400"
         />
-        <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">
-          Filter by type
-        </h2>
+        <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">Filter by type</h2>
       </div>
 
-      <div class="flex gap-2 flex-wrap">
+      <div class="flex flex-wrap gap-2">
         <UBadge
           variant="subtle"
           :color="!selectedType ? 'primary' : 'neutral'"
@@ -46,7 +48,7 @@
         >
           <UIcon
             :name="type.icon"
-            class="size-3 mr-1"
+            class="mr-1 size-3"
           />
           {{ type.label }} ({{ countByType(type.value) }})
         </UBadge>
@@ -67,7 +69,7 @@
         <template #body>
           <div
             v-if="entry.changes?.length"
-            class="space-y-2 mt-4"
+            class="mt-4 space-y-2"
           >
             <div
               v-for="(change, idx) in entry.changes"
@@ -77,7 +79,7 @@
               <UIcon
                 :name="getChangeIcon(change.type)"
                 :class="getChangeColor(change.type)"
-                class="size-4 mt-0.5 shrink-0"
+                class="mt-0.5 size-4 shrink-0"
               />
               <span class="text-neutral-600 dark:text-neutral-400">
                 {{ change.description }}
@@ -91,15 +93,13 @@
     <!-- Empty state -->
     <div
       v-else
-      class="text-center py-12"
+      class="py-12 text-center"
     >
       <UIcon
         name="i-lucide-file-text"
-        class="size-12 text-neutral-300 dark:text-neutral-600 mx-auto mb-4"
+        class="mx-auto mb-4 size-12 text-neutral-300 dark:text-neutral-600"
       />
-      <p class="text-neutral-500">
-        No changelog entries found.
-      </p>
+      <p class="text-neutral-500">No changelog entries found.</p>
     </div>
   </div>
 </template>
@@ -161,35 +161,45 @@ function filterByType(type: string) {
 }
 
 function countByType(type: string): number {
-  return allEntries.value.filter(entry =>
-    entry.changes?.some(c => c.type === type),
-  ).length;
+  return allEntries.value.filter(entry => entry.changes?.some(c => c.type === type)).length;
 }
 
 function getVersionColor(type: string): 'error' | 'primary' | 'neutral' {
   switch (type) {
-    case 'major': return 'error';
-    case 'minor': return 'primary';
-    case 'patch': return 'neutral';
-    default: return 'neutral';
+    case 'major':
+      return 'error';
+    case 'minor':
+      return 'primary';
+    case 'patch':
+      return 'neutral';
+    default:
+      return 'neutral';
   }
 }
 
 function getChangeIcon(type: string): string {
   switch (type) {
-    case 'feature': return 'i-lucide-sparkles';
-    case 'fix': return 'i-lucide-bug';
-    case 'improvement': return 'i-lucide-trending-up';
-    default: return 'i-lucide-circle';
+    case 'feature':
+      return 'i-lucide-sparkles';
+    case 'fix':
+      return 'i-lucide-bug';
+    case 'improvement':
+      return 'i-lucide-trending-up';
+    default:
+      return 'i-lucide-circle';
   }
 }
 
 function getChangeColor(type: string): string {
   switch (type) {
-    case 'feature': return 'text-primary';
-    case 'fix': return 'text-red-500';
-    case 'improvement': return 'text-green-500';
-    default: return 'text-neutral-400';
+    case 'feature':
+      return 'text-primary';
+    case 'fix':
+      return 'text-red-500';
+    case 'improvement':
+      return 'text-green-500';
+    default:
+      return 'text-neutral-400';
   }
 }
 

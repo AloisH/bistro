@@ -16,7 +16,7 @@
       </template>
 
       <div class="space-y-4">
-        <div class="border-b border-default">
+        <div class="border-default border-b">
           <nav class="-mb-px flex gap-4">
             <button
               v-for="template in templates"
@@ -78,7 +78,7 @@
 
           <div
             v-if="viewMode === 'html'"
-            class="rounded-lg border border-default"
+            class="border-default rounded-lg border"
           >
             <iframe
               :srcdoc="selectedTemplate.html"
@@ -90,7 +90,7 @@
 
           <div
             v-else
-            class="rounded-lg border border-default bg-muted p-4"
+            class="border-default bg-muted rounded-lg border p-4"
           >
             <pre class="text-sm whitespace-pre-wrap">{{ selectedTemplate.text }}</pre>
           </div>

@@ -25,18 +25,25 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-12 max-w-4xl">
+  <div class="container mx-auto max-w-4xl px-4 py-12">
     <article v-if="page">
       <!-- Header -->
-      <header class="mb-8 pb-8 border-b border-default">
-        <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
+      <header class="border-default mb-8 border-b pb-8">
+        <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">
           {{ page.title }}
         </h1>
-        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
+        <p class="mb-4 text-lg text-neutral-600 dark:text-neutral-400">
           {{ page.description }}
         </p>
         <p class="text-sm text-neutral-500">
-          Last updated: {{ new Date(page.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+          Last updated:
+          {{
+            new Date(page.lastUpdated).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }}
         </p>
       </header>
 

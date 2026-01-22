@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
-import { createTestUser, createTestSession, createTestOrg, createTestOrgMember } from '../../testing/testFixtures';
+import {
+  createTestUser,
+  createTestSession,
+  createTestOrg,
+  createTestOrgMember,
+} from '../../testing/testFixtures';
 import { sessionRepository } from './session-repository';
 
 describe('SessionRepository', () => {
@@ -154,7 +159,11 @@ describe('SessionRepository', () => {
       const org = await createTestOrg();
       await createTestOrgMember(user.id, org.id, 'MEMBER');
 
-      const result = await sessionRepository.updateCurrentOrganization(session.token, user.id, org.id);
+      const result = await sessionRepository.updateCurrentOrganization(
+        session.token,
+        user.id,
+        org.id,
+      );
 
       expect(result.currentOrganizationId).toBe(org.id);
     });
@@ -171,7 +180,11 @@ describe('SessionRepository', () => {
         },
       });
 
-      const result = await sessionRepository.updateCurrentOrganization(session.token, user.id, null);
+      const result = await sessionRepository.updateCurrentOrganization(
+        session.token,
+        user.id,
+        null,
+      );
 
       expect(result.currentOrganizationId).toBeNull();
     });

@@ -23,7 +23,8 @@
         },
       ]"
       :ui="{
-        title: 'animate-gradient-text bg-gradient-to-r from-primary-500 via-green-400 to-primary-600 bg-clip-text text-transparent',
+        title:
+          'animate-gradient-text bg-gradient-to-r from-primary-500 via-green-400 to-primary-600 bg-clip-text text-transparent',
       }"
     />
 
@@ -33,10 +34,8 @@
       class="scroll-animate"
     >
       <div class="text-center">
-        <p class="text-sm text-muted mb-6">
-          Built with modern technologies
-        </p>
-        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+        <p class="text-muted mb-6 text-sm">Built with modern technologies</p>
+        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
           <NuxtLink
             v-for="(tech, index) in techStack"
             :key="tech.name"
@@ -47,9 +46,11 @@
           >
             <UIcon
               :name="tech.icon"
-              class="size-8 md:size-10 text-neutral-400 dark:text-neutral-500 group-hover:text-primary transition-colors duration-300"
+              class="group-hover:text-primary size-8 text-neutral-400 transition-colors duration-300 md:size-10 dark:text-neutral-500"
             />
-            <span class="text-xs text-muted group-hover:text-foreground transition-colors duration-300">
+            <span
+              class="text-muted group-hover:text-foreground text-xs transition-colors duration-300"
+            >
               {{ tech.name }}
             </span>
           </NuxtLink>
@@ -74,32 +75,37 @@
       description="See what others are saying about Bistro."
       class="scroll-animate"
     >
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         <UCard
           v-for="(testimonial, index) in testimonials"
           :key="testimonial.name"
-          class="flex flex-col card-hover"
+          class="card-hover flex flex-col"
           :style="{ animationDelay: `${index * 100}ms` }"
         >
           <div class="flex-1">
             <UIcon
               name="i-lucide-quote"
-              class="size-6 text-primary mb-3"
+              class="text-primary mb-3 size-6"
             />
             <p class="text-muted">
               {{ testimonial.quote }}
             </p>
           </div>
-          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-default">
+          <div class="border-default mt-4 flex items-center gap-3 border-t pt-4">
             <UAvatar
-              :text="testimonial.name.split(' ').map(n => n[0]).join('')"
+              :text="
+                testimonial.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+              "
               size="md"
             />
             <div>
-              <p class="font-medium text-sm">
+              <p class="text-sm font-medium">
                 {{ testimonial.name }}
               </p>
-              <p class="text-xs text-muted">
+              <p class="text-muted text-xs">
                 {{ testimonial.role }}
               </p>
             </div>
@@ -117,7 +123,7 @@
       class="scroll-animate"
     >
       <!-- Billing Toggle -->
-      <div class="flex justify-center mb-8">
+      <div class="mb-8 flex justify-center">
         <UTabs
           v-model="billingPeriod"
           :items="billingOptions"
@@ -145,7 +151,7 @@
     >
       <UAccordion
         :items="faqItems"
-        class="max-w-2xl mx-auto"
+        class="mx-auto max-w-2xl"
       />
     </UPageSection>
 
@@ -162,7 +168,7 @@
       >
         <template #links>
           <form
-            class="flex flex-col sm:flex-row gap-3 w-full max-w-md"
+            class="flex w-full max-w-md flex-col gap-3 sm:flex-row"
             @submit.prevent="handleSubscribe"
           >
             <UInput
@@ -227,7 +233,8 @@ const features = [
   {
     icon: 'i-lucide-list-checks',
     title: 'Simple task management',
-    description: 'Create, organize, and complete tasks with an intuitive interface. No learning curve required.',
+    description:
+      'Create, organize, and complete tasks with an intuitive interface. No learning curve required.',
   },
   {
     icon: 'i-lucide-filter',
@@ -242,7 +249,8 @@ const features = [
   {
     icon: 'i-lucide-moon',
     title: 'Dark mode',
-    description: 'Easy on the eyes with automatic dark mode support. Work comfortably day or night.',
+    description:
+      'Easy on the eyes with automatic dark mode support. Work comfortably day or night.',
   },
   {
     icon: 'i-lucide-smartphone',
@@ -261,17 +269,20 @@ const testimonials = [
   {
     name: 'Sarah Chen',
     role: 'Indie Developer',
-    quote: 'Finally, a todo app that doesn\'t try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.',
+    quote:
+      'Finally, a todo app that doesn\'t try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.',
   },
   {
     name: 'Marcus Johnson',
     role: 'Startup Founder',
-    quote: 'We switched our team to Bistro and productivity went up. The organization features are exactly what we needed without the bloat.',
+    quote:
+      'We switched our team to Bistro and productivity went up. The organization features are exactly what we needed without the bloat.',
   },
   {
     name: 'Emily Rodriguez',
     role: 'Open Source Contributor',
-    quote: 'Love that it\'s open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.',
+    quote:
+      'Love that it\'s open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.',
   },
 ];
 
@@ -341,23 +352,28 @@ const currentPlans = computed(() => {
 const faqItems = [
   {
     label: 'Is Bistro really free?',
-    content: 'Yes! Bistro is 100% free and open source. There are no premium tiers, no hidden fees, and no credit card required. You can use all features without any limitations.',
+    content:
+      'Yes! Bistro is 100% free and open source. There are no premium tiers, no hidden fees, and no credit card required. You can use all features without any limitations.',
   },
   {
     label: 'Can I self-host Bistro?',
-    content: 'Absolutely. Bistro is open source and designed to be self-hosted. Check out our GitHub repository for deployment instructions using Docker or your preferred hosting platform.',
+    content:
+      'Absolutely. Bistro is open source and designed to be self-hosted. Check out our GitHub repository for deployment instructions using Docker or your preferred hosting platform.',
   },
   {
     label: 'How do organizations work?',
-    content: 'Organizations allow you to collaborate with others. Create an organization, invite team members via email, and assign roles (Owner, Admin, Member, Guest) to control access levels.',
+    content:
+      'Organizations allow you to collaborate with others. Create an organization, invite team members via email, and assign roles (Owner, Admin, Member, Guest) to control access levels.',
   },
   {
     label: 'Is my data secure?',
-    content: 'Security is a priority. We use industry-standard encryption, secure authentication, and never share your data with third parties. For maximum control, you can always self-host.',
+    content:
+      'Security is a priority. We use industry-standard encryption, secure authentication, and never share your data with third parties. For maximum control, you can always self-host.',
   },
   {
     label: 'What tech stack does Bistro use?',
-    content: 'Bistro is built with Nuxt 4, Vue 3, Tailwind CSS, Prisma, and PostgreSQL. It uses Better Auth for authentication and Nuxt UI for the component library.',
+    content:
+      'Bistro is built with Nuxt 4, Vue 3, Tailwind CSS, Prisma, and PostgreSQL. It uses Better Auth for authentication and Nuxt UI for the component library.',
   },
 ];
 

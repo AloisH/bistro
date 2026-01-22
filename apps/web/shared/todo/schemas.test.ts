@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  createTodoSchema,
-  updateTodoSchema,
-  toggleTodoSchema,
-  todoQuerySchema,
-} from './schemas';
+import { createTodoSchema, updateTodoSchema, toggleTodoSchema, todoQuerySchema } from './schemas';
 
 describe('Todo Schemas', () => {
   describe('createTodoSchema', () => {

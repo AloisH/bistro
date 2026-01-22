@@ -22,19 +22,21 @@ export default defineEventHandler(async (event) => {
   const allPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
 
   // Filter drafts and tags in memory
-  const filteredPosts = allPosts.filter((post: BlogCollectionItem) => {
-    // Check draft status
-    if (post.draft && (!includeDrafts || !isAdmin)) {
-      return false;
-    }
+  const filteredPosts = allPosts
+    .filter((post: BlogCollectionItem) => {
+      // Check draft status
+      if (post.draft && (!includeDrafts || !isAdmin)) {
+        return false;
+      }
 
-    // Check tag filter
-    if (tag && (!post.tags || !post.tags.includes(tag))) {
-      return false;
-    }
+      // Check tag filter
+      if (tag && (!post.tags || !post.tags.includes(tag))) {
+        return false;
+      }
 
-    return true;
-  }).reverse(); // Reverse for descending order
+      return true;
+    })
+    .reverse(); // Reverse for descending order
   const total = filteredPosts.length;
 
   // Apply pagination in memory

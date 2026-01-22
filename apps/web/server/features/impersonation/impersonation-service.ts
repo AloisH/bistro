@@ -75,7 +75,10 @@ export class ImpersonationService {
       }
     } catch (error) {
       // Log error for debugging
-      getLogger().error({ error, adminId, targetUserId: input.userId }, 'Better Auth impersonation failed');
+      getLogger().error(
+        { error, adminId, targetUserId: input.userId },
+        'Better Auth impersonation failed',
+      );
       // If Better Auth fails, mark log as ended
       await impersonationRepository.endLog(adminId);
       throw createError({

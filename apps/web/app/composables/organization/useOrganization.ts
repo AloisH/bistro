@@ -1,4 +1,8 @@
-import type { Organization, OrganizationMember, OrganizationRole } from '../../../prisma/generated/client';
+import type {
+  Organization,
+  OrganizationMember,
+  OrganizationRole,
+} from '../../../prisma/generated/client';
 
 type MemberWithUser = OrganizationMember & {
   user: { id: string; name: string; email: string; image: string | null };
@@ -23,11 +27,15 @@ export const useOrganization = () => {
   const urlOrgSlug = computed(() => route.params.slug as string | undefined);
 
   // Update lastOrgSlug when on org route
-  watch(urlOrgSlug, (slug) => {
-    if (slug) {
-      lastOrgSlug.value = slug;
-    }
-  }, { immediate: true });
+  watch(
+    urlOrgSlug,
+    (slug) => {
+      if (slug) {
+        lastOrgSlug.value = slug;
+      }
+    },
+    { immediate: true },
+  );
 
   // Active org: prefer URL slug, fallback to last visited, fallback to first org
   const activeOrganization = computed(() => {
@@ -47,9 +55,7 @@ export const useOrganization = () => {
   const currentOrgId = computed(() => activeOrganization.value?.id ?? null);
   const currentOrganization = activeOrganization;
 
-  const canManageMembers = computed(() =>
-    ['OWNER', 'ADMIN'].includes(currentUserRole.value ?? ''),
-  );
+  const canManageMembers = computed(() => ['OWNER', 'ADMIN'].includes(currentUserRole.value ?? ''));
 
   const canDeleteOrg = computed(() => currentUserRole.value === 'OWNER');
 

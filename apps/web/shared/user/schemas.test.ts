@@ -34,9 +34,7 @@ describe('User Schemas', () => {
     });
 
     it('rejects invalid image URL', () => {
-      expect(() =>
-        updateProfileSchema.parse({ name: 'Test', image: 'not-a-url' }),
-      ).toThrow();
+      expect(() => updateProfileSchema.parse({ name: 'Test', image: 'not-a-url' })).toThrow();
     });
   });
 

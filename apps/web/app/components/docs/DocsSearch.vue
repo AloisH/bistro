@@ -43,19 +43,19 @@ onMounted(() => {
 
           <div
             v-if="results.length"
-            class="mt-4 space-y-2 max-h-96 overflow-y-auto"
+            class="mt-4 max-h-96 space-y-2 overflow-y-auto"
           >
             <NuxtLink
               v-for="r in results"
               :key="r.path"
               :to="r.path"
-              class="block p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              class="block rounded-lg p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800"
               @click="closeModal"
             >
               <div class="font-medium">
                 {{ r.title }}
               </div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 mt-1">
+              <div class="mt-1 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
                 {{ r.content }}
               </div>
             </NuxtLink>

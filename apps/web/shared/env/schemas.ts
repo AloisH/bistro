@@ -29,7 +29,11 @@ const baseEnvSchema = z.object({
   S3_SECRET_ACCESS_KEY: z.string().optional(),
   S3_BUCKET: z.string().optional(),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).optional().default('info'),
-  LOG_SAMPLE_RATE: z.string().regex(/^0(\.\d+)?$|^1(\.0)?$/).optional().default('0.05'),
+  LOG_SAMPLE_RATE: z
+    .string()
+    .regex(/^0(\.\d+)?$|^1(\.0)?$/)
+    .optional()
+    .default('0.05'),
 });
 
 // Production schema - adds requirements

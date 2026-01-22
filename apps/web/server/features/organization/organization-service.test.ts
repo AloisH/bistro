@@ -198,9 +198,9 @@ describe('OrganizationService', () => {
     it('throws 404 if invite not found', async () => {
       const user = await createTestUser();
 
-      await expect(organizationService.acceptInvite(user.id, 'invalid-token')).rejects.toMatchObject(
-        { statusCode: 404 },
-      );
+      await expect(
+        organizationService.acceptInvite(user.id, 'invalid-token'),
+      ).rejects.toMatchObject({ statusCode: 404 });
     });
 
     it('throws 400 if invite expired', async () => {
@@ -221,9 +221,9 @@ describe('OrganizationService', () => {
         },
       });
 
-      await expect(organizationService.acceptInvite(invitee.id, invite.token)).rejects.toMatchObject(
-        { statusCode: 400, message: 'Invite has expired' },
-      );
+      await expect(
+        organizationService.acceptInvite(invitee.id, invite.token),
+      ).rejects.toMatchObject({ statusCode: 400, message: 'Invite has expired' });
     });
 
     it('throws 403 if email does not match', async () => {

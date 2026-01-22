@@ -66,12 +66,8 @@ async function onSubmit() {
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
       <template #header>
-        <h1 class="text-2xl font-bold">
-          Create Organization
-        </h1>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Set up your new organization
-        </p>
+        <h1 class="text-2xl font-bold">Create Organization</h1>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">Set up your new organization</p>
       </template>
 
       <UForm

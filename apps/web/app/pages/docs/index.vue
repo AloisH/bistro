@@ -31,7 +31,7 @@ useSeoMeta({
     <div class="max-w-4xl">
       <article v-if="page">
         <header class="mb-8">
-          <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
+          <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">
             {{ page.title }}
           </h1>
           <p class="text-xl text-neutral-600 dark:text-neutral-400">

@@ -133,7 +133,9 @@ describe('Organization Schemas', () => {
     });
 
     it('rejects invalid role', () => {
-      expect(() => inviteMemberSchema.parse({ email: 'user@example.com', role: 'INVALID' })).toThrow();
+      expect(() =>
+        inviteMemberSchema.parse({ email: 'user@example.com', role: 'INVALID' }),
+      ).toThrow();
     });
 
     it('accepts all valid roles', () => {

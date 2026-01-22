@@ -43,7 +43,9 @@
         />
         <div>
           <p class="font-medium">Tell us about yourself</p>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400">Help us tailor Bistro for you</p>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            Help us tailor Bistro for you
+          </p>
         </div>
       </div>
     </div>

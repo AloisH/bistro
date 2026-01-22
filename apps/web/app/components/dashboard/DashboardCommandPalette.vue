@@ -49,7 +49,10 @@ const groups = computed<CommandPaletteGroup[]>(() => {
     {
       label: 'Dashboard',
       icon: 'i-lucide-house',
-      onSelect: () => navigateTo(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/organizations/select'),
+      onSelect: () =>
+        navigateTo(
+          activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/organizations/select',
+        ),
     },
     {
       label: 'Profile',

@@ -121,7 +121,13 @@ export class OrganizationRepository {
    */
   async findOrganizationMembers(
     organizationId: string,
-  ): Promise<Array<OrganizationMember & { user: { id: string; name: string; email: string; image: string | null } }>> {
+  ): Promise<
+    Array<
+      OrganizationMember & {
+        user: { id: string; name: string; email: string; image: string | null };
+      }
+    >
+  > {
     return this.db.organizationMember.findMany({
       where: { organizationId },
       include: {

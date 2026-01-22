@@ -26,7 +26,8 @@ export default defineNitroPlugin((_nitroApp) => {
       method: event.node.req.method!,
       url,
       ip:
-        (event.node.req.headers['x-forwarded-for'] as string) || event.node.req.socket.remoteAddress,
+        (event.node.req.headers['x-forwarded-for'] as string) ||
+        event.node.req.socket.remoteAddress,
       userAgent: event.node.req.headers['user-agent'] as string,
     };
 

@@ -11,9 +11,7 @@ onMounted(() => fetchTodos());
 <template>
   <UCard>
     <template #header>
-      <h1 class="text-3xl font-bold">
-        My Todos
-      </h1>
+      <h1 class="text-3xl font-bold">My Todos</h1>
     </template>
 
     <TodoList />

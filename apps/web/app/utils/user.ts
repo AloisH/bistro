@@ -1,7 +1,9 @@
 /**
  * Get initials from user name or email for avatar display
  */
-export function getUserInitials(user: { name?: string; email?: string } | null | undefined): string {
+export function getUserInitials(
+  user: { name?: string; email?: string } | null | undefined,
+): string {
   if (!user) return 'U';
 
   const name = user.name || user.email || '';

@@ -4,7 +4,12 @@ import type {
   InviteMemberInput,
   UpdateOrganizationInput,
 } from '#shared/organization';
-import type { Organization, OrganizationInvite, OrganizationMember, OrganizationRole } from '../../../prisma/generated/client';
+import type {
+  Organization,
+  OrganizationInvite,
+  OrganizationMember,
+  OrganizationRole,
+} from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
 import { organizationRepository } from './organization-repository';
 
@@ -43,7 +48,10 @@ export class OrganizationService {
   /**
    * Check if user is OWNER or ADMIN
    */
-  private async checkIsOwnerOrAdmin(userId: string, organizationId: string): Promise<OrganizationMember> {
+  private async checkIsOwnerOrAdmin(
+    userId: string,
+    organizationId: string,
+  ): Promise<OrganizationMember> {
     const membership = await this.checkIsMember(userId, organizationId);
 
     if (membership.role !== 'OWNER' && membership.role !== 'ADMIN') {
@@ -128,9 +136,18 @@ export class OrganizationService {
    * Get organization with members
    * User must be a member
    */
-  async getOrganization(userId: string, organizationId: string): Promise<Organization & {
-    members: Array<OrganizationMember & { user: { id: string; name: string; email: string; image: string | null } }>;
-  }> {
+  async getOrganization(
+    userId: string,
+    organizationId: string,
+  ): Promise<
+    Organization & {
+      members: Array<
+        OrganizationMember & {
+          user: { id: string; name: string; email: string; image: string | null };
+        }
+      >;
+    }
+  > {
     // Check membership
     await this.checkIsMember(userId, organizationId);
 
@@ -276,7 +293,10 @@ export class OrganizationService {
     }
 
     // Check not already a member
-    const existingMembership = await organizationRepository.findMembership(userId, invite.organizationId);
+    const existingMembership = await organizationRepository.findMembership(
+      userId,
+      invite.organizationId,
+    );
     if (existingMembership) {
       throw createError({
         statusCode: 409,
@@ -330,7 +350,10 @@ export class OrganizationService {
     }
 
     // Check target is member
-    const targetMembership = await organizationRepository.findMembership(targetUserId, organizationId);
+    const targetMembership = await organizationRepository.findMembership(
+      targetUserId,
+      organizationId,
+    );
     if (!targetMembership) {
       throw createError({
         statusCode: 404,
@@ -351,7 +374,10 @@ export class OrganizationService {
     await this.checkIsOwnerOrAdmin(userId, organizationId);
 
     // Check target is member
-    const targetMembership = await organizationRepository.findMembership(targetUserId, organizationId);
+    const targetMembership = await organizationRepository.findMembership(
+      targetUserId,
+      organizationId,
+    );
     if (!targetMembership) {
       throw createError({
         statusCode: 404,

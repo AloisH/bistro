@@ -1,7 +1,12 @@
 import type { EventHandlerRequest, H3Event } from 'h3';
 import type { ZodSchema } from 'zod';
 import { serverAuth } from '../features/auth/auth-session';
-import { addUserContext, addOrgContext, setRequestContext, runWithContext } from './request-context';
+import {
+  addUserContext,
+  addOrgContext,
+  setRequestContext,
+  runWithContext,
+} from './request-context';
 import { db } from './db';
 import { getLogger } from './logger';
 

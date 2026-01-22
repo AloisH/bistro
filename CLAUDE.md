@@ -978,6 +978,75 @@ This pattern inspired by Django's `TransactionTestCase`:
 - `beforeAll` equivalent to Django `setUpTestData` (persists)
 - `beforeEach` equivalent to Django `setUp` (per-test)
 
+### H3 Event Mocking
+
+**Use h3's `createEvent` for proper H3Event instances:**
+
+```typescript
+import { createEvent } from 'h3';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+
+// Create mock req/res, then use h3's factory
+const mockReq = { headers: {}, method: 'GET', url: '/' } as unknown as IncomingMessage;
+const mockRes = { statusCode: 200 } as unknown as ServerResponse;
+const event = createEvent(mockReq, mockRes);
+
+// Set context for h3 utilities
+event.context.params = { id: 'todo-123' };
+```
+
+**Why not plain objects:**
+
+- H3Event is a class, not an interface
+- Plain objects won't have correct prototype chain
+- h3 utilities expect actual H3Event instances
+
+**Test helpers location:** `server/testing/testHelpers.ts`
+
+- `createMockEvent(options)` - unauthenticated requests
+- `createAuthEvent(user, options)` - authenticated requests with session
+
+### Nuxt Auto-imports in Tests
+
+**Don't re-declare globals that Nuxt provides:**
+
+```typescript
+// ❌ DON'T: Conflicts with Nuxt's auto-imports
+declare global {
+  var createError: (input: string) => Error;
+}
+
+// ✅ DO: Just provide runtime fallback, Nuxt provides the type
+const g = globalThis as Record<string, unknown>;
+if (typeof g.createError === 'undefined') {
+  g.createError = (input) => new Error(input);
+}
+```
+
+Nuxt auto-imports `createError`, `defineEventHandler`, etc. from h3. Test setup only needs runtime fallbacks for when Nuxt runtime isn't available.
+
+### Acceptable Type Casts
+
+When casts are unavoidable (e.g., Node stream interfaces), contain them in helper functions:
+
+```typescript
+// ✅ DO: Explicit interface + documented cast in helper
+interface MockIncomingMessageData {
+  headers: Record<string, string>;
+  method: string;
+  url: string;
+}
+
+function createMockIncomingMessage(method: string): IncomingMessage {
+  const mockData: MockIncomingMessageData = { headers: {}, method, url: '/' };
+  // Cast needed: IncomingMessage extends stream.Readable
+  return mockData as unknown as IncomingMessage;
+}
+
+// ❌ DON'T: Inline casts without explanation
+const event = { node: {}, headers: {} } as unknown as H3Event;
+```
+
 ## Authentication
 
 Better Auth (email/password implemented, OAuth planned):

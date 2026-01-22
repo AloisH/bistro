@@ -40,7 +40,9 @@
 
           <div class="space-y-4">
             <div>
-              <p class="text-sm text-neutral-600 dark:text-neutral-400">You are about to impersonate:</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                You are about to impersonate:
+              </p>
               <p class="mt-1 font-semibold">{{ selectedUser?.name || selectedUser?.email }}</p>
               <p class="text-sm text-neutral-500">{{ selectedUser?.email }}</p>
             </div>

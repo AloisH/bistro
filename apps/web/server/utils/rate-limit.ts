@@ -16,17 +16,14 @@ interface RateLimitConfig {
 const store = new Map<string, RateLimitEntry>();
 
 // Cleanup old entries periodically
-setInterval(
-  () => {
-    const now = Date.now();
-    for (const [key, entry] of store) {
-      if (entry.resetAt < now) {
-        store.delete(key);
-      }
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of store) {
+    if (entry.resetAt < now) {
+      store.delete(key);
     }
-  },
-  60 * 1000,
-); // Clean every minute
+  }
+}, 60 * 1000); // Clean every minute
 
 /**
  * Rate limit configurations by endpoint type

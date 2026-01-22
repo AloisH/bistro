@@ -2,12 +2,10 @@
   <div class="pb-6">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
-        <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">
-          Danger Zone
-        </h2>
+        <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">Danger Zone</h2>
         <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Once you delete your account, there is no going back. All your data will be
-          permanently deleted.
+          Once you delete your account, there is no going back. All your data will be permanently
+          deleted.
         </p>
       </div>
     </div>

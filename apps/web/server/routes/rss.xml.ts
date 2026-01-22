@@ -34,9 +34,10 @@ export default defineEventHandler(async (event) => {
     // Handle image URL - check if it's already a full URL or a relative path
     let imageUrl: string | undefined;
     if (post.image) {
-      imageUrl = post.image.startsWith('http://') || post.image.startsWith('https://')
-        ? post.image
-        : `${siteUrl}${post.image}`;
+      imageUrl =
+        post.image.startsWith('http://') || post.image.startsWith('https://')
+          ? post.image
+          : `${siteUrl}${post.image}`;
     }
 
     feed.addItem({

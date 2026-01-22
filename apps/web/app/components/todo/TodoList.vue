@@ -4,7 +4,7 @@
     <TodoCreateForm />
 
     <!-- Filter and Sort Controls -->
-    <div class="flex items-center justify-between gap-4 flex-wrap">
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <!-- Filter tabs -->
       <div class="flex items-center gap-2">
         <UIcon
@@ -76,7 +76,7 @@
       <div
         v-for="i in 3"
         :key="i"
-        class="flex items-center justify-between rounded-lg border border-default p-4"
+        class="border-default flex items-center justify-between rounded-lg border p-4"
       >
         <div class="flex items-center gap-3">
           <USkeleton class="h-5 w-5 rounded" />
@@ -105,7 +105,7 @@
       <div
         v-for="todo in todos"
         :key="todo.id"
-        class="flex items-start gap-3 rounded-lg border border-default p-4"
+        class="border-default flex items-start gap-3 rounded-lg border p-4"
       >
         <UCheckbox
           :model-value="todo.completed"
@@ -116,7 +116,7 @@
           <div
             class="truncate"
             :class="{
-              'line-through text-neutral-400 dark:text-neutral-500': todo.completed,
+              'text-neutral-400 line-through dark:text-neutral-500': todo.completed,
               'font-medium text-neutral-900 dark:text-white': !todo.completed,
             }"
           >
@@ -150,11 +150,9 @@
       <!-- Pagination -->
       <div
         v-if="totalPages > 1"
-        class="flex items-center justify-between border-t border-default pt-4"
+        class="border-default flex items-center justify-between border-t pt-4"
       >
-        <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          {{ total }} total
-        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ total }} total</p>
         <div class="flex items-center gap-2">
           <UButton
             icon="i-lucide-chevron-left"

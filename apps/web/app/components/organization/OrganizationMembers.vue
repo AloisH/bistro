@@ -46,7 +46,15 @@ const columns = [
     id: 'name',
     accessorKey: 'user.name',
     header: 'Name',
-    cell: ({ row }: { row: { original: OrganizationMember & { user: { name: string; email: string; image: string | null } } } }) => {
+    cell: ({
+      row,
+    }: {
+      row: {
+        original: OrganizationMember & {
+          user: { name: string; email: string; image: string | null };
+        };
+      };
+    }) => {
       const user = row.original.user;
       return h('div', { class: 'flex items-center gap-2' }, [
         h(resolveComponent('UAvatar'), {
@@ -62,17 +70,22 @@ const columns = [
     id: 'email',
     accessorKey: 'user.email',
     header: 'Email',
-    cell: ({ row }: { row: { original: OrganizationMember & { user: { email: string } } } }) => row.original.user.email,
+    cell: ({ row }: { row: { original: OrganizationMember & { user: { email: string } } } }) =>
+      row.original.user.email,
   },
   {
     id: 'role',
     accessorKey: 'role',
     header: 'Role',
     cell: ({ row }: { row: { original: OrganizationMember } }) => {
-      return h(resolveComponent('UBadge'), {
-        color: roleColors[row.original.role as keyof typeof roleColors],
-        icon: roleIcons[row.original.role as keyof typeof roleIcons],
-      }, () => row.original.role);
+      return h(
+        resolveComponent('UBadge'),
+        {
+          color: roleColors[row.original.role as keyof typeof roleColors],
+          icon: roleIcons[row.original.role as keyof typeof roleIcons],
+        },
+        () => row.original.role,
+      );
     },
   },
   {
@@ -85,35 +98,44 @@ const columns = [
       const canEdit = isOwner.value && !isSelf;
       const canRemove = canManageMembers.value && !isSelf;
 
-      return h('div', { class: 'flex gap-2' }, [
-        // Role dropdown (OWNER only, not self)
-        canEdit
-          ? h(resolveComponent('USelect'), {
-              'modelValue': member.role,
-              'options': [
-                { value: 'OWNER', label: 'Owner' },
-                { value: 'ADMIN', label: 'Admin' },
-                { value: 'MEMBER', label: 'Member' },
-                { value: 'GUEST', label: 'Guest' },
-              ],
-              'onUpdate:modelValue': (newRole: OrganizationRole) => handleRoleChange(member.userId, newRole),
-            })
-          : h(resolveComponent('UBadge'), {
-              color: roleColors[member.role as keyof typeof roleColors],
-              icon: roleIcons[member.role as keyof typeof roleIcons],
-            }, () => member.role),
+      return h(
+        'div',
+        { class: 'flex gap-2' },
+        [
+          // Role dropdown (OWNER only, not self)
+          canEdit
+            ? h(resolveComponent('USelect'), {
+                'modelValue': member.role,
+                'options': [
+                  { value: 'OWNER', label: 'Owner' },
+                  { value: 'ADMIN', label: 'Admin' },
+                  { value: 'MEMBER', label: 'Member' },
+                  { value: 'GUEST', label: 'Guest' },
+                ],
+                'onUpdate:modelValue': (newRole: OrganizationRole) =>
+                  handleRoleChange(member.userId, newRole),
+              })
+            : h(
+                resolveComponent('UBadge'),
+                {
+                  color: roleColors[member.role as keyof typeof roleColors],
+                  icon: roleIcons[member.role as keyof typeof roleIcons],
+                },
+                () => member.role,
+              ),
 
-        // Remove button (OWNER/ADMIN, not self)
-        canRemove
-          ? h(resolveComponent('UButton'), {
-              icon: 'i-lucide-trash-2',
-              size: 'xs',
-              color: 'error',
-              variant: 'ghost',
-              onClick: () => openRemoveModal(member.userId),
-            })
-          : null,
-      ].filter(Boolean));
+          // Remove button (OWNER/ADMIN, not self)
+          canRemove
+            ? h(resolveComponent('UButton'), {
+                icon: 'i-lucide-trash-2',
+                size: 'xs',
+                color: 'error',
+                variant: 'ghost',
+                onClick: () => openRemoveModal(member.userId),
+              })
+            : null,
+        ].filter(Boolean),
+      );
     },
   },
 ];
@@ -209,9 +231,7 @@ async function confirmRemove() {
 <template>
   <div class="space-y-4">
     <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">
-        Members
-      </h2>
+      <h2 class="text-xl font-semibold">Members</h2>
       <UButton
         v-if="isOwner"
         icon="i-lucide-user-plus"
@@ -230,9 +250,7 @@ async function confirmRemove() {
       <template #content="{ close }">
         <UCard>
           <template #header>
-            <h3 class="text-lg font-semibold">
-              Invite Member
-            </h3>
+            <h3 class="text-lg font-semibold">Invite Member</h3>
           </template>
 
           <UForm
@@ -295,9 +313,7 @@ async function confirmRemove() {
       <template #content="{ close }">
         <UCard>
           <template #header>
-            <h3 class="text-lg font-semibold">
-              Remove Member
-            </h3>
+            <h3 class="text-lg font-semibold">Remove Member</h3>
           </template>
 
           <p>Are you sure you want to remove this member?</p>

@@ -61,7 +61,10 @@ describe('validateEnv', () => {
       const result = validateEnv(validBaseEnv, true);
       expect(result.success).toBe(false);
       if (!result.success) {
-        const fieldErrors = result.error.flatten().fieldErrors as Record<string, string[] | undefined>;
+        const fieldErrors = result.error.flatten().fieldErrors as Record<
+          string,
+          string[] | undefined
+        >;
         expect(fieldErrors['AUTH_TRUSTED_ORIGINS']).toBeDefined();
       }
     });
@@ -75,8 +78,7 @@ describe('validateEnv', () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         const errors = result.error.flatten();
-        const authSecretError =
-          errors.fieldErrors.AUTH_SECRET?.[0] || errors.formErrors[0];
+        const authSecretError = errors.fieldErrors.AUTH_SECRET?.[0] || errors.formErrors[0];
         expect(authSecretError).toContain('default');
       }
     });
@@ -86,7 +88,10 @@ describe('validateEnv', () => {
       const result = validateEnv(env, true);
       expect(result.success).toBe(false);
       if (!result.success) {
-        const fieldErrors = result.error.flatten().fieldErrors as Record<string, string[] | undefined>;
+        const fieldErrors = result.error.flatten().fieldErrors as Record<
+          string,
+          string[] | undefined
+        >;
         expect(fieldErrors['AUTH_TRUSTED_ORIGINS']?.[0]).toContain('https://');
       }
     });

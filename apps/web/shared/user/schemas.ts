@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { NAME_MIN_LENGTH, NAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, BIO_MAX_LENGTH, COMPANY_MAX_LENGTH, ONBOARDING_STEPS, USE_CASES } from './constants';
+import {
+  NAME_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  BIO_MAX_LENGTH,
+  COMPANY_MAX_LENGTH,
+  ONBOARDING_STEPS,
+  USE_CASES,
+} from './constants';
 
 /**
  * User validation schemas
@@ -12,7 +20,9 @@ export const updateProfileSchema = z.object({
 
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(NAME_MIN_LENGTH, 'Current password is required'),
-  newPassword: z.string().min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
+  newPassword: z
+    .string()
+    .min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`),
   revokeOtherSessions: z.boolean().optional(),
 });
 

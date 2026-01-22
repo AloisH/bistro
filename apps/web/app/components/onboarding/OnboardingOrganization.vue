@@ -26,9 +26,7 @@ watch(
 <template>
   <div class="space-y-6">
     <div>
-      <h3 class="mb-2 text-lg font-semibold">
-        Create Your Organization
-      </h3>
+      <h3 class="mb-2 text-lg font-semibold">Create Your Organization</h3>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Organizations help you collaborate with your team
       </p>

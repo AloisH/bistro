@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-default pb-6">
+  <div class="border-default border-b pb-6">
     <h2 class="mb-6 text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
       Profile Information
     </h2>

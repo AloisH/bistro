@@ -1,11 +1,9 @@
 <template>
   <div class="container mx-auto px-4 py-12">
-    <div class="max-w-2xl mx-auto">
+    <div class="mx-auto max-w-2xl">
       <!-- Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
-          Contact Us
-        </h1>
+      <div class="mb-12 text-center">
+        <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">Contact Us</h1>
         <p class="text-lg text-neutral-600 dark:text-neutral-400">
           Have a question or feedback? We'd love to hear from you.
         </p>
