@@ -1,9 +1,9 @@
 import { Resend } from 'resend';
 import { getLogger } from '../../utils/logger';
 
-const globalForResend = globalThis as unknown as {
-  resend: Resend | undefined;
-};
+declare global {
+  var resend: Resend | undefined;
+}
 
 function createResendClient(): Resend | undefined {
   const apiKey = process.env.RESEND_API_KEY;
@@ -16,8 +16,8 @@ function createResendClient(): Resend | undefined {
   return new Resend(apiKey);
 }
 
-export const resend = globalForResend.resend ?? createResendClient();
+export const resend = globalThis.resend ?? createResendClient();
 
 if (process.env.NODE_ENV !== 'production') {
-  globalForResend.resend = resend;
+  globalThis.resend = resend;
 }
