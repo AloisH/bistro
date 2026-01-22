@@ -1,5 +1,7 @@
 /**
  * Test setup - provides globals that are auto-imported by Nuxt/H3
+ *
+ * Only defines createError if not already available (Nuxt provides it)
  */
 
 interface ErrorOptions {
@@ -23,18 +25,13 @@ class H3Error extends Error {
   }
 }
 
-function createError(input: string | ErrorOptions): H3Error {
-  if (typeof input === 'string') {
-    return new H3Error(input);
-  }
-  return new H3Error(input.message || input.statusMessage || 'Error', input);
+// Only define createError if not already available (Nuxt auto-imports it)
+const g = globalThis as unknown as Record<string, unknown>;
+if (typeof g.createError === 'undefined') {
+  g.createError = (input: string | ErrorOptions): H3Error => {
+    if (typeof input === 'string') {
+      return new H3Error(input);
+    }
+    return new H3Error(input.message || input.statusMessage || 'Error', input);
+  };
 }
-
-// Make createError available globally for tests
-// This mimics Nuxt's auto-import behavior
-declare global {
-
-  var createError: typeof createError;
-}
-
-globalThis.createError = createError;
