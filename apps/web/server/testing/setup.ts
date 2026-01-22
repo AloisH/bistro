@@ -1,11 +1,10 @@
 /**
  * Test setup - provides globals that are auto-imported by Nuxt/H3
  *
- * Only defines createError if not already available (Nuxt provides it)
+ * Nuxt auto-imports createError from h3 which provides the type.
+ * This file provides a runtime fallback for test environments where
+ * the Nuxt runtime isn't available.
  */
-
-// Make this file a module so declare global works
-export {};
 
 interface ErrorOptions {
   statusCode?: number;
@@ -28,14 +27,11 @@ class H3Error extends Error {
   }
 }
 
-// Type declaration for test globals
-declare global {
-  var createError: ((input: string | ErrorOptions) => H3Error) | undefined;
-}
-
-// Only define createError if not already available (Nuxt auto-imports it)
-if (typeof globalThis.createError === 'undefined') {
-  globalThis.createError = (input: string | ErrorOptions): H3Error => {
+// Runtime fallback: define createError if not already available from Nuxt
+// Type comes from h3 via Nuxt auto-imports, we just provide the implementation
+const g = globalThis as Record<string, unknown>;
+if (typeof g.createError === 'undefined') {
+  g.createError = (input: string | ErrorOptions): H3Error => {
     if (typeof input === 'string') {
       return new H3Error(input);
     }

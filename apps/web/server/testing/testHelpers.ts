@@ -15,77 +15,69 @@ export interface MockEventOptions {
 }
 
 /**
+ * Minimal mock of IncomingMessage properties used by h3.
+ * h3 reads: headers, method, url for request handling.
+ */
+interface MockIncomingMessageData {
+  headers: Record<string, string | string[] | undefined>;
+  method: string;
+  url: string;
+}
+
+/**
  * Creates a minimal mock IncomingMessage for h3 event creation.
- * Implements only the properties that h3 utilities actually read.
+ * Cast is necessary because IncomingMessage requires stream properties
+ * that h3 doesn't actually use for our test scenarios.
  */
 function createMockIncomingMessage(
   method: string,
   headers: Record<string, string>,
 ): IncomingMessage {
-  return {
+  const mockData: MockIncomingMessageData = {
     headers: {
       ...headers,
       'content-type': headers['content-type'] || 'application/json',
     },
     method,
     url: '/',
-    // Required by IncomingMessage interface but not used by h3
-    httpVersion: '1.1',
-    httpVersionMajor: 1,
-    httpVersionMinor: 1,
-    complete: true,
-    rawHeaders: Object.entries(headers).flat(),
-    rawTrailers: [],
-    trailers: {},
-    aborted: false,
-    socket: null,
-    // Minimal stream implementation
-    readable: false,
-    readableAborted: false,
-    readableDidRead: false,
-    readableEncoding: null,
-    readableEnded: true,
-    readableFlowing: null,
-    readableHighWaterMark: 0,
-    readableLength: 0,
-    readableObjectMode: false,
-    destroyed: false,
-    closed: false,
-    errored: null,
-  } as IncomingMessage;
+  };
+  // IncomingMessage extends stream.Readable which has many required methods.
+  // For h3 event testing, only headers/method/url are actually read.
+  return mockData as unknown as IncomingMessage;
+}
+
+/**
+ * Minimal mock of ServerResponse properties used by h3.
+ * h3 writes: statusCode, headers via setHeader/getHeader.
+ */
+interface MockServerResponseData {
+  statusCode: number;
+  statusMessage: string;
+  headersSent: boolean;
+  setHeader: () => void;
+  getHeader: () => undefined;
+  getHeaders: () => Record<string, never>;
+  end: () => void;
 }
 
 /**
  * Creates a minimal mock ServerResponse for h3 event creation.
- * Implements only the properties that h3 utilities actually read.
+ * Cast is necessary because ServerResponse requires stream properties
+ * that h3 doesn't actually use for our test scenarios.
  */
 function createMockServerResponse(): ServerResponse {
-  return {
+  const mockData: MockServerResponseData = {
     statusCode: 200,
     statusMessage: 'OK',
     headersSent: false,
-    finished: false,
-    // Minimal writable stream implementation
-    writable: true,
-    writableEnded: false,
-    writableFinished: false,
-    writableHighWaterMark: 0,
-    writableLength: 0,
-    writableObjectMode: false,
-    writableCorked: 0,
-    destroyed: false,
-    closed: false,
-    errored: null,
-    // Stub methods that handlers might call
     setHeader: () => {},
     getHeader: () => undefined,
     getHeaders: () => ({}),
-    hasHeader: () => false,
-    removeHeader: () => {},
-    write: () => true,
     end: () => {},
-    flushHeaders: () => {},
-  } as unknown as ServerResponse;
+  };
+  // ServerResponse extends stream.Writable which has many required methods.
+  // For h3 event testing, only status and header methods are actually used.
+  return mockData as unknown as ServerResponse;
 }
 
 /**
