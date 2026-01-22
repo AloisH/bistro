@@ -170,10 +170,8 @@ async function onSubmit() {
   }
 }
 
-useSeoMeta({
-  title: 'Contact - Bistro',
+useSeo({
+  title: 'Contact',
   description: 'Get in touch with the Bistro team for support, feedback, or general inquiries.',
-  ogTitle: 'Contact - Bistro',
-  ogDescription: 'Get in touch with the Bistro team for support, feedback, or general inquiries.',
 });
 </script>

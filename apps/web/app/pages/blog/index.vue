@@ -283,11 +283,9 @@ watch(
 );
 
 // SEO
-useSeoMeta({
-  title: 'Blog - Bistro',
+useSeo({
+  title: 'Blog',
   description: 'Latest articles and updates from Bistro',
-  ogTitle: 'Blog - Bistro',
-  ogDescription: 'Latest articles and updates from Bistro',
 });
 </script>
 

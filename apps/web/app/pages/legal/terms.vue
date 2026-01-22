@@ -16,11 +16,9 @@ if (!page.value) {
 }
 
 // SEO
-useSeoMeta({
+useSeo({
   title: page.value.title,
   description: page.value.description,
-  ogTitle: page.value.title,
-  ogDescription: page.value.description,
 });
 </script>
 

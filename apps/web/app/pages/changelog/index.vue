@@ -212,10 +212,8 @@ watch(
   },
 );
 
-useSeoMeta({
-  title: 'Changelog - Bistro',
+useSeo({
+  title: 'Changelog',
   description: 'Track new features, improvements, and bug fixes in Bistro.',
-  ogTitle: 'Changelog - Bistro',
-  ogDescription: 'Track new features, improvements, and bug fixes in Bistro.',
 });
 </script>

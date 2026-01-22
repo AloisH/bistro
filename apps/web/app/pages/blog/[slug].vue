@@ -140,14 +140,13 @@ if (!post.value) {
 }
 
 // SEO
-useSeoMeta({
+useSeo({
   title: post.value.title,
   description: post.value.description,
-  ogTitle: post.value.title,
-  ogDescription: post.value.description,
-  ogImage: post.value.image,
-  articlePublishedTime: post.value.date,
-  articleTag: post.value.tags,
+  image: post.value.image,
+  type: 'article',
+  publishedTime: post.value.date,
+  tags: post.value.tags,
 });
 
 // Format date
