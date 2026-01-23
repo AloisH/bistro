@@ -50,6 +50,7 @@ const items = computed(() => [
         trailing-icon="i-lucide-chevron-down"
         block
         class="group hover:bg-neutral-100 dark:hover:bg-neutral-800"
+        :aria-label="`Switch organization, current: ${activeOrganization.name}`"
       >
         <div class="flex items-center gap-2">
           <UAvatar

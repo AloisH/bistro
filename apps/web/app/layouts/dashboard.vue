@@ -1,12 +1,15 @@
 <template>
   <UDashboardGroup>
     <UDashboardSidebar
+      v-model:collapsed="sidebarCollapsed"
       resizable
       collapsible
       :ui="{
         footer: 'border-t border-default',
       }"
       class="bg-default border-default border-r"
+      role="navigation"
+      aria-label="Main navigation"
     >
       <template #header="{ collapsed }">
         <div
@@ -81,13 +84,19 @@
         </template>
       </UDashboardNavbar>
 
-      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+      <main
+        id="main-content"
+        class="flex-1 overflow-y-auto p-4 sm:p-6"
+        role="main"
+        aria-label="Main content"
+      >
         <slot />
-      </div>
+      </main>
     </UDashboardPanel>
 
     <AdminImpersonationBanner />
     <DashboardCommandPalette v-model:open="commandPaletteOpen" />
+    <DashboardShortcutsHelp v-model:open="shortcutsHelpOpen" />
   </UDashboardGroup>
 </template>
 
@@ -98,8 +107,17 @@ const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
 const { activeOrgSlug, fetchOrganizations } = useOrganization();
 
-// Command palette state
+// UI state
 const commandPaletteOpen = ref(false);
+const shortcutsHelpOpen = ref(false);
+const sidebarCollapsed = ref(false);
+
+// Global keyboard shortcuts
+useKeyboardShortcuts({
+  onOpenCommandPalette: () => (commandPaletteOpen.value = true),
+  onToggleSidebar: () => (sidebarCollapsed.value = !sidebarCollapsed.value),
+  onOpenShortcutsHelp: () => (shortcutsHelpOpen.value = true),
+});
 
 // Fetch orgs on mount for sidebar
 onMounted(() => fetchOrganizations());

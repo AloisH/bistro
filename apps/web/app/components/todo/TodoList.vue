@@ -1,5 +1,14 @@
 <template>
   <div class="space-y-6">
+    <!-- Screen reader announcements -->
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      class="sr-only"
+    >
+      {{ statusMessage }}
+    </div>
+
     <!-- Create form -->
     <TodoCreateForm />
 
@@ -194,6 +203,14 @@ const {
   toggleTodo,
   deleteTodo,
 } = useTodos();
+
+// Status message for screen readers
+const statusMessage = computed(() => {
+  if (loading.value) return 'Loading todos...';
+  if (todos.value.length === 0) return 'No todos found.';
+  const completed = todos.value.filter(t => t.completed).length;
+  return `${todos.value.length} todos, ${completed} completed.`;
+});
 
 async function handleToggle(id: string, completed: string | boolean) {
   await toggleTodo(id, Boolean(completed));

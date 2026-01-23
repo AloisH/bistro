@@ -4,23 +4,12 @@ import type { CreateOrganizationInput } from '#shared/organization';
 
 const model = defineModel<CreateOrganizationInput>({ required: true });
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-watch(
-  () => model.value.name,
-  (newName, oldName) => {
-    if (!model.value.slug || model.value.slug === slugify(oldName || '')) {
-      model.value.slug = slugify(newName);
-    }
-  },
-);
+const name = computed(() => model.value.name);
+const slug = computed({
+  get: () => model.value.slug,
+  set: v => (model.value.slug = v),
+});
+useSlugify(name, slug);
 </script>
 
 <template>

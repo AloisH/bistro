@@ -2,6 +2,7 @@
   <UForm
     :state="state"
     :schema="createTodoSchema"
+    aria-label="Create new todo"
     @submit.prevent="onSubmit"
   >
     <div class="space-y-3">
