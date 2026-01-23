@@ -9,7 +9,7 @@
       <UForm
         :state="state"
         :schema="resetPasswordSchema"
-        @submit.prevent="onSubmit"
+        @submit.prevent="submit"
       >
         <UFormField
           name="password"
@@ -71,66 +71,5 @@
 <script setup lang="ts">
 import { resetPasswordSchema } from '#shared/auth';
 
-const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
-const route = useRoute();
-const toast = useToast();
-
-const token = ref(route.query.token as string);
-
-// Redirect if already authenticated, or if no token
-onMounted(async () => {
-  await fetchSession();
-  if (loggedIn.value) {
-    await redirectToUserDashboard();
-    return;
-  }
-
-  if (!token.value) {
-    toast.add({
-      title: 'Invalid link',
-      description: 'Password reset link is missing or invalid',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    navigateTo({ name: 'auth-forgot-password' });
-  }
-});
-
-const state = reactive({
-  password: '',
-  confirmPassword: '',
-});
-
-const loading = ref(false);
-const error = ref('');
-
-async function onSubmit() {
-  loading.value = true;
-  error.value = '';
-
-  try {
-    const result = await client.resetPassword({
-      newPassword: state.password,
-      token: token.value,
-    });
-
-    if (result.error) {
-      error.value = result.error.message || 'Failed to reset password';
-      return;
-    }
-
-    toast.add({
-      title: 'Password updated',
-      description: 'You can now sign in with your new password',
-      color: 'success',
-      icon: 'i-lucide-check',
-    });
-
-    await navigateTo({ name: 'auth-login' });
-  } catch (e: unknown) {
-    error.value = getErrorMessage(e, 'Invalid or expired reset link');
-  } finally {
-    loading.value = false;
-  }
-}
+const { state, loading, error, submit } = usePasswordReset();
 </script>
