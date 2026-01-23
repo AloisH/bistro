@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/content',
     '@nuxt/ui',
+    '@nuxt/image',
     '@nuxt/test-utils/module',
     'nuxt-security',
     '@nuxtjs/sitemap',
@@ -134,6 +135,12 @@ export default defineNuxtConfig({
         semi: true,
       },
     },
+  },
+
+  // Image optimization
+  image: {
+    formats: ['avif', 'webp'],
+    quality: 80,
   },
 
   // Security headers

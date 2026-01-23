@@ -90,11 +90,12 @@
           <!-- Image -->
           <template #header>
             <div class="relative -m-6 mb-0 aspect-video overflow-hidden">
-              <img
+              <NuxtImg
                 :src="post.image"
                 :alt="post.title"
+                loading="lazy"
                 class="h-full w-full object-cover"
-              >
+              />
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               />

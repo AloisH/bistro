@@ -29,12 +29,13 @@
       <!-- Hero image with overlay -->
       <div class="relative -mx-4 mb-12 sm:mx-0">
         <div class="relative h-[400px] overflow-hidden rounded-3xl">
-          <img
+          <NuxtImg
             v-if="post.image"
             :src="post.image"
             :alt="post.title"
+            loading="eager"
             class="h-full w-full object-cover"
-          >
+          />
           <!-- Gradient overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
