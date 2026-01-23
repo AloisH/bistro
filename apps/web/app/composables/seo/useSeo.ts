@@ -30,22 +30,31 @@ export function useSeo(options: SeoOptions) {
     ? options.title
     : `${options.title} - Bistro`;
 
-  const image = options.image || '/og-image.png';
-  // Ensure image is absolute URL
-  const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+  // Use provided image or let nuxt-og-image generate dynamically
+  const hasCustomImage = !!options.image;
+  const absoluteImage = hasCustomImage
+    ? (options.image!.startsWith('http') ? options.image! : `${siteUrl}${options.image}`)
+    : undefined;
 
   useSeoMeta({
     title: fullTitle,
     description: options.description,
     ogTitle: fullTitle,
     ogDescription: options.description,
-    ogImage: absoluteImage,
     ogType: options.type || 'website',
     twitterCard: 'summary_large_image',
-    twitterImage: absoluteImage,
+    ...(absoluteImage && { ogImage: absoluteImage, twitterImage: absoluteImage }),
     ...(options.publishedTime && { articlePublishedTime: options.publishedTime }),
     ...(options.tags?.length && { articleTag: options.tags }),
   });
+
+  // Generate dynamic OG image if no custom image provided
+  if (!hasCustomImage) {
+    defineOgImageComponent('NuxtSeo', {
+      title: options.title,
+      description: options.description,
+    });
+  }
 
   // Build head arrays
   const links: { rel: string; href: string }[] = [];
@@ -58,12 +67,15 @@ export function useSeo(options: SeoOptions) {
 
   // Add JSON-LD for articles (BlogPosting schema)
   if (options.type === 'article' && options.publishedTime) {
+    // For JSON-LD, use custom image or the dynamic OG image URL
+    const schemaImage = absoluteImage || `${siteUrl}/__og-image__/image${route.path}/og.png`;
+
     const blogPostingSchema = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       'headline': options.title,
       'description': options.description,
-      'image': absoluteImage,
+      'image': schemaImage,
       'datePublished': options.publishedTime,
       'url': `${siteUrl}${route.path}`,
       ...(options.authorName && {

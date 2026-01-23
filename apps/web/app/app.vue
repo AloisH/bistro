@@ -36,9 +36,13 @@ useSeoMeta({
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: '/og-image.png',
-  twitterImage: '/og-image.png',
   twitterCard: 'summary_large_image',
+});
+
+// Dynamic OG image generation
+defineOgImageComponent('NuxtSeo', {
+  title,
+  description,
 });
 </script>
 

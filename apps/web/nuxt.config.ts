@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-security',
     '@nuxtjs/sitemap',
+    'nuxt-og-image',
   ],
 
   // Auto-import components from nested feature directories
@@ -147,8 +148,17 @@ export default defineNuxtConfig({
 
   // Image optimization
   image: {
-    formats: ['avif', 'webp'],
+    format: ['avif', 'webp'],
     quality: 80,
+  },
+
+  // OG Image generation
+  ogImage: {
+    defaults: {
+      component: 'NuxtSeo',
+      width: 1200,
+      height: 630,
+    },
   },
 
   // Security headers
