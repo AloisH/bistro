@@ -55,21 +55,5 @@ export default defineEventHandler(async (event): Promise<SitemapUrl[]> => {
     // Content collection may not exist
   }
 
-  // Changelog entries
-  try {
-    const changelogEntries = await queryCollection(event, 'changelog').all();
-    for (const entry of changelogEntries) {
-      if (entry.path) {
-        urls.push({
-          loc: entry.path,
-          changefreq: 'monthly',
-          priority: 0.5,
-        });
-      }
-    }
-  } catch {
-    // Content collection may not exist
-  }
-
   return urls;
 });
