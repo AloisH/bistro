@@ -101,6 +101,16 @@ Then refer to SOPs for specific tasks.
   - Optimistic UI updates
   - Use as template for your features
 
+### Testing
+
+- **[Testing Infrastructure](./System/testing_infrastructure.md)**
+  - Transaction-per-test pattern
+  - Fixture factories (createTestUser, createTestOrg, createTestTodo)
+  - Repository testing patterns
+  - H3 event mocking
+  - Edge cases and gotchas
+  - Running tests
+
 ---
 
 ## Component Documentation
@@ -199,6 +209,17 @@ Then refer to SOPs for specific tasks.
   - Auto-imports
   - Common scenarios (redirect, loading, 404)
   - Troubleshooting
+
+### General
+
+- **[Troubleshooting](./SOP/troubleshooting.md)**
+  - Database issues (Prisma, connections, types)
+  - Authentication issues (OAuth, sessions)
+  - Build & CI issues
+  - Testing issues
+  - Development issues
+  - Docker issues
+  - Quick fixes checklist
 
 ---
 
@@ -368,16 +389,18 @@ All engineers should contribute to documentation:
 │   ├── authentication_system.md          # Auth flows, RBAC, impersonation
 │   ├── onboarding_system.md              # 5-step user onboarding
 │   ├── organizations_system.md           # Multi-tenancy, invites, roles
-│   └── todos_system.md                   # Todo example (CRUD template)
+│   ├── todos_system.md                   # Todo example (CRUD template)
+│   └── testing_infrastructure.md         # Test patterns, fixtures, mocking
 ├── SOP/                                   # Best practices for tasks
 │   ├── database_migrations.md            # Schema changes workflow
 │   ├── adding_api_endpoints.md           # Backend endpoint creation
 │   ├── adding_pages.md                   # Frontend page creation
-│   └── bun_vite_configuration.md         # Bun + Vite setup, troubleshooting
+│   ├── bun_vite_configuration.md         # Bun + Vite setup
+│   └── troubleshooting.md                # Common issues and fixes
 └── Tasks/                                 # PRD + implementation plans
     └── (placeholder)
 ```
 
 ---
 
-_Last updated: 2025-12-21_
+_Last updated: 2026-01-23_
