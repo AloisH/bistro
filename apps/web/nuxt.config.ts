@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/test-utils/module',
     'nuxt-security',
+    '@nuxtjs/sitemap',
   ],
 
   // Auto-import components from nested feature directories
@@ -36,6 +37,11 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  // Sitemap configuration
+  site: {
+    url: process.env.APP_URL || 'http://localhost:3000',
+  },
 
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -155,5 +161,9 @@ export default defineNuxtConfig({
     },
     // HSTS only in production (requires HTTPS)
     strict: process.env.NODE_ENV === 'production',
+  },
+  sitemap: {
+    exclude: ['/auth/**', '/admin/**', '/org/**', '/api/**', '/onboarding/**', '/organizations/**'],
+    sources: ['/api/__sitemap__/urls'],
   },
 });
