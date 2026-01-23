@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { UserService } from './user-service';
 import { userRepository } from './user-repository';
 import { emailService } from '../email/email-service';
+import { log } from '../../utils/request-context';
 
 // Mock userRepository
 vi.mock('./user-repository', () => ({
@@ -16,6 +17,15 @@ vi.mock('./user-repository', () => ({
 vi.mock('../email/email-service', () => ({
   emailService: {
     sendAccountDeletion: vi.fn(),
+  },
+}));
+
+// Mock request-context log
+vi.mock('../../utils/request-context', () => ({
+  log: {
+    debug: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
   },
 }));
 
@@ -143,16 +153,9 @@ describe('UserService', () => {
 
       mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-
       await userService.deleteAccountWithPassword('user-123', password);
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '[UserService] Account deletion email failed:',
-        expect.any(Error),
-      );
-
-      consoleWarnSpy.mockRestore();
+      expect(log.warn).toHaveBeenCalledWith('Account deletion email failed');
     });
   });
 
@@ -208,16 +211,9 @@ describe('UserService', () => {
     it('logs warning if email fails', async () => {
       mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-
       await userService.deleteAccountWithEmail('user-123', 'test@example.com');
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '[UserService] Account deletion email failed:',
-        expect.any(Error),
-      );
-
-      consoleWarnSpy.mockRestore();
+      expect(log.warn).toHaveBeenCalledWith('Account deletion email failed');
     });
   });
 });
