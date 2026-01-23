@@ -16,6 +16,8 @@ export interface SeoOptions {
   tags?: string[];
   /** Whether to skip canonical URL (e.g., for dynamic pages) */
   noCanonical?: boolean;
+  /** Article author name */
+  authorName?: string;
 }
 
 export function useSeo(options: SeoOptions) {
@@ -45,10 +47,46 @@ export function useSeo(options: SeoOptions) {
     ...(options.tags?.length && { articleTag: options.tags }),
   });
 
+  // Build head arrays
+  const links: { rel: string; href: string }[] = [];
+  const scripts: { type: string; innerHTML: string }[] = [];
+
   // Add canonical URL unless explicitly skipped
   if (!options.noCanonical) {
-    useHead({
-      link: [{ rel: 'canonical', href: `${siteUrl}${route.path}` }],
+    links.push({ rel: 'canonical', href: `${siteUrl}${route.path}` });
+  }
+
+  // Add JSON-LD for articles (BlogPosting schema)
+  if (options.type === 'article' && options.publishedTime) {
+    const blogPostingSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'headline': options.title,
+      'description': options.description,
+      'image': absoluteImage,
+      'datePublished': options.publishedTime,
+      'url': `${siteUrl}${route.path}`,
+      ...(options.authorName && {
+        author: {
+          '@type': 'Person',
+          'name': options.authorName,
+        },
+      }),
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Bistro',
+        'url': siteUrl,
+      },
+    };
+
+    scripts.push({
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(blogPostingSchema),
     });
   }
+
+  useHead({
+    link: links,
+    script: scripts,
+  });
 }

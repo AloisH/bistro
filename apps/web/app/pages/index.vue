@@ -195,6 +195,39 @@
 
 <script setup lang="ts">
 const toast = useToast();
+const config = useRuntimeConfig();
+const siteUrl = config.public.appUrl || 'http://localhost:3000';
+
+// SoftwareApplication JSON-LD schema
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  'name': 'Bistro',
+  'description':
+    'Free, open-source todo app built with Nuxt 4. Simple task management with team collaboration.',
+  'url': siteUrl,
+  'applicationCategory': 'ProductivityApplication',
+  'operatingSystem': 'Web',
+  'offers': {
+    '@type': 'Offer',
+    'price': '0',
+    'priceCurrency': 'USD',
+  },
+  'author': {
+    '@type': 'Organization',
+    'name': 'Bistro',
+    'url': siteUrl,
+  },
+};
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(softwareSchema),
+    },
+  ],
+});
 
 // Refs for scroll animation
 const techSection = ref<HTMLElement | null>(null);

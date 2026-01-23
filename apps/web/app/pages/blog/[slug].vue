@@ -140,7 +140,7 @@ if (!post.value) {
   });
 }
 
-// SEO
+// SEO with BlogPosting JSON-LD
 useSeo({
   title: post.value.title,
   description: post.value.description,
@@ -148,6 +148,7 @@ useSeo({
   type: 'article',
   publishedTime: post.value.date,
   tags: post.value.tags,
+  authorName: post.value.authors?.[0]?.name,
 });
 
 // Format date
