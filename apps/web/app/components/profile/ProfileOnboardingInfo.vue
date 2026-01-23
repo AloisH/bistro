@@ -21,7 +21,7 @@
             <div class="min-w-0 flex-1">
               <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Bio</p>
               <p class="mt-1 text-sm text-neutral-900 dark:text-white">
-                {{ (user as any)?.bio || 'Not provided' }}
+                {{ user?.bio || 'Not provided' }}
               </p>
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="min-w-0 flex-1">
               <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Company</p>
               <p class="mt-1 text-sm text-neutral-900 dark:text-white">
-                {{ (user as any)?.company || 'Not provided' }}
+                {{ user?.company || 'Not provided' }}
               </p>
             </div>
           </div>
@@ -53,7 +53,7 @@
             <div class="min-w-0 flex-1">
               <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Use Case</p>
               <p class="mt-1 text-sm text-neutral-900 capitalize dark:text-white">
-                {{ (user as any)?.useCase || 'Not provided' }}
+                {{ user?.useCase || 'Not provided' }}
               </p>
             </div>
           </div>
@@ -71,7 +71,7 @@
                 Email Notifications
               </p>
               <p class="mt-1 text-sm text-neutral-900 dark:text-white">
-                {{ (user as any)?.emailNotifications ? 'Enabled' : 'Disabled' }}
+                {{ user?.emailNotifications ? 'Enabled' : 'Disabled' }}
               </p>
             </div>
           </div>

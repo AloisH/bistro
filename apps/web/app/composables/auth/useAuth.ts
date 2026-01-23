@@ -1,10 +1,35 @@
 import { createAuthClient } from 'better-auth/client';
 import { adminClient, magicLinkClient } from 'better-auth/client/plugins';
-import type {
-  InferSessionFromClient,
-  InferUserFromClient,
-  ClientOptions,
-} from 'better-auth/client';
+
+// Custom User type with additional fields from Prisma schema
+interface AuthUser {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  role: string;
+  onboardingCompleted: boolean;
+  bio?: string | null;
+  company?: string | null;
+  useCase?: string | null;
+  emailNotifications: boolean;
+}
+
+interface AuthSession {
+  id: string;
+  userId: string;
+  expiresAt: Date;
+  token: string;
+  createdAt: Date;
+  updatedAt: Date;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  impersonatedBy?: string | null;
+  currentOrganizationId?: string | null;
+}
 
 export const useAuth = () => {
   const url = useRequestURL();
@@ -21,11 +46,8 @@ export const useAuth = () => {
     ],
   });
 
-  const session = useState<InferSessionFromClient<ClientOptions> | null>(
-    'auth:session',
-    () => null,
-  );
-  const user = useState<InferUserFromClient<ClientOptions> | null>('auth:user', () => null);
+  const session = useState<AuthSession | null>('auth:session', () => null);
+  const user = useState<AuthUser | null>('auth:user', () => null);
   const sessionFetching = import.meta.server
     ? ref(false)
     : useState('auth:sessionFetching', () => false);
@@ -40,8 +62,9 @@ export const useAuth = () => {
         headers,
       },
     });
-    session.value = data?.session || null;
-    user.value = data?.user || null;
+    // Cast through unknown since Better Auth's base types don't include custom fields
+    session.value = (data?.session as unknown as AuthSession) || null;
+    user.value = (data?.user as unknown as AuthUser) || null;
     sessionFetching.value = false;
     return data;
   };
