@@ -1,64 +1,3 @@
-<script setup lang="ts">
-const route = useRoute();
-const router = useRouter();
-const toast = useToast();
-
-const token = route.query.token as string;
-
-if (!token) {
-  await router.push('/organizations/select');
-}
-
-interface InviteResponse {
-  invite: {
-    id: string;
-    email: string;
-    role: string;
-    organization: {
-      id: string;
-      name: string;
-      slug: string;
-      description?: string;
-    };
-  };
-}
-
-const { data: inviteData, error: fetchError } = await useFetch<InviteResponse>(
-  `/api/organizations/invites/${token}`,
-);
-
-const accepting = ref(false);
-
-async function acceptInvite() {
-  accepting.value = true;
-  try {
-    await $fetch('/api/organizations/invites/accept', {
-      method: 'POST',
-      body: { token },
-    });
-
-    toast.add({
-      title: 'Success',
-      description: 'You have joined the organization',
-      color: 'success',
-      icon: 'i-lucide-check',
-    });
-
-    await router.push(`/org/${inviteData.value?.invite.organization.slug}/dashboard`);
-  } catch (err) {
-    const error = err as { data?: { message?: string } };
-    toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to accept invite',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-  } finally {
-    accepting.value = false;
-  }
-}
-</script>
-
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -86,7 +25,7 @@ async function acceptInvite() {
       </div>
 
       <div
-        v-else-if="inviteData?.invite"
+        v-else-if="invite"
         class="space-y-6"
       >
         <div class="space-y-4">
@@ -101,13 +40,13 @@ async function acceptInvite() {
               />
               <div>
                 <h2 class="text-xl font-semibold">
-                  {{ inviteData.invite.organization.name }}
+                  {{ invite.organization.name }}
                 </h2>
                 <p
-                  v-if="inviteData.invite.organization.description"
+                  v-if="invite.organization.description"
                   class="text-sm text-neutral-500"
                 >
-                  {{ inviteData.invite.organization.description }}
+                  {{ invite.organization.description }}
                 </p>
               </div>
             </div>
@@ -117,11 +56,11 @@ async function acceptInvite() {
             <div class="space-y-2 text-sm">
               <div class="flex justify-between">
                 <span class="text-neutral-500">Email:</span>
-                <span class="font-medium">{{ inviteData.invite.email }}</span>
+                <span class="font-medium">{{ invite.email }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-neutral-500">Role:</span>
-                <span class="font-medium">{{ inviteData.invite.role }}</span>
+                <span class="font-medium">{{ invite.role }}</span>
               </div>
             </div>
           </div>
@@ -147,3 +86,10 @@ async function acceptInvite() {
     </UCard>
   </div>
 </template>
+
+<script setup lang="ts">
+const route = useRoute();
+const token = route.query.token as string;
+
+const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
+</script>

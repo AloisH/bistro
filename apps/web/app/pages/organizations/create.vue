@@ -1,67 +1,3 @@
-<script setup lang="ts">
-import { createOrganizationSchema } from '#shared/organization';
-import type { CreateOrganizationInput } from '#shared/organization';
-
-const router = useRouter();
-const toast = useToast();
-
-const state = reactive<CreateOrganizationInput>({
-  name: '',
-  slug: '',
-  description: '',
-});
-
-const loading = ref(false);
-
-// Auto-generate slug from name
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-watch(
-  () => state.name,
-  (newName, oldName) => {
-    if (!state.slug || state.slug === slugify(oldName || '')) {
-      state.slug = slugify(newName);
-    }
-  },
-);
-
-async function onSubmit() {
-  loading.value = true;
-  try {
-    const response = await $fetch<{ organization: { slug: string } }>('/api/organizations', {
-      method: 'POST',
-      body: state,
-    });
-
-    toast.add({
-      title: 'Success',
-      description: 'Organization created successfully',
-      color: 'success',
-      icon: 'i-lucide-check',
-    });
-
-    await router.push(`/org/${response.organization.slug}/dashboard`);
-  } catch (err) {
-    const error = err as { data?: { message?: string } };
-    toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to create organization',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-  } finally {
-    loading.value = false;
-  }
-}
-</script>
-
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -72,8 +8,8 @@ async function onSubmit() {
 
       <UForm
         :state="state"
-        :schema="createOrganizationSchema"
-        @submit.prevent="onSubmit"
+        :schema="schema"
+        @submit.prevent="createOrganization"
       >
         <div class="space-y-4">
           <UFormField
@@ -131,3 +67,7 @@ async function onSubmit() {
     </UCard>
   </div>
 </template>
+
+<script setup lang="ts">
+const { state, loading, schema, createOrganization } = useOrgCreate();
+</script>
