@@ -66,10 +66,8 @@ const router = useRouter();
 const { client } = useAuth();
 const toast = useToast();
 
-// Get email from query param
 const email = ref(route.query.email as string);
 
-// Redirect if no email
 onMounted(() => {
   if (!email.value) {
     toast.add({
@@ -82,66 +80,12 @@ onMounted(() => {
   }
 });
 
-// Resend state
-const resending = ref(false);
-const cooldown = ref(0);
-const canResend = computed(() => cooldown.value === 0 && !resending.value);
-let cooldownTimer: NodeJS.Timeout | null = null;
+const { resending, cooldown, canResend, resend } = useResendCooldown();
 
-// Cleanup timer on unmount
-onBeforeUnmount(() => {
-  if (cooldownTimer) {
-    clearInterval(cooldownTimer);
-  }
-});
-
-// Resend verification email
-async function resendVerification() {
-  if (!canResend.value) return;
-
-  resending.value = true;
-
-  try {
-    await client.sendVerificationEmail({
-      email: email.value,
-      callbackURL: '/organizations/select',
-    });
-
-    toast.add({
-      title: 'Email sent',
-      description: 'Check your inbox for verification link',
-      color: 'success',
-      icon: 'i-lucide-mail-check',
-    });
-
-    // Start 60s cooldown
-    cooldown.value = 60;
-    cooldownTimer = setInterval(() => {
-      cooldown.value--;
-      if (cooldown.value <= 0 && cooldownTimer) {
-        clearInterval(cooldownTimer);
-        cooldownTimer = null;
-      }
-    }, 1000);
-  } catch (e: unknown) {
-    const err = e as { status?: number };
-    if (err?.status === 429) {
-      toast.add({
-        title: 'Too many attempts',
-        description: 'Please wait before trying again',
-        color: 'error',
-        icon: 'i-lucide-alert-triangle',
-      });
-    } else {
-      toast.add({
-        title: 'Failed to send',
-        description: 'Please try again later',
-        color: 'error',
-        icon: 'i-lucide-alert-triangle',
-      });
-    }
-  } finally {
-    resending.value = false;
-  }
+function resendVerification() {
+  resend(
+    () => client.sendVerificationEmail({ email: email.value, callbackURL: '/organizations/select' }),
+    'Check your inbox for verification link',
+  );
 }
 </script>

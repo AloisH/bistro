@@ -67,10 +67,8 @@ const router = useRouter();
 const toast = useToast();
 const config = useRuntimeConfig();
 
-// Get email from query param
 const email = ref(route.query.email as string);
 
-// Redirect if no email
 onMounted(() => {
   if (!email.value) {
     toast.add({
@@ -83,66 +81,16 @@ onMounted(() => {
   }
 });
 
-// Resend state
-const resending = ref(false);
-const cooldown = ref(0);
-const canResend = computed(() => cooldown.value === 0 && !resending.value);
-let cooldownTimer: NodeJS.Timeout | null = null;
+const { resending, cooldown, canResend, resend } = useResendCooldown();
 
-// Cleanup timer on unmount
-onBeforeUnmount(() => {
-  if (cooldownTimer) {
-    clearInterval(cooldownTimer);
-  }
-});
-
-// Resend reset email
-async function resendReset() {
-  if (!canResend.value) return;
-
-  resending.value = true;
-
-  try {
-    await client.requestPasswordReset({
-      email: email.value,
-      redirectTo: `${config.public.appUrl}/auth/reset-password`,
-    });
-
-    toast.add({
-      title: 'Email sent',
-      description: 'Check your inbox for reset link',
-      color: 'success',
-      icon: 'i-lucide-mail-check',
-    });
-
-    // Start 60s cooldown
-    cooldown.value = 60;
-    cooldownTimer = setInterval(() => {
-      cooldown.value--;
-      if (cooldown.value <= 0 && cooldownTimer) {
-        clearInterval(cooldownTimer);
-        cooldownTimer = null;
-      }
-    }, 1000);
-  } catch (e: unknown) {
-    const err = e as { status?: number };
-    if (err?.status === 429) {
-      toast.add({
-        title: 'Too many attempts',
-        description: 'Please wait before trying again',
-        color: 'error',
-        icon: 'i-lucide-alert-triangle',
-      });
-    } else {
-      toast.add({
-        title: 'Failed to send',
-        description: 'Please try again later',
-        color: 'error',
-        icon: 'i-lucide-alert-triangle',
-      });
-    }
-  } finally {
-    resending.value = false;
-  }
+function resendReset() {
+  resend(
+    () =>
+      client.requestPasswordReset({
+        email: email.value,
+        redirectTo: `${config.public.appUrl}/auth/reset-password`,
+      }),
+    'Check your inbox for reset link',
+  );
 }
 </script>
