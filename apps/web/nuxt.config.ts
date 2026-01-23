@@ -88,6 +88,13 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
+    '/blog': { prerender: true },
+    '/blog/**': { isr: 3600 }, // ISR with 1hr revalidation
+    '/docs': { prerender: true },
+    '/docs/**': { isr: 3600 },
+    '/changelog': { prerender: true },
+    '/legal/**': { prerender: true },
+    '/contact': { prerender: true },
   },
 
   compatibilityDate: '2025-01-15',
@@ -100,7 +107,8 @@ export default defineNuxtConfig({
       wasm: true,
     },
     prerender: {
-      routes: ['/rss.xml'],
+      crawlLinks: true,
+      routes: ['/', '/blog', '/docs', '/rss.xml'],
     },
   },
 
