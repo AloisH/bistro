@@ -18,17 +18,16 @@ Bistro uses **Bun** as package manager/runtime with **Vite** (via Nuxt). Bun's f
 
 ```typescript
 // nuxt.config.ts
-import { dirname, resolve } from 'node:path';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = resolve(__dirname, '../..');
 
 export default defineNuxtConfig({
   vite: {
     server: {
       fs: {
-        allow: [workspaceRoot], // Allow Bun's .bun directory
+        allow: [__dirname], // Allow Bun's .bun directory
         strict: false, // Disable strict FS restrictions
       },
       headers: {
@@ -46,7 +45,7 @@ export default defineNuxtConfig({
 
 - Bun stores packages in `node_modules/.bun/{package}@{version}+{hash}/`
 - Vite's default FS restrictions block `@fs` paths outside project root
-- `allow: [workspaceRoot]` permits access to entire monorepo (includes `.bun`)
+- `allow: [__dirname]` permits access to entire project (includes `.bun`)
 - `strict: false` removes additional MIME type checks
 
 ---
@@ -81,7 +80,7 @@ The requested module 'virtual:nuxt:.nuxt/nuxt.config.mjs' doesn't provide an exp
 
 ```bash
 # 1. Clear all caches
-rm -rf apps/web/.nuxt node_modules bun.lock
+rm -rf .nuxt node_modules bun.lock
 bun pm cache rm
 
 # 2. Fresh install
@@ -125,7 +124,7 @@ rm -rf node_modules/.bun/nuxt@3*
 
 ```bash
 # 1. Remove existing
-rm -rf node_modules bun.lock apps/web/.nuxt
+rm -rf node_modules bun.lock .nuxt
 
 # 2. Install
 bun install
@@ -141,7 +140,7 @@ bun dev
 
 ```bash
 # 1. Clear Nuxt cache
-rm -rf apps/web/.nuxt
+rm -rf .nuxt
 
 # 2. Regenerate
 bun db:generate
@@ -154,9 +153,9 @@ bun dev
 
 ```bash
 # Project caches
-rm -rf apps/web/.nuxt
-rm -rf apps/web/node_modules/.vite
-rm -rf apps/web/node_modules/.cache
+rm -rf .nuxt
+rm -rf node_modules/.vite
+rm -rf node_modules/.cache
 
 # Bun global cache
 bun pm cache rm

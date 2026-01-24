@@ -34,7 +34,7 @@ Core (utils/db)
 
 ### 1. Define Zod Schema (If Input Required)
 
-**Location:** `apps/web/shared/schemas/<feature>.ts`
+**Location:** `shared/schemas/<feature>.ts`
 
 ```typescript
 // shared/schemas/project.ts
@@ -63,7 +63,7 @@ export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 
 ### 2. Create Repository (If New Feature)
 
-**Location:** `apps/web/server/features/<feature>/<feature>-repository.ts`
+**Location:** `server/features/<feature>/<feature>-repository.ts`
 
 ```typescript
 // server/features/project/project-repository.ts
@@ -104,7 +104,7 @@ export const projectRepository = new ProjectRepository();
 
 ### 3. Create Service (If New Feature)
 
-**Location:** `apps/web/server/features/<feature>/<feature>-service.ts`
+**Location:** `server/features/<feature>/<feature>-service.ts`
 
 ```typescript
 // server/features/project/project-service.ts
@@ -144,7 +144,7 @@ export const projectService = new ProjectService();
 
 ### 4. Create API Handler
 
-**Location:** `apps/web/server/api/<feature>/<endpoint>.<method>.ts`
+**Location:** `server/api/<feature>/<endpoint>.<method>.ts`
 
 **Naming convention:**
 

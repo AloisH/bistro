@@ -14,7 +14,7 @@ User profile and account management components.
 
 **Security:** Password verification for sensitive ops, session revocation, permanent deletion warnings
 
-**Page:** `/home/alois/bistro/apps/web/app/pages/profile.vue`
+**Page:** `/home/alois/bistro/app/pages/profile.vue`
 
 ---
 
@@ -58,7 +58,7 @@ ProfilePage
 
 ### ProfileForm
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/ProfileForm.vue`
+**File:** `/home/alois/bistro/app/components/profile/ProfileForm.vue`
 
 **Purpose:** Edit user profile (name, email display)
 
@@ -97,7 +97,7 @@ ProfilePage
 
 ### ChangePasswordForm
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/ChangePasswordForm.vue`
+**File:** `/home/alois/bistro/app/components/profile/ChangePasswordForm.vue`
 
 **Purpose:** Change account password
 
@@ -154,7 +154,7 @@ async function handleChange() {
 
 ### DeleteAccountSection
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/DeleteAccountSection.vue`
+**File:** `/home/alois/bistro/app/components/profile/DeleteAccountSection.vue`
 
 **Purpose:** Permanent account deletion with confirmation
 
@@ -201,7 +201,7 @@ async function handleChange() {
 
 ### SessionManagement
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/SessionManagement.vue`
+**File:** `/home/alois/bistro/app/components/profile/SessionManagement.vue`
 
 **Purpose:** View and manage active sessions
 
@@ -235,7 +235,7 @@ const showRevokeAllModal = ref(false);
 
 ### SessionList
 
-**File:** `/home/alois/bistro/apps/web/app/components/admin/SessionList.vue`
+**File:** `/home/alois/bistro/app/components/admin/SessionList.vue`
 
 **Purpose:** Presentational component for session cards
 
@@ -272,7 +272,7 @@ const showRevokeAllModal = ref(false);
 
 ### OnboardingInfo
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/OnboardingInfo.vue`
+**File:** `/home/alois/bistro/app/components/profile/OnboardingInfo.vue`
 
 **Purpose:** Display onboarding completion status
 
@@ -297,7 +297,7 @@ const showRevokeAllModal = ref(false);
 
 ### RestartOnboardingButton
 
-**File:** `/home/alois/bistro/apps/web/app/components/profile/RestartOnboardingButton.vue`
+**File:** `/home/alois/bistro/app/components/profile/RestartOnboardingButton.vue`
 
 **Purpose:** Reset onboarding flow
 
@@ -553,7 +553,7 @@ it('shows confirmation modal before delete', async () => {
 
 ## Page Integration Example
 
-**File:** `/home/alois/bistro/apps/web/app/pages/profile.vue`
+**File:** `/home/alois/bistro/app/pages/profile.vue`
 
 ```vue
 <script setup lang="ts">
@@ -591,7 +591,7 @@ const hasPassword = computed(() =>
 - [Authentication System](./../System/authentication_system.md) - Better Auth, session management
 - [Database Schema](./../System/database_schema.md) - User model, Session model
 - [Adding Pages](./../SOP/adding_pages.md) - Page creation patterns
-- Component files: `/home/alois/bistro/apps/web/app/components/profile/CLAUDE.md`
+- Component files: `/home/alois/bistro/app/components/profile/CLAUDE.md`
 
 ---
 

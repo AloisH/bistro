@@ -49,7 +49,7 @@ Admin impersonation and user management features for SUPER_ADMIN role.
 
 ### ImpersonationBanner
 
-**File:** `/home/alois/bistro/apps/web/app/components/admin/ImpersonationBanner.vue`
+**File:** `/home/alois/bistro/app/components/admin/ImpersonationBanner.vue`
 
 **Purpose:** Global warning banner during active impersonation
 
@@ -123,7 +123,7 @@ async function handleStop() {
 
 ### SessionList
 
-**File:** `/home/alois/bistro/apps/web/app/components/admin/SessionList.vue`
+**File:** `/home/alois/bistro/app/components/admin/SessionList.vue`
 
 **Purpose:** Presentational component for displaying user sessions
 
@@ -210,7 +210,7 @@ function getDeviceIcon(device: string): string {
 
 ### useImpersonation
 
-**File:** `/home/alois/bistro/apps/web/app/composables/admin/useImpersonation.ts`
+**File:** `/home/alois/bistro/app/composables/admin/useImpersonation.ts`
 
 **Purpose:** Manage impersonation state and operations
 
@@ -509,7 +509,7 @@ it('hides admin features for non-admin', async () => {
 - [Authentication System](./../System/authentication_system.md) - RBAC, roles, Better Auth
 - [Database Schema](./../System/database_schema.md) - ImpersonationLog, Session models
 - [Profile Components](./../System/profile_components_system.md) - SessionManagement integration
-- Component files: `/home/alois/bistro/apps/web/app/components/admin/CLAUDE.md`
+- Component files: `/home/alois/bistro/app/components/admin/CLAUDE.md`
 
 ---
 

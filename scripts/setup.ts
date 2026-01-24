@@ -57,7 +57,7 @@ async function waitForPostgres(maxAttempts = 30): Promise<boolean> {
       await $`docker compose exec -T postgres pg_isready -U bistro`.quiet();
       return true;
     } catch {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 

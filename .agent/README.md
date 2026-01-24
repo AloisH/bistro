@@ -28,7 +28,7 @@ Then refer to SOPs for specific tasks.
 - **[Project Architecture](./System/project_architecture.md)**
   - Project goals and status
   - Tech stack (Nuxt 4, Prisma 7, Better Auth)
-  - Monorepo structure
+  - Project structure
   - Directory organization
   - Architecture patterns (client/server, feature-based)
   - Integration points (DB, auth, email, AI, payments)
@@ -119,14 +119,14 @@ Then refer to SOPs for specific tasks.
 
 ### Component-Level Docs (CLAUDE.md in feature directories)
 
-- `apps/web/app/components/todo/CLAUDE.md` - Todo CRUD components
-- `apps/web/app/components/auth/CLAUDE.md` - Auth UI components
-- `apps/web/app/components/organization/CLAUDE.md` - Org management
-- `apps/web/app/components/onboarding/CLAUDE.md` - Onboarding flow
-- `apps/web/app/components/profile/CLAUDE.md` - User profile
-- `apps/web/app/components/admin/CLAUDE.md` - Admin features
-- `apps/web/app/components/shared/CLAUDE.md` - Shared utilities
-- `apps/web/app/components/docs/CLAUDE.md` - Docs search
+- `app/components/todo/CLAUDE.md` - Todo CRUD components
+- `app/components/auth/CLAUDE.md` - Auth UI components
+- `app/components/organization/CLAUDE.md` - Org management
+- `app/components/onboarding/CLAUDE.md` - Onboarding flow
+- `app/components/profile/CLAUDE.md` - User profile
+- `app/components/admin/CLAUDE.md` - Admin features
+- `app/components/shared/CLAUDE.md` - Shared utilities
+- `app/components/docs/CLAUDE.md` - Docs search
 
 ### System-Level Component Docs
 
@@ -291,15 +291,15 @@ Tasks/
 **Root project docs (CLAUDE.md files):**
 
 - `/CLAUDE.md` - Root project guidance
-- `/apps/web/CLAUDE.md` - Web app overview
-- `/apps/web/server/CLAUDE.md` - Server layer patterns
-- `/apps/web/app/CLAUDE.md` - App layer patterns
+- `/CLAUDE.md` - Web app overview
+- `/server/CLAUDE.md` - Server layer patterns
+- `/app/CLAUDE.md` - App layer patterns
 
 **Feature-specific docs:**
 
-- `/apps/web/server/features/auth/auth.md` - Auth feature
-- `/apps/web/server/features/user/user.md` - User feature
-- `/apps/web/server/features/email/email.md` - Email feature
+- `/server/features/auth/auth.md` - Auth feature
+- `/server/features/user/user.md` - User feature
+- `/server/features/email/email.md` - Email feature
 
 ---
 

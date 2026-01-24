@@ -455,6 +455,6 @@ Is it duplicated in 2+ files?
 
 - **Authentication system:** `.agent/System/authentication_system.md`
 - **Better Auth docs:** https://www.better-auth.com
-- **useAuth source:** `apps/web/app/composables/auth/useAuth.ts`
-- **useRole source:** `apps/web/app/composables/auth/useRole.ts`
-- **Public route utility:** `apps/web/app/utils/route.ts`
+- **useAuth source:** `app/composables/auth/useAuth.ts`
+- **useRole source:** `app/composables/auth/useRole.ts`
+- **Public route utility:** `app/utils/route.ts`

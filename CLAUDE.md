@@ -16,7 +16,7 @@ bun db:studio        # Prisma Studio
 docker compose up -d # Start postgres + redis
 ```
 
-**Run from repo root, not subdirectories.**
+**Run from repo root.**
 
 ## Critical Rules
 
@@ -40,19 +40,18 @@ docker compose up -d # Start postgres + redis
 
 **Context-specific (read when working in that area):**
 
-- [apps/web/CLAUDE.md](apps/web/CLAUDE.md) - Web app config, env vars
-- [apps/web/server/CLAUDE.md](apps/web/server/CLAUDE.md) - API patterns, auth, DB
-- [apps/web/app/CLAUDE.md](apps/web/app/CLAUDE.md) - Pages, components, composables
+- [server/CLAUDE.md](server/CLAUDE.md) - API patterns, auth, DB
+- [app/CLAUDE.md](app/CLAUDE.md) - Pages, components, composables
 
 ## Structure
 
 ```
-apps/web/           # Main Nuxt app
-├── app/            # Pages, components, composables
-├── server/         # API routes, features (service + repository)
-├── shared/         # Zod schemas (#shared alias)
-└── prisma/         # Schema, migrations
-.agent/             # System docs, SOPs
+app/            # Pages, components, composables
+server/         # API routes, features (service + repository)
+shared/         # Zod schemas (#shared alias)
+prisma/         # Schema, migrations
+content/        # Blog/docs content
+.agent/         # System docs, SOPs
 ```
 
 ## Quick Troubleshooting

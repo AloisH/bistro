@@ -306,7 +306,7 @@ it('returns null for missing entities', async () => {
 
 ```bash
 # Single file
-bun test apps/web/server/features/todo/todo-repository.test.ts
+bun test server/features/todo/todo-repository.test.ts
 
 # With database
 DATABASE_URL="postgresql://bistro:bistro@localhost:5432/bistro" bun test

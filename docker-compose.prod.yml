@@ -21,7 +21,7 @@ services:
 
   db-migrate:
     build:
-      context: ./apps/web
+      context: .
       dockerfile: Dockerfile.migrate
     container_name: bistro-db-migrate
     restart: on-failure
@@ -36,7 +36,7 @@ services:
 
   app:
     build:
-      context: ./apps/web
+      context: .
       dockerfile: Dockerfile
     container_name: bistro-app
     restart: unless-stopped

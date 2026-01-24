@@ -59,30 +59,10 @@ Provides production-ready foundation:
 
 ---
 
-## Monorepo Structure
-
-Bun workspaces:
+## Project Structure
 
 ```
-bistro/
-├── apps/
-│   ├── web/           # Main Nuxt 4 app (IMPLEMENTED)
-│   └── landing/       # Marketing site (PLACEHOLDER)
-├── packages/
-│   └── cli/           # CLI tool (PLACEHOLDER)
-├── CLAUDE.md          # Root docs
-├── package.json       # Workspace config
-└── docker-compose.yml # Dev services
-```
 
-**Only `apps/web` has implementation.** Landing/CLI are empty.
-
----
-
-## apps/web Structure
-
-```
-apps/web/
 ├── app/                           # Client-side code
 │   ├── app.vue                    # Root layout (UApp wrapper)
 │   ├── pages/                     # File-based routes
@@ -417,7 +397,7 @@ const projects = await db.project.findMany();
 
 - Local dev: `DATABASE_URL=postgresql://bistro:bistro@localhost:5432/bistro`
 - Docker prod: `DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro`
-- Fallback: `apps/web/prisma.config.ts`
+- Fallback: `prisma.config.ts`
 
 **Migrations:**
 
@@ -611,7 +591,7 @@ bun docker:prod:logs    # View logs
 3. **User-scoped queries**: ALWAYS filter by userId (data leak prevention)
 4. **OAuth session**: Must call `fetchSession()` after OAuth callback
 5. **Public routes**: Add to `nuxt.config.ts` (NOT middleware)
-6. **Commands from root**: ALWAYS from `/home/alois/bistro`, NOT `apps/web/`
+6. **Commands from root**: ALWAYS run commands from project root
 7. **Prisma regenerate**: After schema changes, run `bun db:generate` before typecheck
 8. **Type safety**: No `as` assertions, no `!` non-null assertions - use Zod validation
 9. **Imports**: Server uses relative paths, shared uses `#shared` alias
@@ -644,8 +624,6 @@ bun docker:prod:logs    # View logs
 
 - ⏳ Payment integration (Polar)
 - ⏳ AI workflows (Vercel AI SDK)
-- ⏳ Landing site (`apps/landing`)
-- ⏳ CLI tool (`packages/cli`)
 
 ---
 

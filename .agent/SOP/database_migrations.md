@@ -22,7 +22,7 @@ How to safely create and apply database schema changes using Prisma.
 
 ### 1. Edit Schema
 
-Edit `apps/web/prisma/schema.prisma`:
+Edit `prisma/schema.prisma`:
 
 ```prisma
 model User {

@@ -16,7 +16,7 @@ Frontend components for 5-step user onboarding flow.
 
 **State:** URL query params (`?step=2`), backend tracking (User.onboardingSteps JSON)
 
-**Page:** `/home/alois/bistro/apps/web/app/pages/onboarding.vue`
+**Page:** `/home/alois/bistro/app/pages/onboarding.vue`
 
 ---
 
@@ -61,7 +61,7 @@ OnboardingPage
 
 ### OnboardingProgress
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingProgress.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingProgress.vue`
 
 **Purpose:** Visual progress indicator + step labels
 
@@ -94,7 +94,7 @@ OnboardingPage
 
 ### OnboardingWelcome
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingWelcome.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingWelcome.vue`
 
 **Purpose:** Welcome message, explain what to expect
 
@@ -117,7 +117,7 @@ OnboardingPage
 
 ### OnboardingProfile
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingProfile.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingProfile.vue`
 
 **Purpose:** Collect user bio and company
 
@@ -146,7 +146,7 @@ OnboardingPage
 
 ### OnboardingPreferences
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingPreferences.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingPreferences.vue`
 
 **Purpose:** Configure theme and notifications
 
@@ -176,7 +176,7 @@ OnboardingPage
 
 ### OnboardingUseCase
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingUseCase.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingUseCase.vue`
 
 **Purpose:** Understand user's primary use case
 
@@ -209,7 +209,7 @@ OnboardingPage
 
 ### OnboardingOrganization
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingOrganization.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingOrganization.vue`
 
 **Purpose:** Create first organization
 
@@ -241,7 +241,7 @@ OnboardingPage
 
 ### OnboardingComplete
 
-**File:** `/home/alois/bistro/apps/web/app/components/onboarding/OnboardingComplete.vue`
+**File:** `/home/alois/bistro/app/components/onboarding/OnboardingComplete.vue`
 
 **Purpose:** Celebrate completion, show next steps
 
@@ -284,7 +284,7 @@ OnboardingPage
 
 ## Page Implementation Pattern
 
-**File:** `/home/alois/bistro/apps/web/app/pages/onboarding.vue`
+**File:** `/home/alois/bistro/app/pages/onboarding.vue`
 
 ```vue
 <script setup lang="ts">
@@ -448,7 +448,7 @@ function handleNext() {
 
 ## Middleware Integration
 
-**File:** `/home/alois/bistro/apps/web/app/middleware/auth.global.ts`
+**File:** `/home/alois/bistro/app/middleware/auth.global.ts`
 
 **Pattern:** Redirect incomplete onboarding to /onboarding
 
@@ -535,7 +535,7 @@ it('emits next event with form data', async () => {
 - [Authentication System](./../System/authentication_system.md) - User auth, middleware
 - [Organizations System](./../System/organizations_system.md) - Org creation
 - [Adding Pages](./../SOP/adding_pages.md) - Page creation patterns
-- Component files: `/home/alois/bistro/apps/web/app/components/onboarding/CLAUDE.md`
+- Component files: `/home/alois/bistro/app/components/onboarding/CLAUDE.md`
 
 ---
 

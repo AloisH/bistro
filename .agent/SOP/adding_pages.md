@@ -26,7 +26,7 @@ How to add new pages using Nuxt file-based routing.
 
 ### 1. Create Page File
 
-**Location:** `apps/web/app/pages/<path>.vue`
+**Location:** `app/pages/<path>.vue`
 
 **Basic page:**
 

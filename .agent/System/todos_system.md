@@ -524,30 +524,30 @@ watch(
 
 **Backend:**
 
-- `apps/web/server/features/todo/todo-repository.ts` - Data access
-- `apps/web/server/features/todo/todo-service.ts` - Business logic
-- `apps/web/shared/schemas/todo.ts` - Validation schemas
-- `apps/web/server/api/todos/index.get.ts` - List endpoint
-- `apps/web/server/api/todos/index.post.ts` - Create endpoint
-- `apps/web/server/api/todos/[id].get.ts` - Get endpoint
-- `apps/web/server/api/todos/[id].put.ts` - Update endpoint
-- `apps/web/server/api/todos/[id].delete.ts` - Delete endpoint
-- `apps/web/server/api/todos/[id]/toggle.post.ts` - Toggle endpoint
+- `server/features/todo/todo-repository.ts` - Data access
+- `server/features/todo/todo-service.ts` - Business logic
+- `shared/schemas/todo.ts` - Validation schemas
+- `server/api/todos/index.get.ts` - List endpoint
+- `server/api/todos/index.post.ts` - Create endpoint
+- `server/api/todos/[id].get.ts` - Get endpoint
+- `server/api/todos/[id].put.ts` - Update endpoint
+- `server/api/todos/[id].delete.ts` - Delete endpoint
+- `server/api/todos/[id]/toggle.post.ts` - Toggle endpoint
 
 **Frontend:**
 
-- `apps/web/app/composables/useTodos.ts` - State management
-- `apps/web/app/components/TodoList.vue` - List component
-- `apps/web/app/components/CreateTodoForm.vue` - Form component
-- `apps/web/app/pages/org/[slug]/org/[slug]/dashboard.vue` - Dashboard page
+- `app/composables/useTodos.ts` - State management
+- `app/components/TodoList.vue` - List component
+- `app/components/CreateTodoForm.vue` - Form component
+- `app/pages/org/[slug]/org/[slug]/dashboard.vue` - Dashboard page
 
 **Database:**
 
-- `apps/web/prisma/schema.prisma` - Todo model (line 124)
+- `prisma/schema.prisma` - Todo model (line 124)
 
 **Tests:**
 
-- `apps/web/server/features/todo/todo-service.test.ts` - Service tests
+- `server/features/todo/todo-service.test.ts` - Service tests
 
 ---
 

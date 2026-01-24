@@ -9,7 +9,7 @@
 **Database:** PostgreSQL (local dev + Docker prod)
 **ORM:** Prisma 7 with @prisma/adapter-pg
 **Driver:** pg with connection pooling
-**Location:** `apps/web/prisma/schema.prisma`
+**Location:** `prisma/schema.prisma`
 
 ---
 
@@ -591,7 +591,7 @@ const user = await db.user.findUnique({
 
 ```bash
 # 1. Edit schema
-vim apps/web/prisma/schema.prisma
+vim prisma/schema.prisma
 
 # 2. Create migration
 bun db:migrate
@@ -606,7 +606,7 @@ bun typecheck
 
 ### Migration Files
 
-**Location:** `apps/web/prisma/migrations/`
+**Location:** `prisma/migrations/`
 
 **Format:**
 
@@ -670,7 +670,7 @@ bun db:studio
 
 ## Data Seeding (Planned)
 
-**Seed script:** `apps/web/prisma/seed.ts` (not yet implemented)
+**Seed script:** `prisma/seed.ts` (not yet implemented)
 
 **Purpose:**
 
@@ -709,7 +709,7 @@ DATABASE_URL=postgresql://bistro:bistro@postgres:5432/bistro
 
 ### Fallback Config
 
-If `DATABASE_URL` not in env, fallback in `apps/web/prisma.config.ts`:
+If `DATABASE_URL` not in env, fallback in `prisma.config.ts`:
 
 ```typescript
 export default {

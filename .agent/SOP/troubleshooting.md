@@ -108,7 +108,7 @@ vi.mock('@prisma/adapter-pg');
 vi.mock('pg');
 ```
 
-See `apps/web/server/utils/db.test.ts` for example.
+See `server/utils/db.test.ts` for example.
 
 ### "Cannot find module" in tests
 
