@@ -6,6 +6,9 @@ import { dirname, resolve } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
+  // Workaround: @nuxt/fonts leaves zombie esbuild process
+  // https://github.com/nuxt/nuxt/issues/33987
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/content',
@@ -155,6 +158,11 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       include: ['./shared/**/*.ts', './server/testing/**/*.ts'],
+    },
+  },
+  hooks: {
+    close: (nuxt) => {
+      if (!nuxt.options._prepare) process.exit(0);
     },
   },
   eslint: {
