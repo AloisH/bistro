@@ -1,5 +1,4 @@
-import type { Todo } from '../../../prisma/generated/client';
-import type { CreateTodoInput } from '#shared/todo';
+import type { Todo, TodoResponse, TodoListResponse, CreateTodoInput } from '#shared/todo';
 
 export function useTodos() {
   const route = useRoute();
@@ -23,7 +22,7 @@ export function useTodos() {
   async function fetchTodos() {
     loading.value = true;
     try {
-      const data = await $fetch<{ todos: Todo[]; total: number }>('/api/todos', {
+      const data = await $fetch<TodoListResponse>('/api/todos', {
         query: { filter: filter.value, sort: sort.value, page: page.value, limit: limit.value },
       });
       todos.value = data.todos;
@@ -82,7 +81,7 @@ export function useTodos() {
 
   async function createTodo(input: CreateTodoInput) {
     try {
-      const { todo } = await $fetch<{ todo: Todo }>('/api/todos', {
+      const { todo } = await $fetch<TodoResponse>('/api/todos', {
         method: 'POST',
         body: input,
       });
