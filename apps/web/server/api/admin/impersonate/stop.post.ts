@@ -1,11 +1,13 @@
 import { serverAuth } from '../../../features/auth/auth-session';
 import { impersonationService } from '../../../features/impersonation/impersonation-service';
 
-/**
- * POST /api/admin/impersonate/stop
- * Stop impersonating current user
- * Note: During impersonation, session user = impersonated user
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Stop user impersonation',
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Get session to find admin ID
   const session = await serverAuth().getSession({ headers: event.headers });

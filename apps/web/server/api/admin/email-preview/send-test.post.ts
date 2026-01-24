@@ -7,6 +7,13 @@ import MagicLinkEmail from '../../../features/email/templates/MagicLinkEmail.vue
 import AccountDeletion from '../../../features/email/templates/AccountDeletion.vue';
 import type { Component } from 'vue';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Send test email to current user (requires ADMIN/SUPER_ADMIN)',
+  },
+});
+
 const sendTestEmailSchema = z.object({
   templateId: z.enum(['verify-email', 'reset-password', 'magic-link', 'account-deletion']),
 });

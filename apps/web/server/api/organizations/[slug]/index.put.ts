@@ -3,11 +3,16 @@ import { updateOrganizationSchema } from '#shared/organization';
 import { organizationService } from '../../../features/organization/organization-service';
 import { organizationRepository } from '../../../features/organization/organization-repository';
 
-/**
- * PUT /api/organizations/:slug
- * Update organization
- * User must be OWNER or ADMIN
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Update organization (requires OWNER/ADMIN)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+    ],
+  },
+});
+
 export default defineValidatedApiHandler(updateOrganizationSchema, async (ctx) => {
   const slug = getRouterParam(ctx.event, 'slug');
   if (!slug) {

@@ -3,11 +3,17 @@ import { updateMemberRoleSchema } from '#shared/organization';
 import { organizationService } from '../../../../../features/organization/organization-service';
 import { organizationRepository } from '../../../../../features/organization/organization-repository';
 
-/**
- * PUT /api/organizations/:slug/members/:userId/role
- * Update member role
- * User must be OWNER
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Update member role (requires OWNER)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+      { in: 'path', name: 'userId', required: true, description: 'User ID' },
+    ],
+  },
+});
+
 export default defineValidatedApiHandler(updateMemberRoleSchema, async (ctx) => {
   const slug = getRouterParam(ctx.event, 'slug');
   const userId = getRouterParam(ctx.event, 'userId');

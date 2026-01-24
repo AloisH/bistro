@@ -1,11 +1,13 @@
 import { requireRole } from '../../../utils/require-role';
 import { impersonationService } from '../../../features/impersonation/impersonation-service';
 
-/**
- * GET /api/admin/impersonate/active
- * Get active impersonation session
- * Requires SUPER_ADMIN role
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Get active impersonation session (requires SUPER_ADMIN)',
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Check role
   const ctx = await requireRole(event, ['SUPER_ADMIN']);

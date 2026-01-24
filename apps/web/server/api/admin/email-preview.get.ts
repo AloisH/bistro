@@ -5,6 +5,13 @@ import ResetPasswordEmail from '../../features/email/templates/ResetPasswordEmai
 import MagicLinkEmail from '../../features/email/templates/MagicLinkEmail.vue';
 import AccountDeletion from '../../features/email/templates/AccountDeletion.vue';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Preview all email templates (requires ADMIN/SUPER_ADMIN)',
+  },
+});
+
 export default defineEventHandler(async (event) => {
   await requireRole(event, ['ADMIN', 'SUPER_ADMIN']);
 

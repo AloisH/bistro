@@ -2,11 +2,17 @@ import { defineApiHandler } from '../../../../utils/api-handler';
 import { organizationService } from '../../../../features/organization/organization-service';
 import { organizationRepository } from '../../../../features/organization/organization-repository';
 
-/**
- * DELETE /api/organizations/:slug/members/:userId
- * Remove member from organization
- * User must be OWNER or ADMIN
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Remove member from organization (requires OWNER/ADMIN)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+      { in: 'path', name: 'userId', required: true, description: 'User ID to remove' },
+    ],
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const slug = getRouterParam(ctx.event, 'slug');
   const userId = getRouterParam(ctx.event, 'userId');

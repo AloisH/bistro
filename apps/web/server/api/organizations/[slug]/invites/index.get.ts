@@ -1,10 +1,15 @@
 import { requireOrgAccess } from '../../../../utils/require-org-access';
 
-/**
- * GET /api/organizations/:slug/invites
- * List all invites for organization
- * User must be OWNER or ADMIN
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'List organization invites (requires OWNER/ADMIN)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+    ],
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Check user is OWNER or ADMIN
   const ctx = await requireOrgAccess(event, {

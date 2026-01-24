@@ -2,11 +2,13 @@ import { defineApiHandler } from '../../utils/api-handler';
 import { sessionService } from '../../features/auth/session-service';
 import { serverAuth } from '../../features/auth/auth-session';
 
-/**
- * PUT /api/user/current-organization
- * Set current organization in session
- * Pass null to clear current organization
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['User'],
+    description: 'Set current organization in session (null to clear)',
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const body = await readBody(ctx.event);
 

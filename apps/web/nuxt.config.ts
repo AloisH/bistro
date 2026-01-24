@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/sitemap',
     'nuxt-og-image',
+    '@scalar/nuxt',
   ],
 
   // Auto-import components from nested feature directories
@@ -106,6 +107,19 @@ export default defineNuxtConfig({
     },
     experimental: {
       wasm: true,
+      openAPI: true,
+    },
+    openAPI: {
+      meta: {
+        title: 'Bistro API',
+        description: 'Nuxt 4 SaaS boilerplate API',
+        version: '1.0.0',
+      },
+      ui: {
+        scalar: {
+          route: '/api-docs',
+        },
+      },
     },
     prerender: {
       crawlLinks: true,

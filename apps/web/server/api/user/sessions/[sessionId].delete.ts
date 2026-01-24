@@ -2,6 +2,16 @@ import { defineApiHandler } from '../../../utils/api-handler';
 import { sessionService } from '../../../features/auth/session-service';
 import { serverAuth } from '../../../features/auth/auth-session';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['User'],
+    description: 'Revoke a specific session',
+    parameters: [
+      { in: 'path', name: 'sessionId', required: true, description: 'Session ID' },
+    ],
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const sessionId = getRouterParam(ctx.event, 'sessionId');
   if (!sessionId) {

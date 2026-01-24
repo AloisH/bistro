@@ -1,11 +1,13 @@
 import { defineApiHandler } from '../../../utils/api-handler';
 import { organizationService } from '../../../features/organization/organization-service';
 
-/**
- * POST /api/organizations/invites/accept
- * Accept organization invite
- * Requires token in request body
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Accept organization invite with token',
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const body = await readBody(ctx.event);
 

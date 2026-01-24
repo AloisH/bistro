@@ -1,10 +1,15 @@
 import { requireOrgAccess } from '../../../utils/require-org-access';
 
-/**
- * GET /api/organizations/:slug/members
- * List organization members
- * User must be a member
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'List organization members',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+    ],
+  },
+});
+
 export default defineEventHandler(async (event) => {
   const ctx = await requireOrgAccess(event);
 

@@ -1,10 +1,15 @@
 import { organizationRepository } from '../../../features/organization/organization-repository';
 
-/**
- * GET /api/organizations/invites/:token
- * Get invite details by token
- * Public endpoint (no auth required)
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Get invite details by token (public)',
+    parameters: [
+      { in: 'path', name: 'token', required: true, description: 'Invite token' },
+    ],
+  },
+});
+
 export default defineEventHandler(async (event) => {
   const token = getRouterParam(event, 'token');
   if (!token) {

@@ -2,11 +2,16 @@ import { updateRoleSchema } from '#shared/role';
 import { requireRole } from '../../../../utils/require-role';
 import { userRepository } from '../../../../features/user/user-repository';
 
-/**
- * PUT /api/admin/users/:id/role
- * Update user role
- * Requires SUPER_ADMIN role
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Update user role (requires SUPER_ADMIN)',
+    parameters: [
+      { in: 'path', name: 'userId', required: true, description: 'User ID' },
+    ],
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Check role - only SUPER_ADMIN can change roles
   const ctx = await requireRole(event, ['SUPER_ADMIN']);

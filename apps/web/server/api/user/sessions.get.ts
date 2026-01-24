@@ -2,6 +2,13 @@ import { defineApiHandler } from '../../utils/api-handler';
 import { sessionService } from '../../features/auth/session-service';
 import { serverAuth } from '../../features/auth/auth-session';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['User'],
+    description: 'List active sessions for current user',
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const session = await serverAuth().getSession({ headers: ctx.event.headers });
   const currentToken = session?.session?.token;

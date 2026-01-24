@@ -3,11 +3,16 @@ import { inviteMemberSchema } from '#shared/organization';
 import { organizationService } from '../../../../features/organization/organization-service';
 import { organizationRepository } from '../../../../features/organization/organization-repository';
 
-/**
- * POST /api/organizations/:slug/invites
- * Invite member to organization
- * User must be OWNER or ADMIN
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Invite member to organization (requires OWNER/ADMIN)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+    ],
+  },
+});
+
 export default defineValidatedApiHandler(inviteMemberSchema, async (ctx) => {
   const slug = getRouterParam(ctx.event, 'slug');
   if (!slug) {

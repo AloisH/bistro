@@ -1,6 +1,13 @@
 import { contactSchema } from '#shared/schemas/contact';
 import { emailService } from '../features/email/email-service';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['Public'],
+    description: 'Submit contact form (public)',
+  },
+});
+
 const subjectLabels: Record<string, string> = {
   general: 'General Inquiry',
   support: 'Support Request',

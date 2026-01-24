@@ -1,6 +1,13 @@
 import { defineApiHandler } from '../../utils/api-handler';
 import { userService } from '../../features/user/user-service';
 
+defineRouteMeta({
+  openAPI: {
+    tags: ['User'],
+    description: 'Delete user account (requires password or email confirmation)',
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const body = await readBody(ctx.event);
 

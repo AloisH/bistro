@@ -2,11 +2,16 @@ import { defineApiHandler } from '../../../utils/api-handler';
 import { organizationService } from '../../../features/organization/organization-service';
 import { organizationRepository } from '../../../features/organization/organization-repository';
 
-/**
- * GET /api/organizations/:slug
- * Get organization details with members
- * User must be a member
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Organizations'],
+    description: 'Get organization details (requires membership)',
+    parameters: [
+      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
+    ],
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const slug = getRouterParam(ctx.event, 'slug');
   if (!slug) {

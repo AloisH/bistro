@@ -1,11 +1,13 @@
 import { requireRole } from '../../../utils/require-role';
 import { userRepository } from '../../../features/user/user-repository';
 
-/**
- * GET /api/admin/users
- * List all users with their roles
- * Requires ADMIN or SUPER_ADMIN role
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'List all users (requires ADMIN/SUPER_ADMIN)',
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Check role - both ADMIN and SUPER_ADMIN can view users
   await requireRole(event, ['ADMIN', 'SUPER_ADMIN']);

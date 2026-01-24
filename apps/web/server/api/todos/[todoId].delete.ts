@@ -1,10 +1,16 @@
 import { defineApiHandler } from '../../utils/api-handler';
 import { todoService } from '../../features/todo/todo-service';
 
-/**
- * DELETE /api/todos/:id
- * Delete todo
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Todos'],
+    description: 'Delete a todo',
+    parameters: [
+      { in: 'path', name: 'todoId', required: true, description: 'Todo ID' },
+    ],
+  },
+});
+
 export default defineApiHandler(async (ctx) => {
   const todoId = getRouterParam(ctx.event, 'todoId');
   if (!todoId) {

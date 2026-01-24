@@ -2,10 +2,16 @@ import { defineValidatedApiHandler } from '../../utils/api-handler';
 import { updateTodoSchema } from '#shared/todo';
 import { todoService } from '../../features/todo/todo-service';
 
-/**
- * PUT /api/todos/:id
- * Update todo
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Todos'],
+    description: 'Update a todo',
+    parameters: [
+      { in: 'path', name: 'todoId', required: true, description: 'Todo ID' },
+    ],
+  },
+});
+
 export default defineValidatedApiHandler(updateTodoSchema, async (ctx) => {
   const todoId = getRouterParam(ctx.event, 'todoId');
   if (!todoId) {

@@ -2,11 +2,13 @@ import { startImpersonationSchema } from '#shared/impersonation';
 import { impersonationService } from '../../features/impersonation/impersonation-service';
 import { requireRole } from '../../utils/require-role';
 
-/**
- * POST /api/admin/impersonate
- * Start impersonating a user
- * Requires SUPER_ADMIN role
- */
+defineRouteMeta({
+  openAPI: {
+    tags: ['Admin'],
+    description: 'Start user impersonation (requires SUPER_ADMIN)',
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Check role
   const ctx = await requireRole(event, ['SUPER_ADMIN']);
