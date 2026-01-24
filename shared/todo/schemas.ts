@@ -56,11 +56,3 @@ export type CreateTodoInput = z.infer<typeof createTodoSchema>;
 export type UpdateTodoInput = z.infer<typeof updateTodoSchema>;
 export type ToggleTodoInput = z.infer<typeof toggleTodoSchema>;
 export type TodoQueryInput = z.infer<typeof todoQuerySchema>;
-
-export interface PaginatedTodos<T = unknown> {
-  todos: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
