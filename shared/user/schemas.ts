@@ -49,9 +49,13 @@ export const updateOnboardingSchema = z.object({
   }),
 });
 
+/** Schema for onboardingSteps JSON field */
+export const onboardingStepsSchema = z.record(z.enum(ONBOARDING_STEPS), z.boolean());
+
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 export type DeleteAccountPasswordInput = z.infer<typeof deleteAccountPasswordSchema>;
 export type DeleteAccountEmailInput = z.infer<typeof deleteAccountEmailSchema>;
 export type DeleteAccountInput = z.infer<typeof deleteAccountSchema>;
 export type UpdateOnboardingInput = z.infer<typeof updateOnboardingSchema>;
+export type OnboardingSteps = z.infer<typeof onboardingStepsSchema>;

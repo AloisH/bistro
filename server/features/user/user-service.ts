@@ -2,6 +2,7 @@ import { scrypt, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 import type {
   OnboardingState,
+  OnboardingSteps,
   UpdateOnboardingInput,
   UpdateProfileInput,
   UserProfile,
@@ -76,7 +77,7 @@ export class UserService {
 
     return {
       completed: user.onboardingCompleted,
-      steps: (user.onboardingSteps as Record<string, boolean>) || {},
+      steps: (user.onboardingSteps as OnboardingSteps) || {},
       data: {
         bio: user.bio,
         company: user.company,
@@ -100,7 +101,7 @@ export class UserService {
     }
 
     // Merge step completion into onboardingSteps
-    const steps = (user.onboardingSteps as Record<string, boolean>) || {};
+    const steps = (user.onboardingSteps as OnboardingSteps) || {};
     steps[input.step] = true;
 
     // Update user with new data
@@ -111,7 +112,7 @@ export class UserService {
 
     return {
       completed: updated.onboardingCompleted,
-      steps: (updated.onboardingSteps as Record<string, boolean>) || {},
+      steps: (updated.onboardingSteps as OnboardingSteps) || {},
       data: {
         bio: updated.bio,
         company: updated.company,

@@ -1,3 +1,4 @@
+import type { CreateTodoInput, TodoQueryInput } from '#shared/todo';
 import { db } from '../../utils/db';
 import type { Todo, Prisma } from '../../../prisma/generated/client';
 
@@ -6,12 +7,7 @@ export class TodoRepository {
 
   async findByUserId(
     userId: string,
-    options?: {
-      filter?: 'all' | 'active' | 'completed';
-      sort?: 'date' | 'title';
-      page?: number;
-      limit?: number;
-    },
+    options?: Partial<TodoQueryInput>,
   ): Promise<{ todos: Todo[]; total: number }> {
     const { filter = 'all', sort = 'date', page = 1, limit = 10 } = options || {};
 
@@ -40,7 +36,7 @@ export class TodoRepository {
     });
   }
 
-  async create(userId: string, data: { title: string; description?: string }): Promise<Todo> {
+  async create(userId: string, data: CreateTodoInput): Promise<Todo> {
     return this.db.todo.create({
       data: {
         title: data.title,
