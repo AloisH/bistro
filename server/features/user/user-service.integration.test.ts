@@ -71,6 +71,7 @@ describe('UserService', () => {
       const user = await createTestUser();
 
       const result = await userService.updateProfile(user.id, {
+        name: user.name ?? 'Test User',
         image: 'https://example.com/avatar.png',
       });
 

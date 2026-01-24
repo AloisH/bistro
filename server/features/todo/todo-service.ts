@@ -1,4 +1,4 @@
-import type { CreateTodoInput, UpdateTodoInput, PaginatedTodos } from '#shared/todo';
+import type { CreateTodoInput, UpdateTodoInput } from '#shared/todo';
 import type { Todo } from '../../../prisma/generated/client';
 import { todoRepository } from './todo-repository';
 
@@ -11,7 +11,7 @@ export class TodoService {
       page?: number;
       limit?: number;
     },
-  ): Promise<PaginatedTodos> {
+  ): Promise<{ todos: Todo[]; total: number; page: number; limit: number; totalPages: number }> {
     const { page = 1, limit = 10 } = options || {};
     const { todos, total } = await todoRepository.findByUserId(userId, options);
     return {
