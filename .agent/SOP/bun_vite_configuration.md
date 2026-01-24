@@ -310,4 +310,4 @@ export default defineNuxtConfig({
 
 ---
 
-_Last updated: 2025-12-21_
+_Last updated: 2026-01-24_

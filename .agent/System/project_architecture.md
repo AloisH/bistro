@@ -586,7 +586,7 @@ bun docker:prod:logs    # View logs
 
 ## Key Gotchas
 
-1. **Bun + Vite**: Configure `vite.server.fs.allow: [workspaceRoot]` for .bun directory access - see [SOP/bun_vite_configuration.md](../SOP/bun_vite_configuration.md)
+1. **Bun + Vite**: Configure `vite.server.fs.allow: [__dirname]` for .bun directory access - see [SOP/bun_vite_configuration.md](../SOP/bun_vite_configuration.md)
 2. **Database singleton**: NEVER `new PrismaClient()`, always `import { db } from '~/server/utils/db'`
 3. **User-scoped queries**: ALWAYS filter by userId (data leak prevention)
 4. **OAuth session**: Must call `fetchSession()` after OAuth callback

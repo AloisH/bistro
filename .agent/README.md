@@ -291,7 +291,6 @@ Tasks/
 **Root project docs (CLAUDE.md files):**
 
 - `/CLAUDE.md` - Root project guidance
-- `/CLAUDE.md` - Web app overview
 - `/server/CLAUDE.md` - Server layer patterns
 - `/app/CLAUDE.md` - App layer patterns
 
@@ -403,4 +402,4 @@ All engineers should contribute to documentation:
 
 ---
 
-_Last updated: 2026-01-23_
+_Last updated: 2026-01-24_
