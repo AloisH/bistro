@@ -13,7 +13,7 @@ interface ErrorOptions {
   data?: unknown;
 }
 
-class H3Error extends Error {
+class TestH3Error extends Error {
   statusCode: number;
   statusMessage?: string;
   data?: unknown;
@@ -31,10 +31,12 @@ class H3Error extends Error {
 // Type comes from h3 via Nuxt auto-imports, we just provide the implementation
 const g = globalThis as Record<string, unknown>;
 if (typeof g.createError === 'undefined') {
-  g.createError = (input: string | ErrorOptions): H3Error => {
+  g.createError = (input: string | ErrorOptions): TestH3Error => {
     if (typeof input === 'string') {
-      return new H3Error(input);
+      return new TestH3Error(input);
     }
-    return new H3Error(input.message || input.statusMessage || 'Error', input);
+    return new TestH3Error(input.message || input.statusMessage || 'Error', input);
   };
 }
+
+export {};

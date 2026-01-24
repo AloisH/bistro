@@ -27,8 +27,8 @@ describe('SessionRepository', () => {
 
       expect(result).toHaveLength(2);
       // Most recent first
-      expect(result[0].id).toBe(session2.id);
-      expect(result[1].id).toBe(session1.id);
+      expect(result.at(0)?.id).toBe(session2.id);
+      expect(result.at(1)?.id).toBe(session1.id);
     });
 
     it('returns empty array if no sessions', async () => {
@@ -48,7 +48,7 @@ describe('SessionRepository', () => {
       const result = await sessionRepository.findByUserId(user1.id);
 
       expect(result).toHaveLength(1);
-      expect(result[0].userId).toBe(user1.id);
+      expect(result.at(0)?.userId).toBe(user1.id);
     });
   });
 
@@ -127,7 +127,7 @@ describe('SessionRepository', () => {
       expect(count).toBe(2);
       const remaining = await db.session.findMany({ where: { userId: user.id } });
       expect(remaining).toHaveLength(1);
-      expect(remaining[0].token).toBe(current.token);
+      expect(remaining.at(0)?.token).toBe(current.token);
     });
 
     it('returns 0 if only current session exists', async () => {

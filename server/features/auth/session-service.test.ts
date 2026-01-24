@@ -25,11 +25,11 @@ describe('SessionService', () => {
       const result = await sessionService.listSessions(user.id, session.token);
 
       expect(result).toHaveLength(1);
-      expect(result[0].id).toBe(session.id);
-      expect(result[0].isCurrent).toBe(true);
-      expect(result[0].browser).toBeDefined();
-      expect(result[0].os).toBeDefined();
-      expect(result[0].device).toBeDefined();
+      expect(result.at(0)?.id).toBe(session.id);
+      expect(result.at(0)?.isCurrent).toBe(true);
+      expect(result.at(0)?.browser).toBeDefined();
+      expect(result.at(0)?.os).toBeDefined();
+      expect(result.at(0)?.device).toBeDefined();
     });
 
     it('marks current session correctly', async () => {
@@ -65,7 +65,7 @@ describe('SessionService', () => {
 
       const remaining = await db.session.findMany({ where: { userId: user.id } });
       expect(remaining).toHaveLength(1);
-      expect(remaining[0].id).toBe(currentSession.id);
+      expect(remaining.at(0)?.id).toBe(currentSession.id);
     });
 
     it('throws 404 if session not found', async () => {
@@ -110,7 +110,7 @@ describe('SessionService', () => {
       expect(count).toBe(2);
       const remaining = await db.session.findMany({ where: { userId: user.id } });
       expect(remaining).toHaveLength(1);
-      expect(remaining[0].id).toBe(currentSession.id);
+      expect(remaining.at(0)?.id).toBe(currentSession.id);
     });
 
     it('returns 0 if only current session exists', async () => {

@@ -144,8 +144,8 @@ describe('ImpersonationService', () => {
       });
 
       expect(logs).toHaveLength(2);
-      expect(logs[1].endedAt).not.toBeNull(); // Old log ended
-      expect(logs[0].endedAt).toBeNull(); // New log active
+      expect(logs.at(1)?.endedAt).not.toBeNull(); // Old log ended
+      expect(logs.at(0)?.endedAt).toBeNull(); // New log active
     });
 
     it('stores reason when provided', async () => {
@@ -307,7 +307,7 @@ describe('ImpersonationService', () => {
       const logs = await impersonationService.getAuditLogs({ adminId: admin1.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs[0].adminId).toBe(admin1.id);
+      expect(logs.at(0)?.adminId).toBe(admin1.id);
     });
 
     it('filters by targetUserId', async () => {
@@ -321,7 +321,7 @@ describe('ImpersonationService', () => {
       const logs = await impersonationService.getAuditLogs({ targetUserId: target1.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs[0].targetUserId).toBe(target1.id);
+      expect(logs.at(0)?.targetUserId).toBe(target1.id);
     });
 
     it('respects limit', async () => {

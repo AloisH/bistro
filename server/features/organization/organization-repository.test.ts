@@ -149,7 +149,7 @@ describe('OrganizationRepository', () => {
         const result = await organizationRepository.findUserOrganizations(user1.id);
 
         expect(result).toHaveLength(1);
-        expect(result[0].members).toHaveLength(2);
+        expect(result.at(0)?.members).toHaveLength(2);
       });
     });
 
@@ -164,8 +164,8 @@ describe('OrganizationRepository', () => {
         const result = await organizationRepository.findOrganizationMembers(org.id);
 
         expect(result).toHaveLength(2);
-        expect(result[0].user.name).toBeDefined();
-        expect(result[0].user.email).toBeDefined();
+        expect(result.at(0)?.user.name).toBeDefined();
+        expect(result.at(0)?.user.email).toBeDefined();
       });
 
       it('returns empty array if no members', async () => {

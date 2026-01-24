@@ -36,7 +36,7 @@ describe('TodoRepository (Integration)', () => {
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
-      expect(todos[0].userId).toBe(user1.id);
+      expect(todos.at(0)?.userId).toBe(user1.id);
     });
 
     it('filters active todos', async () => {
@@ -48,7 +48,7 @@ describe('TodoRepository (Integration)', () => {
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
-      expect(todos[0].completed).toBe(false);
+      expect(todos.at(0)?.completed).toBe(false);
     });
 
     it('filters completed todos', async () => {
@@ -60,7 +60,7 @@ describe('TodoRepository (Integration)', () => {
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
-      expect(todos[0].completed).toBe(true);
+      expect(todos.at(0)?.completed).toBe(true);
     });
 
     it('sorts by date descending by default', async () => {
@@ -71,8 +71,8 @@ describe('TodoRepository (Integration)', () => {
       const { todos } = await todoRepository.findByUserId(user.id);
 
       // Most recent first (todo2 created after todo1)
-      expect(todos[0].id).toBe(todo2.id);
-      expect(todos[1].id).toBe(todo1.id);
+      expect(todos.at(0)?.id).toBe(todo2.id);
+      expect(todos.at(1)?.id).toBe(todo1.id);
     });
 
     it('sorts by title when specified', async () => {
@@ -82,8 +82,8 @@ describe('TodoRepository (Integration)', () => {
 
       const { todos } = await todoRepository.findByUserId(user.id, { sort: 'title' });
 
-      expect(todos[0].title).toBe('Apple');
-      expect(todos[1].title).toBe('Zebra');
+      expect(todos.at(0)?.title).toBe('Apple');
+      expect(todos.at(1)?.title).toBe('Zebra');
     });
 
     it('paginates results', async () => {

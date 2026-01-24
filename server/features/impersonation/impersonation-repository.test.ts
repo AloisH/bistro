@@ -153,7 +153,7 @@ describe('ImpersonationRepository', () => {
       const logs = await impersonationRepository.getLogs();
 
       expect(logs.length).toBeGreaterThanOrEqual(2);
-      expect(logs[0].startedAt.getTime()).toBeGreaterThanOrEqual(logs[1].startedAt.getTime());
+      expect(logs.at(0)?.startedAt.getTime()).toBeGreaterThanOrEqual(logs.at(1)?.startedAt.getTime() ?? 0);
     });
 
     it('filters by adminId', async () => {
@@ -167,7 +167,7 @@ describe('ImpersonationRepository', () => {
       const logs = await impersonationRepository.getLogs({ adminId: admin1.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs[0].adminId).toBe(admin1.id);
+      expect(logs.at(0)?.adminId).toBe(admin1.id);
     });
 
     it('filters by targetUserId', async () => {
@@ -181,7 +181,7 @@ describe('ImpersonationRepository', () => {
       const logs = await impersonationRepository.getLogs({ targetUserId: target1.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs[0].targetUserId).toBe(target1.id);
+      expect(logs.at(0)?.targetUserId).toBe(target1.id);
     });
 
     it('respects limit', async () => {
@@ -206,9 +206,9 @@ describe('ImpersonationRepository', () => {
       const logs = await impersonationRepository.getLogs({ adminId: admin.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs[0].adminId).toBe(admin.id);
-      expect(logs[0].targetUserId).toBe(target.id);
-      expect(logs[0].admin?.name).toBe('Admin');
+      expect(logs.at(0)?.adminId).toBe(admin.id);
+      expect(logs.at(0)?.targetUserId).toBe(target.id);
+      expect(logs.at(0)?.admin?.name).toBe('Admin');
     });
   });
 });
