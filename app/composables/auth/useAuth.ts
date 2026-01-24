@@ -1,35 +1,6 @@
 import { createAuthClient } from 'better-auth/client';
 import { adminClient, magicLinkClient } from 'better-auth/client/plugins';
-
-// Custom User type with additional fields from Prisma schema
-interface AuthUser {
-  id: string;
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  role: string;
-  onboardingCompleted: boolean;
-  bio?: string | null;
-  company?: string | null;
-  useCase?: string | null;
-  emailNotifications: boolean;
-}
-
-interface AuthSession {
-  id: string;
-  userId: string;
-  expiresAt: Date;
-  token: string;
-  createdAt: Date;
-  updatedAt: Date;
-  ipAddress?: string | null;
-  userAgent?: string | null;
-  impersonatedBy?: string | null;
-  currentOrganizationId?: string | null;
-}
+import type { AuthUser, AuthSession } from '#shared/auth';
 
 export const useAuth = () => {
   const url = useRequestURL();
