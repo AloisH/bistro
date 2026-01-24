@@ -1,12 +1,5 @@
-import type {
-  Organization,
-  OrganizationMember,
-  OrganizationRole,
-} from '../../../prisma/generated/client';
-
-type MemberWithUser = OrganizationMember & {
-  user: { id: string; name: string; email: string; image: string | null };
-};
+import type { Organization, OrganizationRole } from '../../../prisma/generated/client';
+import type { MemberWithUser, MembersListResponse } from '#shared/organization';
 
 export const useOrganization = () => {
   // State - SSR-safe with useState
@@ -75,7 +68,7 @@ export const useOrganization = () => {
   async function fetchMembers(slug: string) {
     try {
       fetching.value = true;
-      const data = await $fetch<{ members: MemberWithUser[]; currentUserRole: OrganizationRole }>(
+      const data = await $fetch<MembersListResponse>(
         `/api/organizations/${slug}/members`,
       );
       members.value = data?.members ?? [];
