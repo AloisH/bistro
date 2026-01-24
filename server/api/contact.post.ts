@@ -1,4 +1,4 @@
-import { contactSchema } from '#shared/schemas/contact';
+import { contactSchema } from '#shared/contact';
 import { emailService } from '../features/email/email-service';
 
 defineRouteMeta({
