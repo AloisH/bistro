@@ -22,3 +22,16 @@ export interface UserProfile {
   updatedAt: Date;
   hasPassword: boolean;
 }
+
+/** User for admin panel (dates as string|Date for JSON serialization) */
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  image: string | null;
+  role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
+  banned: boolean;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}

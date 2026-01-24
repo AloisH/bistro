@@ -1,10 +1,6 @@
-import type { User as PrismaUser } from '../../../prisma/generated/client';
+import type { AdminUser } from '#shared/user/types';
 
-// Serialized user type (dates are strings after JSON serialization)
-export type AdminUser = Omit<PrismaUser, 'createdAt' | 'updatedAt'> & {
-  createdAt: string | Date;
-  updatedAt: string | Date;
-};
+export type { AdminUser };
 
 export function useAdminUsers() {
   const toast = useToast();
