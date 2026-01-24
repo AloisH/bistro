@@ -90,12 +90,18 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/blog': { prerender: true },
-    '/blog/**': { isr: 3600 }, // ISR with 1hr revalidation
+    '/blog/**': { isr: 3600, prerender: false }, // ISR, no prerender
     '/docs': { prerender: true },
-    '/docs/**': { isr: 3600 },
+    '/docs/**': { isr: 3600, prerender: false },
     '/changelog': { prerender: true },
     '/legal/**': { prerender: true },
     '/contact': { prerender: true },
+    // Protected routes - skip prerender
+    '/admin/**': { prerender: false },
+    '/onboarding/**': { prerender: false },
+    '/profile/**': { prerender: false },
+    '/organizations/**': { prerender: false },
+    '/org/**': { prerender: false },
   },
 
   compatibilityDate: '2025-01-15',

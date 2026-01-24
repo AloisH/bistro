@@ -43,8 +43,16 @@ declare global {
   var prisma: PrismaClientSingleton | undefined;
 }
 
-export const db = globalThis.prisma ?? prismaClientSingleton();
-
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.prisma = db;
+// Lazy init - avoids crash during prerender when no DATABASE_URL
+function getDb(): PrismaClientSingleton {
+  if (!globalThis.prisma) {
+    globalThis.prisma = prismaClientSingleton();
+  }
+  return globalThis.prisma;
 }
+
+export const db = new Proxy({} as PrismaClientSingleton, {
+  get(_, prop) {
+    return getDb()[prop as keyof PrismaClientSingleton];
+  },
+});
