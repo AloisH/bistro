@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { magicLinkSchema } from '#shared/auth/schemas';
 
 export function useAuthLogin() {
   const { signIn, fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
@@ -48,9 +48,6 @@ export function useAuthLogin() {
   }
 
   // Magic link form
-  const magicLinkSchema = z.object({
-    email: z.string().email('Please enter a valid email'),
-  });
   const magicLinkState = reactive({ email: '' });
   const magicLinkLoading = ref(false);
   const magicLinkError = ref('');
