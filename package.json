@@ -24,7 +24,7 @@
     "test:all": "vitest --config vitest.unit.config.ts && vitest --config vitest.integration.config.ts",
     "test:ui": "vitest --ui --config vitest.unit.config.ts",
     "test:run": "vitest run --config vitest.unit.config.ts",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --config vitest.unit.config.ts",
     "db:migrate": "bunx prisma migrate dev",
     "db:studio": "bunx prisma studio",
     "db:generate": "bunx prisma generate",
