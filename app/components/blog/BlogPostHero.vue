@@ -14,10 +14,7 @@
       <!-- Content overlay -->
       <div class="absolute right-0 bottom-0 left-0 p-8 text-white">
         <!-- Tags -->
-        <div
-          v-if="tags?.length"
-          class="mb-4 flex flex-wrap gap-2"
-        >
+        <div v-if="tags?.length" class="mb-4 flex flex-wrap gap-2">
           <UBadge
             v-for="tag in tags"
             :key="tag"
@@ -41,14 +38,8 @@
 
         <!-- Meta -->
         <div class="flex items-center gap-4">
-          <div
-            v-if="author"
-            class="flex items-center gap-2"
-          >
-            <UAvatar
-              :src="author.avatar"
-              :alt="author.name"
-            />
+          <div v-if="author" class="flex items-center gap-2">
+            <UAvatar :src="author.avatar" :alt="author.name" />
             <span class="font-medium">{{ author.name }}</span>
           </div>
           <span v-if="author">•</span>

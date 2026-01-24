@@ -187,9 +187,7 @@ describe('UserService', () => {
     it('throws 400 for password account', async () => {
       const user = await createTestUser(); // has password by default
 
-      await expect(
-        userService.deleteAccountWithEmail(user.id, user.email),
-      ).rejects.toMatchObject({
+      await expect(userService.deleteAccountWithEmail(user.id, user.email)).rejects.toMatchObject({
         statusCode: 400,
         message: 'Account uses password authentication',
       });

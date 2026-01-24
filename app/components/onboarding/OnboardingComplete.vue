@@ -2,10 +2,7 @@
   <div class="py-8 text-center">
     <div class="mb-6">
       <div class="bg-primary/10 mx-auto flex h-20 w-20 items-center justify-center rounded-full">
-        <UIcon
-          name="i-lucide-check-circle"
-          class="text-primary h-12 w-12"
-        />
+        <UIcon name="i-lucide-check-circle" class="text-primary h-12 w-12" />
       </div>
     </div>
 
@@ -19,24 +16,15 @@
       <h3 class="mb-3 font-semibold">What's next?</h3>
       <ul class="space-y-2 text-left text-sm">
         <li class="flex items-start gap-2">
-          <UIcon
-            name="i-lucide-circle-check"
-            class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
-          />
+          <UIcon name="i-lucide-circle-check" class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
           <span>Explore your dashboard and create your first project</span>
         </li>
         <li class="flex items-start gap-2">
-          <UIcon
-            name="i-lucide-circle-check"
-            class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
-          />
+          <UIcon name="i-lucide-circle-check" class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
           <span>Check out the documentation to learn more</span>
         </li>
         <li class="flex items-start gap-2">
-          <UIcon
-            name="i-lucide-circle-check"
-            class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
-          />
+          <UIcon name="i-lucide-circle-check" class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
           <span>Customize your profile settings anytime</span>
         </li>
       </ul>

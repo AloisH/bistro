@@ -4,18 +4,11 @@
       v-if="sessions.length === 0"
       class="py-8 text-center text-neutral-500 dark:text-neutral-400"
     >
-      <UIcon
-        name="i-lucide-shield-off"
-        class="mx-auto mb-3 text-4xl"
-      />
+      <UIcon name="i-lucide-shield-off" class="mx-auto mb-3 text-4xl" />
       <p>No active sessions found</p>
     </div>
 
-    <div
-      v-for="session in sessions"
-      :key="session.id"
-      class="border-default rounded-lg border p-4"
-    >
+    <div v-for="session in sessions" :key="session.id" class="border-default rounded-lg border p-4">
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-1 items-start gap-3">
           <UIcon
@@ -27,27 +20,17 @@
               <h3 class="font-medium text-neutral-900 dark:text-white">
                 {{ session.browser }} on {{ session.os }}
               </h3>
-              <UBadge
-                v-if="session.isCurrent"
-                color="primary"
-                variant="subtle"
-              >
+              <UBadge v-if="session.isCurrent" color="primary" variant="subtle">
                 Current Session
               </UBadge>
             </div>
             <div class="space-y-1 text-sm text-neutral-500 dark:text-neutral-400">
               <p v-if="session.ipAddress">
-                <UIcon
-                  name="i-lucide-map-pin"
-                  class="mr-1 inline"
-                />
+                <UIcon name="i-lucide-map-pin" class="mr-1 inline" />
                 {{ session.ipAddress }}
               </p>
               <p>
-                <UIcon
-                  name="i-lucide-clock"
-                  class="mr-1 inline"
-                />
+                <UIcon name="i-lucide-clock" class="mr-1 inline" />
                 Last active: {{ formatTime(session.lastActive) }}
               </p>
             </div>

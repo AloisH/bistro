@@ -15,22 +15,14 @@ onMounted(() => {
 
 <template>
   <div>
-    <UButton
-      variant="ghost"
-      icon="i-lucide-search"
-      size="sm"
-      @click="open"
-    >
+    <UButton variant="ghost" icon="i-lucide-search" size="sm" @click="open">
       Search
       <template #trailing>
         <UKbd>⌘K</UKbd>
       </template>
     </UButton>
 
-    <UModal
-      v-model:open="isOpen"
-      :ui="{ wrapper: 'max-w-2xl' }"
-    >
+    <UModal v-model:open="isOpen" :ui="{ wrapper: 'max-w-2xl' }">
       <template #content="{ close: closeModal }">
         <div class="p-4">
           <UInput
@@ -41,10 +33,7 @@ onMounted(() => {
             size="lg"
           />
 
-          <div
-            v-if="results.length"
-            class="mt-4 max-h-96 space-y-2 overflow-y-auto"
-          >
+          <div v-if="results.length" class="mt-4 max-h-96 space-y-2 overflow-y-auto">
             <NuxtLink
               v-for="r in results"
               :key="r.path"
@@ -61,18 +50,8 @@ onMounted(() => {
             </NuxtLink>
           </div>
 
-          <div
-            v-else-if="query"
-            class="mt-8 text-center text-neutral-500"
-          >
-            No results
-          </div>
-          <div
-            v-else
-            class="mt-8 text-center text-neutral-500"
-          >
-            Start typing to search
-          </div>
+          <div v-else-if="query" class="mt-8 text-center text-neutral-500">No results</div>
+          <div v-else class="mt-8 text-center text-neutral-500">Start typing to search</div>
         </div>
       </template>
     </UModal>

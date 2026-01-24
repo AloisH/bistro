@@ -98,13 +98,7 @@ const footer = {
     <Preview>Your login link for Bistro</Preview>
     <Body :style="main">
       <Container :style="container">
-        <Img
-          src="/logo.svg"
-          alt="Bistro Logo"
-          width="120"
-          height="30"
-          :style="logo"
-        />
+        <Img src="/logo.svg" alt="Bistro Logo" width="120" height="30" :style="logo" />
 
         <Heading :style="heading">Sign in to Bistro</Heading>
 
@@ -113,20 +107,12 @@ const footer = {
         </Text>
 
         <div :style="buttonContainer">
-          <Button
-            :href="magicLink"
-            :style="button"
-          >
-            Sign in to Bistro
-          </Button>
+          <Button :href="magicLink" :style="button"> Sign in to Bistro </Button>
         </div>
 
         <Text :style="paragraph">Or copy and paste this URL into your browser:</Text>
 
-        <Link
-          :href="magicLink"
-          :style="link"
-        >
+        <Link :href="magicLink" :style="link">
           {{ magicLink }}
         </Link>
 
@@ -137,12 +123,7 @@ const footer = {
           ignore this email.
         </Text>
 
-        <Text
-          v-if="email"
-          :style="footer"
-        >
-          This email was sent to {{ email }}
-        </Text>
+        <Text v-if="email" :style="footer"> This email was sent to {{ email }} </Text>
       </Container>
     </Body>
   </Html>

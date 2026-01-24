@@ -22,7 +22,7 @@ export function useEmailTemplates() {
 
   // Computed
   const selectedTemplate = computed(() =>
-    templates.value.find(t => t.id === selectedTemplateId.value),
+    templates.value.find((t) => t.id === selectedTemplateId.value),
   );
 
   // Actions

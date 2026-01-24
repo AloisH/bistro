@@ -30,10 +30,7 @@
       </UButton>
     </div>
   </div>
-  <div
-    v-if="isImpersonating"
-    class="h-[73px]"
-  />
+  <div v-if="isImpersonating" class="h-[73px]" />
 </template>
 
 <script setup lang="ts">

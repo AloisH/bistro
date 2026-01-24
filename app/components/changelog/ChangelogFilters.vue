@@ -1,10 +1,7 @@
 <template>
   <div class="mb-8">
     <div class="mb-4 flex items-center gap-3">
-      <UIcon
-        name="i-lucide-filter"
-        class="text-neutral-400"
-      />
+      <UIcon name="i-lucide-filter" class="text-neutral-400" />
       <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">Filter by type</h2>
     </div>
 
@@ -25,10 +22,7 @@
         class="cursor-pointer"
         @click="$emit('filter', type.value)"
       >
-        <UIcon
-          :name="type.icon"
-          class="mr-1 size-3"
-        />
+        <UIcon :name="type.icon" class="mr-1 size-3" />
         {{ type.label }} ({{ countByType(type.value) }})
       </UBadge>
     </div>

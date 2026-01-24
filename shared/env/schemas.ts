@@ -42,11 +42,11 @@ const productionEnvSchema = baseEnvSchema
     AUTH_TRUSTED_ORIGINS: z
       .string()
       .min(1, 'AUTH_TRUSTED_ORIGINS required in production')
-      .refine(val => val.includes('https://'), {
+      .refine((val) => val.includes('https://'), {
         message: 'AUTH_TRUSTED_ORIGINS must include https://',
       }),
   })
-  .refine(data => data.AUTH_SECRET !== 'your-secret-key-min-32-chars-long', {
+  .refine((data) => data.AUTH_SECRET !== 'your-secret-key-min-32-chars-long', {
     message: 'AUTH_SECRET must not be default in production',
     path: ['AUTH_SECRET'],
   });

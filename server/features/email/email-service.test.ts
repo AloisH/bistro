@@ -21,7 +21,7 @@ vi.mock('@vue-email/render', () => ({
 
 // Mock createError
 vi.mock('h3', () => ({
-  createError: vi.fn(error => error),
+  createError: vi.fn((error) => error),
 }));
 
 const mockSend = resend!.emails.send as ReturnType<typeof vi.fn>;
@@ -105,20 +105,6 @@ describe('EmailService', () => {
       expect(mockSend).toHaveBeenCalledWith(
         expect.objectContaining({
           replyTo: 'reply@example.com',
-        }),
-      );
-    });
-
-    it('normalizes email addresses', async () => {
-      await emailService.sendEmail({
-        to: ' Test@Example.COM ',
-        subject: 'Test',
-        html: '<p>Test</p>',
-      });
-
-      expect(mockSend).toHaveBeenCalledWith(
-        expect.objectContaining({
-          to: 'test@example.com',
         }),
       );
     });

@@ -51,9 +51,9 @@ import { shortcuts } from '~/composables/shortcuts/useKeyboardShortcuts';
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
-const navigationShortcuts = computed(() => shortcuts.filter(s => s.category === 'navigation'));
+const navigationShortcuts = computed(() => shortcuts.filter((s) => s.category === 'navigation'));
 
-const modalShortcuts = computed(() => shortcuts.filter(s => s.category === 'modals'));
+const modalShortcuts = computed(() => shortcuts.filter((s) => s.category === 'modals'));
 
 // Helper component for shortcut rows
 const ShortcutRow = defineComponent({
@@ -77,7 +77,7 @@ const ShortcutRow = defineComponent({
       h('div', { class: 'flex items-center justify-between py-1' }, [
         h('span', { class: 'text-sm' }, props.label),
         h('div', { class: 'flex items-center gap-1' }, [
-          ...keyParts.value.map(key => h(resolveComponent('UKbd'), { key }, () => key)),
+          ...keyParts.value.map((key) => h(resolveComponent('UKbd'), { key }, () => key)),
         ]),
       ]);
   },

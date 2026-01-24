@@ -29,7 +29,7 @@ export function useRecentItems() {
 
   function addRecentItem(item: RecentItem) {
     // Remove if exists
-    const filtered = recentItems.value.filter(i => i.id !== item.id);
+    const filtered = recentItems.value.filter((i) => i.id !== item.id);
     // Add to front
     recentItems.value = [item, ...filtered].slice(0, MAX_ITEMS);
     // Persist

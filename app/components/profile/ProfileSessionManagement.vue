@@ -6,13 +6,7 @@
           <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
             Active Sessions
           </h2>
-          <UBadge
-            color="primary"
-            variant="subtle"
-            size="sm"
-          >
-            Security
-          </UBadge>
+          <UBadge color="primary" variant="subtle" size="sm"> Security </UBadge>
         </div>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
           Manage devices where you're currently logged in
@@ -26,10 +20,7 @@
       @revoke="revokeSession"
     />
 
-    <div
-      v-if="sessions.length > 1"
-      class="border-default mt-6 border-t pt-4"
-    >
+    <div v-if="sessions.length > 1" class="border-default mt-6 border-t pt-4">
       <UButton
         color="error"
         variant="outline"
@@ -38,10 +29,7 @@
         @click="showRevokeAllModal = true"
       >
         <template #leading>
-          <UIcon
-            name="i-lucide-log-out"
-            class="mr-2"
-          />
+          <UIcon name="i-lucide-log-out" class="mr-2" />
         </template>
         Revoke All Other Sessions
       </UButton>
@@ -87,11 +75,7 @@
             @click="revokeAllOthers"
           >
             <template #leading>
-              <UIcon
-                v-if="!revokeLoading"
-                name="i-lucide-log-out"
-                class="mr-2"
-              />
+              <UIcon v-if="!revokeLoading" name="i-lucide-log-out" class="mr-2" />
             </template>
             Revoke All Sessions
           </UButton>

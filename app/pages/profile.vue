@@ -25,10 +25,7 @@
 
     <div class="space-y-8">
       <ProfileForm :has-password="hasPassword" />
-      <ProfileChangePasswordForm
-        v-if="hasPassword"
-        @changed="onPasswordChanged"
-      />
+      <ProfileChangePasswordForm v-if="hasPassword" @changed="onPasswordChanged" />
       <ProfileSessionManagement ref="sessionManagement" />
       <ProfileOnboardingInfo />
       <ProfileRestartOnboardingButton />
@@ -55,7 +52,7 @@ const sessionManagement = ref<{ fetchSessions: () => void } | null>(null);
 function getInitials(name: string): string {
   return name
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase())
+    .map((word) => word.charAt(0).toUpperCase())
     .join('');
 }
 

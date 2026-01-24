@@ -25,7 +25,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // Skip if already on organization-related pages
   const orgPages = ['/organizations/create', '/organizations/select', '/organizations/invite'];
-  if (orgPages.some(page => to.path.startsWith(page))) {
+  if (orgPages.some((page) => to.path.startsWith(page))) {
     return;
   }
 

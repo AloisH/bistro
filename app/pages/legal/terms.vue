@@ -46,10 +46,7 @@ useSeo({
       </header>
 
       <!-- Content -->
-      <ContentRenderer
-        :value="page"
-        class="prose dark:prose-invert max-w-none"
-      />
+      <ContentRenderer :value="page" class="prose dark:prose-invert max-w-none" />
     </article>
   </div>
 </template>

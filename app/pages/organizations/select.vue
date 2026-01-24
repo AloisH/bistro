@@ -16,16 +16,8 @@
         @retry="refresh"
       />
 
-      <template
-        v-if="organizations?.organizations?.length"
-        #footer
-      >
-        <UButton
-          to="/organizations/create"
-          variant="soft"
-          icon="i-lucide-plus"
-          block
-        >
+      <template v-if="organizations?.organizations?.length" #footer>
+        <UButton to="/organizations/create" variant="soft" icon="i-lucide-plus" block>
           Create New Organization
         </UButton>
       </template>

@@ -13,7 +13,7 @@ const colorMode = useColorMode();
 
 const localValue = computed({
   get: () => props.modelValue,
-  set: value => emit('update:modelValue', value),
+  set: (value) => emit('update:modelValue', value),
 });
 
 const colorModeOptions = [
@@ -47,10 +47,7 @@ const colorModeOptions = [
             ]"
             @click="colorMode.preference = option.value as 'light' | 'dark' | 'system'"
           >
-            <UIcon
-              :name="option.icon"
-              class="h-6 w-6"
-            />
+            <UIcon :name="option.icon" class="h-6 w-6" />
             <span class="text-sm font-medium">{{ option.label }}</span>
           </button>
         </div>

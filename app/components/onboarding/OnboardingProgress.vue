@@ -10,19 +10,11 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
 <template>
   <div class="mb-8 w-full">
     <!-- Progress bar -->
-    <UProgress
-      :value="(currentStep / totalSteps) * 100"
-      size="sm"
-      class="mb-6"
-    />
+    <UProgress :value="(currentStep / totalSteps) * 100" size="sm" class="mb-6" />
 
     <!-- Step indicators -->
     <div class="flex items-center justify-between">
-      <div
-        v-for="i in totalSteps"
-        :key="i"
-        class="flex flex-1 flex-col items-center"
-      >
+      <div v-for="i in totalSteps" :key="i" class="flex flex-1 flex-col items-center">
         <div
           :class="[
             'mb-2 flex h-10 w-10 items-center justify-center rounded-full font-semibold transition-colors',
@@ -31,11 +23,7 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
               : 'bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400',
           ]"
         >
-          <UIcon
-            v-if="i < currentStep"
-            name="i-lucide-check"
-            class="h-5 w-5"
-          />
+          <UIcon v-if="i < currentStep" name="i-lucide-check" class="h-5 w-5" />
           <span v-else>{{ i }}</span>
         </div>
         <span

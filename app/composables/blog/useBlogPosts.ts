@@ -37,9 +37,9 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
 
   const posts = computed<BlogPost[]>(() => {
     const rawPosts = postsData.value?.posts || [];
-    return rawPosts.map(post => ({
+    return rawPosts.map((post) => ({
       ...post,
-      authors: post.authors?.map(a => ({
+      authors: post.authors?.map((a) => ({
         ...a,
         avatar: a.avatar ? { src: a.avatar } : undefined,
       })),

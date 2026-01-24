@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   // Filter by change type if specified
   const filtered = type
-    ? sorted.filter(entry => entry.changes?.some(c => c.type === type))
+    ? sorted.filter((entry) => entry.changes?.some((c) => c.type === type))
     : sorted;
 
   return {

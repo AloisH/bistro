@@ -153,7 +153,9 @@ describe('ImpersonationRepository', () => {
       const logs = await impersonationRepository.getLogs();
 
       expect(logs.length).toBeGreaterThanOrEqual(2);
-      expect(logs.at(0)?.startedAt.getTime()).toBeGreaterThanOrEqual(logs.at(1)?.startedAt.getTime() ?? 0);
+      expect(logs.at(0)?.startedAt.getTime()).toBeGreaterThanOrEqual(
+        logs.at(1)?.startedAt.getTime() ?? 0,
+      );
     });
 
     it('filters by adminId', async () => {

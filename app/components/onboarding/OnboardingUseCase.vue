@@ -9,7 +9,7 @@ const emit = defineEmits<{
 
 const localValue = computed({
   get: () => props.modelValue,
-  set: value => emit('update:modelValue', value),
+  set: (value) => emit('update:modelValue', value),
 });
 
 const useCases = [
@@ -69,18 +69,12 @@ const useCases = [
                 : 'border-neutral-300 dark:border-neutral-600',
             ]"
           >
-            <div
-              v-if="localValue === useCase.value"
-              class="bg-primary h-3 w-3 rounded-full"
-            />
+            <div v-if="localValue === useCase.value" class="bg-primary h-3 w-3 rounded-full" />
           </div>
         </div>
         <div class="flex-1">
           <div class="mb-1 flex items-center gap-2">
-            <UIcon
-              :name="useCase.icon"
-              class="h-5 w-5"
-            />
+            <UIcon :name="useCase.icon" class="h-5 w-5" />
             <span class="font-medium">{{ useCase.label }}</span>
           </div>
           <p class="text-sm text-neutral-500 dark:text-neutral-400">

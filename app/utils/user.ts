@@ -19,7 +19,7 @@ export function getUserInitials(
   if (words.length > 1) {
     return words
       .slice(0, 2)
-      .map(word => word.charAt(0).toUpperCase())
+      .map((word) => word.charAt(0).toUpperCase())
       .join('');
   }
 

@@ -140,8 +140,8 @@ describe('UserRepository', () => {
 
       expect(result.length).toBeGreaterThanOrEqual(2);
       // Most recent first
-      const user1Index = result.findIndex(u => u.id === user1.id);
-      const user2Index = result.findIndex(u => u.id === user2.id);
+      const user1Index = result.findIndex((u) => u.id === user1.id);
+      const user2Index = result.findIndex((u) => u.id === user2.id);
       expect(user2Index).toBeLessThan(user1Index);
     });
   });

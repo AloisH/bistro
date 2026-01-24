@@ -11,56 +11,26 @@
 
     <UHeader :links="navLinks">
       <template #left>
-        <NuxtLink
-          to="/"
-          class="flex items-center gap-2"
-        >
-          <UIcon
-            name="i-lucide-check-square"
-            class="text-primary size-6"
-          />
+        <NuxtLink to="/" class="flex items-center gap-2">
+          <UIcon name="i-lucide-check-square" class="text-primary size-6" />
           <span class="text-lg font-bold">Bistro</span>
         </NuxtLink>
 
-        <UNavigationMenu
-          :items="navLinks"
-          class="ml-6 hidden md:flex"
-        />
+        <UNavigationMenu :items="navLinks" class="ml-6 hidden md:flex" />
       </template>
 
       <template #right>
         <UColorModeButton class="hidden md:flex" />
-        <UButton
-          to="/auth/login"
-          variant="ghost"
-          class="hidden sm:flex"
-        >
-          Sign in
-        </UButton>
+        <UButton to="/auth/login" variant="ghost" class="hidden sm:flex"> Sign in </UButton>
         <UButton to="/auth/register"> Get Started </UButton>
       </template>
 
       <template #body>
-        <UNavigationMenu
-          :items="navLinks"
-          orientation="vertical"
-          class="w-full"
-        />
+        <UNavigationMenu :items="navLinks" orientation="vertical" class="w-full" />
         <USeparator class="my-4" />
         <div class="flex flex-col gap-2">
-          <UButton
-            to="/auth/login"
-            variant="ghost"
-            block
-          >
-            Sign in
-          </UButton>
-          <UButton
-            to="/auth/register"
-            block
-          >
-            Get Started
-          </UButton>
+          <UButton to="/auth/login" variant="ghost" block> Sign in </UButton>
+          <UButton to="/auth/register" block> Get Started </UButton>
         </div>
       </template>
     </UHeader>
@@ -102,10 +72,7 @@
 
       <template #left>
         <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-check-square"
-            class="text-primary size-5"
-          />
+          <UIcon name="i-lucide-check-square" class="text-primary size-5" />
           <span class="font-semibold">Bistro</span>
         </div>
         <p class="text-muted mt-1 text-sm">Open source todo app built with Nuxt.</p>
@@ -118,10 +85,7 @@
       </template>
 
       <template #right>
-        <UColorModeButton
-          color="neutral"
-          variant="ghost"
-        />
+        <UColorModeButton color="neutral" variant="ghost" />
       </template>
     </UFooter>
   </div>

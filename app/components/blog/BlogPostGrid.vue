@@ -14,10 +14,7 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    v-if="posts?.length"
-    class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-  >
+  <div v-if="posts?.length" class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     <NuxtLink
       v-for="(post, index) in posts"
       :key="post.path"
@@ -81,12 +78,7 @@ defineProps<{
     </NuxtLink>
   </div>
 
-  <p
-    v-else
-    class="py-12 text-center text-neutral-500"
-  >
-    No posts found. Check back soon!
-  </p>
+  <p v-else class="py-12 text-center text-neutral-500">No posts found. Check back soon!</p>
 </template>
 
 <style scoped>

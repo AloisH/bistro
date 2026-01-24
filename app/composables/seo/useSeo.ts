@@ -73,21 +73,21 @@ export function useSeo(options: SeoOptions) {
     const blogPostingSchema = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
-      'headline': options.title,
-      'description': options.description,
-      'image': schemaImage,
-      'datePublished': options.publishedTime,
-      'url': `${siteUrl}${route.path}`,
+      headline: options.title,
+      description: options.description,
+      image: schemaImage,
+      datePublished: options.publishedTime,
+      url: `${siteUrl}${route.path}`,
       ...(options.authorName && {
         author: {
           '@type': 'Person',
-          'name': options.authorName,
+          name: options.authorName,
         },
       }),
-      'publisher': {
+      publisher: {
         '@type': 'Organization',
-        'name': 'Bistro',
-        'url': siteUrl,
+        name: 'Bistro',
+        url: siteUrl,
       },
     };
 

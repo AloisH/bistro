@@ -22,8 +22,8 @@ describe('TodoRepository (Integration)', () => {
 
       expect(todos).toHaveLength(2);
       expect(total).toBe(2);
-      expect(todos.map(t => t.id)).toContain(todo1.id);
-      expect(todos.map(t => t.id)).toContain(todo2.id);
+      expect(todos.map((t) => t.id)).toContain(todo1.id);
+      expect(todos.map((t) => t.id)).toContain(todo2.id);
     });
 
     it('does not return other users todos', async () => {

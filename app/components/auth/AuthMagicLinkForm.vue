@@ -15,15 +15,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <UForm
-    :state="state"
-    :schema="schema"
-    @submit.prevent="emit('submit')"
-  >
-    <UFormField
-      name="email"
-      label="Email"
-    >
+  <UForm :state="state" :schema="schema" @submit.prevent="emit('submit')">
+    <UFormField name="email" label="Email">
       <UInput
         v-model="state.email"
         type="email"
@@ -36,13 +29,7 @@ const emit = defineEmits<{
       We'll send you a link to sign in without a password.
     </p>
 
-    <UAlert
-      v-if="error"
-      color="error"
-      variant="subtle"
-      :title="error"
-      class="mt-4"
-    />
+    <UAlert v-if="error" color="error" variant="subtle" :title="error" class="mt-4" />
 
     <UButton
       type="submit"

@@ -12,7 +12,7 @@ const emit = defineEmits<{
 
 const localValue = computed({
   get: () => props.modelValue,
-  set: value => emit('update:modelValue', value),
+  set: (value) => emit('update:modelValue', value),
 });
 </script>
 
@@ -28,11 +28,7 @@ const localValue = computed({
     <div class="space-y-4">
       <div>
         <label class="mb-2 block text-sm font-medium"> Bio </label>
-        <UTextarea
-          v-model="localValue.bio"
-          placeholder="Tell us about yourself..."
-          :rows="4"
-        />
+        <UTextarea v-model="localValue.bio" placeholder="Tell us about yourself..." :rows="4" />
         <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
           {{ localValue.bio?.length || 0 }} / 500
         </p>
@@ -40,10 +36,7 @@ const localValue = computed({
 
       <div>
         <label class="mb-2 block text-sm font-medium"> Company / Organization </label>
-        <UInput
-          v-model="localValue.company"
-          placeholder="Acme Inc."
-        />
+        <UInput v-model="localValue.company" placeholder="Acme Inc." />
       </div>
     </div>
   </div>

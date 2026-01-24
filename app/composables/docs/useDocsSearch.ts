@@ -36,7 +36,7 @@ export function useDocsSearch() {
     return fuse.value
       .search(query.value)
       .slice(0, 10)
-      .map(r => ({
+      .map((r) => ({
         title: r.item.title,
         path: r.item.path,
         content: r.item.content.slice(0, 150),

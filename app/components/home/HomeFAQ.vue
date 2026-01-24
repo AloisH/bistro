@@ -35,9 +35,6 @@ const faqItems = [
     description="Got questions? We've got answers."
     class="scroll-animate"
   >
-    <UAccordion
-      :items="faqItems"
-      class="mx-auto max-w-2xl"
-    />
+    <UAccordion :items="faqItems" class="mx-auto max-w-2xl" />
   </UPageSection>
 </template>

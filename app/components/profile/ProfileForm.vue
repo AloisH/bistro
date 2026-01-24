@@ -14,12 +14,7 @@
         label="Full Name"
         description="Your display name that appears on your profile"
       >
-        <UInput
-          v-model="profileState.name"
-          placeholder="Your full name"
-          size="lg"
-          class="w-full"
-        />
+        <UInput v-model="profileState.name" placeholder="Your full name" size="lg" class="w-full" />
       </UFormField>
 
       <UFormField
@@ -31,27 +26,13 @@
             : 'Managed by your OAuth provider (GitHub/Google)'
         "
       >
-        <UInput
-          :model-value="user?.email"
-          disabled
-          size="lg"
-          class="w-full"
-        />
+        <UInput :model-value="user?.email" disabled size="lg" class="w-full" />
       </UFormField>
 
       <div class="pt-4">
-        <UButton
-          type="submit"
-          :loading="profileLoading"
-          size="lg"
-          class="w-full sm:w-auto"
-        >
+        <UButton type="submit" :loading="profileLoading" size="lg" class="w-full sm:w-auto">
           <template #leading>
-            <UIcon
-              v-if="!profileLoading"
-              name="i-lucide-save"
-              class="mr-2"
-            />
+            <UIcon v-if="!profileLoading" name="i-lucide-save" class="mr-2" />
           </template>
           Save Changes
         </UButton>

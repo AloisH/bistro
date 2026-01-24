@@ -1,13 +1,6 @@
 <template>
-  <div
-    v-if="pending"
-    class="space-y-2"
-  >
-    <div
-      v-for="i in 3"
-      :key="i"
-      class="flex items-center gap-3 p-3"
-    >
+  <div v-if="pending" class="space-y-2">
+    <div v-for="i in 3" :key="i" class="flex items-center gap-3 p-3">
       <USkeleton class="h-5 w-5 rounded" />
       <div class="flex-1 space-y-2">
         <USkeleton class="h-4 w-32" />
@@ -16,22 +9,14 @@
     </div>
   </div>
 
-  <div
-    v-else-if="error"
-    class="py-8"
-  >
+  <div v-else-if="error" class="py-8">
     <UAlert
       color="error"
       icon="i-lucide-alert-triangle"
       title="Error loading organizations"
       :description="error.message"
     />
-    <UButton
-      class="mt-4"
-      @click="$emit('retry')"
-    >
-      Retry
-    </UButton>
+    <UButton class="mt-4" @click="$emit('retry')"> Retry </UButton>
   </div>
 
   <UEmpty
@@ -44,10 +29,7 @@
     ]"
   />
 
-  <div
-    v-else
-    class="space-y-2"
-  >
+  <div v-else class="space-y-2">
     <UButton
       v-for="org in organizations"
       :key="org.id"
@@ -56,18 +38,12 @@
       @click="$emit('select', org.slug)"
     >
       <div class="flex items-center gap-3">
-        <UIcon
-          name="i-lucide-building-2"
-          class="h-5 w-5"
-        />
+        <UIcon name="i-lucide-building-2" class="h-5 w-5" />
         <div class="text-left">
           <div class="font-medium">
             {{ org.name }}
           </div>
-          <div
-            v-if="org.description"
-            class="text-xs text-neutral-500"
-          >
+          <div v-if="org.description" class="text-xs text-neutral-500">
             {{ org.description }}
           </div>
         </div>

@@ -27,7 +27,7 @@ export const mockDb = {
   organization: createModelMock(),
   organizationMember: createModelMock(),
   organizationInvite: createModelMock(),
-  $transaction: vi.fn(fn => fn(mockDb)),
+  $transaction: vi.fn((fn) => fn(mockDb)),
   $executeRaw: vi.fn(),
   $queryRaw: vi.fn(),
   $connect: vi.fn(),

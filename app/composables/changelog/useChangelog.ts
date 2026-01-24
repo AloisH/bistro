@@ -59,7 +59,7 @@ export function useChangelog() {
   }
 
   function countByType(type: string): number {
-    return allEntries.value.filter(entry => entry.changes?.some(c => c.type === type)).length;
+    return allEntries.value.filter((entry) => entry.changes?.some((c) => c.type === type)).length;
   }
 
   // Color/icon helpers

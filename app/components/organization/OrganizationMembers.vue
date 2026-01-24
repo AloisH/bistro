@@ -105,8 +105,8 @@ const columns = [
           // Role dropdown (OWNER only, not self)
           canEdit
             ? h(resolveComponent('USelect'), {
-                'modelValue': member.role,
-                'options': [
+                modelValue: member.role,
+                options: [
                   { value: 'OWNER', label: 'Owner' },
                   { value: 'ADMIN', label: 'Admin' },
                   { value: 'MEMBER', label: 'Member' },
@@ -232,19 +232,12 @@ async function confirmRemove() {
   <div class="space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-xl font-semibold">Members</h2>
-      <UButton
-        v-if="isOwner"
-        icon="i-lucide-user-plus"
-        @click="openInviteModal"
-      >
+      <UButton v-if="isOwner" icon="i-lucide-user-plus" @click="openInviteModal">
         Invite Member
       </UButton>
     </div>
 
-    <UTable
-      :data="[...members]"
-      :columns="columns"
-    />
+    <UTable :data="[...members]" :columns="columns" />
 
     <UModal v-model:open="inviteModalOpen">
       <template #content="{ close }">
@@ -253,28 +246,13 @@ async function confirmRemove() {
             <h3 class="text-lg font-semibold">Invite Member</h3>
           </template>
 
-          <UForm
-            :state="inviteState"
-            :schema="inviteMemberSchema"
-            @submit.prevent="sendInvite"
-          >
+          <UForm :state="inviteState" :schema="inviteMemberSchema" @submit.prevent="sendInvite">
             <div class="space-y-4">
-              <UFormField
-                name="email"
-                label="Email"
-                required
-              >
-                <UInput
-                  v-model="inviteState.email"
-                  type="email"
-                  placeholder="member@example.com"
-                />
+              <UFormField name="email" label="Email" required>
+                <UInput v-model="inviteState.email" type="email" placeholder="member@example.com" />
               </UFormField>
 
-              <UFormField
-                name="role"
-                label="Role"
-              >
+              <UFormField name="role" label="Role">
                 <USelect
                   v-model="inviteState.role"
                   :options="[
@@ -288,20 +266,8 @@ async function confirmRemove() {
               </UFormField>
 
               <div class="flex gap-2 pt-4">
-                <UButton
-                  type="submit"
-                  :loading="inviting"
-                  block
-                >
-                  Send Invitation
-                </UButton>
-                <UButton
-                  variant="ghost"
-                  :disabled="inviting"
-                  @click="close"
-                >
-                  Cancel
-                </UButton>
+                <UButton type="submit" :loading="inviting" block> Send Invitation </UButton>
+                <UButton variant="ghost" :disabled="inviting" @click="close"> Cancel </UButton>
               </div>
             </div>
           </UForm>
@@ -320,20 +286,8 @@ async function confirmRemove() {
 
           <template #footer>
             <div class="flex gap-2">
-              <UButton
-                color="error"
-                :loading="removing"
-                @click="confirmRemove"
-              >
-                Remove
-              </UButton>
-              <UButton
-                variant="ghost"
-                :disabled="removing"
-                @click="close"
-              >
-                Cancel
-              </UButton>
+              <UButton color="error" :loading="removing" @click="confirmRemove"> Remove </UButton>
+              <UButton variant="ghost" :disabled="removing" @click="close"> Cancel </UButton>
             </div>
           </template>
         </UCard>

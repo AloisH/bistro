@@ -85,7 +85,7 @@ export class OrganizationService {
    */
   private async countOwners(organizationId: string): Promise<number> {
     const members = await organizationRepository.findOrganizationMembers(organizationId);
-    return members.filter(m => m.role === 'OWNER').length;
+    return members.filter((m) => m.role === 'OWNER').length;
   }
 
   /**

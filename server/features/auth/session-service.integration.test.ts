@@ -40,8 +40,8 @@ describe('SessionService', () => {
       const result = await sessionService.listSessions(user.id, session1.token);
 
       expect(result).toHaveLength(2);
-      const current = result.find(s => s.id === session1.id);
-      const other = result.find(s => s.id === session2.id);
+      const current = result.find((s) => s.id === session1.id);
+      const other = result.find((s) => s.id === session2.id);
       expect(current?.isCurrent).toBe(true);
       expect(other?.isCurrent).toBe(false);
     });

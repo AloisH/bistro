@@ -1,9 +1,5 @@
 <template>
-  <UTable
-    :data="users"
-    :columns="columns"
-    :loading="loading"
-  />
+  <UTable :data="users" :columns="columns" :loading="loading" />
 </template>
 
 <script setup lang="ts">

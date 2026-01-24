@@ -8,15 +8,8 @@
         </p>
       </template>
 
-      <UForm
-        :state="state"
-        :schema="magicLinkSchema"
-        @submit.prevent="submit"
-      >
-        <UFormField
-          name="email"
-          label="Email"
-        >
+      <UForm :state="state" :schema="magicLinkSchema" @submit.prevent="submit">
+        <UFormField name="email" label="Email">
           <UInput
             v-model="state.email"
             type="email"
@@ -25,21 +18,9 @@
           />
         </UFormField>
 
-        <UAlert
-          v-if="error"
-          color="error"
-          variant="subtle"
-          :title="error"
-          class="mt-4"
-        />
+        <UAlert v-if="error" color="error" variant="subtle" :title="error" class="mt-4" />
 
-        <UButton
-          type="submit"
-          block
-          :loading="loading"
-          size="xl"
-          class="mt-6 font-semibold"
-        >
+        <UButton type="submit" block :loading="loading" size="xl" class="mt-6 font-semibold">
           Send magic link
         </UButton>
       </UForm>
@@ -47,10 +28,7 @@
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
           Prefer a password?
-          <NuxtLink
-            to="/auth/login"
-            class="text-primary hover:underline"
-          >
+          <NuxtLink to="/auth/login" class="text-primary hover:underline">
             Sign in with password
           </NuxtLink>
         </p>

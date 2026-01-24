@@ -99,13 +99,7 @@ const footer = {
     <Preview>Verify your email for Bistro</Preview>
     <Body :style="main">
       <Container :style="container">
-        <Img
-          src="/logo.svg"
-          alt="Bistro Logo"
-          width="120"
-          height="30"
-          :style="logo"
-        />
+        <Img src="/logo.svg" alt="Bistro Logo" width="120" height="30" :style="logo" />
 
         <Heading :style="heading">Welcome to Bistro, {{ name }}!</Heading>
 
@@ -116,20 +110,12 @@ const footer = {
         <Text :style="paragraph"> Click the button below to verify your email address: </Text>
 
         <div :style="buttonContainer">
-          <Button
-            :href="verificationLink"
-            :style="button"
-          >
-            Verify Email Address
-          </Button>
+          <Button :href="verificationLink" :style="button"> Verify Email Address </Button>
         </div>
 
         <Text :style="paragraph">Or copy and paste this URL into your browser:</Text>
 
-        <Link
-          :href="verificationLink"
-          :style="link"
-        >
+        <Link :href="verificationLink" :style="link">
           {{ verificationLink }}
         </Link>
 
@@ -140,12 +126,7 @@ const footer = {
           Bistro, you can safely ignore this email.
         </Text>
 
-        <Text
-          v-if="email"
-          :style="footer"
-        >
-          This email was sent to {{ email }}
-        </Text>
+        <Text v-if="email" :style="footer"> This email was sent to {{ email }} </Text>
       </Container>
     </Body>
   </Html>

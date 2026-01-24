@@ -178,15 +178,15 @@ export default defineNuxtConfig({
   security: {
     headers: {
       contentSecurityPolicy: {
-        'default-src': ['\'self\''],
-        'script-src': ['\'self\'', '\'nonce-{{nonce}}\'', '\'strict-dynamic\''],
-        'style-src': ['\'self\'', '\'unsafe-inline\''], // Nuxt UI requires inline styles
-        'img-src': ['\'self\'', 'data:', 'https:'],
-        'font-src': ['\'self\''],
-        'connect-src': ['\'self\''],
-        'frame-ancestors': ['\'none\''],
-        'base-uri': ['\'self\''],
-        'form-action': ['\'self\''],
+        'default-src': ["'self'"],
+        'script-src': ["'self'", "'nonce-{{nonce}}'", "'strict-dynamic'"],
+        'style-src': ["'self'", "'unsafe-inline'"], // Nuxt UI requires inline styles
+        'img-src': ["'self'", 'data:', 'https:'],
+        'font-src': ["'self'"],
+        'connect-src': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'base-uri': ["'self'"],
+        'form-action': ["'self'"],
       },
       xFrameOptions: 'DENY',
       xContentTypeOptions: 'nosniff',

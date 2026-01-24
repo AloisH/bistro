@@ -42,20 +42,10 @@
       @select="filterByTag"
     />
 
-    <BlogPostGrid
-      :posts="posts"
-      :format-date="formatDate"
-    />
+    <BlogPostGrid :posts="posts" :format-date="formatDate" />
 
-    <div
-      v-if="totalPages > 1"
-      class="mt-8 flex justify-center"
-    >
-      <UPagination
-        v-model="currentPage"
-        :total="total"
-        :page-count="limit"
-      />
+    <div v-if="totalPages > 1" class="mt-8 flex justify-center">
+      <UPagination v-model="currentPage" :total="total" :page-count="limit" />
     </div>
   </div>
 </template>

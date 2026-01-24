@@ -40,10 +40,10 @@ export const useOrganization = () => {
   // Active org: prefer URL slug, fallback to last visited, fallback to first org
   const activeOrganization = computed(() => {
     if (urlOrgSlug.value) {
-      return organizations.value.find(org => org.slug === urlOrgSlug.value);
+      return organizations.value.find((org) => org.slug === urlOrgSlug.value);
     }
     if (lastOrgSlug.value) {
-      return organizations.value.find(org => org.slug === lastOrgSlug.value);
+      return organizations.value.find((org) => org.slug === lastOrgSlug.value);
     }
     return organizations.value[0] ?? null;
   });

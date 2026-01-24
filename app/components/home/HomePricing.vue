@@ -30,7 +30,7 @@ const plans = {
 
 const currentPlans = computed(() => {
   const period = billingPeriod.value as 'monthly' | 'yearly';
-  return Object.values(plans).map(plan => ({
+  return Object.values(plans).map((plan) => ({
     title: plan.title,
     description: plan.description,
     tagline: plan.tagline,
@@ -51,19 +51,11 @@ const currentPlans = computed(() => {
     class="scroll-animate"
   >
     <div class="mb-8 flex justify-center">
-      <UTabs
-        v-model="billingPeriod"
-        :items="billingOptions"
-        size="lg"
-      />
+      <UTabs v-model="billingPeriod" :items="billingOptions" size="lg" />
     </div>
 
     <div class="flex justify-center">
-      <UPricingPlans
-        :plans="currentPlans"
-        compact
-        class="max-w-sm"
-      />
+      <UPricingPlans :plans="currentPlans" compact class="max-w-sm" />
     </div>
   </UPageSection>
 </template>

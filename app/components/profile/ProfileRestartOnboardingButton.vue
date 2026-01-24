@@ -19,11 +19,7 @@
       @click="restartOnboarding"
     >
       <template #leading>
-        <UIcon
-          v-if="!restartOnboardingLoading"
-          name="i-lucide-refresh-cw"
-          class="mr-2"
-        />
+        <UIcon v-if="!restartOnboardingLoading" name="i-lucide-refresh-cw" class="mr-2" />
       </template>
       Restart Onboarding
     </UButton>

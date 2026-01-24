@@ -41,10 +41,7 @@
       </div>
     </div>
 
-    <div
-      v-if="viewMode === 'html'"
-      class="border-default rounded-lg border"
-    >
+    <div v-if="viewMode === 'html'" class="border-default rounded-lg border">
       <iframe
         :srcdoc="template.html"
         class="h-[600px] w-full rounded-lg"
@@ -53,10 +50,7 @@
       />
     </div>
 
-    <div
-      v-else
-      class="border-default bg-muted rounded-lg border p-4"
-    >
+    <div v-else class="border-default bg-muted rounded-lg border p-4">
       <pre class="text-sm whitespace-pre-wrap">{{ template.text }}</pre>
     </div>
 
@@ -80,6 +74,6 @@ defineProps<{
 
 defineEmits<{
   'update:viewMode': [mode: 'html' | 'text'];
-  'sendTest': [];
+  sendTest: [];
 }>();
 </script>

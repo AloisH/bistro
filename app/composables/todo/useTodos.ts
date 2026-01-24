@@ -99,7 +99,7 @@ export function useTodos() {
   }
 
   async function toggleTodo(id: string, completed: boolean) {
-    const todo = todos.value.find(t => t.id === id);
+    const todo = todos.value.find((t) => t.id === id);
     if (todo) todo.completed = completed;
 
     try {
@@ -119,7 +119,7 @@ export function useTodos() {
   }
 
   async function deleteTodo(id: string) {
-    const index = todos.value.findIndex(t => t.id === id);
+    const index = todos.value.findIndex((t) => t.id === id);
     const removed = todos.value.splice(index, 1);
 
     try {

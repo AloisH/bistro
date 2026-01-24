@@ -10,10 +10,7 @@
       :to="entry.path"
     >
       <template #body>
-        <div
-          v-if="entry.changes?.length"
-          class="mt-4 space-y-2"
-        >
+        <div v-if="entry.changes?.length" class="mt-4 space-y-2">
           <div
             v-for="(change, idx) in entry.changes"
             :key="idx"
@@ -33,10 +30,7 @@
     </UChangelogVersion>
   </UChangelogVersions>
 
-  <div
-    v-else
-    class="py-12 text-center"
-  >
+  <div v-else class="py-12 text-center">
     <UIcon
       name="i-lucide-file-text"
       class="mx-auto mb-4 size-12 text-neutral-300 dark:text-neutral-600"
