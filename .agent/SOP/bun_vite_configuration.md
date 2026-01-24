@@ -62,7 +62,7 @@ Loading module from "http://localhost:3000/_nuxt/@fs/home/user/bistro/node_modul
 
 **Cause:** Vite blocking access to Bun's `.bun` directory
 
-**Fix:** Add `fs.allow: [workspaceRoot]` (see Critical Configuration)
+**Fix:** Add `fs.allow: [__dirname]` (see Critical Configuration)
 
 ---
 
@@ -228,7 +228,7 @@ const posts = allPosts.filter((post: BlogCollectionItem) => !post.draft);
 
 **Module loading errors:**
 
-- [ ] Check `vite.server.fs.allow` includes `workspaceRoot`
+- [ ] Check `vite.server.fs.allow` includes `__dirname`
 - [ ] Check `vite.server.fs.strict: false` set
 - [ ] Clear `.nuxt`, `.vite`, `.cache` directories
 - [ ] Clear browser cache/storage
@@ -259,7 +259,6 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = resolve(__dirname, '../..');
 
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/content', '@nuxt/ui'],
@@ -280,7 +279,7 @@ export default defineNuxtConfig({
   vite: {
     server: {
       fs: {
-        allow: [workspaceRoot], // Bun .bun directory access
+        allow: [__dirname], // Bun .bun directory access
         strict: false, // Disable strict FS checks
       },
       headers: {

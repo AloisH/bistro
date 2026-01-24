@@ -6,9 +6,7 @@ defineRouteMeta({
   openAPI: {
     tags: ['Todos'],
     description: 'Update a todo',
-    parameters: [
-      { in: 'path', name: 'todoId', required: true, description: 'Todo ID' },
-    ],
+    parameters: [{ in: 'path', name: 'todoId', required: true, description: 'Todo ID' }],
   },
 });
 

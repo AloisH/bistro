@@ -119,9 +119,7 @@ export class OrganizationRepository {
   /**
    * Find all members of an organization
    */
-  async findOrganizationMembers(
-    organizationId: string,
-  ): Promise<
+  async findOrganizationMembers(organizationId: string): Promise<
     Array<
       OrganizationMember & {
         user: { id: string; name: string; email: string; image: string | null };

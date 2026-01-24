@@ -26,14 +26,14 @@ export function useSeo(options: SeoOptions) {
   const siteUrl = config.public.appUrl || 'http://localhost:3000';
 
   // Auto-append " - Bistro" if not present
-  const fullTitle = options.title.includes('Bistro')
-    ? options.title
-    : `${options.title} - Bistro`;
+  const fullTitle = options.title.includes('Bistro') ? options.title : `${options.title} - Bistro`;
 
   // Use provided image or let nuxt-og-image generate dynamically
   const hasCustomImage = !!options.image;
   const absoluteImage = hasCustomImage
-    ? (options.image!.startsWith('http') ? options.image! : `${siteUrl}${options.image}`)
+    ? options.image!.startsWith('http')
+      ? options.image!
+      : `${siteUrl}${options.image}`
     : undefined;
 
   useSeoMeta({

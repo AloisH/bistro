@@ -68,7 +68,12 @@ const groups = computed<CommandPaletteGroup[]>(() => {
         icon: item.icon || 'i-lucide-clock',
         onSelect: (e: Event) => {
           // Find and execute the original action
-          const allItems = [...navItems.value, ...orgItems.value, ...adminItems.value, ...actionItems.value];
+          const allItems = [
+            ...navItems.value,
+            ...orgItems.value,
+            ...adminItems.value,
+            ...actionItems.value,
+          ];
           const original = allItems.find(i => i.id === item.id);
           original?.onSelect?.(e);
         },

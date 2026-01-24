@@ -4,9 +4,7 @@ defineRouteMeta({
   openAPI: {
     tags: ['Organizations'],
     description: 'Get invite details by token (public)',
-    parameters: [
-      { in: 'path', name: 'token', required: true, description: 'Invite token' },
-    ],
+    parameters: [{ in: 'path', name: 'token', required: true, description: 'Invite token' }],
   },
 });
 

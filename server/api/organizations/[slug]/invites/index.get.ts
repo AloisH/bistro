@@ -4,9 +4,7 @@ defineRouteMeta({
   openAPI: {
     tags: ['Organizations'],
     description: 'List organization invites (requires OWNER/ADMIN)',
-    parameters: [
-      { in: 'path', name: 'slug', required: true, description: 'Organization slug' },
-    ],
+    parameters: [{ in: 'path', name: 'slug', required: true, description: 'Organization slug' }],
   },
 });
 

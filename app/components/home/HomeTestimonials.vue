@@ -48,7 +48,7 @@ const testimonials = [
             :text="
               testimonial.name
                 .split(' ')
-                .map(n => n[0])
+                .map((n) => n[0])
                 .join('')
             "
             size="md"

@@ -6,9 +6,7 @@ defineRouteMeta({
   openAPI: {
     tags: ['User'],
     description: 'Revoke a specific session',
-    parameters: [
-      { in: 'path', name: 'sessionId', required: true, description: 'Session ID' },
-    ],
+    parameters: [{ in: 'path', name: 'sessionId', required: true, description: 'Session ID' }],
   },
 });
 

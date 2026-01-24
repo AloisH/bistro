@@ -39,7 +39,10 @@ const columns = [
     cell: ({ row }: { row: { original: AdminUser } }) =>
       h(
         resolveComponent('UBadge'),
-        { color: props.getRoleColor(row.original.role), icon: props.getRoleIcon(row.original.role) },
+        {
+          color: props.getRoleColor(row.original.role),
+          icon: props.getRoleIcon(row.original.role),
+        },
         () => row.original.role,
       ),
   },
@@ -47,7 +50,8 @@ const columns = [
     id: 'emailVerified',
     accessorKey: 'emailVerified',
     header: 'Verified',
-    cell: ({ row }: { row: { original: AdminUser } }) => (row.original.emailVerified ? 'Yes' : 'No'),
+    cell: ({ row }: { row: { original: AdminUser } }) =>
+      row.original.emailVerified ? 'Yes' : 'No',
   },
   {
     id: 'actions',

@@ -6,9 +6,7 @@ defineRouteMeta({
   openAPI: {
     tags: ['Admin'],
     description: 'Update user role (requires SUPER_ADMIN)',
-    parameters: [
-      { in: 'path', name: 'userId', required: true, description: 'User ID' },
-    ],
+    parameters: [{ in: 'path', name: 'userId', required: true, description: 'User ID' }],
   },
 });
 
