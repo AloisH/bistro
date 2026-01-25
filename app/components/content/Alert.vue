@@ -1,7 +1,7 @@
 <template>
   <UAlert :color="color" :icon="icon" class="my-4">
     <template #description>
-      <ContentSlot :use="$slots.default" unwrap="p" />
+      <slot />
     </template>
   </UAlert>
 </template>
