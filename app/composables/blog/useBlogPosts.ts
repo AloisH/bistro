@@ -78,14 +78,6 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
     refresh();
   }
 
-  function formatDate(date: string) {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  }
-
   // Sync page changes to URL
   watch(currentPage, (newPage) => {
     const query: Record<string, string> = { page: newPage.toString() };
@@ -121,6 +113,5 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
     allTags,
     limit,
     filterByTag,
-    formatDate,
   };
 }
