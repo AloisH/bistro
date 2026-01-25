@@ -42,7 +42,7 @@
       @select="filterByTag"
     />
 
-    <BlogPostGrid :posts="posts" :format-date="formatDate" />
+    <BlogPostGrid :posts="posts" />
 
     <div v-if="totalPages > 1" class="mt-8 flex justify-center">
       <UPagination v-model="currentPage" :total="total" :page-count="limit" />
@@ -51,17 +51,8 @@
 </template>
 
 <script setup lang="ts">
-const {
-  posts,
-  total,
-  totalPages,
-  currentPage,
-  selectedTag,
-  allTags,
-  limit,
-  filterByTag,
-  formatDate,
-} = await useBlogPosts();
+const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag } =
+  await useBlogPosts();
 
 useSeo({
   title: 'Blog',

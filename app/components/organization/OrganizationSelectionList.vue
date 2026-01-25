@@ -24,9 +24,7 @@
     icon="i-lucide-building-2"
     title="No organizations yet"
     description="Create your first organization to get started"
-    :actions="[
-      { label: 'Create Organization', to: '/org/create', icon: 'i-lucide-plus' },
-    ]"
+    :actions="[{ label: 'Create Organization', to: '/org/create', icon: 'i-lucide-plus' }]"
   />
 
   <div v-else class="space-y-2">

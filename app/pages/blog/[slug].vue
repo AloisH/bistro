@@ -27,7 +27,6 @@
         :tags="post.tags"
         :date="post.date"
         :author="post.authors?.[0]"
-        :format-date="formatDate"
       />
 
       <!-- Content -->
@@ -46,7 +45,7 @@
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { post, isAdmin, formatDate } = useBlogPost(slug);
+const { post, isAdmin } = useBlogPost(slug);
 
 // 404 if not found
 if (!post.value) {

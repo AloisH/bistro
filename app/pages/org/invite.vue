@@ -50,9 +50,7 @@
 
         <div class="flex gap-2">
           <UButton :loading="accepting" block @click="acceptInvite"> Accept Invitation </UButton>
-          <UButton variant="ghost" to="/org/select" :disabled="accepting">
-            Decline
-          </UButton>
+          <UButton variant="ghost" to="/org/select" :disabled="accepting"> Decline </UButton>
         </div>
       </div>
     </UCard>

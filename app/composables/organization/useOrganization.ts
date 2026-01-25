@@ -68,9 +68,7 @@ export const useOrganization = () => {
   async function fetchMembers(slug: string) {
     try {
       fetching.value = true;
-      const data = await $fetch<MembersListResponse>(
-        `/api/organizations/${slug}/members`,
-      );
+      const data = await $fetch<MembersListResponse>(`/api/organizations/${slug}/members`);
       members.value = data?.members ?? [];
       currentUserRole.value = data?.currentUserRole ?? null;
     } catch {

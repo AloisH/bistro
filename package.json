@@ -102,7 +102,10 @@
     "pre-commit": "bunx lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "bun run lint:fix",
+    "*.{js,ts,vue}": [
+      "prettier --write",
+      "bun run lint:fix"
+    ],
     "*.{json,md,css}": "prettier --write"
   }
 }

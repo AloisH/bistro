@@ -43,9 +43,7 @@
             <span class="font-medium">{{ author.name }}</span>
           </div>
           <span v-if="author">•</span>
-          <time :datetime="date">
-            {{ formattedDate }}
-          </time>
+          <NuxtTime :datetime="date" month="long" day="numeric" year="numeric" />
         </div>
       </div>
     </div>
@@ -53,15 +51,12 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   title: string;
   description: string;
   image?: string;
   tags?: string[];
   date: string;
   author?: { name: string; avatar?: string };
-  formatDate: (date: string) => string;
 }>();
-
-const formattedDate = computed(() => props.formatDate(props.date));
 </script>

@@ -31,9 +31,7 @@
 
           <div class="flex gap-2 pt-4">
             <UButton type="submit" :loading="loading" block> Create Organization </UButton>
-            <UButton variant="ghost" to="/org/select" :disabled="loading">
-              Cancel
-            </UButton>
+            <UButton variant="ghost" to="/org/select" :disabled="loading"> Cancel </UButton>
           </div>
         </div>
       </UForm>

@@ -9,7 +9,6 @@ defineProps<{
     tags?: string[];
     authors?: { name: string; avatar?: { src: string } }[];
   }[];
-  formatDate: (date: string) => string;
 }>();
 </script>
 
@@ -71,7 +70,7 @@ defineProps<{
               <span>{{ post.authors?.[0]?.name }}</span>
             </div>
             <span>•</span>
-            <span>{{ formatDate(post.date) }}</span>
+            <NuxtTime :datetime="post.date" month="long" day="numeric" year="numeric" />
           </div>
         </div>
       </UCard>

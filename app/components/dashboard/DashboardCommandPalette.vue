@@ -123,9 +123,7 @@ const navItems = computed<CommandPaletteItem[]>(() => [
     label: 'Dashboard',
     icon: 'i-lucide-house',
     onSelect: () =>
-      navigateTo(
-        activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select',
-      ),
+      navigateTo(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select'),
   },
   {
     id: 'nav-profile',

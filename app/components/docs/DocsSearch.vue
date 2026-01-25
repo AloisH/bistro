@@ -57,7 +57,10 @@ function handleSelect(item: CommandPaletteItem | undefined) {
           :groups="groups"
           placeholder="Search docs..."
           close
-          :empty-state="{ icon: 'i-lucide-search', label: query ? 'No results' : 'Start typing to search' }"
+          :empty-state="{
+            icon: 'i-lucide-search',
+            label: query ? 'No results' : 'Start typing to search',
+          }"
           @update:open="isOpen = $event"
           @update:model-value="handleSelect"
         />
