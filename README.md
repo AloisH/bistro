@@ -246,7 +246,7 @@ After setup, try these workflows:
 
 1. **Create account** → `/auth/register`
 2. **Complete onboarding** → 5-step flow
-3. **Create organization** → `/organizations/create`
+3. **Create organization** → `/org/create`
 4. **Add todos** → `/org/[slug]/dashboard`
 5. **Filter/sort todos** → URL params persist
 6. **Invite members** → `/org/[slug]/members`

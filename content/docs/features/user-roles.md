@@ -31,7 +31,7 @@ const { hasRole, isAdmin, isSuperAdmin } = useRole();
 
 <template>
   <div v-if="isAdmin">
-    <NuxtLink to="/admin">Admin Panel</NuxtLink>
+    <NuxtLink to="/admin/users">Admin Panel</NuxtLink>
   </div>
 </template>
 ```

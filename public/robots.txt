@@ -5,6 +5,4 @@ Disallow: /admin/
 Disallow: /org/
 Disallow: /api/
 Disallow: /onboarding/
-Disallow: /organizations/
-
 Sitemap: https://bistro.dev/sitemap.xml

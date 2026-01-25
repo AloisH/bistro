@@ -318,15 +318,14 @@ const {
 **Route structure:**
 
 ```
-/organizations/
+/org/
   ├── create              # Create new org
   ├── select              # Choose/switch org
-  └── invite?token=...    # Accept invite
-
-/org/[slug]/              # Org-scoped routes (slug from URL)
-  ├── dashboard           # Main page
-  ├── members             # Member management
-  └── settings            # Org settings
+  ├── invite?token=...    # Accept invite
+  └── [slug]/             # Org-scoped routes (slug from URL)
+      ├── dashboard       # Main page
+      ├── members         # Member management
+      └── settings        # Org settings
 ```
 
 **Pattern:** Dynamic `[slug]` segment uses URL-friendly slug (not ID). Extract via `route.params.slug`.
@@ -355,7 +354,7 @@ const {
 
 **require-organization.global.ts**:
 
-- Redirects to /organizations/select if no org selected
+- Redirects to /org/select if no org selected
 - Enforces org selection for protected pages
 - Skips for auth/onboarding/user routes
 

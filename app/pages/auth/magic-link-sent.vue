@@ -77,7 +77,7 @@ const { resending, cooldown, canResend, resend } = useResendCooldown();
 
 function resendMagicLink() {
   resend(
-    () => client.signIn.magicLink({ email: email.value, callbackURL: '/organizations/select' }),
+    () => client.signIn.magicLink({ email: email.value, callbackURL: '/org/select' }),
     'Check your inbox for login link',
   );
 }

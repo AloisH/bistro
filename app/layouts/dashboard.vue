@@ -115,7 +115,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
     {
       label: 'Dashboard',
       icon: 'i-lucide-house',
-      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/organizations/select',
+      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select',
     },
     {
       label: 'Profile',

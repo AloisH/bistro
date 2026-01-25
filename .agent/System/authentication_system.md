@@ -503,7 +503,7 @@ const { isSuperAdmin, isAdmin } = useRole();
 
 <template>
   <div>
-    <UButton v-if="isAdmin" to="/admin">Admin Panel</UButton>
+    <UButton v-if="isAdmin" to="/admin/users">Admin Panel</UButton>
     <UButton v-if="isSuperAdmin" @click="handleImpersonate"> Impersonate User </UButton>
   </div>
 </template>

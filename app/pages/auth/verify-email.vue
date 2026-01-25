@@ -76,7 +76,7 @@ const { resending, cooldown, canResend, resend } = useResendCooldown();
 function resendVerification() {
   resend(
     () =>
-      client.sendVerificationEmail({ email: email.value, callbackURL: '/organizations/select' }),
+      client.sendVerificationEmail({ email: email.value, callbackURL: '/org/select' }),
     'Check your inbox for verification link',
   );
 }

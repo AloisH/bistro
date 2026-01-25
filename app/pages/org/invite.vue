@@ -12,7 +12,7 @@
           title="Invalid Invitation"
           :description="fetchError.message"
         />
-        <UButton class="mt-4" to="/organizations/select" block> Go to Organizations </UButton>
+        <UButton class="mt-4" to="/org/select" block> Go to Organizations </UButton>
       </div>
 
       <div v-else-if="invite" class="space-y-6">
@@ -50,7 +50,7 @@
 
         <div class="flex gap-2">
           <UButton :loading="accepting" block @click="acceptInvite"> Accept Invitation </UButton>
-          <UButton variant="ghost" to="/organizations/select" :disabled="accepting">
+          <UButton variant="ghost" to="/org/select" :disabled="accepting">
             Decline
           </UButton>
         </div>

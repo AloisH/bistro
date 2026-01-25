@@ -284,7 +284,7 @@ async function onSubmit() {
     <UHeaderLinks>
       <UHeaderLink to="/">Home</UHeaderLink>
       <UHeaderLink to="/projects">Projects</UHeaderLink>
-      <UHeaderLink v-if="isAdmin" to="/admin">Admin</UHeaderLink>
+      <UHeaderLink v-if="isAdmin" to="/admin/users">Admin</UHeaderLink>
     </UHeaderLinks>
   </UHeader>
 </template>

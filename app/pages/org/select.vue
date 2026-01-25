@@ -17,7 +17,7 @@
       />
 
       <template v-if="organizations?.organizations?.length" #footer>
-        <UButton to="/organizations/create" variant="soft" icon="i-lucide-plus" block>
+        <UButton to="/org/create" variant="soft" icon="i-lucide-plus" block>
           Create New Organization
         </UButton>
       </template>

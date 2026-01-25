@@ -25,7 +25,7 @@
     title="No organizations yet"
     description="Create your first organization to get started"
     :actions="[
-      { label: 'Create Organization', to: '/organizations/create', icon: 'i-lucide-plus' },
+      { label: 'Create Organization', to: '/org/create', icon: 'i-lucide-plus' },
     ]"
   />
 

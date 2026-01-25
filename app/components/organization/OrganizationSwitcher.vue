@@ -29,7 +29,7 @@ const items = computed(() => [
     {
       label: 'Create Organization',
       icon: 'i-lucide-plus',
-      to: '/organizations/create',
+      to: '/org/create',
     },
   ],
 ]);
@@ -67,7 +67,7 @@ const items = computed(() => [
       v-else
       color="neutral"
       variant="ghost"
-      to="/organizations/create"
+      to="/org/create"
       block
       class="hover:bg-neutral-100 dark:hover:bg-neutral-800"
     >

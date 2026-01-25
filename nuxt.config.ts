@@ -61,7 +61,7 @@ export default defineNuxtConfig({
       appUrl: process.env.APP_URL || 'http://localhost:3000',
       oauthGithubEnabled: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
       oauthGoogleEnabled: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
-      authCallbackUrl: '/organizations/select',
+      authCallbackUrl: '/org/select',
       publicRoutes: [
         '/',
         '/auth/login',
@@ -103,7 +103,6 @@ export default defineNuxtConfig({
     '/admin/**': { prerender: false },
     '/onboarding/**': { prerender: false },
     '/profile/**': { prerender: false },
-    '/organizations/**': { prerender: false },
     '/org/**': { prerender: false },
   },
 
@@ -215,7 +214,7 @@ export default defineNuxtConfig({
     strict: process.env.NODE_ENV === 'production',
   },
   sitemap: {
-    exclude: ['/auth/**', '/admin/**', '/org/**', '/api/**', '/onboarding/**', '/organizations/**'],
+    exclude: ['/auth/**', '/admin/**', '/org/**', '/api/**', '/onboarding/**'],
     sources: ['/api/__sitemap__/urls'],
   },
 });

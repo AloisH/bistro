@@ -10,7 +10,7 @@
 **Roles:** OWNER, ADMIN, MEMBER, GUEST
 **Features:** Create orgs, invite members, role management, org switching
 **Isolation:** Data scoped by organizationId
-**Pages:** `/organizations/*`, `/org/[slug]/*`
+**Pages:** `/org/*` (create, select, invite, [slug]/\*)
 
 ---
 
@@ -234,7 +234,7 @@ model OrganizationInvite {
 
 ## Pages
 
-### /organizations/create
+### /org/create
 
 **Purpose:** Create new organization
 
@@ -244,9 +244,9 @@ model OrganizationInvite {
 2. Validate slug uniqueness
 3. Create org via API
 4. Auto-create OWNER membership
-5. Redirect to `/org/[slug]/org/[slug]/dashboard`
+5. Redirect to `/org/[slug]/dashboard`
 
-### /organizations/select
+### /org/select
 
 **Purpose:** Organization switcher/selector
 
@@ -258,7 +258,7 @@ model OrganizationInvite {
 4. Update session currentOrganizationId
 5. Redirect to org dashboard
 
-### /organizations/invite
+### /org/invite
 
 **Purpose:** Accept organization invite
 
@@ -270,7 +270,7 @@ model OrganizationInvite {
 4. Accept button calls API
 5. Redirect to org dashboard
 
-### /org/[slug]/org/[slug]/dashboard
+### /org/[slug]/dashboard
 
 **Purpose:** Organization workspace
 
@@ -423,7 +423,7 @@ async function inviteMember(email: string, role: OrganizationRole) {
   });
 
   // Copy invite link
-  const inviteUrl = `${window.location.origin}/organizations/invite?token=${token}`;
+  const inviteUrl = `${window.location.origin}/org/invite?token=${token}`;
   await navigator.clipboard.writeText(inviteUrl);
 
   toast.add({ title: 'Invite sent', description: 'Link copied to clipboard' });

@@ -24,7 +24,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Skip if already on organization-related pages
-  const orgPages = ['/organizations/create', '/organizations/select', '/organizations/invite'];
+  const orgPages = ['/org/create', '/org/select', '/org/invite'];
   if (orgPages.some((page) => to.path.startsWith(page))) {
     return;
   }
@@ -65,5 +65,5 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Redirect to org select (will show create prompt if no orgs)
-  return navigateTo({ name: 'organizations-select' });
+  return navigateTo('/org/select');
 });
