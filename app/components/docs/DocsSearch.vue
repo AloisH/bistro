@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { query, results, isOpen, open } = useDocsSearch();
+const { query, results, isOpen, selectedIndex, open, close, selectPrevious, selectNext, getSelectedResult } = useDocsSearch();
 
 onMounted(() => {
   const handler = (e: KeyboardEvent) => {
@@ -11,6 +11,23 @@ onMounted(() => {
   window.addEventListener('keydown', handler);
   onUnmounted(() => window.removeEventListener('keydown', handler));
 });
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    selectPrevious();
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    selectNext();
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const result = getSelectedResult();
+    if (result) {
+      navigateTo(result.path);
+      close();
+    }
+  }
+}
 </script>
 
 <template>
@@ -31,14 +48,16 @@ onMounted(() => {
             autofocus
             icon="i-lucide-search"
             size="lg"
+            @keydown="handleKeydown"
           />
 
           <div v-if="results.length" class="mt-4 max-h-96 space-y-2 overflow-y-auto">
             <NuxtLink
-              v-for="r in results"
+              v-for="(r, i) in results"
               :key="r.path"
               :to="r.path"
               class="block rounded-lg p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              :class="{ 'bg-neutral-100 dark:bg-neutral-800': i === selectedIndex }"
               @click="closeModal"
             >
               <div class="font-medium">
