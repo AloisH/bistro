@@ -48,8 +48,8 @@ export function useSeo(options: SeoOptions) {
     ...(options.tags?.length && { articleTag: options.tags }),
   });
 
-  // Generate dynamic OG image if no custom image provided
-  if (!hasCustomImage) {
+  // Generate dynamic OG image if no custom image provided (server only)
+  if (!hasCustomImage && import.meta.server) {
     defineOgImageComponent('NuxtSeo', {
       title: options.title,
       description: options.description,

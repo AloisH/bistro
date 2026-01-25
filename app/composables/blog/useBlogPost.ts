@@ -10,24 +10,18 @@ export async function useBlogPost(slug: string) {
     }),
   );
 
-  // Setup SEO when post is available
-  watch(
-    post,
-    (p) => {
-      if (p) {
-        useSeo({
-          title: p.title,
-          description: p.description,
-          image: p.image,
-          type: 'article',
-          publishedTime: p.date,
-          tags: p.tags,
-          authorName: p.authors?.[0]?.name,
-        });
-      }
-    },
-    { immediate: true },
-  );
+  // Setup SEO immediately (data available after await)
+  if (post.value) {
+    useSeo({
+      title: post.value.title,
+      description: post.value.description,
+      image: post.value.image,
+      type: 'article',
+      publishedTime: post.value.date,
+      tags: post.value.tags,
+      authorName: post.value.authors?.[0]?.name,
+    });
+  }
 
   return {
     post,
