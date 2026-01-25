@@ -1,15 +1,14 @@
 import type { BlogCollectionItem } from '@nuxt/content';
 
-export function useBlogPost(slug: string) {
+export async function useBlogPost(slug: string) {
   const { isAdmin } = useRole();
 
-  // Fetch post
-  const { data: post } = useFetch<BlogCollectionItem>(`/api/blog/posts/${slug}`, {
-    key: `blog-post-${slug}`,
-    query: {
-      includeDrafts: isAdmin.value,
-    },
-  });
+  // Fetch post with async data for proper SSR
+  const { data: post, error } = await useAsyncData<BlogCollectionItem>(`blog-post-${slug}`, () =>
+    $fetch(`/api/blog/posts/${slug}`, {
+      query: { includeDrafts: isAdmin.value },
+    }),
+  );
 
   // Setup SEO when post is available
   watch(
@@ -32,6 +31,7 @@ export function useBlogPost(slug: string) {
 
   return {
     post,
+    error,
     isAdmin,
   };
 }

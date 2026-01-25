@@ -45,10 +45,10 @@
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { post, isAdmin } = useBlogPost(slug);
+const { post, error, isAdmin } = await useBlogPost(slug);
 
-// 404 if not found
-if (!post.value) {
+// 404 if not found or error
+if (error.value || !post.value) {
   throw createError({
     statusCode: 404,
     message: 'Post not found',
