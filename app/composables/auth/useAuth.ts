@@ -63,10 +63,10 @@ export const useAuth = () => {
   };
 
   return {
-    session,
-    user,
+    session: readonly(session),
+    user: readonly(user),
     loggedIn: computed(() => !!session.value),
-    isPending: sessionFetching,
+    isPending: readonly(sessionFetching),
     signIn: client.signIn,
     signUp: client.signUp,
     async signOut({ redirectTo }: { redirectTo?: string } = {}) {

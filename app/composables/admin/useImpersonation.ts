@@ -86,8 +86,8 @@ export function useImpersonation() {
   };
 
   return {
-    isImpersonating,
-    impersonatedUser,
+    isImpersonating: readonly(isImpersonating),
+    impersonatedUser: readonly(impersonatedUser),
     startImpersonation,
     stopImpersonation,
     checkImpersonation,
