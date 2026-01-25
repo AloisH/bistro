@@ -18,6 +18,9 @@ export const USER = ac.newRole({
   // No admin permissions
 });
 
+// ADMIN and SUPER_ADMIN have same Better Auth plugin permissions.
+// Additional restrictions (role changes, impersonation) enforced
+// at endpoint level via requireRole(['SUPER_ADMIN'])
 export const ADMIN = ac.newRole({
   user: ['create', 'list', 'set-role', 'ban', 'impersonate', 'delete', 'set-password'],
   session: ['list', 'revoke'],
