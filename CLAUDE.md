@@ -5,15 +5,17 @@ Nuxt 4 SaaS boilerplate with multi-tenancy, RBAC, Better Auth, Prisma 7.
 ## Commands
 
 ```bash
-bun dev              # Start dev server (:3000)
-bun test             # Run tests (watch)
-bun lint             # ESLint
-bun typecheck        # TypeScript check
-bun build            # Production build
-bun db:migrate       # Run migrations
-bun db:generate      # Generate Prisma client
-bun db:studio        # Prisma Studio
-docker compose up -d # Start postgres + redis
+bun run dev              # Start dev server (:3000)
+bun run test             # Unit tests (watch)
+bun run test:run         # Unit tests (single run)
+bun run test:integration # Integration tests
+bun run lint             # ESLint
+bun run typecheck        # TypeScript check
+bun run build            # Production build
+bun run db:migrate       # Run migrations
+bun run db:generate      # Generate Prisma client
+bun run db:studio        # Prisma Studio
+docker compose up -d     # Start postgres + redis
 ```
 
 **Run from repo root.**
