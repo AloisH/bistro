@@ -1,21 +1,23 @@
 {
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "matcher": "Edit:*.ts|Edit:*.vue",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "bun run typecheck --noEmit"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-as-any.sh"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
-        "matcher": "Edit:*.ts|Edit:*.vue",
+        "matcher": "Edit:*.ts|Edit:*.vue|Edit:*.js|Edit:*.tsx|Edit:*.jsx|Write:*.ts|Write:*.vue|Write:*.js|Write:*.tsx|Write:*.jsx",
         "hooks": [
           {
             "type": "command",
-            "command": "bun format && bun lint:fix"
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-edit-lint.sh"
           }
         ]
       }
