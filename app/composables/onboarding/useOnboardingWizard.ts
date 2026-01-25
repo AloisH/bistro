@@ -107,8 +107,8 @@ export function useOnboardingWizard() {
       // Clear localStorage
       localStorage.removeItem(STORAGE_KEY);
 
-      // Fetch updated session to refresh onboardingCompleted flag
-      await fetchSession();
+      // Fetch updated session with cache bypass to get fresh onboardingCompleted flag
+      await fetchSession({ forceRefresh: true });
 
       toast.add({
         title: 'Welcome!',

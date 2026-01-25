@@ -23,7 +23,7 @@ export const useAuth = () => {
     ? ref(false)
     : useState('auth:sessionFetching', () => false);
 
-  const fetchSession = async () => {
+  const fetchSession = async (options?: { forceRefresh?: boolean }) => {
     if (sessionFetching.value) {
       return;
     }
@@ -31,6 +31,8 @@ export const useAuth = () => {
     const { data } = await client.getSession({
       fetchOptions: {
         headers,
+        // Bypass cookie cache when forceRefresh is true (e.g., after onboarding)
+        ...(options?.forceRefresh && { query: { disableCookieCache: true } }),
       },
     });
     // Cast through unknown since Better Auth's base types don't include custom fields
