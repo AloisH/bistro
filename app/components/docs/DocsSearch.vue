@@ -3,15 +3,8 @@ import type { CommandPaletteItem } from '@nuxt/ui';
 
 const { query, results, isOpen, open, close } = useDocsSearch();
 
-onMounted(() => {
-  const handler = (e: KeyboardEvent) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      open();
-    }
-  };
-  window.addEventListener('keydown', handler);
-  onUnmounted(() => window.removeEventListener('keydown', handler));
+defineShortcuts({
+  meta_k: open,
 });
 
 const groups = computed(() => {
