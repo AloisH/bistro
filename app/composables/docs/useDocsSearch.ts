@@ -43,13 +43,6 @@ export function useDocsSearch() {
       }));
   });
 
-  const selectedIndex = ref(0);
-
-  // Reset selection when results change
-  watch(results, () => {
-    selectedIndex.value = 0;
-  });
-
   function open() {
     isOpen.value = true;
   }
@@ -57,24 +50,7 @@ export function useDocsSearch() {
   function close() {
     isOpen.value = false;
     query.value = '';
-    selectedIndex.value = 0;
   }
 
-  function selectPrevious() {
-    if (selectedIndex.value > 0) {
-      selectedIndex.value--;
-    }
-  }
-
-  function selectNext() {
-    if (selectedIndex.value < results.value.length - 1) {
-      selectedIndex.value++;
-    }
-  }
-
-  function getSelectedResult() {
-    return results.value[selectedIndex.value];
-  }
-
-  return { query, results, isOpen, selectedIndex, open, close, selectPrevious, selectNext, getSelectedResult };
+  return { query, results, isOpen, open, close };
 }
