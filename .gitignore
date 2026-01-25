@@ -59,10 +59,6 @@ test-results/
 *.sqlite
 *.sqlite3
 
-# Prisma
-prisma/migrations/**/*.sql
-!prisma/migrations/migration_lock.toml
-
 # Docker
 docker-compose.override.yml
 

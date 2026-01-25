@@ -5,5 +5,11 @@ export default defineEventHandler(async (event) => {
     ignoredTags: ['pre', 'code'],
   });
 
-  return sections;
+  // Transform to expected format with /docs prefix
+  return sections.map((s) => ({
+    title: s.title,
+    content: s.content,
+    headings: s.titles,
+    path: s.id.startsWith('/docs') ? s.id : `/docs${s.id}`,
+  }));
 });
