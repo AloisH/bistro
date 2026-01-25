@@ -69,7 +69,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    router.push('/auth/magic-link');
+    router.push({ name: 'auth-magic-link' });
   }
 });
 

@@ -67,7 +67,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    router.push('/auth/register');
+    router.push({ name: 'auth-register' });
   }
 });
 

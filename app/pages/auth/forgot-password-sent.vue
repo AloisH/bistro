@@ -68,7 +68,7 @@ onMounted(() => {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-    router.push('/auth/forgot-password');
+    router.push({ name: 'auth-forgot-password' });
   }
 });
 

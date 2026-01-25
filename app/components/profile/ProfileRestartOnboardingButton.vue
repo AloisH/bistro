@@ -48,7 +48,7 @@ async function restartOnboarding() {
     await fetchSession();
 
     // Redirect to onboarding
-    await router.push('/onboarding');
+    await router.push({ name: 'onboarding' });
 
     toast.add({
       title: 'Restarting onboarding',
