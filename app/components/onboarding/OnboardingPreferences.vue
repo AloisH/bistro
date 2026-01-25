@@ -1,20 +1,7 @@
 <script setup lang="ts">
-const { modelValue } = defineProps<{
-  modelValue: {
-    emailNotifications: boolean;
-  };
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: { emailNotifications: boolean }): void;
-}>();
+const model = defineModel<{ emailNotifications: boolean }>({ required: true });
 
 const colorMode = useColorMode();
-
-const localValue = computed({
-  get: () => modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
 
 const colorModeOptions = [
   { value: 'light', label: 'Light', icon: 'i-lucide-sun' },
@@ -55,11 +42,11 @@ const colorModeOptions = [
 
       <!-- Email notifications -->
       <div class="flex items-start gap-3">
-        <UCheckbox v-model="localValue.emailNotifications" />
+        <UCheckbox v-model="model.emailNotifications" />
         <div class="flex-1">
           <label
             class="block cursor-pointer text-sm font-medium"
-            @click="localValue.emailNotifications = !localValue.emailNotifications"
+            @click="model.emailNotifications = !model.emailNotifications"
           >
             Email notifications
           </label>

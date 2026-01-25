@@ -1,19 +1,5 @@
 <script setup lang="ts">
-const { modelValue } = defineProps<{
-  modelValue: {
-    bio: string;
-    company: string;
-  };
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: { bio: string; company: string }): void;
-}>();
-
-const localValue = computed({
-  get: () => modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
+const model = defineModel<{ bio: string; company: string }>({ required: true });
 </script>
 
 <template>
@@ -28,15 +14,15 @@ const localValue = computed({
     <div class="space-y-4">
       <div>
         <label class="mb-2 block text-sm font-medium"> Bio </label>
-        <UTextarea v-model="localValue.bio" placeholder="Tell us about yourself..." :rows="4" />
+        <UTextarea v-model="model.bio" placeholder="Tell us about yourself..." :rows="4" />
         <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-          {{ localValue.bio?.length || 0 }} / 500
+          {{ model.bio?.length || 0 }} / 500
         </p>
       </div>
 
       <div>
         <label class="mb-2 block text-sm font-medium"> Company / Organization </label>
-        <UInput v-model="localValue.company" placeholder="Acme Inc." />
+        <UInput v-model="model.company" placeholder="Acme Inc." />
       </div>
     </div>
   </div>

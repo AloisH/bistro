@@ -1,16 +1,5 @@
 <script setup lang="ts">
-const { modelValue } = defineProps<{
-  modelValue: string;
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
-}>();
-
-const localValue = computed({
-  get: () => modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
+const model = defineModel<string>({ required: true });
 
 const useCases = [
   {
@@ -54,22 +43,22 @@ const useCases = [
         type="button"
         :class="[
           'flex w-full items-start gap-4 rounded-lg border-2 p-4 text-left transition-all',
-          localValue === useCase.value
+          model === useCase.value
             ? 'border-primary bg-primary/5'
             : 'border-default hover:border-neutral-400 dark:hover:border-neutral-500',
         ]"
-        @click="localValue = useCase.value"
+        @click="model = useCase.value"
       >
         <div class="mt-0.5">
           <div
             :class="[
               'flex h-5 w-5 items-center justify-center rounded-full border-2',
-              localValue === useCase.value
+              model === useCase.value
                 ? 'border-primary'
                 : 'border-neutral-300 dark:border-neutral-600',
             ]"
           >
-            <div v-if="localValue === useCase.value" class="bg-primary h-3 w-3 rounded-full" />
+            <div v-if="model === useCase.value" class="bg-primary h-3 w-3 rounded-full" />
           </div>
         </div>
         <div class="flex-1">
