@@ -134,7 +134,7 @@
 <script setup lang="ts">
 import { deleteAccountPasswordSchema, deleteAccountEmailSchema } from '#shared/user';
 
-const props = defineProps<{
+const { hasPassword } = defineProps<{
   hasPassword: boolean;
 }>();
 
@@ -151,9 +151,7 @@ const deleteLoading = ref(false);
 async function deleteAccount() {
   deleteLoading.value = true;
   try {
-    const body = props.hasPassword
-      ? { password: deleteState.password }
-      : { email: deleteState.email };
+    const body = hasPassword ? { password: deleteState.password } : { email: deleteState.email };
 
     await $fetch('/api/user/account', {
       method: 'DELETE',

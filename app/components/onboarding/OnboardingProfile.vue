@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+const { modelValue } = defineProps<{
   modelValue: {
     bio: string;
     company: string;
@@ -11,7 +11,7 @@ const emit = defineEmits<{
 }>();
 
 const localValue = computed({
-  get: () => props.modelValue,
+  get: () => modelValue,
   set: (value) => emit('update:modelValue', value),
 });
 </script>

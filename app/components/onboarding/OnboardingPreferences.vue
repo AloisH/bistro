@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+const { modelValue } = defineProps<{
   modelValue: {
     emailNotifications: boolean;
   };
@@ -12,7 +12,7 @@ const emit = defineEmits<{
 const colorMode = useColorMode();
 
 const localValue = computed({
-  get: () => props.modelValue,
+  get: () => modelValue,
   set: (value) => emit('update:modelValue', value),
 });
 

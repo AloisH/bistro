@@ -6,7 +6,7 @@
 import { h, resolveComponent } from 'vue';
 import type { AdminUser } from '~/composables/admin/useAdminUsers';
 
-const props = defineProps<{
+const { users, loading, getRoleColor, getRoleIcon } = defineProps<{
   users: AdminUser[];
   loading: boolean;
   getRoleColor: (role: string) => string;
@@ -36,8 +36,8 @@ const columns = [
       h(
         resolveComponent('UBadge'),
         {
-          color: props.getRoleColor(row.original.role),
-          icon: props.getRoleIcon(row.original.role),
+          color: getRoleColor(row.original.role),
+          icon: getRoleIcon(row.original.role),
         },
         () => row.original.role,
       ),

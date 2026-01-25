@@ -3,7 +3,7 @@ import type { OrganizationMember, OrganizationRole } from '../../../prisma/gener
 import { inviteMemberSchema } from '#shared/organization';
 import { h, resolveComponent } from 'vue';
 
-const props = defineProps<{
+const { organizationSlug } = defineProps<{
   organizationSlug: string;
 }>();
 
@@ -13,7 +13,7 @@ const { members, currentUserRole, canManageMembers, fetchMembers, updateMemberRo
   useOrganization();
 
 // Fetch members on mount
-onMounted(() => fetchMembers(props.organizationSlug));
+onMounted(() => fetchMembers(organizationSlug));
 
 const isOwner = computed(() => currentUserRole.value === 'OWNER');
 
@@ -149,7 +149,7 @@ async function openInviteModal() {
 async function sendInvite() {
   inviting.value = true;
   try {
-    await $fetch(`/api/organizations/${props.organizationSlug}/invites`, {
+    await $fetch(`/api/organizations/${organizationSlug}/invites`, {
       method: 'POST',
       body: inviteState,
     });
@@ -177,7 +177,7 @@ async function sendInvite() {
 
 async function handleRoleChange(userId: string, role: OrganizationRole) {
   try {
-    await updateMemberRole(props.organizationSlug, userId, role);
+    await updateMemberRole(organizationSlug, userId, role);
     toast.add({
       title: 'Success',
       description: 'Member role updated',
@@ -205,7 +205,7 @@ async function confirmRemove() {
 
   removing.value = true;
   try {
-    await removeMember(props.organizationSlug, memberToRemove.value);
+    await removeMember(organizationSlug, memberToRemove.value);
     toast.add({
       title: 'Success',
       description: 'Member removed',
