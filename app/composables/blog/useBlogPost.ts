@@ -10,19 +10,6 @@ export async function useBlogPost(slug: string) {
     }),
   );
 
-  // Setup SEO immediately (data available after await)
-  if (post.value) {
-    useSeo({
-      title: post.value.title,
-      description: post.value.description,
-      image: post.value.image,
-      type: 'article',
-      publishedTime: post.value.date,
-      tags: post.value.tags,
-      authorName: post.value.authors?.[0]?.name,
-    });
-  }
-
   return {
     post,
     error,
