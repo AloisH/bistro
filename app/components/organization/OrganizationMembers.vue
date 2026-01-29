@@ -21,7 +21,7 @@ const inviteModalOpen = ref(false);
 const removeModalOpen = ref(false);
 const memberToRemove = ref<string | null>(null);
 const removing = ref(false);
-const inviteState = reactive({
+const inviteState = ref({
   email: '',
   role: 'MEMBER' as OrganizationRole,
 });
@@ -142,8 +142,8 @@ const columns = [
 
 async function openInviteModal() {
   inviteModalOpen.value = true;
-  inviteState.email = '';
-  inviteState.role = 'MEMBER';
+  inviteState.value.email = '';
+  inviteState.value.role = 'MEMBER';
 }
 
 async function sendInvite() {
@@ -151,7 +151,7 @@ async function sendInvite() {
   try {
     await $fetch(`/api/organizations/${organizationSlug}/invites`, {
       method: 'POST',
-      body: inviteState,
+      body: inviteState.value,
     });
 
     toast.add({

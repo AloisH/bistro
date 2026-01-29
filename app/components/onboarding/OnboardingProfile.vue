@@ -15,8 +15,12 @@ const model = defineModel<{ bio: string; company: string }>({ required: true });
 
     <div class="space-y-4">
       <div>
-        <label class="mb-2 block text-sm font-medium"> Bio </label>
+        <label
+          for="profile-bio"
+          class="mb-2 block text-sm font-medium"
+        > Bio </label>
         <UTextarea
+          id="profile-bio"
           v-model="model.bio"
           placeholder="Tell us about yourself..."
           :rows="4"
@@ -27,8 +31,12 @@ const model = defineModel<{ bio: string; company: string }>({ required: true });
       </div>
 
       <div>
-        <label class="mb-2 block text-sm font-medium"> Company / Organization </label>
+        <label
+          for="profile-company"
+          class="mb-2 block text-sm font-medium"
+        > Company / Organization </label>
         <UInput
+          id="profile-company"
           v-model="model.company"
           placeholder="Acme Inc."
         />

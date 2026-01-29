@@ -191,7 +191,7 @@ export default defineNuxtConfig({
   // Security headers
   security: {
     // Disable rate limiter in dev
-    rateLimiter: process.env.NODE_ENV === 'production',
+    rateLimiter: process.env.NODE_ENV !== 'production' ? false : undefined,
     headers: {
       contentSecurityPolicy: {
         'default-src': ['\'self\''],

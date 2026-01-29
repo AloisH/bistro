@@ -54,18 +54,12 @@
         class="pt-2"
       >
         <template #label>
-          <div class="flex items-center gap-3">
-            <UCheckbox
-              id="revoke-sessions"
-              v-model="passwordState.revokeOtherSessions"
-            />
-            <label
-              for="revoke-sessions"
-              class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
-            >
+          <label class="flex cursor-pointer items-center gap-3">
+            <UCheckbox v-model="passwordState.revokeOtherSessions" />
+            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
               Sign out from all other devices
-            </label>
-          </div>
+            </span>
+          </label>
         </template>
         <template #description>
           <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
@@ -106,7 +100,7 @@ const emit = defineEmits<{
 const { client } = useAuth();
 const toast = useToast();
 
-const passwordState = reactive({
+const passwordState = ref({
   currentPassword: '',
   newPassword: '',
   revokeOtherSessions: true,
@@ -117,12 +111,12 @@ async function changePassword() {
   passwordLoading.value = true;
   try {
     await client.changePassword({
-      currentPassword: passwordState.currentPassword,
-      newPassword: passwordState.newPassword,
-      revokeOtherSessions: passwordState.revokeOtherSessions,
+      currentPassword: passwordState.value.currentPassword,
+      newPassword: passwordState.value.newPassword,
+      revokeOtherSessions: passwordState.value.revokeOtherSessions,
     });
-    passwordState.currentPassword = '';
-    passwordState.newPassword = '';
+    passwordState.value.currentPassword = '';
+    passwordState.value.newPassword = '';
     toast.add({
       title: 'Password Updated',
       description: 'Your password has been changed successfully',
@@ -130,7 +124,7 @@ async function changePassword() {
       icon: 'i-lucide-check-circle',
     });
     // Emit event if sessions were revoked
-    if (passwordState.revokeOtherSessions) {
+    if (passwordState.value.revokeOtherSessions) {
       emit('changed');
     }
   }

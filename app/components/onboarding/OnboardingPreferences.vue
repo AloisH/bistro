@@ -23,8 +23,10 @@ const colorModeOptions = [
 
     <div class="space-y-6">
       <!-- Dark mode -->
-      <div>
-        <label class="mb-3 block text-sm font-medium"> Theme </label>
+      <fieldset>
+        <legend class="mb-3 block text-sm font-medium">
+          Theme
+        </legend>
         <div class="grid grid-cols-3 gap-3">
           <button
             v-for="option in colorModeOptions"
@@ -45,15 +47,18 @@ const colorModeOptions = [
             <span class="text-sm font-medium">{{ option.label }}</span>
           </button>
         </div>
-      </div>
+      </fieldset>
 
       <!-- Email notifications -->
       <div class="flex items-start gap-3">
-        <UCheckbox v-model="model.emailNotifications" />
+        <UCheckbox
+          id="email-notifications"
+          v-model="model.emailNotifications"
+        />
         <div class="flex-1">
           <label
+            for="email-notifications"
             class="block cursor-pointer text-sm font-medium"
-            @click="model.emailNotifications = !model.emailNotifications"
           >
             Email notifications
           </label>

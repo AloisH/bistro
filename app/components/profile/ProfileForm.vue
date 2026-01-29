@@ -70,20 +70,20 @@ defineProps<{
 const { user, fetchSession } = useAuth();
 const toast = useToast();
 
-const profileState = reactive({
+const profileState = ref({
   name: user.value?.name || '',
 });
 const profileLoading = ref(false);
 
 // Track original value for dirty detection
 const originalName = ref(user.value?.name || '');
-const isDirty = computed(() => profileState.name !== originalName.value);
+const isDirty = computed(() => profileState.value.name !== originalName.value);
 
 watch(
   () => user.value?.name,
   (newName) => {
     if (newName) {
-      profileState.name = newName;
+      profileState.value.name = newName;
       originalName.value = newName;
     }
   },
@@ -101,10 +101,10 @@ async function updateProfile() {
   try {
     await $fetch('/api/user/profile', {
       method: 'PUT',
-      body: { name: profileState.name },
+      body: { name: profileState.value.name },
     });
     await fetchSession();
-    originalName.value = profileState.name; // Reset dirty state
+    originalName.value = profileState.value.name; // Reset dirty state
     toast.add({
       title: 'Profile Updated',
       description: 'Your profile information has been saved successfully',

@@ -163,7 +163,7 @@ const { user, signOut } = useAuth();
 const toast = useToast();
 
 const showDeleteModal = ref(false);
-const deleteState = reactive({
+const deleteState = ref({
   password: '',
   email: '',
 });
@@ -172,7 +172,7 @@ const deleteLoading = ref(false);
 async function deleteAccount() {
   deleteLoading.value = true;
   try {
-    const body = hasPassword ? { password: deleteState.password } : { email: deleteState.email };
+    const body = hasPassword ? { password: deleteState.value.password } : { email: deleteState.value.email };
 
     await $fetch('/api/user/account', {
       method: 'DELETE',
