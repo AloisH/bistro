@@ -101,6 +101,6 @@
     "pre-commit": "bunx lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,vue,json,md,css,yaml,yml}": "eslint --fix"
+    "*": "eslint --fix"
   }
 }
