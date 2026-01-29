@@ -13,7 +13,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "preview": "nuxt preview",
-    "lint": "eslint .",
+    "lint": "eslint",
     "typecheck": "nuxt typecheck",
     "test": "vitest --config vitest.unit.config.ts",
     "test:unit": "vitest --config vitest.unit.config.ts",
