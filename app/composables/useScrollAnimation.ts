@@ -1,5 +1,5 @@
 export function useScrollAnimation() {
-  const animatedElements = ref<Set<Element>>(new Set());
+  const animatedElements = shallowRef<Set<Element>>(new Set());
 
   function observe(el: Ref<HTMLElement | ComponentPublicInstance | null> | HTMLElement | null) {
     const raw = isRef(el) ? el.value : el;
