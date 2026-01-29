@@ -64,6 +64,7 @@ docker-compose.override.yml
 # Build artifacts
 *.tsbuildinfo
 .cache/
+.turbo
 
 # Vercel
 .vercel
