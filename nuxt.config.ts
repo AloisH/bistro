@@ -93,9 +93,10 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/blog': { prerender: true },
-    '/blog/**': { isr: 3600, prerender: false }, // ISR, no prerender
+    // ISR only in production (causes payload 404s in dev)
+    '/blog/**': process.env.NODE_ENV === 'production' ? { isr: 3600 } : {},
     '/docs': { prerender: true },
-    '/docs/**': { isr: 3600, prerender: false },
+    '/docs/**': process.env.NODE_ENV === 'production' ? { isr: 3600 } : {},
     '/changelog': { prerender: true },
     '/legal/**': { prerender: true },
     '/contact': { prerender: true },
