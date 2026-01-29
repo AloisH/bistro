@@ -22,13 +22,17 @@
             <div class="text-2xl font-bold text-neutral-900 dark:text-white">
               {{ total }}
             </div>
-            <div class="text-neutral-600 dark:text-neutral-400">Articles</div>
+            <div class="text-neutral-600 dark:text-neutral-400">
+              Articles
+            </div>
           </div>
           <div>
             <div class="text-2xl font-bold text-neutral-900 dark:text-white">
               {{ allTags.length }}
             </div>
-            <div class="text-neutral-600 dark:text-neutral-400">Topics</div>
+            <div class="text-neutral-600 dark:text-neutral-400">
+              Topics
+            </div>
           </div>
         </div>
       </div>
@@ -44,15 +48,22 @@
 
     <BlogPostGrid :posts="posts" />
 
-    <div v-if="totalPages > 1" class="mt-8 flex justify-center">
-      <UPagination v-model="currentPage" :total="total" :page-count="limit" />
+    <div
+      v-if="totalPages > 1"
+      class="mt-8 flex justify-center"
+    >
+      <UPagination
+        v-model="currentPage"
+        :total="total"
+        :page-count="limit"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag } =
-  await useBlogPosts();
+const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag }
+  = await useBlogPosts();
 
 useSeo({
   title: 'Blog',

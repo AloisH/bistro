@@ -21,7 +21,7 @@ vi.mock('@vue-email/render', () => ({
 
 // Mock createError
 vi.mock('h3', () => ({
-  createError: vi.fn((error) => error),
+  createError: vi.fn(error => error),
 }));
 
 const mockSend = resend!.emails.send as ReturnType<typeof vi.fn>;

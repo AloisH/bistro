@@ -99,11 +99,21 @@ const footer = {
     <Preview>Reset your Bistro password</Preview>
     <Body :style="main">
       <Container :style="container">
-        <Img src="/logo.svg" alt="Bistro Logo" width="120" height="30" :style="logo" />
+        <Img
+          src="/logo.svg"
+          alt="Bistro Logo"
+          width="120"
+          height="30"
+          :style="logo"
+        />
 
-        <Heading :style="heading">Reset your password</Heading>
+        <Heading :style="heading">
+          Reset your password
+        </Heading>
 
-        <Text :style="paragraph"> Hi {{ name }}, </Text>
+        <Text :style="paragraph">
+          Hi {{ name }},
+        </Text>
 
         <Text :style="paragraph">
           We received a request to reset your password. Click the button below to create a new
@@ -111,12 +121,22 @@ const footer = {
         </Text>
 
         <div :style="buttonContainer">
-          <Button :href="resetLink" :style="button"> Reset Password </Button>
+          <Button
+            :href="resetLink"
+            :style="button"
+          >
+            Reset Password
+          </Button>
         </div>
 
-        <Text :style="paragraph">Or copy and paste this URL into your browser:</Text>
+        <Text :style="paragraph">
+          Or copy and paste this URL into your browser:
+        </Text>
 
-        <Link :href="resetLink" :style="link">
+        <Link
+          :href="resetLink"
+          :style="link"
+        >
           {{ resetLink }}
         </Link>
 
@@ -127,7 +147,12 @@ const footer = {
           you can safely ignore this email.
         </Text>
 
-        <Text v-if="email" :style="footer"> This email was sent to {{ email }} </Text>
+        <Text
+          v-if="email"
+          :style="footer"
+        >
+          This email was sent to {{ email }}
+        </Text>
       </Container>
     </Body>
   </Html>

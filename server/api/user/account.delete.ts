@@ -13,9 +13,11 @@ export default defineApiHandler(async (ctx) => {
 
   if (body.password) {
     await userService.deleteAccountWithPassword(ctx.userId, body.password);
-  } else if (body.email) {
+  }
+  else if (body.email) {
     await userService.deleteAccountWithEmail(ctx.userId, body.email);
-  } else {
+  }
+  else {
     throw createError({
       statusCode: 400,
       message: 'Password or email required',

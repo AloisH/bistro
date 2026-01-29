@@ -21,7 +21,8 @@ export function useAdminUsers() {
     try {
       const response = await $fetch('/api/admin/users');
       users.value = response.users;
-    } catch (err) {
+    }
+    catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
         title: 'Error',
@@ -29,7 +30,8 @@ export function useAdminUsers() {
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }
@@ -89,7 +91,8 @@ export function useAdminUsers() {
       });
       closeModal();
       await redirectToUserDashboard();
-    } else {
+    }
+    else {
       toast.add({
         title: 'Error',
         description: result.error || 'Failed to start impersonation',

@@ -12,18 +12,31 @@
       aria-label="Main navigation"
     >
       <template #header="{ collapsed }">
-        <div v-if="!collapsed" class="flex w-full items-center justify-between gap-2">
+        <div
+          v-if="!collapsed"
+          class="flex w-full items-center justify-between gap-2"
+        >
           <OrganizationSwitcher class="min-w-0 flex-1" />
           <UDashboardSidebarCollapse />
         </div>
-        <UDashboardSidebarCollapse v-else class="mx-auto" />
+        <UDashboardSidebarCollapse
+          v-else
+          class="mx-auto"
+        />
       </template>
 
       <template #default="{ collapsed }">
-        <UDashboardSearchButton :collapsed="collapsed" @click="commandPaletteOpen = true" />
+        <UDashboardSearchButton
+          :collapsed="collapsed"
+          @click="commandPaletteOpen = true"
+        />
 
         <ClientOnly>
-          <UNavigationMenu :collapsed="collapsed" :items="navigationItems" orientation="vertical" />
+          <UNavigationMenu
+            :collapsed="collapsed"
+            :items="navigationItems"
+            orientation="vertical"
+          />
 
           <UNavigationMenu
             :collapsed="collapsed"

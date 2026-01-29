@@ -103,7 +103,8 @@ export function defineApiHandler<TReturn>(
         };
 
         return await handler(context);
-      } catch (error) {
+      }
+      catch (error) {
         if (logContext) {
           getLogger().error({ context: logContext, error }, `API handler error: ${logContext}`);
         }
@@ -197,7 +198,8 @@ export function defineValidatedApiHandler<TBody, TReturn>(
         };
 
         return await handler(context);
-      } catch (error) {
+      }
+      catch (error) {
         if (logContext) {
           getLogger().error({ context: logContext, error }, `API handler error: ${logContext}`);
         }

@@ -22,7 +22,7 @@ export function useEmailTemplates() {
 
   // Computed
   const selectedTemplate = computed(() =>
-    templates.value.find((t) => t.id === selectedTemplateId.value),
+    templates.value.find(t => t.id === selectedTemplateId.value),
   );
 
   // Actions
@@ -32,7 +32,8 @@ export function useEmailTemplates() {
     try {
       const response = await $fetch('/api/admin/email-preview');
       templates.value = response.templates;
-    } catch (err) {
+    }
+    catch (err) {
       const apiError = err as { data?: { message?: string } };
       error.value = apiError.data?.message || 'Failed to load templates';
       toast.add({
@@ -41,7 +42,8 @@ export function useEmailTemplates() {
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }
@@ -62,7 +64,8 @@ export function useEmailTemplates() {
         color: 'success',
         icon: 'i-lucide-check',
       });
-    } catch (err) {
+    }
+    catch (err) {
       const apiError = err as { data?: { message?: string } };
       const errorMessage = apiError.data?.message || 'Failed to send test email';
 
@@ -73,7 +76,8 @@ export function useEmailTemplates() {
           color: 'warning',
           icon: 'i-lucide-alert-triangle',
         });
-      } else {
+      }
+      else {
         toast.add({
           title: 'Error',
           description: errorMessage,
@@ -81,7 +85,8 @@ export function useEmailTemplates() {
           icon: 'i-lucide-alert-triangle',
         });
       }
-    } finally {
+    }
+    finally {
       sendingTest.value = false;
     }
   }

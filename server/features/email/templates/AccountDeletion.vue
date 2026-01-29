@@ -80,13 +80,25 @@ const footer = {
     <Preview>Your Bistro account has been deleted</Preview>
     <Body :style="main">
       <Container :style="container">
-        <Img src="/logo.svg" alt="Bistro Logo" width="120" height="30" :style="logo" />
+        <Img
+          src="/logo.svg"
+          alt="Bistro Logo"
+          width="120"
+          height="30"
+          :style="logo"
+        />
 
-        <Heading :style="heading">Your account has been deleted</Heading>
+        <Heading :style="heading">
+          Your account has been deleted
+        </Heading>
 
         <Text :style="paragraph">
-          <template v-if="name">Hi {{ name }},</template>
-          <template v-else>Hi there,</template>
+          <template v-if="name">
+            Hi {{ name }},
+          </template>
+          <template v-else>
+            Hi there,
+          </template>
         </Text>
 
         <Text :style="paragraph">

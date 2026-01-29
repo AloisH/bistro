@@ -30,12 +30,15 @@
       </UButton>
     </div>
   </div>
-  <div v-if="isImpersonating" class="h-[73px]" />
+  <div
+    v-if="isImpersonating"
+    class="h-[73px]"
+  />
 </template>
 
 <script setup lang="ts">
-const { isImpersonating, impersonatedUser, stopImpersonation, checkImpersonation } =
-  useImpersonation();
+const { isImpersonating, impersonatedUser, stopImpersonation, checkImpersonation }
+  = useImpersonation();
 const loading = ref(false);
 const toast = useToast();
 
@@ -57,7 +60,8 @@ async function handleStopImpersonation() {
       icon: 'i-lucide-check',
     });
     await navigateTo({ name: 'admin-users' });
-  } else {
+  }
+  else {
     toast.add({
       title: 'Error',
       description: result.error || 'Failed to stop impersonation',

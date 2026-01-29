@@ -28,7 +28,8 @@ export function useImpersonation() {
       isImpersonating.value = true;
 
       return { success: true };
-    } catch (err) {
+    }
+    catch (err) {
       const error = err as { data?: { message?: string } };
       return {
         success: false,
@@ -55,7 +56,8 @@ export function useImpersonation() {
       await navigateTo({ name: 'admin-users' }, { external: true });
 
       return { success: true };
-    } catch (err) {
+    }
+    catch (err) {
       const error = err as { data?: { message?: string } };
       return {
         success: false,
@@ -78,7 +80,8 @@ export function useImpersonation() {
       if (response.session?.targetUser) {
         impersonatedUser.value = response.session.targetUser;
       }
-    } catch {
+    }
+    catch {
       // Not impersonating or not authorized
       isImpersonating.value = false;
       impersonatedUser.value = null;

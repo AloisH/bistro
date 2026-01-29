@@ -35,7 +35,8 @@ export function useOnboardingWizard() {
       try {
         const parsed = JSON.parse(stored);
         Object.assign(state, parsed);
-      } catch {
+      }
+      catch {
         // Invalid stored state, ignore
       }
     }
@@ -83,7 +84,8 @@ export function useOnboardingWizard() {
           body: payload,
         });
       }
-    } catch (error) {
+    }
+    catch (error) {
       toast.add({
         title: 'Error',
         description:
@@ -91,7 +93,8 @@ export function useOnboardingWizard() {
         color: 'error',
       });
       throw error;
-    } finally {
+    }
+    finally {
       isLoading.value = false;
     }
   }
@@ -119,18 +122,21 @@ export function useOnboardingWizard() {
       // Redirect to org dashboard if org was created, otherwise to org select
       if (createdOrgSlug.value) {
         await navigateTo({ name: 'org-slug-dashboard', params: { slug: createdOrgSlug.value } });
-      } else {
+      }
+      else {
         await navigateTo({ name: 'organizations-select' });
       }
-    } catch (error) {
+    }
+    catch (error) {
       toast.add({
         title: 'Error',
         description:
-          (error as { data?: { message?: string } })?.data?.message ||
-          'Failed to complete onboarding',
+          (error as { data?: { message?: string } })?.data?.message
+          || 'Failed to complete onboarding',
         color: 'error',
       });
-    } finally {
+    }
+    finally {
       isLoading.value = false;
     }
   }
@@ -141,7 +147,8 @@ export function useOnboardingWizard() {
     if (state.currentStep < TOTAL_STEPS) {
       await saveCurrentStep();
       state.currentStep++;
-    } else {
+    }
+    else {
       await complete();
     }
   }
@@ -157,7 +164,8 @@ export function useOnboardingWizard() {
 
     if (state.currentStep < TOTAL_STEPS) {
       state.currentStep++;
-    } else {
+    }
+    else {
       await complete();
     }
   }

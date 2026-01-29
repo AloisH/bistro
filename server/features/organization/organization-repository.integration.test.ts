@@ -127,8 +127,8 @@ describe('OrganizationRepository', () => {
         const result = await organizationRepository.findUserOrganizations(user.id);
 
         expect(result).toHaveLength(2);
-        expect(result.map((o) => o.name)).toContain('Org 1');
-        expect(result.map((o) => o.name)).toContain('Org 2');
+        expect(result.map(o => o.name)).toContain('Org 1');
+        expect(result.map(o => o.name)).toContain('Org 2');
       });
 
       it('returns empty array if user has no organizations', async () => {

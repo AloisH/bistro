@@ -33,10 +33,10 @@ export const useOrganization = () => {
   // Active org: prefer URL slug, fallback to last visited, fallback to first org
   const activeOrganization = computed(() => {
     if (urlOrgSlug.value) {
-      return organizations.value.find((org) => org.slug === urlOrgSlug.value);
+      return organizations.value.find(org => org.slug === urlOrgSlug.value);
     }
     if (lastOrgSlug.value) {
-      return organizations.value.find((org) => org.slug === lastOrgSlug.value);
+      return organizations.value.find(org => org.slug === lastOrgSlug.value);
     }
     return organizations.value[0] ?? null;
   });
@@ -58,9 +58,11 @@ export const useOrganization = () => {
       fetching.value = true;
       const data = await $fetch<{ organizations: Organization[] }>('/api/organizations');
       organizations.value = data?.organizations ?? [];
-    } catch {
+    }
+    catch {
       organizations.value = [];
-    } finally {
+    }
+    finally {
       fetching.value = false;
     }
   }
@@ -71,10 +73,12 @@ export const useOrganization = () => {
       const data = await $fetch<MembersListResponse>(`/api/organizations/${slug}/members`);
       members.value = data?.members ?? [];
       currentUserRole.value = data?.currentUserRole ?? null;
-    } catch {
+    }
+    catch {
       members.value = [];
       currentUserRole.value = null;
-    } finally {
+    }
+    finally {
       fetching.value = false;
     }
   }
@@ -87,7 +91,8 @@ export const useOrganization = () => {
     try {
       switching.value = true;
       await router.push(`/org/${slug}/dashboard`);
-    } finally {
+    }
+    finally {
       switching.value = false;
     }
   }

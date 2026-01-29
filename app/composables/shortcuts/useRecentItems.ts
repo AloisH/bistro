@@ -22,20 +22,22 @@ export function useRecentItems() {
       if (stored) {
         recentItems.value = JSON.parse(stored);
       }
-    } catch {
+    }
+    catch {
       // Ignore parse errors
     }
   });
 
   function addRecentItem(item: RecentItem) {
     // Remove if exists
-    const filtered = recentItems.value.filter((i) => i.id !== item.id);
+    const filtered = recentItems.value.filter(i => i.id !== item.id);
     // Add to front
     recentItems.value = [item, ...filtered].slice(0, MAX_ITEMS);
     // Persist
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(recentItems.value));
-    } catch {
+    }
+    catch {
       // Ignore storage errors
     }
   }
@@ -44,7 +46,8 @@ export function useRecentItems() {
     recentItems.value = [];
     try {
       localStorage.removeItem(STORAGE_KEY);
-    } catch {
+    }
+    catch {
       // Ignore storage errors
     }
   }

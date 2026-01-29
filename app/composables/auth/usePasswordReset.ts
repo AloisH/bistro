@@ -37,9 +37,11 @@ export function usePasswordResetRequest() {
       });
 
       await navigateTo({ name: 'auth-forgot-password-sent', query: { email: state.email } });
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       error.value = getErrorMessage(e);
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }
@@ -101,9 +103,11 @@ export function usePasswordReset() {
       });
 
       await navigateTo({ name: 'auth-login' });
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       error.value = getErrorMessage(e, 'Invalid or expired reset link');
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }

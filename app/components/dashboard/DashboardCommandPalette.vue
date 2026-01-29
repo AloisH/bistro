@@ -62,7 +62,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
     result.push({
       id: 'recent',
       label: 'Recent',
-      items: recentItems.value.map((item) => ({
+      items: recentItems.value.map(item => ({
         id: item.id,
         label: item.label,
         icon: item.icon || 'i-lucide-clock',
@@ -74,7 +74,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
             ...adminItems.value,
             ...actionItems.value,
           ];
-          const original = allItems.find((i) => i.id === item.id);
+          const original = allItems.find(i => i.id === item.id);
           original?.onSelect?.(e);
         },
       })),

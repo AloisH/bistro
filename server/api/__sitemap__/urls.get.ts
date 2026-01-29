@@ -35,7 +35,8 @@ export default defineEventHandler(async (event): Promise<SitemapUrl[]> => {
         });
       }
     }
-  } catch {
+  }
+  catch {
     // Content collection may not exist
   }
 
@@ -51,7 +52,8 @@ export default defineEventHandler(async (event): Promise<SitemapUrl[]> => {
         });
       }
     }
-  } catch {
+  }
+  catch {
     // Content collection may not exist
   }
 

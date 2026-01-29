@@ -31,7 +31,8 @@ export async function logAuthEvent(
         metadata: options.metadata,
       },
     });
-  } catch (error) {
+  }
+  catch (error) {
     // Don't throw - audit logging should not break auth flow
     getLogger().error({ error, event, status }, 'Failed to log audit event');
   }

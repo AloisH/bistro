@@ -14,7 +14,7 @@ const groups = computed(() => {
     {
       id: 'docs',
       label: 'Documentation',
-      items: results.value.map((r) => ({
+      items: results.value.map(r => ({
         id: r.path,
         label: r.title,
         description: r.content,
@@ -38,7 +38,13 @@ function handleSelect(item: CommandPaletteItem | undefined) {
 
 <template>
   <div>
-    <UButton variant="ghost" icon="i-lucide-search" size="sm" block @click="open">
+    <UButton
+      variant="ghost"
+      icon="i-lucide-search"
+      size="sm"
+      block
+      @click="open"
+    >
       <span class="flex-1 text-left">Search</span>
       <UKbd>⌘K</UKbd>
     </UButton>

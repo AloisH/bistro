@@ -3,7 +3,9 @@
     <template #content>
       <div class="p-6">
         <div class="mb-6 flex items-center justify-between">
-          <h2 class="text-lg font-semibold">Keyboard Shortcuts</h2>
+          <h2 class="text-lg font-semibold">
+            Keyboard Shortcuts
+          </h2>
           <UButton
             icon="i-lucide-x"
             color="neutral"
@@ -17,7 +19,9 @@
         <div class="space-y-6">
           <!-- Navigation -->
           <div>
-            <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">Navigation</h3>
+            <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">
+              Navigation
+            </h3>
             <div class="space-y-2">
               <ShortcutRow
                 v-for="s in navigationShortcuts"
@@ -30,7 +34,9 @@
 
           <!-- Modals -->
           <div>
-            <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">Modals</h3>
+            <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">
+              Modals
+            </h3>
             <div class="space-y-2">
               <ShortcutRow
                 v-for="s in modalShortcuts"
@@ -51,9 +57,9 @@ import { shortcuts } from '~/composables/shortcuts/useKeyboardShortcuts';
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
-const navigationShortcuts = computed(() => shortcuts.filter((s) => s.category === 'navigation'));
+const navigationShortcuts = computed(() => shortcuts.filter(s => s.category === 'navigation'));
 
-const modalShortcuts = computed(() => shortcuts.filter((s) => s.category === 'modals'));
+const modalShortcuts = computed(() => shortcuts.filter(s => s.category === 'modals'));
 
 // Helper component for shortcut rows
 const ShortcutRow = defineComponent({
@@ -77,7 +83,7 @@ const ShortcutRow = defineComponent({
       h('div', { class: 'flex items-center justify-between py-1' }, [
         h('span', { class: 'text-sm' }, props.label),
         h('div', { class: 'flex items-center gap-1' }, [
-          ...keyParts.value.map((key) => h(resolveComponent('UKbd'), { key }, () => key)),
+          ...keyParts.value.map(key => h(resolveComponent('UKbd'), { key }, () => key)),
         ]),
       ]);
   },

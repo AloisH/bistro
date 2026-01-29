@@ -30,7 +30,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['**/*.integration.test.ts'],
-    exclude: ['node_modules/**', '.nuxt/**'],
+    exclude: ['node_modules/**', '.nuxt/**', 'e2e/**'],
     setupFiles: ['./server/testing/setup.ts'],
     testTimeout: 30000,
     hookTimeout: 30000,

@@ -163,7 +163,8 @@ export class UserService {
       return (
         storedBuffer.length === derivedBuffer.length && timingSafeEqual(storedBuffer, derivedBuffer)
       );
-    } catch {
+    }
+    catch {
       return false;
     }
   }
@@ -205,7 +206,8 @@ export class UserService {
         to: user.email,
         name: user.name || undefined,
       });
-    } catch {
+    }
+    catch {
       log.warn('Account deletion email failed');
       // Continue with deletion - account must be deleted regardless
     }
@@ -248,7 +250,8 @@ export class UserService {
         to: user.email,
         name: user.name || undefined,
       });
-    } catch {
+    }
+    catch {
       log.warn('Account deletion email failed');
       // Continue with deletion - account must be deleted regardless
     }

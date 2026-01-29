@@ -13,8 +13,12 @@ const colorModeOptions = [
 <template>
   <div class="py-4">
     <div class="mb-6">
-      <h2 class="mb-2 text-2xl font-bold">Configure preferences</h2>
-      <p class="text-neutral-600 dark:text-neutral-300">Customize your Bistro experience</p>
+      <h2 class="mb-2 text-2xl font-bold">
+        Configure preferences
+      </h2>
+      <p class="text-neutral-600 dark:text-neutral-300">
+        Customize your Bistro experience
+      </p>
     </div>
 
     <div class="space-y-6">
@@ -34,7 +38,10 @@ const colorModeOptions = [
             ]"
             @click="colorMode.preference = option.value as 'light' | 'dark' | 'system'"
           >
-            <UIcon :name="option.icon" class="h-6 w-6" />
+            <UIcon
+              :name="option.icon"
+              class="h-6 w-6"
+            />
             <span class="text-sm font-medium">{{ option.label }}</span>
           </button>
         </div>

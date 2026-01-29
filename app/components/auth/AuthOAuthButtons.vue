@@ -1,13 +1,14 @@
 <template>
-  <div v-if="hasOAuth" class="mt-6 space-y-3">
+  <div
+    v-if="hasOAuth"
+    class="mt-6 space-y-3"
+  >
     <div class="relative">
       <div class="absolute inset-0 flex items-center">
         <span class="border-default w-full border-t" />
       </div>
       <div class="relative flex justify-center text-xs uppercase">
-        <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400"
-          >Or continue with</span
-        >
+        <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400">Or continue with</span>
       </div>
     </div>
 
@@ -60,7 +61,8 @@ const signInWithGithub = async () => {
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
       await navigateTo(result.url, { external: true });
     }
-  } catch {
+  }
+  catch {
     loading.value = null;
   }
 };
@@ -77,7 +79,8 @@ const signInWithGoogle = async () => {
     if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
       await navigateTo(result.url, { external: true });
     }
-  } catch {
+  }
+  catch {
     loading.value = null;
   }
 };

@@ -44,7 +44,8 @@ async function checkDockerRunning(): Promise<boolean> {
   try {
     await $`docker compose ps`.quiet();
     return true;
-  } catch {
+  }
+  catch {
     return false;
   }
 }
@@ -56,8 +57,9 @@ async function waitForPostgres(maxAttempts = 30): Promise<boolean> {
     try {
       await $`docker compose exec -T postgres pg_isready -U bistro`.quiet();
       return true;
-    } catch {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    catch {
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
@@ -115,12 +117,14 @@ async function main() {
         .replace('REDIS_URL=redis://localhost:6379', 'REDIS_URL=redis://redis:6379');
       await writeFile('.env.docker', dockerEnv);
       console.log(c.green('✓') + ' Created .env.docker (for Docker testing)');
-    } else {
+    }
+    else {
       console.log(c.yellow('⊘ Skipped .env creation'));
       console.log(c.yellow('  Run: cp .env.example .env'));
       return;
     }
-  } else {
+  }
+  else {
     console.log(c.green('✓') + ' .env exists');
   }
 
@@ -132,12 +136,14 @@ async function main() {
       console.log('  Starting services...');
       await $`docker compose up -d`;
       console.log(c.green('✓') + ' Docker services started');
-    } else {
+    }
+    else {
       console.log(c.yellow('⊘ Skipped Docker start'));
       console.log(c.yellow('  Run: docker compose up -d'));
       return;
     }
-  } else {
+  }
+  else {
     console.log(c.green('✓') + ' Docker services running');
   }
 

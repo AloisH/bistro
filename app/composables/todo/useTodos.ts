@@ -27,14 +27,16 @@ export function useTodos() {
       });
       todos.value = data.todos;
       total.value = data.total;
-    } catch {
+    }
+    catch {
       toast.add({
         title: 'Error',
         description: 'Failed to load todos',
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }
@@ -86,7 +88,8 @@ export function useTodos() {
         body: input,
       });
       todos.value.unshift(todo);
-    } catch {
+    }
+    catch {
       toast.add({
         title: 'Error',
         description: 'Failed to create todo',
@@ -98,7 +101,7 @@ export function useTodos() {
   }
 
   async function toggleTodo(id: string, completed: boolean) {
-    const todo = todos.value.find((t) => t.id === id);
+    const todo = todos.value.find(t => t.id === id);
     if (todo) todo.completed = completed;
 
     try {
@@ -106,7 +109,8 @@ export function useTodos() {
         method: 'POST',
         body: { completed },
       });
-    } catch {
+    }
+    catch {
       if (todo) todo.completed = !completed;
       toast.add({
         title: 'Error',
@@ -118,7 +122,7 @@ export function useTodos() {
   }
 
   async function deleteTodo(id: string) {
-    const index = todos.value.findIndex((t) => t.id === id);
+    const index = todos.value.findIndex(t => t.id === id);
     const removed = todos.value.splice(index, 1);
 
     try {
@@ -129,7 +133,8 @@ export function useTodos() {
         color: 'success',
         icon: 'i-lucide-check',
       });
-    } catch {
+    }
+    catch {
       todos.value.splice(index, 0, ...removed);
       toast.add({
         title: 'Error',

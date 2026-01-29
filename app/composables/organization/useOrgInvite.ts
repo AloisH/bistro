@@ -47,7 +47,8 @@ export function useOrgInvite(token: string) {
       });
 
       await router.push(`/org/${invite.value.organization.slug}/dashboard`);
-    } catch (err) {
+    }
+    catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
         title: 'Error',
@@ -55,7 +56,8 @@ export function useOrgInvite(token: string) {
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       accepting.value = false;
     }
   }

@@ -6,12 +6,27 @@
     @submit.prevent="onSubmit"
   >
     <div class="space-y-3">
-      <UFormField name="title" label="Title" required>
-        <UInput v-model="state.title" placeholder="Todo title..." @keyup.enter="onSubmit" />
+      <UFormField
+        name="title"
+        label="Title"
+        required
+      >
+        <UInput
+          v-model="state.title"
+          placeholder="Todo title..."
+          @keyup.enter="onSubmit"
+        />
       </UFormField>
 
-      <UFormField name="description" label="Description">
-        <UTextarea v-model="state.description" placeholder="Description (optional)" :rows="2" />
+      <UFormField
+        name="description"
+        label="Description"
+      >
+        <UTextarea
+          v-model="state.description"
+          placeholder="Description (optional)"
+          :rows="2"
+        />
       </UFormField>
 
       <UAlert
@@ -22,7 +37,14 @@
         class="animate-in fade-in slide-in-from-top duration-300"
       />
 
-      <UButton type="submit" icon="i-lucide-plus" :loading="loading" block> Add Todo </UButton>
+      <UButton
+        type="submit"
+        icon="i-lucide-plus"
+        :loading="loading"
+        block
+      >
+        Add Todo
+      </UButton>
     </div>
   </UForm>
 </template>
@@ -54,9 +76,11 @@ async function onSubmit() {
     emit('created');
     state.title = '';
     state.description = '';
-  } catch {
+  }
+  catch {
     error.value = 'Failed to create todo. Please try again.';
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }

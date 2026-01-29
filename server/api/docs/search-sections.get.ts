@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   });
 
   // Transform to expected format with /docs prefix
-  return sections.map((s) => ({
+  return sections.map(s => ({
     title: s.title,
     content: s.content,
     headings: s.titles,

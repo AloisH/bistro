@@ -13,8 +13,13 @@ const emit = defineEmits<{
 <template>
   <div class="mb-8">
     <div class="mb-4 flex items-center gap-3">
-      <UIcon name="i-lucide-tag" class="text-neutral-400" />
-      <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">Filter by topic</h2>
+      <UIcon
+        name="i-lucide-tag"
+        class="text-neutral-400"
+      />
+      <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">
+        Filter by topic
+      </h2>
     </div>
 
     <div class="flex flex-wrap gap-2">

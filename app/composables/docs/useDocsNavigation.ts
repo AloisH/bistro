@@ -20,13 +20,13 @@ export function useDocsNavigation() {
     // Icon defaults per section
     const iconMap: Record<string, string> = {
       'getting-started': 'i-lucide-rocket',
-      features: 'i-lucide-star',
-      deployment: 'i-lucide-cloud',
+      'features': 'i-lucide-star',
+      'deployment': 'i-lucide-cloud',
     };
 
     // Root is at index 0, we want its children (sections)
     const sections = data.value[0].children
-      .filter((item) => item.page === false) // Only sections, not pages
+      .filter(item => item.page === false) // Only sections, not pages
       .map((section) => {
         const sectionName = section.stem?.split('/')[1] || 'default';
         const icon = iconMap[sectionName] || 'i-lucide-file';
@@ -36,7 +36,7 @@ export function useDocsNavigation() {
           icon,
           children: section.children
             ?.sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
-            .map((child) => ({
+            .map(child => ({
               label: child.title,
               to: child.path,
             })),

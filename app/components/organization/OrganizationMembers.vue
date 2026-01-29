@@ -9,8 +9,8 @@ const { organizationSlug } = defineProps<{
 
 const toast = useToast();
 const { user } = useAuth();
-const { members, currentUserRole, canManageMembers, fetchMembers, updateMemberRole, removeMember } =
-  useOrganization();
+const { members, currentUserRole, canManageMembers, fetchMembers, updateMemberRole, removeMember }
+  = useOrganization();
 
 // Fetch members on mount
 onMounted(() => fetchMembers(organizationSlug));
@@ -105,8 +105,8 @@ const columns = [
           // Role dropdown (OWNER only, not self)
           canEdit
             ? h(resolveComponent('USelect'), {
-                modelValue: member.role,
-                options: [
+                'modelValue': member.role,
+                'options': [
                   { value: 'OWNER', label: 'Owner' },
                   { value: 'ADMIN', label: 'Admin' },
                   { value: 'MEMBER', label: 'Member' },
@@ -162,7 +162,8 @@ async function sendInvite() {
     });
 
     inviteModalOpen.value = false;
-  } catch (err) {
+  }
+  catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
       title: 'Error',
@@ -170,7 +171,8 @@ async function sendInvite() {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  } finally {
+  }
+  finally {
     inviting.value = false;
   }
 }
@@ -184,7 +186,8 @@ async function handleRoleChange(userId: string, role: OrganizationRole) {
       color: 'success',
       icon: 'i-lucide-check',
     });
-  } catch (err) {
+  }
+  catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
       title: 'Error',
@@ -213,7 +216,8 @@ async function confirmRemove() {
       icon: 'i-lucide-check',
     });
     removeModalOpen.value = false;
-  } catch (err) {
+  }
+  catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
       title: 'Error',
@@ -221,7 +225,8 @@ async function confirmRemove() {
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  } finally {
+  }
+  finally {
     removing.value = false;
     memberToRemove.value = null;
   }
@@ -231,28 +236,54 @@ async function confirmRemove() {
 <template>
   <div class="space-y-4">
     <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">Members</h2>
-      <UButton v-if="isOwner" icon="i-lucide-user-plus" @click="openInviteModal">
+      <h2 class="text-xl font-semibold">
+        Members
+      </h2>
+      <UButton
+        v-if="isOwner"
+        icon="i-lucide-user-plus"
+        @click="openInviteModal"
+      >
         Invite Member
       </UButton>
     </div>
 
-    <UTable :data="[...members]" :columns="columns" />
+    <UTable
+      :data="[...members]"
+      :columns="columns"
+    />
 
     <UModal v-model:open="inviteModalOpen">
       <template #content="{ close }">
         <UCard>
           <template #header>
-            <h3 class="text-lg font-semibold">Invite Member</h3>
+            <h3 class="text-lg font-semibold">
+              Invite Member
+            </h3>
           </template>
 
-          <UForm :state="inviteState" :schema="inviteMemberSchema" @submit.prevent="sendInvite">
+          <UForm
+            :state="inviteState"
+            :schema="inviteMemberSchema"
+            @submit.prevent="sendInvite"
+          >
             <div class="space-y-4">
-              <UFormField name="email" label="Email" required>
-                <UInput v-model="inviteState.email" type="email" placeholder="member@example.com" />
+              <UFormField
+                name="email"
+                label="Email"
+                required
+              >
+                <UInput
+                  v-model="inviteState.email"
+                  type="email"
+                  placeholder="member@example.com"
+                />
               </UFormField>
 
-              <UFormField name="role" label="Role">
+              <UFormField
+                name="role"
+                label="Role"
+              >
                 <USelect
                   v-model="inviteState.role"
                   :options="[
@@ -266,8 +297,20 @@ async function confirmRemove() {
               </UFormField>
 
               <div class="flex gap-2 pt-4">
-                <UButton type="submit" :loading="inviting" block> Send Invitation </UButton>
-                <UButton variant="ghost" :disabled="inviting" @click="close"> Cancel </UButton>
+                <UButton
+                  type="submit"
+                  :loading="inviting"
+                  block
+                >
+                  Send Invitation
+                </UButton>
+                <UButton
+                  variant="ghost"
+                  :disabled="inviting"
+                  @click="close"
+                >
+                  Cancel
+                </UButton>
               </div>
             </div>
           </UForm>
@@ -279,15 +322,29 @@ async function confirmRemove() {
       <template #content="{ close }">
         <UCard>
           <template #header>
-            <h3 class="text-lg font-semibold">Remove Member</h3>
+            <h3 class="text-lg font-semibold">
+              Remove Member
+            </h3>
           </template>
 
           <p>Are you sure you want to remove this member?</p>
 
           <template #footer>
             <div class="flex gap-2">
-              <UButton color="error" :loading="removing" @click="confirmRemove"> Remove </UButton>
-              <UButton variant="ghost" :disabled="removing" @click="close"> Cancel </UButton>
+              <UButton
+                color="error"
+                :loading="removing"
+                @click="confirmRemove"
+              >
+                Remove
+              </UButton>
+              <UButton
+                variant="ghost"
+                :disabled="removing"
+                @click="close"
+              >
+                Cancel
+              </UButton>
             </div>
           </template>
         </UCard>

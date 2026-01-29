@@ -11,8 +11,8 @@ defineRouteMeta({
 export default defineEventHandler(async (event) => {
   const ctx = await requireOrgAccess(event);
 
-  const { organizationRepository } =
-    await import('../../../features/organization/organization-repository');
+  const { organizationRepository }
+    = await import('../../../features/organization/organization-repository');
 
   const members = await organizationRepository.findOrganizationMembers(ctx.organizationId);
   const currentMember = await organizationRepository.findMembership(ctx.userId, ctx.organizationId);

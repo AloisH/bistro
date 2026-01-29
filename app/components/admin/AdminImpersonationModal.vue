@@ -4,7 +4,9 @@
       <UCard>
         <template #header>
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">Impersonate User</h3>
+            <h3 class="text-lg font-semibold">
+              Impersonate User
+            </h3>
             <UButton
               color="neutral"
               variant="ghost"
@@ -20,12 +22,23 @@
             <p class="text-sm text-neutral-600 dark:text-neutral-400">
               You are about to impersonate:
             </p>
-            <p class="mt-1 font-semibold">{{ user?.name || user?.email }}</p>
-            <p class="text-sm text-neutral-500">{{ user?.email }}</p>
+            <p class="mt-1 font-semibold">
+              {{ user?.name || user?.email }}
+            </p>
+            <p class="text-sm text-neutral-500">
+              {{ user?.email }}
+            </p>
           </div>
 
-          <UFormField label="Reason (optional)" help="Document why you're impersonating this user">
-            <UTextarea v-model="reason" placeholder="e.g., Debug checkout issue" :rows="3" />
+          <UFormField
+            label="Reason (optional)"
+            help="Document why you're impersonating this user"
+          >
+            <UTextarea
+              v-model="reason"
+              placeholder="e.g., Debug checkout issue"
+              :rows="3"
+            />
           </UFormField>
 
           <UAlert
@@ -38,8 +51,18 @@
 
         <template #footer>
           <div class="flex justify-end gap-2">
-            <UButton color="neutral" variant="subtle" @click="close"> Cancel </UButton>
-            <UButton color="warning" :loading="loading" @click="$emit('confirm')">
+            <UButton
+              color="neutral"
+              variant="subtle"
+              @click="close"
+            >
+              Cancel
+            </UButton>
+            <UButton
+              color="warning"
+              :loading="loading"
+              @click="$emit('confirm')"
+            >
               Start Impersonating
             </UButton>
           </div>

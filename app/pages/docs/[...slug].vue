@@ -54,7 +54,10 @@ useSeo({
           </p>
         </header>
 
-        <ContentRenderer :value="page" class="prose dark:prose-invert max-w-none" />
+        <ContentRenderer
+          :value="page"
+          class="prose dark:prose-invert max-w-none"
+        />
 
         <!-- Prev/Next navigation -->
         <div class="border-default mt-12 border-t pt-8">
@@ -65,9 +68,20 @@ useSeo({
       <!-- Right sidebar: Table of Contents (sticky, desktop only) -->
       <aside class="hidden lg:block">
         <div class="sticky top-6">
-          <h3 class="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">On this page</h3>
-          <UContentToc v-if="tocLinks.length" :links="tocLinks" highlight />
-          <p v-else class="text-sm text-neutral-500">No sections</p>
+          <h3 class="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
+            On this page
+          </h3>
+          <UContentToc
+            v-if="tocLinks.length"
+            :links="tocLinks"
+            highlight
+          />
+          <p
+            v-else
+            class="text-sm text-neutral-500"
+          >
+            No sections
+          </p>
         </div>
       </aside>
     </div>

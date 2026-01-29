@@ -40,9 +40,11 @@ export function useAuthLogin() {
 
       await fetchSession();
       await redirectToUserDashboard();
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       passwordError.value = getErrorMessage(e);
-    } finally {
+    }
+    finally {
       passwordLoading.value = false;
     }
   }
@@ -63,9 +65,11 @@ export function useAuthLogin() {
       });
 
       await navigateTo({ name: 'auth-magic-link-sent', query: { email: magicLinkState.email } });
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       magicLinkError.value = getErrorMessage(e);
-    } finally {
+    }
+    finally {
       magicLinkLoading.value = false;
     }
   }

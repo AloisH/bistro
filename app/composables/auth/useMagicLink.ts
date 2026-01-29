@@ -37,9 +37,11 @@ export function useMagicLink() {
       });
 
       await navigateTo({ name: 'auth-magic-link-sent', query: { email: state.email } });
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       error.value = getErrorMessage(e);
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }

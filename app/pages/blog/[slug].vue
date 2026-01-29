@@ -13,7 +13,13 @@
     <article v-if="post">
       <!-- Back button -->
       <div class="mb-8">
-        <UButton to="/blog" variant="ghost" icon="i-lucide-arrow-left" size="sm" class="group">
+        <UButton
+          to="/blog"
+          variant="ghost"
+          icon="i-lucide-arrow-left"
+          size="sm"
+          class="group"
+        >
           <span class="inline-block transition-transform group-hover:-translate-x-1">
             Back to Blog
           </span>
@@ -30,7 +36,10 @@
       />
 
       <!-- Content -->
-      <ContentRenderer :value="post" class="prose dark:prose-invert max-w-none" />
+      <ContentRenderer
+        :value="post"
+        class="prose dark:prose-invert max-w-none"
+      />
 
       <BlogPostAuthor
         v-if="post.authors?.[0]"

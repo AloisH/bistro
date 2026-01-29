@@ -4,7 +4,7 @@ const testimonials = [
     name: 'Sarah Chen',
     role: 'Indie Developer',
     quote:
-      "Finally, a todo app that doesn't try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.",
+      'Finally, a todo app that doesn\'t try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.',
   },
   {
     name: 'Marcus Johnson',
@@ -16,7 +16,7 @@ const testimonials = [
     name: 'Emily Rodriguez',
     role: 'Open Source Contributor',
     quote:
-      "Love that it's open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.",
+      'Love that it\'s open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.',
   },
 ];
 </script>
@@ -35,7 +35,10 @@ const testimonials = [
         :style="{ animationDelay: `${index * 100}ms` }"
       >
         <div class="flex-1">
-          <UIcon name="i-lucide-quote" class="text-primary mb-3 size-6" />
+          <UIcon
+            name="i-lucide-quote"
+            class="text-primary mb-3 size-6"
+          />
           <p class="text-muted">
             {{ testimonial.quote }}
           </p>

@@ -2,7 +2,9 @@
   <div class="pb-6">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
-        <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">Danger Zone</h2>
+        <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">
+          Danger Zone
+        </h2>
         <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
           Once you delete your account, there is no going back. All your data will be permanently
           deleted.
@@ -17,7 +19,10 @@
       @click="showDeleteModal = true"
     >
       <template #leading>
-        <UIcon name="i-lucide-trash-2" class="mr-2" />
+        <UIcon
+          name="i-lucide-trash-2"
+          class="mr-2"
+        />
       </template>
       Delete Account
     </UButton>
@@ -47,19 +52,31 @@
             </p>
             <ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li class="flex items-start gap-2">
-                <UIcon name="i-lucide-user" class="mt-1 text-neutral-400 dark:text-neutral-500" />
+                <UIcon
+                  name="i-lucide-user"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
+                />
                 <span>Your user profile and account information</span>
               </li>
               <li class="flex items-start gap-2">
-                <UIcon name="i-lucide-folder" class="mt-1 text-neutral-400 dark:text-neutral-500" />
+                <UIcon
+                  name="i-lucide-folder"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
+                />
                 <span>All your projects and their configurations</span>
               </li>
               <li class="flex items-start gap-2">
-                <UIcon name="i-lucide-bot" class="mt-1 text-neutral-400 dark:text-neutral-500" />
+                <UIcon
+                  name="i-lucide-bot"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
+                />
                 <span>All AI jobs and their results</span>
               </li>
               <li class="flex items-start gap-2">
-                <UIcon name="i-lucide-globe" class="mt-1 text-neutral-400 dark:text-neutral-500" />
+                <UIcon
+                  name="i-lucide-globe"
+                  class="mt-1 text-neutral-400 dark:text-neutral-500"
+                />
                 <span>All active sessions across devices</span>
               </li>
             </ul>
@@ -121,7 +138,11 @@
             @click="deleteAccount"
           >
             <template #leading>
-              <UIcon v-if="!deleteLoading" name="i-lucide-trash-2" class="mr-2" />
+              <UIcon
+                v-if="!deleteLoading"
+                name="i-lucide-trash-2"
+                class="mr-2"
+              />
             </template>
             Delete Forever
           </UButton>
@@ -164,7 +185,8 @@ async function deleteAccount() {
       icon: 'i-lucide-check-circle',
     });
     await signOut({ redirectTo: '/auth/login' });
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Deletion Failed',
@@ -172,7 +194,8 @@ async function deleteAccount() {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     deleteLoading.value = false;
   }
 }

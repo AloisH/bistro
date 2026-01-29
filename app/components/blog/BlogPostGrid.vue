@@ -13,7 +13,10 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="posts?.length" class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+  <div
+    v-if="posts?.length"
+    class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+  >
     <NuxtLink
       v-for="(post, index) in posts"
       :key="post.path"
@@ -70,14 +73,24 @@ defineProps<{
               <span>{{ post.authors?.[0]?.name }}</span>
             </div>
             <span>•</span>
-            <NuxtTime :datetime="post.date" month="long" day="numeric" year="numeric" />
+            <NuxtTime
+              :datetime="post.date"
+              month="long"
+              day="numeric"
+              year="numeric"
+            />
           </div>
         </div>
       </UCard>
     </NuxtLink>
   </div>
 
-  <p v-else class="py-12 text-center text-neutral-500">No posts found. Check back soon!</p>
+  <p
+    v-else
+    class="py-12 text-center text-neutral-500"
+  >
+    No posts found. Check back soon!
+  </p>
 </template>
 
 <style scoped>

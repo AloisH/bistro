@@ -10,22 +10,24 @@ export function useNewsletter() {
     subscribing.value = true;
     try {
       // TODO: Implement actual subscription API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       toast.add({
         title: 'Subscribed!',
-        description: "Thanks for subscribing. We'll keep you posted.",
+        description: 'Thanks for subscribing. We\'ll keep you posted.',
         color: 'success',
         icon: 'i-lucide-check',
       });
       email.value = '';
-    } catch {
+    }
+    catch {
       toast.add({
         title: 'Error',
         description: 'Something went wrong. Please try again.',
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       subscribing.value = false;
     }
   }

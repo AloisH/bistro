@@ -14,7 +14,8 @@ export default defineEventHandler(async (event) => {
   try {
     const session = await requireRole(event, ['ADMIN', 'SUPER_ADMIN']);
     isAdmin = !!session;
-  } catch {
+  }
+  catch {
     // Not admin, continue without drafts
   }
 

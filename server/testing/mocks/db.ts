@@ -27,7 +27,7 @@ export const mockDb = {
   organization: createModelMock(),
   organizationMember: createModelMock(),
   organizationInvite: createModelMock(),
-  $transaction: vi.fn((fn) => fn(mockDb)),
+  $transaction: vi.fn(fn => fn(mockDb)),
   $executeRaw: vi.fn(),
   $queryRaw: vi.fn(),
   $connect: vi.fn(),
@@ -42,7 +42,8 @@ export const resetMockDb = () => {
           (fn as ReturnType<typeof vi.fn>).mockReset();
         }
       });
-    } else if (typeof value === 'function' && 'mockReset' in value) {
+    }
+    else if (typeof value === 'function' && 'mockReset' in value) {
       (value as ReturnType<typeof vi.fn>).mockReset();
     }
   });

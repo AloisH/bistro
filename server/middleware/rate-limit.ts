@@ -15,13 +15,17 @@ export default defineEventHandler((event) => {
   // Map paths to rate limit configs
   if (path.includes('/sign-in') || path.includes('/signin')) {
     rateLimit(event, 'login');
-  } else if (path.includes('/sign-up') || path.includes('/signup')) {
+  }
+  else if (path.includes('/sign-up') || path.includes('/signup')) {
     rateLimit(event, 'register');
-  } else if (path.includes('/reset-password') || path.includes('/forgot-password')) {
+  }
+  else if (path.includes('/reset-password') || path.includes('/forgot-password')) {
     rateLimit(event, 'passwordReset');
-  } else if (path.includes('/magic-link')) {
+  }
+  else if (path.includes('/magic-link')) {
     rateLimit(event, 'magicLink');
-  } else {
+  }
+  else {
     // General auth endpoints (session, etc.)
     rateLimit(event, 'authGeneral');
   }

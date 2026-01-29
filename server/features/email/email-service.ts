@@ -69,7 +69,8 @@ export class EmailService {
       }
 
       return { id: result.data.id };
-    } catch (error) {
+    }
+    catch (error) {
       getLogger().error({ error }, 'Failed to send email');
       throw createError({
         statusCode: 500,

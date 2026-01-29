@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="mb-6">
-      <h1 class="text-2xl font-bold">User Management</h1>
+      <h1 class="text-2xl font-bold">
+        User Management
+      </h1>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Manage users and impersonate for support
       </p>
@@ -10,8 +12,12 @@
     <UCard>
       <template #header>
         <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold">All Users</h2>
-          <UBadge color="neutral">{{ users.length }} users</UBadge>
+          <h2 class="text-lg font-semibold">
+            All Users
+          </h2>
+          <UBadge color="neutral">
+            {{ users.length }} users
+          </UBadge>
         </div>
       </template>
 

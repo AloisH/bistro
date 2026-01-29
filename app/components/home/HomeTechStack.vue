@@ -12,7 +12,9 @@ const techStack = [
 <template>
   <UPageSection class="scroll-animate">
     <div class="text-center">
-      <p class="text-muted mb-6 text-sm">Built with modern technologies</p>
+      <p class="text-muted mb-6 text-sm">
+        Built with modern technologies
+      </p>
       <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
         <NuxtLink
           v-for="(tech, index) in techStack"

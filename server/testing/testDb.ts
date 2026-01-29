@@ -36,7 +36,8 @@ import { db } from '../utils/db';
 export async function startTransaction(): Promise<void> {
   try {
     await db.$executeRaw`BEGIN`;
-  } catch (error) {
+  }
+  catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(`Failed to start transaction: ${message}`);
   }
@@ -72,7 +73,8 @@ export async function startTransaction(): Promise<void> {
 export async function rollbackTransaction(): Promise<void> {
   try {
     await db.$executeRaw`ROLLBACK`;
-  } catch (error) {
+  }
+  catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(`Failed to rollback transaction: ${message}`);
   }

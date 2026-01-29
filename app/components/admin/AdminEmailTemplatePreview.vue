@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="mb-4">
-      <h3 class="font-semibold">{{ template.name }}</h3>
+      <h3 class="font-semibold">
+        {{ template.name }}
+      </h3>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
         {{ template.description }}
       </p>
@@ -41,7 +43,10 @@
       </div>
     </div>
 
-    <div v-if="viewMode === 'html'" class="border-default rounded-lg border">
+    <div
+      v-if="viewMode === 'html'"
+      class="border-default rounded-lg border"
+    >
       <iframe
         :srcdoc="template.html"
         class="h-[600px] w-full rounded-lg"
@@ -50,12 +55,17 @@
       />
     </div>
 
-    <div v-else class="border-default bg-muted rounded-lg border p-4">
+    <div
+      v-else
+      class="border-default bg-muted rounded-lg border p-4"
+    >
       <pre class="text-sm whitespace-pre-wrap">{{ template.text }}</pre>
     </div>
 
     <div class="mt-4 rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
-      <h4 class="mb-2 text-sm font-semibold">Sample Data</h4>
+      <h4 class="mb-2 text-sm font-semibold">
+        Sample Data
+      </h4>
       <pre class="text-xs text-neutral-600 dark:text-neutral-400">{{
         JSON.stringify(template.props, null, 2)
       }}</pre>
@@ -74,6 +84,6 @@ defineProps<{
 
 defineEmits<{
   'update:viewMode': [mode: 'html' | 'text'];
-  sendTest: [];
+  'sendTest': [];
 }>();
 </script>

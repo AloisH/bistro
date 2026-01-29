@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="mb-6">
-      <h1 class="text-2xl font-bold">Email Template Previews</h1>
+      <h1 class="text-2xl font-bold">
+        Email Template Previews
+      </h1>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
         Preview how email templates appear to recipients
       </p>
@@ -10,8 +12,12 @@
     <UCard v-if="!loading && templates.length > 0">
       <template #header>
         <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold">Templates</h2>
-          <UBadge color="neutral">{{ templates.length }} templates</UBadge>
+          <h2 class="text-lg font-semibold">
+            Templates
+          </h2>
+          <UBadge color="neutral">
+            {{ templates.length }} templates
+          </UBadge>
         </div>
       </template>
 
@@ -35,7 +41,9 @@
 
     <UCard v-else-if="loading">
       <div class="flex items-center justify-center py-12">
-        <div class="text-neutral-600 dark:text-neutral-400">Loading templates...</div>
+        <div class="text-neutral-600 dark:text-neutral-400">
+          Loading templates...
+        </div>
       </div>
     </UCard>
 

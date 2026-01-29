@@ -52,14 +52,15 @@ export function useChangelog() {
     selectedType.value = type;
     if (type) {
       router.push({ query: { type } });
-    } else {
+    }
+    else {
       router.push({ query: {} });
     }
     refresh();
   }
 
   function countByType(type: string): number {
-    return allEntries.value.filter((entry) => entry.changes?.some((c) => c.type === type)).length;
+    return allEntries.value.filter(entry => entry.changes?.some(c => c.type === type)).length;
   }
 
   // Color/icon helpers

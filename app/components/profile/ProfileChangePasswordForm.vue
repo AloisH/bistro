@@ -9,7 +9,13 @@
           Update your password to keep your account secure
         </p>
       </div>
-      <UBadge color="neutral" variant="subtle" class="mt-2 sm:mt-0"> Security </UBadge>
+      <UBadge
+        color="neutral"
+        variant="subtle"
+        class="mt-2 sm:mt-0"
+      >
+        Security
+      </UBadge>
     </div>
     <UForm
       :state="passwordState"
@@ -43,10 +49,16 @@
         />
       </UFormField>
 
-      <UFormField name="revokeOtherSessions" class="pt-2">
+      <UFormField
+        name="revokeOtherSessions"
+        class="pt-2"
+      >
         <template #label>
           <div class="flex items-center gap-3">
-            <UCheckbox id="revoke-sessions" v-model="passwordState.revokeOtherSessions" />
+            <UCheckbox
+              id="revoke-sessions"
+              v-model="passwordState.revokeOtherSessions"
+            />
             <label
               for="revoke-sessions"
               class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
@@ -71,7 +83,11 @@
           class="w-full sm:w-auto"
         >
           <template #leading>
-            <UIcon v-if="!passwordLoading" name="i-lucide-lock" class="mr-2" />
+            <UIcon
+              v-if="!passwordLoading"
+              name="i-lucide-lock"
+              class="mr-2"
+            />
           </template>
           Update Password
         </UButton>
@@ -117,7 +133,8 @@ async function changePassword() {
     if (passwordState.revokeOtherSessions) {
       emit('changed');
     }
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { message?: string };
     toast.add({
       title: 'Password Change Failed',
@@ -125,7 +142,8 @@ async function changePassword() {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     passwordLoading.value = false;
   }
 }

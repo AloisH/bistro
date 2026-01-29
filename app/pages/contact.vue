@@ -3,7 +3,9 @@
     <div class="mx-auto max-w-2xl">
       <!-- Header -->
       <div class="mb-12 text-center">
-        <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">Contact Us</h1>
+        <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">
+          Contact Us
+        </h1>
         <p class="text-lg text-neutral-600 dark:text-neutral-400">
           Have a question or feedback? We'd love to hear from you.
         </p>
@@ -11,9 +13,17 @@
 
       <!-- Contact Form -->
       <UCard>
-        <UForm :state="state" :schema="contactSchema" @submit="onSubmit">
+        <UForm
+          :state="state"
+          :schema="contactSchema"
+          @submit="onSubmit"
+        >
           <div class="space-y-6">
-            <UFormField name="name" label="Name" class="w-full">
+            <UFormField
+              name="name"
+              label="Name"
+              class="w-full"
+            >
               <UInput
                 v-model="state.name"
                 placeholder="Your name"
@@ -22,7 +32,11 @@
               />
             </UFormField>
 
-            <UFormField name="email" label="Email" class="w-full">
+            <UFormField
+              name="email"
+              label="Email"
+              class="w-full"
+            >
               <UInput
                 v-model="state.email"
                 type="email"
@@ -32,7 +46,11 @@
               />
             </UFormField>
 
-            <UFormField name="subject" label="Subject" class="w-full">
+            <UFormField
+              name="subject"
+              label="Subject"
+              class="w-full"
+            >
               <USelect
                 v-model="state.subject"
                 :items="subjectOptions"
@@ -42,7 +60,11 @@
               />
             </UFormField>
 
-            <UFormField name="message" label="Message" class="w-full">
+            <UFormField
+              name="message"
+              label="Message"
+              class="w-full"
+            >
               <UTextarea
                 v-model="state.message"
                 placeholder="How can we help?"
@@ -51,7 +73,14 @@
               />
             </UFormField>
 
-            <UButton type="submit" block size="lg" :loading="loading"> Send Message </UButton>
+            <UButton
+              type="submit"
+              block
+              size="lg"
+              :loading="loading"
+            >
+              Send Message
+            </UButton>
           </div>
         </UForm>
       </UCard>
@@ -121,7 +150,7 @@ async function onSubmit() {
 
     toast.add({
       title: 'Message sent',
-      description: "Thanks for reaching out. We'll get back to you soon.",
+      description: 'Thanks for reaching out. We\'ll get back to you soon.',
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -131,14 +160,16 @@ async function onSubmit() {
     state.email = '';
     state.subject = '' as ContactForm['subject'];
     state.message = '';
-  } catch {
+  }
+  catch {
     toast.add({
       title: 'Error',
       description: 'Failed to send message. Please try again.',
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }

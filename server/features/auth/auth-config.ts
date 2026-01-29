@@ -88,7 +88,8 @@ export const auth = betterAuth({
           resetLink: url,
         });
         getLogger().info('Password reset email sent');
-      } catch (error) {
+      }
+      catch (error) {
         getLogger().error({ error }, 'Failed to send password reset email');
       }
     },
@@ -110,7 +111,8 @@ export const auth = betterAuth({
           verificationLink: url,
         });
         getLogger().info('Verification email sent');
-      } catch (error) {
+      }
+      catch (error) {
         getLogger().error({ error }, 'Failed to send verification email');
         // Don't throw - allow registration even if email fails
       }
@@ -123,7 +125,7 @@ export const auth = betterAuth({
     },
     expiresIn: 60 * 60 * 24 * 7, // 7 days
   },
-  trustedOrigins: process.env.AUTH_TRUSTED_ORIGINS?.split(',').map((s) => s.trim()) || [
+  trustedOrigins: process.env.AUTH_TRUSTED_ORIGINS?.split(',').map(s => s.trim()) || [
     'http://localhost:3000',
   ],
   socialProviders,
@@ -150,7 +152,8 @@ export const auth = betterAuth({
             magicLink: url,
           });
           getLogger().info('Magic link sent');
-        } catch (error) {
+        }
+        catch (error) {
           getLogger().error({ error }, 'Failed to send magic link');
         }
       },

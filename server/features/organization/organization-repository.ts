@@ -113,7 +113,7 @@ export class OrganizationRepository {
       },
     });
 
-    return memberships.map((m) => m.organization);
+    return memberships.map(m => m.organization);
   }
 
   /**
@@ -239,8 +239,8 @@ export class OrganizationRepository {
    */
   async findInviteByToken(token: string): Promise<
     | (OrganizationInvite & {
-        organization: Organization;
-      })
+      organization: Organization;
+    })
     | null
   > {
     return this.db.organizationInvite.findUnique({

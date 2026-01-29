@@ -1,6 +1,9 @@
 <template>
   <div :class="['my-4 flex gap-2 rounded-md border px-3 py-2 text-sm', colorClasses]">
-    <UIcon :name="icon" class="mt-0.5 size-4 shrink-0" />
+    <UIcon
+      :name="icon"
+      class="mt-0.5 size-4 shrink-0"
+    />
     <div class="[&>p]:m-0">
       <slot />
     </div>

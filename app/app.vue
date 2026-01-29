@@ -12,9 +12,9 @@ const description = 'Production-ready Nuxt 4 SaaS boilerplate with auth, multi-t
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: title,
+  'name': title,
   description,
-  url: siteUrl,
+  'url': siteUrl,
 };
 
 useHead({

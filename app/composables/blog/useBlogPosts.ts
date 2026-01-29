@@ -37,9 +37,9 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
 
   const posts = computed<BlogPost[]>(() => {
     const rawPosts = postsData.value?.posts || [];
-    return rawPosts.map((post) => ({
+    return rawPosts.map(post => ({
       ...post,
-      authors: post.authors?.map((a) => ({
+      authors: post.authors?.map(a => ({
         ...a,
         avatar: a.avatar ? { src: a.avatar } : undefined,
       })),
@@ -70,7 +70,8 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
     if (selectedTag.value === tag || tag === '') {
       selectedTag.value = '';
       router.push({ query: { page: '1' } });
-    } else {
+    }
+    else {
       selectedTag.value = tag;
       currentPage.value = 1;
       router.push({ query: { tag, page: '1' } });

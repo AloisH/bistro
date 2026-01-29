@@ -43,9 +43,11 @@ export function useAuthRegister() {
       });
 
       await navigateTo({ name: 'auth-verify-email', query: { email: state.email } });
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       error.value = getErrorMessage(e);
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }

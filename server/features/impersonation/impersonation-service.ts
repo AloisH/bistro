@@ -47,8 +47,8 @@ export class ImpersonationService {
     await impersonationRepository.endLog(adminId);
 
     // Extract IP and user agent from request
-    const ipAddress =
-      getHeader(event, 'x-forwarded-for') || getHeader(event, 'x-real-ip') || undefined;
+    const ipAddress
+      = getHeader(event, 'x-forwarded-for') || getHeader(event, 'x-real-ip') || undefined;
     const userAgent = getHeader(event, 'user-agent') || undefined;
 
     // Create audit log
@@ -73,7 +73,8 @@ export class ImpersonationService {
       for (const cookie of cookies) {
         appendResponseHeader(event, 'set-cookie', cookie);
       }
-    } catch (error) {
+    }
+    catch (error) {
       // Log error for debugging
       getLogger().error(
         { error, adminId, targetUserId: input.userId },
@@ -121,7 +122,8 @@ export class ImpersonationService {
       for (const cookie of cookies) {
         appendResponseHeader(event, 'set-cookie', cookie);
       }
-    } catch {
+    }
+    catch {
       // Session may already be expired or cleared - that's ok, just log it
       log.warn('Better Auth impersonation already stopped');
       // Continue to end the audit log regardless

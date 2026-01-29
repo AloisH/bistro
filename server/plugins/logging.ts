@@ -10,10 +10,10 @@ export default defineNitroPlugin((_nitroApp) => {
     const url = event.node.req.url!;
 
     // Only log API requests, skip static assets and icon requests
-    const shouldLog =
-      url.startsWith('/api/') &&
-      !url.startsWith('/api/_nuxt_icon') &&
-      !url.startsWith('/api/auth/session');
+    const shouldLog
+      = url.startsWith('/api/')
+        && !url.startsWith('/api/_nuxt_icon')
+        && !url.startsWith('/api/auth/session');
 
     if (!shouldLog) return;
 
@@ -26,8 +26,8 @@ export default defineNitroPlugin((_nitroApp) => {
       method: event.node.req.method!,
       url,
       ip:
-        (event.node.req.headers['x-forwarded-for'] as string) ||
-        event.node.req.socket.remoteAddress,
+        (event.node.req.headers['x-forwarded-for'] as string)
+        || event.node.req.socket.remoteAddress,
       userAgent: event.node.req.headers['user-agent'] as string,
     };
 
@@ -55,8 +55,8 @@ export default defineNitroPlugin((_nitroApp) => {
     context.samplingReason = reason;
 
     if (shouldLog) {
-      const level =
-        context.statusCode && context.statusCode >= 500
+      const level
+        = context.statusCode && context.statusCode >= 500
           ? 'error'
           : context.statusCode && context.statusCode >= 400
             ? 'warn'
@@ -78,8 +78,8 @@ export default defineNitroPlugin((_nitroApp) => {
       stack: isDev ? error.stack : undefined,
       code: 'code' in error ? (error.code as string) : undefined,
     };
-    const statusCode =
-      'statusCode' in error && typeof error.statusCode === 'number' ? error.statusCode : 500;
+    const statusCode
+      = 'statusCode' in error && typeof error.statusCode === 'number' ? error.statusCode : 500;
 
     if (context) {
       context.error = errorInfo;
@@ -92,7 +92,8 @@ export default defineNitroPlugin((_nitroApp) => {
         context as LogContext,
         `${context.method} ${context.url} ${statusCode} ${context.durationMs}ms ERROR: ${error.message}`,
       );
-    } else {
+    }
+    else {
       // No context (non-API request or early error) - log basic info
       logger.error(
         { error: errorInfo, statusCode, url: event?.node.req.url },

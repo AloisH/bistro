@@ -59,7 +59,8 @@ export const useAuth = () => {
         return navigateTo({ name: 'org-slug-dashboard', params: { slug: firstOrg.slug } });
       }
       return navigateTo({ name: 'organizations-create' });
-    } catch {
+    }
+    catch {
       return navigateTo({ name: 'organizations-create' });
     }
   };
@@ -83,7 +84,8 @@ export const useAuth = () => {
         // Hard redirect to clear all cached state (including cookieCache)
         if (import.meta.client) {
           window.location.href = redirectTo;
-        } else {
+        }
+        else {
           await navigateTo(redirectTo);
         }
       }

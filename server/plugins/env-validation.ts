@@ -23,12 +23,14 @@ export default defineNitroPlugin((_nitroApp) => {
   const disabledGroups: string[] = [];
 
   Object.entries(OPTIONAL_VAR_GROUPS).forEach(([group, vars]) => {
-    const present = vars.filter((v) => process.env[v]);
+    const present = vars.filter(v => process.env[v]);
     if (present.length === vars.length) {
       enabledGroups.push(group);
-    } else if (present.length === 0) {
+    }
+    else if (present.length === 0) {
       disabledGroups.push(group);
-    } else {
+    }
+    else {
       enabledGroups.push(`${group} (partial)`);
     }
   });

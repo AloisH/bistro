@@ -1,7 +1,11 @@
 <template>
   <div class="space-y-6">
     <!-- Screen reader announcements -->
-    <div aria-live="polite" aria-atomic="true" class="sr-only">
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      class="sr-only"
+    >
       {{ statusMessage }}
     </div>
 
@@ -12,7 +16,10 @@
     <div class="flex flex-wrap items-center justify-between gap-4">
       <!-- Filter tabs -->
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-filter" class="text-neutral-400" />
+        <UIcon
+          name="i-lucide-filter"
+          class="text-neutral-400"
+        />
         <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Filter:</span>
         <div class="flex gap-2">
           <UBadge
@@ -44,7 +51,10 @@
 
       <!-- Sort options -->
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-arrow-up-down" class="text-neutral-400" />
+        <UIcon
+          name="i-lucide-arrow-up-down"
+          class="text-neutral-400"
+        />
         <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Sort:</span>
         <div class="flex gap-2">
           <UBadge
@@ -68,7 +78,10 @@
     </div>
 
     <!-- Loading state -->
-    <div v-if="loading" class="space-y-3">
+    <div
+      v-if="loading"
+      class="space-y-3"
+    >
       <div
         v-for="i in 3"
         :key="i"
@@ -94,7 +107,10 @@
     />
 
     <!-- Todo list -->
-    <div v-else class="space-y-3">
+    <div
+      v-else
+      class="space-y-3"
+    >
       <div
         v-for="todo in todos"
         :key="todo.id"
@@ -123,7 +139,10 @@
             {{ todo.description }}
           </p>
           <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-            <UIcon name="i-lucide-clock" class="mr-1 inline" />
+            <UIcon
+              name="i-lucide-clock"
+              class="mr-1 inline"
+            />
             {{ formatTime(todo.createdAt) }}
           </p>
         </div>
@@ -142,7 +161,9 @@
         v-if="totalPages > 1"
         class="border-default flex items-center justify-between border-t pt-4"
       >
-        <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ total }} total</p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          {{ total }} total
+        </p>
         <div class="flex items-center gap-2">
           <UButton
             icon="i-lucide-chevron-left"
@@ -189,7 +210,7 @@ const {
 const statusMessage = computed(() => {
   if (loading.value) return 'Loading todos...';
   if (todos.value.length === 0) return 'No todos found.';
-  const completed = todos.value.filter((t) => t.completed).length;
+  const completed = todos.value.filter(t => t.completed).length;
   return `${todos.value.length} todos, ${completed} completed.`;
 });
 

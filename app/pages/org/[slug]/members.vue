@@ -10,7 +10,9 @@ const slug = route.params.slug as string;
 <template>
   <UCard>
     <template #header>
-      <h1 class="text-3xl font-bold">Organization Members</h1>
+      <h1 class="text-3xl font-bold">
+        Organization Members
+      </h1>
     </template>
 
     <div class="space-y-6">

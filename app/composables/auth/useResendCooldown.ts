@@ -48,7 +48,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
 
       startCooldown();
       onSuccess?.();
-    } catch (e: unknown) {
+    }
+    catch (e: unknown) {
       const err = e as { status?: number };
       if (err?.status === 429) {
         toast.add({
@@ -58,7 +59,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
           icon: 'i-lucide-alert-triangle',
         });
         onRateLimit?.();
-      } else {
+      }
+      else {
         toast.add({
           title: 'Failed to send',
           description: 'Please try again later',
@@ -67,7 +69,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
         });
         onError?.(e);
       }
-    } finally {
+    }
+    finally {
       resending.value = false;
     }
   }

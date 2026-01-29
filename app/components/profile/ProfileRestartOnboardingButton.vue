@@ -19,7 +19,11 @@
       @click="restartOnboarding"
     >
       <template #leading>
-        <UIcon v-if="!restartOnboardingLoading" name="i-lucide-refresh-cw" class="mr-2" />
+        <UIcon
+          v-if="!restartOnboardingLoading"
+          name="i-lucide-refresh-cw"
+          class="mr-2"
+        />
       </template>
       Restart Onboarding
     </UButton>
@@ -56,7 +60,8 @@ async function restartOnboarding() {
       color: 'success',
       icon: 'i-lucide-refresh-cw',
     });
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Error',
@@ -64,7 +69,8 @@ async function restartOnboarding() {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     restartOnboardingLoading.value = false;
   }
 }

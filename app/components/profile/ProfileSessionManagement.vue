@@ -6,7 +6,13 @@
           <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
             Active Sessions
           </h2>
-          <UBadge color="primary" variant="subtle" size="sm"> Security </UBadge>
+          <UBadge
+            color="primary"
+            variant="subtle"
+            size="sm"
+          >
+            Security
+          </UBadge>
         </div>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
           Manage devices where you're currently logged in
@@ -20,7 +26,10 @@
       @revoke="revokeSession"
     />
 
-    <div v-if="sessions.length > 1" class="border-default mt-6 border-t pt-4">
+    <div
+      v-if="sessions.length > 1"
+      class="border-default mt-6 border-t pt-4"
+    >
       <UButton
         color="error"
         variant="outline"
@@ -29,7 +38,10 @@
         @click="showRevokeAllModal = true"
       >
         <template #leading>
-          <UIcon name="i-lucide-log-out" class="mr-2" />
+          <UIcon
+            name="i-lucide-log-out"
+            class="mr-2"
+          />
         </template>
         Revoke All Other Sessions
       </UButton>
@@ -75,7 +87,11 @@
             @click="revokeAllOthers"
           >
             <template #leading>
-              <UIcon v-if="!revokeLoading" name="i-lucide-log-out" class="mr-2" />
+              <UIcon
+                v-if="!revokeLoading"
+                name="i-lucide-log-out"
+                class="mr-2"
+              />
             </template>
             Revoke All Sessions
           </UButton>
@@ -126,7 +142,8 @@ async function fetchSessions() {
         lastActive: new Date(s.lastActive),
       }),
     );
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Load Sessions',
@@ -134,7 +151,8 @@ async function fetchSessions() {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     sessionsLoading.value = false;
   }
 }
@@ -152,7 +170,8 @@ async function revokeSession(sessionId: string) {
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Revoke Session',
@@ -160,7 +179,8 @@ async function revokeSession(sessionId: string) {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     revokeLoading.value = false;
   }
 }
@@ -180,7 +200,8 @@ async function revokeAllOthers() {
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Revoke Sessions',
@@ -188,7 +209,8 @@ async function revokeAllOthers() {
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
-  } finally {
+  }
+  finally {
     revokeLoading.value = false;
   }
 }

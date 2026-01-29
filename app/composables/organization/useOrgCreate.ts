@@ -32,7 +32,8 @@ export function useOrgCreate() {
       });
 
       await router.push(`/org/${response.organization.slug}/dashboard`);
-    } catch (err) {
+    }
+    catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
         title: 'Error',
@@ -40,7 +41,8 @@ export function useOrgCreate() {
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   }

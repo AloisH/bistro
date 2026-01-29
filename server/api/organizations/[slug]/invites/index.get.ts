@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
   });
 
   // Get all invites for organization
-  const { organizationRepository } =
-    await import('../../../../features/organization/organization-repository');
+  const { organizationRepository }
+    = await import('../../../../features/organization/organization-repository');
   const invites = await organizationRepository.findInvitesByOrganization(ctx.organizationId);
 
   return { invites };
