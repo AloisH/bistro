@@ -26,7 +26,9 @@ defineProps<{
   selectedId: string;
 }>();
 
-defineEmits<{
-  select: [id: string];
-}>();
+interface Emits {
+  (e: 'select', id: string): void;
+}
+
+defineEmits<Emits>();
 </script>

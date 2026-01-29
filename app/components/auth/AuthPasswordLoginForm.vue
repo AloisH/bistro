@@ -8,9 +8,11 @@ defineProps<{
   error: string;
 }>();
 
-const emit = defineEmits<{
-  submit: [];
-}>();
+interface Emits {
+  (e: 'submit'): void;
+}
+
+const emit = defineEmits<Emits>();
 </script>
 
 <template>

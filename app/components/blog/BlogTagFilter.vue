@@ -5,9 +5,11 @@ defineProps<{
   total: number;
 }>();
 
-const emit = defineEmits<{
-  select: [tag: string];
-}>();
+interface Emits {
+  (e: 'select', tag: string): void;
+}
+
+const emit = defineEmits<Emits>();
 </script>
 
 <template>

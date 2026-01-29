@@ -1,0 +1,39 @@
+import { fileURLToPath } from 'node:url';
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load .env file for DATABASE_URL (needed for integration tests)
+const envPath = path.resolve(dirname, '.env');
+if (existsSync(envPath)) {
+  const envContent = readFileSync(envPath, 'utf-8');
+  for (const line of envContent.split('\n')) {
+    const match = line.match(/^([^#=]+)=(.*)$/);
+    if (match && !process.env[match[1]]) {
+      const value = match[2]
+        .replace(/\s*#.*$/, '')
+        .replace(/^["']|["']$/g, '')
+        .trim();
+      process.env[match[1]] = value;
+    }
+  }
+}
+
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '#shared': path.resolve(dirname, './shared'),
+    },
+  },
+  test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: ['.nuxt/**', 'node_modules/**', 'dist/**', '*.config.{js,ts}', 'prisma/**'],
+    },
+  },
+});

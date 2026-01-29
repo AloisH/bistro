@@ -53,9 +53,11 @@
 import { createTodoSchema } from '#shared/todo';
 import type { CreateTodoInput } from '#shared/todo';
 
-const emit = defineEmits<{
-  created: [];
-}>();
+interface Emits {
+  (e: 'created'): void;
+}
+
+const emit = defineEmits<Emits>();
 
 const { createTodo } = useTodos();
 

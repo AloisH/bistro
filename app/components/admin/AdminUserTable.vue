@@ -17,9 +17,11 @@ const { users, loading, getRoleColor, getRoleIcon } = defineProps<{
   getRoleIcon: (role: string) => string;
 }>();
 
-const emit = defineEmits<{
-  impersonate: [user: AdminUser];
-}>();
+interface Emits {
+  (e: 'impersonate', user: AdminUser): void;
+}
+
+const emit = defineEmits<Emits>();
 
 const columns = [
   {

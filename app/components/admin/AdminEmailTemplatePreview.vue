@@ -82,8 +82,10 @@ defineProps<{
   sendingTest: boolean;
 }>();
 
-defineEmits<{
-  'update:viewMode': [mode: 'html' | 'text'];
-  'sendTest': [];
-}>();
+interface Emits {
+  (e: 'update:viewMode', mode: 'html' | 'text'): void;
+  (e: 'sendTest'): void;
+}
+
+defineEmits<Emits>();
 </script>

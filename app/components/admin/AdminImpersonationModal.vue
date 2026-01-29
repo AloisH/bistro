@@ -80,9 +80,11 @@ defineProps<{
   loading: boolean;
 }>();
 
-defineEmits<{
-  confirm: [];
-}>();
+interface Emits {
+  (e: 'confirm'): void;
+}
+
+defineEmits<Emits>();
 
 const model = defineModel<boolean>({ required: true });
 const reason = defineModel<string>('reason', { required: true });

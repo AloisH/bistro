@@ -46,7 +46,9 @@ defineProps<{
   countByType: (type: string) => number;
 }>();
 
-defineEmits<{
-  filter: [type: string];
-}>();
+interface Emits {
+  (e: 'filter', type: string): void;
+}
+
+defineEmits<Emits>();
 </script>

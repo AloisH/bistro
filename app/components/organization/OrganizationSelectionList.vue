@@ -84,8 +84,10 @@ defineProps<{
   error: FetchError | null | undefined;
 }>();
 
-defineEmits<{
-  select: [slug: string];
-  retry: [];
-}>();
+interface Emits {
+  (e: 'select', slug: string): void;
+  (e: 'retry'): void;
+}
+
+defineEmits<Emits>();
 </script>

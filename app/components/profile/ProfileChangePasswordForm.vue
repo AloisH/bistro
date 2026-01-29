@@ -93,9 +93,11 @@
 <script setup lang="ts">
 import { changePasswordSchema } from '#shared/user';
 
-const emit = defineEmits<{
-  changed: [];
-}>();
+interface Emits {
+  (e: 'changed'): void;
+}
+
+const emit = defineEmits<Emits>();
 
 const { client } = useAuth();
 const toast = useToast();

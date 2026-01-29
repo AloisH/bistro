@@ -89,9 +89,11 @@ withDefaults(defineProps<Props>(), {
   loading: false,
 });
 
-defineEmits<{
-  revoke: [id: string];
-}>();
+interface Emits {
+  (e: 'revoke', id: string): void;
+}
+
+defineEmits<Emits>();
 
 function getDeviceIcon(device: string): string {
   if (device === 'Mobile') return 'i-lucide-smartphone';
