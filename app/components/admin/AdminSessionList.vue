@@ -85,7 +85,9 @@ interface Props {
   loading?: boolean;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  loading: false,
+});
 
 defineEmits<{
   revoke: [id: string];

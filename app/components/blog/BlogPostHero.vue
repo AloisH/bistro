@@ -65,12 +65,16 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   title: string;
   description: string;
   image?: string;
   tags?: string[];
   date: string;
   author?: { name: string; avatar?: string };
-}>();
+}>(), {
+  image: '',
+  tags: () => [],
+  author: undefined,
+});
 </script>

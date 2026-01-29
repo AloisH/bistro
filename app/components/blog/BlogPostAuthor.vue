@@ -19,8 +19,10 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   name: string;
   avatar?: string;
-}>();
+}>(), {
+  avatar: '',
+});
 </script>

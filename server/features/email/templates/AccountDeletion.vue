@@ -15,7 +15,9 @@ interface Props {
   name?: string;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  name: '',
+});
 
 // Inline styles (required for email clients)
 const main = {
