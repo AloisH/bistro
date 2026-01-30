@@ -1,34 +1,43 @@
-# Environment variables
+# Environment
 .env
 .env.local
 .env.*.local
+.env.docker
 
 # Dependencies
 node_modules/
+
+# Lockfiles (bun.lock is tracked)
 bun.lockb
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
-# Nuxt build outputs
+# Build outputs
 .nuxt/
 .output/
 .nitro/
 .data/
-.cache/
 dist/
+
+# Cache
+.cache/
+.turbo
+.temp
+cache
+*.tsbuildinfo
+.eslintcache
 
 # Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-bun-debug.log*
 logs/
 
-# OS files
-.DS_Store
-Thumbs.db
+# Coverage & Testing
+coverage/
+lib-cov
+.nyc_output/
+playwright-report/
+test-results/
 
 # IDE / Editor
 .idea/
@@ -41,16 +50,14 @@ Thumbs.db
 *.launch
 .settings/
 
+# OS
+.DS_Store
+Thumbs.db
+
 # Temporary files
 tmp/
 temp/
 *.tmp
-
-# Coverage & Testing
-coverage/
-.nyc_output/
-playwright-report/
-test-results/
 
 # Database
 *.db
@@ -58,14 +65,11 @@ test-results/
 *.sqlite
 *.sqlite3
 
+# Package artifacts
+*.tgz
+
 # Docker
 docker-compose.override.yml
-
-# Build artifacts
-*.tsbuildinfo
-.cache/
-.turbo
-.eslintcache
 
 # Vercel
 .vercel
@@ -75,9 +79,3 @@ docker-compose.override.yml
 
 # Local development
 .local/
-
-# Environment files
-.env
-.env.local
-.env.docker
-.env*.local
