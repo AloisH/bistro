@@ -37,11 +37,11 @@ describe('OnboardingProgress', () => {
 
     const stepCircles = wrapper.findAll('.rounded-full');
     // Steps 1-3 should have primary background
-    expect(stepCircles[0].classes()).toContain('bg-primary');
-    expect(stepCircles[1].classes()).toContain('bg-primary');
-    expect(stepCircles[2].classes()).toContain('bg-primary');
+    expect(stepCircles[0]?.classes()).toContain('bg-primary');
+    expect(stepCircles[1]?.classes()).toContain('bg-primary');
+    expect(stepCircles[2]?.classes()).toContain('bg-primary');
     // Steps 4-6 should have neutral background
-    expect(stepCircles[3].classes()).toContain('bg-neutral-200');
+    expect(stepCircles[3]?.classes()).toContain('bg-neutral-200');
   });
 
   it('shows check icon for completed steps', () => {
@@ -64,9 +64,9 @@ describe('OnboardingProgress', () => {
     const stepCircles = wrapper.findAll('.rounded-full');
     // Step 1 has check icon (no number)
     // Step 2 (current) shows "2"
-    expect(stepCircles[1].text()).toBe('2');
+    expect(stepCircles[1]?.text()).toBe('2');
     // Step 3 shows "3"
-    expect(stepCircles[2].text()).toBe('3');
+    expect(stepCircles[2]?.text()).toBe('3');
   });
 
   it('displays step labels', () => {

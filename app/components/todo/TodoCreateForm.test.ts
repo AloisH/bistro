@@ -69,8 +69,8 @@ describe('TodoCreateForm', () => {
 
     const fields = wrapper.findAll('.form-field');
     expect(fields).toHaveLength(2);
-    expect(fields[0].text()).toContain('Title');
-    expect(fields[1].text()).toContain('Description');
+    expect(fields[0]?.text()).toContain('Title');
+    expect(fields[1]?.text()).toContain('Description');
   });
 
   it('allows input in title field', async () => {

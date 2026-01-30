@@ -12,12 +12,14 @@ if (existsSync(envPath)) {
   const envContent = readFileSync(envPath, 'utf-8');
   for (const line of envContent.split('\n')) {
     const match = line.match(/^([^#=]+)=(.*)$/);
-    if (match && !process.env[match[1]]) {
-      const value = match[2]
+    const key = match?.[1];
+    const rawValue = match?.[2];
+    if (key && rawValue !== undefined && !process.env[key]) {
+      const value = rawValue
         .replace(/\s*#.*$/, '')
         .replace(/^["']|["']$/g, '')
         .trim();
-      process.env[match[1]] = value;
+      process.env[key] = value;
     }
   }
 }

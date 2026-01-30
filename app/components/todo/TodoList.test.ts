@@ -208,7 +208,7 @@ describe('TodoList', () => {
 
     // Find delete button (last button in todo item)
     const buttons = wrapper.findAll('button');
-    const deleteBtn = buttons[buttons.length - 1];
+    const deleteBtn = buttons[buttons.length - 1]!;
     await deleteBtn.trigger('click');
 
     expect(mockDeleteTodo).toHaveBeenCalledWith('1');
@@ -240,7 +240,7 @@ describe('TodoList', () => {
     // Find pagination buttons (after todo items)
     const buttons = wrapper.findAll('button');
     // Previous button
-    await buttons[buttons.length - 2].trigger('click');
+    await buttons[buttons.length - 2]!.trigger('click');
     expect(mockSetPage).toHaveBeenCalledWith(1);
   });
 
@@ -254,7 +254,7 @@ describe('TodoList', () => {
     });
 
     const buttons = wrapper.findAll('button');
-    const prevBtn = buttons[buttons.length - 2];
+    const prevBtn = buttons[buttons.length - 2]!;
     expect(prevBtn.attributes('disabled')).toBeDefined();
   });
 
