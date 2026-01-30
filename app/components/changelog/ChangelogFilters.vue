@@ -40,11 +40,13 @@
 <script setup lang="ts">
 import { changeTypes } from '~/composables/changelog/useChangelog';
 
-defineProps<{
+interface Props {
   selectedType: string;
   totalCount: number;
   countByType: (type: string) => number;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'filter', type: string): void;

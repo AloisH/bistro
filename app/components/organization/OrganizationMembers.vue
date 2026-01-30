@@ -3,9 +3,11 @@ import type { OrganizationMember, OrganizationRole } from '../../../prisma/gener
 import { inviteMemberSchema } from '#shared/organization';
 import { h, resolveComponent } from 'vue';
 
-const { organizationSlug } = defineProps<{
+interface Props {
   organizationSlug: string;
-}>();
+}
+
+const { organizationSlug } = defineProps<Props>();
 
 const toast = useToast();
 const { user } = useAuth();

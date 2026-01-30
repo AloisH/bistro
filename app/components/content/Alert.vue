@@ -11,14 +11,13 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    type?: 'info' | 'warning' | 'error' | 'success';
-  }>(),
-  {
-    type: 'info',
-  },
-);
+interface Props {
+  type?: 'info' | 'warning' | 'error' | 'success';
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  type: 'info',
+});
 
 const colorClassMap: Record<string, string> = {
   info: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200',

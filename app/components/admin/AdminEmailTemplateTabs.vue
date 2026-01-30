@@ -21,10 +21,12 @@
 <script setup lang="ts">
 import type { EmailTemplate } from '~/composables/admin/useEmailTemplates';
 
-defineProps<{
+interface Props {
   templates: EmailTemplate[];
   selectedId: string;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'select', id: string): void;

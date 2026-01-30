@@ -76,11 +76,13 @@
 <script setup lang="ts">
 import type { EmailTemplate } from '~/composables/admin/useEmailTemplates';
 
-defineProps<{
+interface Props {
   template: EmailTemplate;
   viewMode: 'html' | 'text';
   sendingTest: boolean;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'update:viewMode', mode: 'html' | 'text'): void;

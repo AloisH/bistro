@@ -1,9 +1,11 @@
 <script setup lang="ts">
-defineProps<{
+interface Props {
   tags: { name: string; count: number }[];
   selectedTag: string;
   total: number;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'select', tag: string): void;

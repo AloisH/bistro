@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{
+interface Props {
   posts: {
     path: string;
     title: string;
@@ -9,7 +9,9 @@ defineProps<{
     tags?: string[];
     authors?: { name: string; avatar?: { src: string } }[];
   }[];
-}>();
+}
+
+defineProps<Props>();
 </script>
 
 <template>

@@ -10,12 +10,14 @@
 import { h, resolveComponent } from 'vue';
 import type { AdminUser } from '~/composables/admin/useAdminUsers';
 
-const { users, loading, getRoleColor, getRoleIcon } = defineProps<{
+interface Props {
   users: AdminUser[];
   loading: boolean;
   getRoleColor: (role: string) => string;
   getRoleIcon: (role: string) => string;
-}>();
+}
+
+const { users, loading, getRoleColor, getRoleIcon } = defineProps<Props>();
 
 interface Emits {
   (e: 'impersonate', user: AdminUser): void;

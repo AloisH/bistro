@@ -63,9 +63,11 @@
 <script setup lang="ts">
 import { updateProfileSchema } from '#shared/user';
 
-defineProps<{
+interface Props {
   hasPassword: boolean;
-}>();
+}
+
+defineProps<Props>();
 
 const { user, fetchSession } = useAuth();
 const toast = useToast();

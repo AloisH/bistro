@@ -155,9 +155,11 @@
 <script setup lang="ts">
 import { deleteAccountPasswordSchema, deleteAccountEmailSchema } from '#shared/user';
 
-const { hasPassword } = defineProps<{
+interface Props {
   hasPassword: boolean;
-}>();
+}
+
+const { hasPassword } = defineProps<Props>();
 
 const { user, signOut } = useAuth();
 const toast = useToast();

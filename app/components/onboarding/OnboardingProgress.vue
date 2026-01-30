@@ -1,8 +1,10 @@
 <script setup lang="ts">
-defineProps<{
+interface Props {
   currentStep: number;
   totalSteps: number;
-}>();
+}
+
+defineProps<Props>();
 
 const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organization', 'Complete'];
 </script>

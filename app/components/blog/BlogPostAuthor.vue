@@ -19,10 +19,12 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{
+interface Props {
   name: string;
   avatar?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   avatar: '',
 });
 </script>

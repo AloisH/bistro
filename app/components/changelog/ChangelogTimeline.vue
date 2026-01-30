@@ -50,10 +50,12 @@
 <script setup lang="ts">
 import type { ChangelogEntry } from '~/composables/changelog/useChangelog';
 
-defineProps<{
+interface Props {
   entries: ChangelogEntry[];
   getVersionColor: (type: string) => 'error' | 'primary' | 'neutral';
   getChangeIcon: (type: string) => string;
   getChangeColor: (type: string) => string;
-}>();
+}
+
+defineProps<Props>();
 </script>

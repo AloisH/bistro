@@ -78,11 +78,13 @@
 import type { FetchError } from 'ofetch';
 import type { Organization } from '../../../prisma/generated/client';
 
-defineProps<{
+interface Props {
   organizations: Organization[];
   pending: boolean;
   error: FetchError | null | undefined;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'select', slug: string): void;

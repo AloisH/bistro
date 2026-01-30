@@ -75,10 +75,12 @@
 <script setup lang="ts">
 import type { AdminUser } from '~/composables/admin/useAdminUsers';
 
-defineProps<{
+interface Props {
   user: AdminUser | null;
   loading: boolean;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'confirm'): void;

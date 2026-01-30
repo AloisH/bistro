@@ -3,11 +3,13 @@ import type { ZodSchema } from 'zod';
 
 const state = defineModel<{ email: string }>('state', { required: true });
 
-defineProps<{
+interface Props {
   schema: ZodSchema;
   loading: boolean;
   error: string;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'submit'): void;

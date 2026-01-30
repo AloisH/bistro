@@ -3,10 +3,12 @@ import { signInSchema } from '#shared/auth';
 
 const state = defineModel<{ email: string; password: string }>('state', { required: true });
 
-defineProps<{
+interface Props {
   loading: boolean;
   error: string;
-}>();
+}
+
+defineProps<Props>();
 
 interface Emits {
   (e: 'submit'): void;
