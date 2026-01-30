@@ -171,6 +171,11 @@ export default defineNuxtConfig({
       stylistic: {
         semi: true,
       },
+      formatters: {
+        css: true,
+        html: true,
+        markdown: 'prettier',
+      },
     },
   },
 
