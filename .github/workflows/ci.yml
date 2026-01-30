@@ -159,6 +159,20 @@ jobs:
   test-e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: bistro
+          POSTGRES_PASSWORD: bistro
+          POSTGRES_DB: bistro
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v4
 
@@ -184,8 +198,15 @@ jobs:
       - name: Generate Prisma Client
         run: bun run db:generate
 
+      - name: Run migrations
+        run: bun run db:migrate
+        env:
+          DATABASE_URL: postgresql://bistro:bistro@localhost:5432/bistro
+
       - name: Run e2e tests
         run: bun run test:e2e
+        env:
+          DATABASE_URL: postgresql://bistro:bistro@localhost:5432/bistro
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
