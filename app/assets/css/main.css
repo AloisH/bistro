@@ -17,11 +17,7 @@
   --color-green-950: #052e16;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--color-green-500) 0%,
-    var(--color-green-600) 100%
-  );
+  --gradient-primary: linear-gradient(135deg, var(--color-green-500) 0%, var(--color-green-600) 100%);
 
   /* Elevation shadows */
   --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
