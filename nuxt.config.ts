@@ -176,6 +176,9 @@ export default defineNuxtConfig({
         html: true,
         markdown: 'prettier',
       },
+      typescript: {
+        tsconfigPath: 'tsconfig.json',
+      },
     },
   },
 
