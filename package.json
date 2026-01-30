@@ -100,7 +100,7 @@
     "bun": ">=1.0.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "bun run lint-staged"
+    "pre-commit": "bun i --frozen-lockfile && bun run lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
