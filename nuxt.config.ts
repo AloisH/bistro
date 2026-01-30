@@ -167,6 +167,7 @@ export default defineNuxtConfig({
   },
   eslint: {
     config: {
+      type: 'app',
       stylistic: {
         semi: true,
       },
