@@ -123,7 +123,7 @@ const revokeLoading = ref(false);
 const showRevokeAllModal = ref(false);
 
 onMounted(() => {
-  fetchSessions();
+  void fetchSessions();
 });
 
 async function fetchSessions() {
@@ -144,10 +144,9 @@ async function fetchSessions() {
     );
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Load Sessions',
-      description: err.data?.message || 'Could not load active sessions',
+      description: getErrorMessage(e, 'Could not load active sessions'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
@@ -172,10 +171,9 @@ async function revokeSession(sessionId: string) {
     });
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Revoke Session',
-      description: err.data?.message || 'Could not revoke the session',
+      description: getErrorMessage(e, 'Could not revoke the session'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
@@ -202,10 +200,9 @@ async function revokeAllOthers() {
     });
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Failed to Revoke Sessions',
-      description: err.data?.message || 'Could not revoke sessions',
+      description: getErrorMessage(e, 'Could not revoke sessions'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });

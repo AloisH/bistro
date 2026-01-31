@@ -27,7 +27,7 @@ export const mockDb = {
   organization: createModelMock(),
   organizationMember: createModelMock(),
   organizationInvite: createModelMock(),
-  $transaction: vi.fn(fn => fn(mockDb)),
+  $transaction: vi.fn(<T>(fn: (tx: typeof mockDb) => T) => fn(mockDb)),
   $executeRaw: vi.fn(),
   $queryRaw: vi.fn(),
   $connect: vi.fn(),
@@ -35,16 +35,16 @@ export const mockDb = {
 };
 
 export const resetMockDb = () => {
-  Object.values(mockDb).forEach((value) => {
+  for (const value of Object.values(mockDb)) {
     if (typeof value === 'object' && value !== null) {
-      Object.values(value).forEach((fn) => {
+      for (const fn of Object.values(value as Record<string, unknown>)) {
         if (typeof fn === 'function' && 'mockReset' in fn) {
           (fn as ReturnType<typeof vi.fn>).mockReset();
         }
-      });
+      }
     }
     else if (typeof value === 'function' && 'mockReset' in value) {
       (value as ReturnType<typeof vi.fn>).mockReset();
     }
-  });
+  }
 };

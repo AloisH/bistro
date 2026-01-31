@@ -1,4 +1,4 @@
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug') || 'index';

@@ -1,4 +1,4 @@
-import { queryCollectionSearchSections } from '@nuxt/content/nitro';
+import { queryCollectionSearchSections } from '@nuxt/content/server';
 
 export default defineEventHandler(async (event) => {
   const sections = await queryCollectionSearchSections(event, 'docs', {

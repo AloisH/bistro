@@ -50,7 +50,7 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
       onSuccess?.();
     }
     catch (e: unknown) {
-      const err = e as { status?: number };
+      const err = e as { status?: number } | null;
       if (err?.status === 429) {
         toast.add({
           title: 'Too many attempts',

@@ -18,7 +18,7 @@ export function useOrgInvite(token: string) {
 
   // Redirect if no token
   if (!token) {
-    router.push('/org/select');
+    void router.push('/org/select');
   }
 
   // Fetch invite data

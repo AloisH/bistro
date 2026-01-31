@@ -1,4 +1,4 @@
-import { createEvent, type H3Event, type EventHandlerRequest } from 'h3';
+import { createEvent, type H3Event } from 'h3';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { User } from '../../prisma/generated/client';
 import { createTestSession } from './testFixtures';
@@ -112,7 +112,7 @@ function createMockServerResponse(): ServerResponse {
  * })
  * ```
  */
-export function createMockEvent(options: MockEventOptions): H3Event<EventHandlerRequest> {
+export function createMockEvent(options: MockEventOptions): H3Event {
   const { method = 'GET', headers = {}, body, params = {}, query = {} } = options;
 
   // Create mock req/res for h3's createEvent
@@ -186,7 +186,7 @@ export function createMockEvent(options: MockEventOptions): H3Event<EventHandler
 export async function createAuthEvent(
   user: User,
   options?: Partial<Parameters<typeof createMockEvent>[0]>,
-): Promise<H3Event<EventHandlerRequest>> {
+): Promise<H3Event> {
   const session = await createTestSession(user);
 
   return createMockEvent({

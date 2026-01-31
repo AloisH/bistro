@@ -1,5 +1,4 @@
-import type { BlogCollectionItem } from '@nuxt/content';
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 import { requireRole } from '../../../utils/require-role';
 
 export default defineEventHandler(async (event) => {
@@ -20,7 +19,7 @@ export default defineEventHandler(async (event) => {
   // Fetch post
   const post = (await queryCollection(event, 'blog')
     .path(`/blog/${slug}`)
-    .first()) as BlogCollectionItem | null;
+    .first());
 
   // Return 404 if not found
   if (!post) {

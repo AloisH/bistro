@@ -28,7 +28,7 @@ export function useDocsNavigation() {
     const sections = data.value[0].children
       .filter(item => item.page === false) // Only sections, not pages
       .map((section) => {
-        const sectionName = section.stem?.split('/')[1] || 'default';
+        const sectionName = section.stem.split('/')[1] ?? 'default';
         const icon = iconMap[sectionName] || 'i-lucide-file';
 
         return {

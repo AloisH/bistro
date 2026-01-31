@@ -1,11 +1,10 @@
-import type { ChangelogCollectionItem } from '@nuxt/content';
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const type = query.type as string;
 
-  const allEntries = (await queryCollection(event, 'changelog').all()) as ChangelogCollectionItem[];
+  const allEntries = (await queryCollection(event, 'changelog').all());
 
   // Sort by date descending
   const sorted = allEntries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

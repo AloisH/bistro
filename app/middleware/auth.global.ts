@@ -3,7 +3,7 @@ import { isPublicRoute } from '../utils/route';
 export default defineNuxtRouteMiddleware(async (to) => {
   // Public routes centralized in nuxt.config.ts
   const config = useRuntimeConfig();
-  const publicRoutes = config.public.publicRoutes as string[];
+  const publicRoutes = config.public.publicRoutes;
 
   // Allow access to public routes (with wildcard support)
   if (isPublicRoute(to.path, publicRoutes)) {

@@ -9,7 +9,7 @@ defineRouteMeta({
 });
 
 export default defineApiHandler(async (ctx) => {
-  const body = await readBody(ctx.event);
+  const body = await readBody<{ password?: string; email?: string }>(ctx.event);
 
   if (body.password) {
     await userService.deleteAccountWithPassword(ctx.userId, body.password);

@@ -1,5 +1,5 @@
-import type { EventHandlerRequest, H3Event } from 'h3';
-import type { ZodSchema } from 'zod';
+import type { H3Event } from 'h3';
+import type { z } from 'zod';
 import { serverAuth } from '../features/auth/auth-session';
 import {
   addUserContext,
@@ -14,7 +14,7 @@ import { getLogger } from './logger';
  * API Handler Context - passed to all handlers
  */
 export interface ApiHandlerContext<TBody = unknown> {
-  event: H3Event<EventHandlerRequest>;
+  event: H3Event;
   userId: string;
   body?: TBody;
 }
@@ -34,7 +34,7 @@ export interface ApiHandlerOptions {
 export function defineApiHandler<TReturn>(
   handler: (context: ApiHandlerContext) => Promise<TReturn>,
   options: ApiHandlerOptions = {},
-): (event: H3Event<EventHandlerRequest>) => Promise<TReturn> {
+): (event: H3Event) => Promise<TReturn> {
   const { requiresAuth = true, logContext } = options;
 
   return defineEventHandler(async (event) => {
@@ -119,10 +119,10 @@ export function defineApiHandler<TReturn>(
  * Use for endpoints with request body (POST, PUT)
  */
 export function defineValidatedApiHandler<TBody, TReturn>(
-  schema: ZodSchema<TBody>,
+  schema: z.ZodType<TBody>,
   handler: (context: ApiHandlerContext<TBody>) => Promise<TReturn>,
   options: ApiHandlerOptions = {},
-): (event: H3Event<EventHandlerRequest>) => Promise<TReturn> {
+): (event: H3Event) => Promise<TReturn> {
   const { requiresAuth = true, logContext } = options;
 
   return defineEventHandler(async (event) => {
@@ -177,7 +177,7 @@ export function defineValidatedApiHandler<TBody, TReturn>(
           }
 
           // Read and validate body using h3 native helper
-          const body = await readValidatedBody(event, schema.parse);
+          const body = await readValidatedBody(event, data => schema.parse(data));
 
           const context: ApiHandlerContext<TBody> = {
             event,
@@ -189,7 +189,7 @@ export function defineValidatedApiHandler<TBody, TReturn>(
         }
 
         // No auth required (rare)
-        const body = await readValidatedBody(event, schema.parse);
+        const body = await readValidatedBody(event, data => schema.parse(data));
 
         const context: ApiHandlerContext<TBody> = {
           event,

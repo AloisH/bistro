@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   // Extract adminId from session:
   // - During active impersonation: session.impersonatedBy contains admin ID
   // - After session expired/cleared: user.id is admin ID (session restored)
-  const adminId = session.session?.impersonatedBy || session.user.id;
+  const adminId = (session.session as { impersonatedBy?: string }).impersonatedBy ?? session.user.id;
 
   // Find active log by adminId (same logic as /active endpoint)
   const activeLog = await impersonationService.getActiveImpersonation(adminId);

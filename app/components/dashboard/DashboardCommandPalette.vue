@@ -18,7 +18,7 @@ import type { CommandPaletteItem, CommandPaletteGroup } from '@nuxt/ui';
 const isOpen = defineModel<boolean>('open', { default: false });
 
 const router = useRouter();
-const { signOut } = useAuth();
+const auth = useAuth();
 const { isAdmin } = useRole();
 const { activeOrgSlug } = useOrganization();
 const colorMode = useColorMode();
@@ -27,13 +27,13 @@ const { recentItems, addRecentItem } = useRecentItems();
 // Navigation helper
 function navigateTo(path: string) {
   isOpen.value = false;
-  router.push(path);
+  void router.push(path);
 }
 
 // Logout handler
 function handleLogout() {
   isOpen.value = false;
-  signOut({ redirectTo: '/auth/login' });
+  void auth.signOut({ redirectTo: '/auth/login' });
 }
 
 // Theme toggle
@@ -122,14 +122,13 @@ const navItems = computed<CommandPaletteItem[]>(() => [
     id: 'nav-dashboard',
     label: 'Dashboard',
     icon: 'i-lucide-house',
-    onSelect: () =>
-      navigateTo(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select'),
+    onSelect: () => { navigateTo(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select'); },
   },
   {
     id: 'nav-profile',
     label: 'Profile',
     icon: 'i-lucide-user',
-    onSelect: () => navigateTo('/profile'),
+    onSelect: () => { navigateTo('/profile'); },
   },
 ]);
 
@@ -141,13 +140,13 @@ const orgItems = computed<CommandPaletteItem[]>(() =>
           id: 'org-members',
           label: 'Members',
           icon: 'i-lucide-users',
-          onSelect: () => navigateTo(`/org/${activeOrgSlug.value}/members`),
+          onSelect: () => { navigateTo(`/org/${activeOrgSlug.value}/members`); },
         },
         {
           id: 'org-settings',
           label: 'Settings',
           icon: 'i-lucide-settings',
-          onSelect: () => navigateTo(`/org/${activeOrgSlug.value}/settings`),
+          onSelect: () => { navigateTo(`/org/${activeOrgSlug.value}/settings`); },
         },
       ]
     : [],
@@ -159,13 +158,13 @@ const adminItems = computed<CommandPaletteItem[]>(() => [
     id: 'admin-panel',
     label: 'Admin Panel',
     icon: 'i-lucide-shield',
-    onSelect: () => navigateTo('/admin/users'),
+    onSelect: () => { navigateTo('/admin/users'); },
   },
   {
     id: 'admin-email',
     label: 'Email Previews',
     icon: 'i-lucide-mail',
-    onSelect: () => navigateTo('/admin/email-preview'),
+    onSelect: () => { navigateTo('/admin/email-preview'); },
   },
 ]);
 

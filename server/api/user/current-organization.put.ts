@@ -10,10 +10,10 @@ defineRouteMeta({
 });
 
 export default defineApiHandler(async (ctx) => {
-  const body = await readBody(ctx.event);
+  const body = await readBody<{ organizationId?: string | null }>(ctx.event);
 
   // organizationId can be string or null
-  const organizationId = body?.organizationId ?? null;
+  const organizationId = body.organizationId ?? null;
 
   // Validate organizationId if provided
   if (organizationId !== null && typeof organizationId !== 'string') {

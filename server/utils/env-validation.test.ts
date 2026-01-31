@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { validateEnv, OPTIONAL_VAR_GROUPS } from '../../shared/env';
+import { validateEnv, OPTIONAL_VAR_GROUPS, getFieldErrors } from '../../shared/env';
 
 describe('validateEnv', () => {
   const validBaseEnv = {
@@ -18,7 +18,7 @@ describe('validateEnv', () => {
       const result = validateEnv(env, false);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.flatten().fieldErrors.DATABASE_URL).toBeDefined();
+        expect(getFieldErrors(result.error).DATABASE_URL).toBeDefined();
       }
     });
 
@@ -27,7 +27,7 @@ describe('validateEnv', () => {
       const result = validateEnv(env, false);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.flatten().fieldErrors.DATABASE_URL?.[0]).toContain('PostgreSQL');
+        expect(getFieldErrors(result.error).DATABASE_URL?.[0]).toContain('PostgreSQL');
       }
     });
 
@@ -36,7 +36,7 @@ describe('validateEnv', () => {
       const result = validateEnv(env, false);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.flatten().fieldErrors.AUTH_SECRET?.[0]).toContain('32');
+        expect(getFieldErrors(result.error).AUTH_SECRET?.[0]).toContain('32');
       }
     });
 
@@ -61,10 +61,7 @@ describe('validateEnv', () => {
       const result = validateEnv(validBaseEnv, true);
       expect(result.success).toBe(false);
       if (!result.success) {
-        const fieldErrors = result.error.flatten().fieldErrors as Record<
-          string,
-          string[] | undefined
-        >;
+        const fieldErrors = getFieldErrors(result.error);
         expect(fieldErrors['AUTH_TRUSTED_ORIGINS']).toBeDefined();
       }
     });
@@ -77,8 +74,8 @@ describe('validateEnv', () => {
       const result = validateEnv(env, true);
       expect(result.success).toBe(false);
       if (!result.success) {
-        const errors = result.error.flatten();
-        const authSecretError = errors.fieldErrors.AUTH_SECRET?.[0] || errors.formErrors[0];
+        const fieldErrors = getFieldErrors(result.error);
+        const authSecretError = fieldErrors.AUTH_SECRET?.[0] || fieldErrors._root?.[0];
         expect(authSecretError).toContain('default');
       }
     });
@@ -88,10 +85,7 @@ describe('validateEnv', () => {
       const result = validateEnv(env, true);
       expect(result.success).toBe(false);
       if (!result.success) {
-        const fieldErrors = result.error.flatten().fieldErrors as Record<
-          string,
-          string[] | undefined
-        >;
+        const fieldErrors = getFieldErrors(result.error);
         expect(fieldErrors['AUTH_TRUSTED_ORIGINS']?.[0]).toContain('https://');
       }
     });

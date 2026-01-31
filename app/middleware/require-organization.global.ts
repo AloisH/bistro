@@ -51,7 +51,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // Skip public routes (blog, legal, docs, etc)
   const config = useRuntimeConfig();
-  const publicRoutes = config.public.publicRoutes as string[];
+  const publicRoutes = config.public.publicRoutes;
   if (isPublicRoute(to.path, publicRoutes)) {
     return;
   }

@@ -115,10 +115,9 @@ async function updateProfile() {
     });
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Update Failed',
-      description: err.data?.message || 'Failed to update profile. Please try again.',
+      description: getErrorMessage(e, 'Failed to update profile. Please try again.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });

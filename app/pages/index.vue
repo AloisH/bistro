@@ -63,6 +63,6 @@ onMounted(() => {
     pricingSection,
     faqSection,
     ctaSection,
-  ].forEach(section => observe(section));
+  ].forEach((section) => { observe(section); });
 });
 </script>

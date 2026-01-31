@@ -20,7 +20,7 @@ export function useRecentItems() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        recentItems.value = JSON.parse(stored);
+        recentItems.value = JSON.parse(stored) as RecentItem[];
       }
     }
     catch {

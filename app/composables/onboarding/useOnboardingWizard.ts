@@ -33,7 +33,7 @@ export function useOnboardingWizard() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored);
+        const parsed = JSON.parse(stored) as Partial<typeof state>;
         Object.assign(state, parsed);
       }
       catch {
@@ -89,7 +89,7 @@ export function useOnboardingWizard() {
       toast.add({
         title: 'Error',
         description:
-          (error as { data?: { message?: string } })?.data?.message || 'Failed to save progress',
+          (error as { data?: { message?: string } } | null)?.data?.message ?? 'Failed to save progress',
         color: 'error',
       });
       throw error;
@@ -131,8 +131,8 @@ export function useOnboardingWizard() {
       toast.add({
         title: 'Error',
         description:
-          (error as { data?: { message?: string } })?.data?.message
-          || 'Failed to complete onboarding',
+          (error as { data?: { message?: string } } | null)?.data?.message
+          ?? 'Failed to complete onboarding',
         color: 'error',
       });
     }

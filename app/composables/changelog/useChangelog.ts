@@ -51,16 +51,16 @@ export function useChangelog() {
   function filterByType(type: string) {
     selectedType.value = type;
     if (type) {
-      router.push({ query: { type } });
+      void router.push({ query: { type } });
     }
     else {
-      router.push({ query: {} });
+      void router.push({ query: {} });
     }
-    refresh();
+    void refresh();
   }
 
   function countByType(type: string): number {
-    return allEntries.value.filter(entry => entry.changes?.some(c => c.type === type)).length;
+    return allEntries.value.filter(entry => entry.changes.some(c => c.type === type)).length;
   }
 
   // Color/icon helpers
@@ -106,7 +106,7 @@ export function useChangelog() {
     () => route.query.type,
     (newType) => {
       selectedType.value = (newType as string) || '';
-      refresh();
+      void refresh();
     },
   );
 

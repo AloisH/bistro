@@ -55,7 +55,7 @@ export function trace(level: 'debug' | 'info' | 'warn', msg: string) {
 }
 
 export const log = {
-  debug: (msg: string) => trace('debug', msg),
-  info: (msg: string) => trace('info', msg),
-  warn: (msg: string) => trace('warn', msg),
+  debug: (msg: string) => { trace('debug', msg); },
+  info: (msg: string) => { trace('info', msg); },
+  warn: (msg: string) => { trace('warn', msg); },
 };

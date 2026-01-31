@@ -119,7 +119,7 @@ export class EmailService {
     return this.sendTemplateEmail({
       to: options.to,
       subject: 'Verify your email address',
-      template: VerifyEmail,
+      template: VerifyEmail as Component,
       props: {
         name: options.name,
         verificationLink: options.verificationLink,
@@ -139,7 +139,7 @@ export class EmailService {
     return this.sendTemplateEmail({
       to: options.to,
       subject: 'Reset your Bistro password',
-      template: ResetPasswordEmail,
+      template: ResetPasswordEmail as Component,
       props: {
         name: options.name,
         resetLink: options.resetLink,
@@ -155,7 +155,7 @@ export class EmailService {
     return this.sendTemplateEmail({
       to: options.to,
       subject: 'Your login link for Bistro',
-      template: MagicLinkEmail,
+      template: MagicLinkEmail as Component,
       props: {
         magicLink: options.magicLink,
         email: options.to,
@@ -173,7 +173,7 @@ export class EmailService {
     return this.sendTemplateEmail({
       to: options.to,
       subject: 'Your Bistro account has been deleted',
-      template: AccountDeletion,
+      template: AccountDeletion as Component,
       props: {
         name: options.name,
       },

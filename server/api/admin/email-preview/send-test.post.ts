@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const body = await readBody(event);
+  const body: unknown = await readBody(event);
   const { templateId } = sendTestEmailSchema.parse(body);
 
   const sampleData = {
@@ -53,19 +53,19 @@ export default defineEventHandler(async (event) => {
 
   const templateMap: Record<string, { template: Component; subject: string }> = {
     'verify-email': {
-      template: VerifyEmail,
+      template: VerifyEmail as Component,
       subject: 'Verify your email address',
     },
     'reset-password': {
-      template: ResetPasswordEmail,
+      template: ResetPasswordEmail as Component,
       subject: 'Reset your Bistro password',
     },
     'magic-link': {
-      template: MagicLinkEmail,
+      template: MagicLinkEmail as Component,
       subject: 'Your login link for Bistro',
     },
     'account-deletion': {
-      template: AccountDeletion,
+      template: AccountDeletion as Component,
       subject: 'Your Bistro account has been deleted',
     },
   };

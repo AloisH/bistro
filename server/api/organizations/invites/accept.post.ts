@@ -9,9 +9,9 @@ defineRouteMeta({
 });
 
 export default defineApiHandler(async (ctx) => {
-  const body = await readBody(ctx.event);
+  const body = await readBody<{ token?: string }>(ctx.event);
 
-  if (!body?.token) {
+  if (!body.token) {
     throw createError({
       statusCode: 400,
       message: 'Invite token is required',

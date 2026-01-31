@@ -16,7 +16,7 @@ const subjectLabels: Record<string, string> = {
 };
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body: unknown = await readBody(event);
   const data = contactSchema.parse(body);
 
   const subjectLabel = subjectLabels[data.subject] || data.subject;

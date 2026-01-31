@@ -70,7 +70,7 @@ const columns = [
           size: 'xs',
           color: 'warning',
           variant: 'soft',
-          onClick: () => emit('impersonate', row.original),
+          onClick: () => { emit('impersonate', row.original); },
         },
         () => 'Impersonate',
       );

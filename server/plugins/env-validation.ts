@@ -1,4 +1,4 @@
-import { validateEnv, OPTIONAL_VAR_GROUPS } from '#shared/env';
+import { validateEnv, OPTIONAL_VAR_GROUPS, getFieldErrors } from '#shared/env';
 
 export default defineNitroPlugin((_nitroApp) => {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -6,7 +6,7 @@ export default defineNitroPlugin((_nitroApp) => {
 
   // Fail fast on required var errors
   if (!result.success) {
-    const errors = result.error.flatten().fieldErrors;
+    const errors = getFieldErrors(result.error);
     const errorMessages = Object.entries(errors)
       .map(([field, msgs]) => `  - ${field}: ${msgs?.join(', ')}`)
       .join('\n');

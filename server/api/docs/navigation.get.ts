@@ -1,6 +1,15 @@
-import { queryCollectionNavigation } from '@nuxt/content/nitro';
+import { queryCollectionNavigation } from '@nuxt/content/server';
 
-export default defineEventHandler(async (event) => {
+interface NavItem {
+  title: string;
+  path: string;
+  stem: string;
+  order?: number;
+  page?: boolean;
+  children?: NavItem[];
+}
+
+export default defineEventHandler(async (event): Promise<NavItem[]> => {
   const navigation = await queryCollectionNavigation(event, 'docs');
-  return navigation;
+  return navigation as NavItem[];
 });

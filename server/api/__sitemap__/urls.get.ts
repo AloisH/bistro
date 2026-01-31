@@ -1,5 +1,4 @@
-import type { BlogCollectionItem } from '@nuxt/content';
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 
 interface SitemapUrl {
   loc: string;
@@ -24,7 +23,7 @@ export default defineEventHandler(async (event): Promise<SitemapUrl[]> => {
 
   // Blog posts (exclude drafts)
   try {
-    const blogPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
+    const blogPosts = (await queryCollection(event, 'blog').all());
     for (const post of blogPosts) {
       if (!post.draft && post.path) {
         urls.push({

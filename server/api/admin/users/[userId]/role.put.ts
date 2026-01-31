@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Validate body
-  const rawBody = await readBody(event);
+  const rawBody: unknown = await readBody(event);
   const validationResult = updateRoleSchema.safeParse(rawBody);
 
   if (!validationResult.success) {

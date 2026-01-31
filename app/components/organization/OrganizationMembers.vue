@@ -133,7 +133,7 @@ const columns = [
                 size: 'xs',
                 color: 'error',
                 variant: 'ghost',
-                onClick: () => openRemoveModal(member.userId),
+                onClick: () => { openRemoveModal(member.userId); },
               })
             : null,
         ].filter(Boolean),
@@ -142,7 +142,7 @@ const columns = [
   },
 ];
 
-async function openInviteModal() {
+function openInviteModal() {
   inviteModalOpen.value = true;
   inviteState.value.email = '';
   inviteState.value.role = 'MEMBER';

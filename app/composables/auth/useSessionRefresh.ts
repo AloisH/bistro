@@ -21,7 +21,7 @@ export const useSessionRefresh = () => {
     };
 
     // Check every minute
-    const interval = setInterval(checkAndRefresh, REFRESH_INTERVAL);
+    const interval = setInterval(() => void checkAndRefresh(), REFRESH_INTERVAL);
 
     // Cleanup on unmount
     onBeforeUnmount(() => {

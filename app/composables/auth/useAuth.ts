@@ -36,16 +36,16 @@ export const useAuth = () => {
       },
     });
     // Cast through unknown since Better Auth's base types don't include custom fields
-    session.value = (data?.session as unknown as AuthSession) || null;
-    user.value = (data?.user as unknown as AuthUser) || null;
+    session.value = data?.session ? (data.session as unknown as AuthSession) : null;
+    user.value = data?.user ? (data.user as unknown as AuthUser) : null;
     sessionFetching.value = false;
     return data;
   };
 
   if (import.meta.client) {
-    client.$store.listen('$sessionSignal', async (signal) => {
+    client.$store.listen('$sessionSignal', (signal) => {
       if (!signal) return;
-      await fetchSession();
+      void fetchSession();
     });
   }
 
@@ -54,14 +54,14 @@ export const useAuth = () => {
       const { organizations } = await $fetch<{ organizations: { slug: string }[] }>(
         '/api/organizations',
       );
-      const firstOrg = organizations?.[0];
+      const firstOrg = organizations[0];
       if (firstOrg) {
-        return navigateTo({ name: 'org-slug-dashboard', params: { slug: firstOrg.slug } });
+        return await navigateTo({ name: 'org-slug-dashboard', params: { slug: firstOrg.slug } });
       }
-      return navigateTo({ name: 'organizations-create' });
+      return await navigateTo({ name: 'organizations-create' });
     }
     catch {
-      return navigateTo({ name: 'organizations-create' });
+      return await navigateTo({ name: 'organizations-create' });
     }
   };
 

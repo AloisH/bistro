@@ -8,7 +8,7 @@ export function useRole() {
   const { user } = useAuth();
 
   // User's current role
-  const userRole = computed<Role | undefined>(() => (user.value as { role?: Role })?.role);
+  const userRole = computed<Role | undefined>(() => (user.value as { role?: Role } | null)?.role);
 
   // Check if user has one of the allowed roles
   const hasRole = (roles: Role[]): boolean => {

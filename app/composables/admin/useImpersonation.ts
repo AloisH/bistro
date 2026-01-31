@@ -1,4 +1,5 @@
-import type { User } from '../../../prisma/generated/client';
+/** Partial user info returned from impersonation API */
+type ImpersonatedUserInfo = { id: string; email: string; name: string };
 
 /**
  * useImpersonation composable
@@ -9,7 +10,7 @@ export function useImpersonation() {
 
   // State
   const isImpersonating = useState('impersonating', () => false);
-  const impersonatedUser = useState<User | null>('impersonatedUser', () => null);
+  const impersonatedUser = useState<ImpersonatedUserInfo | null>('impersonatedUser', () => null);
 
   /**
    * Start impersonating a user
@@ -72,10 +73,7 @@ export function useImpersonation() {
    */
   const checkImpersonation = async () => {
     try {
-      const response = (await $fetch('/api/admin/impersonate/active')) as {
-        active: boolean;
-        session: { targetUser?: User } | null;
-      };
+      const response = (await $fetch('/api/admin/impersonate/active'));
       isImpersonating.value = response.active;
       if (response.session?.targetUser) {
         impersonatedUser.value = response.session.targetUser;

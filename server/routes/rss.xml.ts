@@ -1,5 +1,5 @@
 import type { BlogCollectionItem } from '@nuxt/content';
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 import { Feed } from 'feed';
 
 export default defineEventHandler(async (event) => {
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   });
 
   // Fetch all published posts (exclude drafts)
-  const allPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
+  const allPosts = (await queryCollection(event, 'blog').all());
 
   // Filter out drafts
   const posts = allPosts.filter((post: BlogCollectionItem) => !post.draft).reverse();

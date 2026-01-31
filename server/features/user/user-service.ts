@@ -77,7 +77,7 @@ export class UserService {
 
     return {
       completed: user.onboardingCompleted,
-      steps: (user.onboardingSteps as OnboardingSteps) || {},
+      steps: (user.onboardingSteps ?? {}) as OnboardingSteps,
       data: {
         bio: user.bio,
         company: user.company,
@@ -101,7 +101,7 @@ export class UserService {
     }
 
     // Merge step completion into onboardingSteps
-    const steps = (user.onboardingSteps as OnboardingSteps) || {};
+    const steps = (user.onboardingSteps ?? {}) as OnboardingSteps;
     steps[input.step] = true;
 
     // Update user with new data
@@ -112,7 +112,7 @@ export class UserService {
 
     return {
       completed: updated.onboardingCompleted,
-      steps: (updated.onboardingSteps as OnboardingSteps) || {},
+      steps: (updated.onboardingSteps ?? {}) as OnboardingSteps,
       data: {
         bio: updated.bio,
         company: updated.company,

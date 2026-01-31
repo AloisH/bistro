@@ -5,7 +5,7 @@ import { db } from '../../utils/db';
 import { getLogger } from '../../utils/logger';
 import { log } from '../../utils/request-context';
 import { auth } from '../auth/auth-config';
-import { impersonationRepository } from './impersonation-repository';
+import { impersonationRepository, type ImpersonationLogWithTargetUser } from './impersonation-repository';
 
 /**
  * Service for impersonation business logic
@@ -136,7 +136,7 @@ export class ImpersonationService {
   /**
    * Get active impersonation session
    */
-  async getActiveImpersonation(adminId: string): Promise<ImpersonationLog | null> {
+  async getActiveImpersonation(adminId: string): Promise<ImpersonationLogWithTargetUser | null> {
     return impersonationRepository.getActiveSession(adminId);
   }
 

@@ -161,7 +161,7 @@ interface Props {
 
 const { hasPassword } = defineProps<Props>();
 
-const { user, signOut } = useAuth();
+const auth = useAuth();
 const toast = useToast();
 
 const showDeleteModal = ref(false);
@@ -186,13 +186,12 @@ async function deleteAccount() {
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
-    await signOut({ redirectTo: '/auth/login' });
+    await auth.signOut({ redirectTo: '/auth/login' });
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Deletion Failed',
-      description: err.data?.message || 'Failed to delete account. Please verify your credentials.',
+      description: getErrorMessage(e, 'Failed to delete account. Please verify your credentials.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });

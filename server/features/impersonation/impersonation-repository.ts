@@ -2,7 +2,7 @@ import type { ImpersonationLog, Prisma } from '../../../prisma/generated/client'
 import { db } from '../../utils/db';
 
 /** ImpersonationLog with targetUser relation */
-type ImpersonationLogWithTargetUser = Prisma.ImpersonationLogGetPayload<{
+export type ImpersonationLogWithTargetUser = Prisma.ImpersonationLogGetPayload<{
   include: { targetUser: { select: { id: true; email: true; name: true } } };
 }>;
 

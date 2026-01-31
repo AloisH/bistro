@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const ctx = await requireRole(event, ['SUPER_ADMIN']);
 
   // Validate body
-  const rawBody = await readBody(event);
+  const rawBody: unknown = await readBody(event);
   const validationResult = startImpersonationSchema.safeParse(rawBody);
 
   if (!validationResult.success) {

@@ -1,4 +1,4 @@
-import type { EventHandlerRequest, H3Event } from 'h3';
+import type { H3Event } from 'h3';
 import type { OrganizationRole } from '../../prisma/generated/client';
 import { serverAuth } from '../features/auth/auth-session';
 import { organizationRepository } from '../features/organization/organization-repository';
@@ -7,7 +7,7 @@ import { organizationRepository } from '../features/organization/organization-re
  * Organization Access Context - includes org and membership info
  */
 export interface OrgAccessContext {
-  event: H3Event<EventHandlerRequest>;
+  event: H3Event;
   userId: string;
   organizationId: string;
   organizationSlug: string;
@@ -35,7 +35,7 @@ export interface RequireOrgAccessOptions {
  * @throws 403 if user doesn't have required role
  */
 export async function requireOrgAccess(
-  event: H3Event<EventHandlerRequest>,
+  event: H3Event,
   options: RequireOrgAccessOptions = {},
 ): Promise<OrgAccessContext> {
   // Check session exists

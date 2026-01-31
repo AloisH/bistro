@@ -1,4 +1,4 @@
-import type { EventHandlerRequest, H3Event } from 'h3';
+import type { H3Event } from 'h3';
 import type { Role } from '../../prisma/generated/client';
 import { serverAuth } from '../features/auth/auth-session';
 import { db } from './db';
@@ -7,7 +7,7 @@ import { db } from './db';
  * Admin API Handler Context - includes role information
  */
 export interface AdminApiHandlerContext {
-  event: H3Event<EventHandlerRequest>;
+  event: H3Event;
   userId: string;
   userRole: Role;
 }
@@ -23,7 +23,7 @@ export interface AdminApiHandlerContext {
  * @throws 403 if user doesn't have required role
  */
 export async function requireRole(
-  event: H3Event<EventHandlerRequest>,
+  event: H3Event,
   allowedRoles: Role[],
 ): Promise<AdminApiHandlerContext> {
   // Check session exists
@@ -37,7 +37,8 @@ export async function requireRole(
 
   // During impersonation: session.user.id = impersonated user, session.session.impersonatedBy = original admin
   // For role checks, use the admin's ID if impersonating
-  const userIdForRoleCheck = session.session?.impersonatedBy || session.user.id;
+  const sessionData = session.session as { impersonatedBy?: string } | undefined;
+  const userIdForRoleCheck = sessionData?.impersonatedBy || session.user.id;
 
   // Query user role from database
   const user = await db.user.findUnique({

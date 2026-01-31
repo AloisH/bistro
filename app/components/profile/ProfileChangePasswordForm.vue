@@ -131,10 +131,9 @@ async function changePassword() {
     }
   }
   catch (e: unknown) {
-    const err = e as { message?: string };
     toast.add({
       title: 'Password Change Failed',
-      description: err.message || 'Failed to change password. Please check your current password.',
+      description: getErrorMessage(e, 'Failed to change password. Please check your current password.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });

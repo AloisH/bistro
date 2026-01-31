@@ -69,14 +69,14 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
   function filterByTag(tag: string) {
     if (selectedTag.value === tag || tag === '') {
       selectedTag.value = '';
-      router.push({ query: { page: '1' } });
+      void router.push({ query: { page: '1' } });
     }
     else {
       selectedTag.value = tag;
       currentPage.value = 1;
-      router.push({ query: { tag, page: '1' } });
+      void router.push({ query: { tag, page: '1' } });
     }
-    refresh();
+    void refresh();
   }
 
   // Sync page changes to URL
@@ -85,9 +85,9 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
     if (selectedTag.value) {
       query.tag = selectedTag.value;
     }
-    router.push({ query });
+    void router.push({ query });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    refresh();
+    void refresh();
   });
 
   // Scroll on tag change
@@ -101,7 +101,7 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
     (newQuery) => {
       currentPage.value = Number.parseInt((newQuery.page as string) || '1');
       selectedTag.value = (newQuery.tag as string) || '';
-      refresh();
+      void refresh();
     },
   );
 

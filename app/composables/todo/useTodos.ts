@@ -15,9 +15,9 @@ export function useTodos() {
 
   // URL-synced filter and sort state
   const filter = ref<'all' | 'active' | 'completed'>(
-    (route.query.filter as 'all' | 'active' | 'completed') || 'all',
+    (route.query.filter as 'all' | 'active' | 'completed' | undefined) ?? 'all',
   );
-  const sort = ref<'date' | 'title'>((route.query.sort as 'date' | 'title') || 'date');
+  const sort = ref<'date' | 'title'>((route.query.sort as 'date' | 'title' | undefined) ?? 'date');
 
   async function fetchTodos() {
     loading.value = true;
@@ -46,38 +46,38 @@ export function useTodos() {
     if (filter.value !== 'all') query.filter = filter.value;
     if (sort.value !== 'date') query.sort = sort.value;
     if (page.value > 1) query.page = page.value;
-    router.push({ query });
+    void router.push({ query });
   }
 
   function setFilter(newFilter: 'all' | 'active' | 'completed') {
     filter.value = newFilter;
     page.value = 1; // Reset to first page
     updateUrl();
-    fetchTodos();
+    void fetchTodos();
   }
 
   function setSort(newSort: 'date' | 'title') {
     sort.value = newSort;
     page.value = 1; // Reset to first page
     updateUrl();
-    fetchTodos();
+    void fetchTodos();
   }
 
   function setPage(newPage: number) {
     if (newPage < 1 || newPage > totalPages.value) return;
     page.value = newPage;
     updateUrl();
-    fetchTodos();
+    void fetchTodos();
   }
 
   // Watch route changes (back/forward navigation)
   watch(
     () => route.query,
     (newQuery) => {
-      filter.value = (newQuery.filter as 'all' | 'active' | 'completed') || 'all';
-      sort.value = (newQuery.sort as 'date' | 'title') || 'date';
+      filter.value = (newQuery.filter as 'all' | 'active' | 'completed' | undefined) ?? 'all';
+      sort.value = (newQuery.sort as 'date' | 'title' | undefined) ?? 'date';
       page.value = Number(newQuery.page) || 1;
-      fetchTodos();
+      void fetchTodos();
     },
   );
 

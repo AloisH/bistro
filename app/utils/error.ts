@@ -10,36 +10,45 @@ export function getErrorMessage(
     return 'Network error. Check your connection.';
   }
 
-  // API error with status
-  const err = e as { status?: number; data?: { message?: string } };
-
-  if (err?.status === 429) {
-    return 'Too many attempts. Try again later.';
+  if (!e || typeof e !== 'object') {
+    return defaultMessage;
   }
 
-  if (err?.status === 400) {
-    return err.data?.message || 'Invalid request.';
+  // API error with status ($fetch pattern)
+  if ('status' in e && typeof e.status === 'number') {
+    const status = e.status;
+
+    if (status === 429) {
+      return 'Too many attempts. Try again later.';
+    }
+    if (status === 400) {
+      const dataMsg = 'data' in e && e.data && typeof e.data === 'object' && 'message' in e.data
+        ? String(e.data.message)
+        : null;
+      return dataMsg || 'Invalid request.';
+    }
+    if (status === 401) {
+      return 'Invalid credentials.';
+    }
+    if (status === 403) {
+      return 'Access denied.';
+    }
+    if (status === 404) {
+      return 'Not found.';
+    }
+    if (status >= 500) {
+      return 'Server error. Try again later.';
+    }
   }
 
-  if (err?.status === 401) {
-    return 'Invalid credentials.';
+  // Check for message in error data ($fetch pattern)
+  if ('data' in e && e.data && typeof e.data === 'object' && 'message' in e.data) {
+    return String(e.data.message);
   }
 
-  if (err?.status === 403) {
-    return 'Access denied.';
-  }
-
-  if (err?.status === 404) {
-    return 'Not found.';
-  }
-
-  if (err?.status && err.status >= 500) {
-    return 'Server error. Try again later.';
-  }
-
-  // Check for message in error data
-  if (err?.data?.message) {
-    return err.data.message;
+  // Check for direct message property (Better Auth client pattern)
+  if ('message' in e && typeof e.message === 'string') {
+    return e.message;
   }
 
   return defaultMessage;

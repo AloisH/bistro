@@ -1,5 +1,5 @@
 import type { BlogCollectionItem } from '@nuxt/content';
-import { queryCollection } from '@nuxt/content/nitro';
+import { queryCollection } from '@nuxt/content/server';
 import { requireRole } from '../../utils/require-role';
 
 export default defineEventHandler(async (event) => {
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Fetch all posts
-  const allPosts = (await queryCollection(event, 'blog').all()) as BlogCollectionItem[];
+  const allPosts = (await queryCollection(event, 'blog').all());
 
   // Filter drafts and tags in memory
   const filteredPosts = allPosts

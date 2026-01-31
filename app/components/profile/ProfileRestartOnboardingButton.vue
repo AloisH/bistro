@@ -62,10 +62,9 @@ async function restartOnboarding() {
     });
   }
   catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
     toast.add({
       title: 'Error',
-      description: err.data?.message || 'Failed to restart onboarding',
+      description: getErrorMessage(e, 'Failed to restart onboarding'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });

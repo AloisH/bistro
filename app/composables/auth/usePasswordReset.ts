@@ -76,7 +76,7 @@ export function usePasswordReset() {
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
-      navigateTo({ name: 'auth-forgot-password' });
+      void navigateTo({ name: 'auth-forgot-password' });
     }
   });
 

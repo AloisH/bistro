@@ -57,7 +57,7 @@ export const useOrganization = () => {
     try {
       fetching.value = true;
       const data = await $fetch<{ organizations: Organization[] }>('/api/organizations');
-      organizations.value = data?.organizations ?? [];
+      organizations.value = data.organizations;
     }
     catch {
       organizations.value = [];
@@ -71,8 +71,8 @@ export const useOrganization = () => {
     try {
       fetching.value = true;
       const data = await $fetch<MembersListResponse>(`/api/organizations/${slug}/members`);
-      members.value = data?.members ?? [];
-      currentUserRole.value = data?.currentUserRole ?? null;
+      members.value = data.members;
+      currentUserRole.value = data.currentUserRole;
     }
     catch {
       members.value = [];

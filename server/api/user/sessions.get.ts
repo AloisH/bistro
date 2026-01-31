@@ -11,7 +11,7 @@ defineRouteMeta({
 
 export default defineApiHandler(async (ctx) => {
   const session = await serverAuth().getSession({ headers: ctx.event.headers });
-  const currentToken = session?.session?.token;
+  const currentToken = session?.session.token;
 
   if (!currentToken) {
     throw createError({

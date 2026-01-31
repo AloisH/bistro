@@ -158,6 +158,9 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       include: ['./shared/**/*.ts', './server/testing/**/*.ts'],
+      compilerOptions: {
+        strictNullChecks: true,
+      },
     },
   },
   hooks: {
