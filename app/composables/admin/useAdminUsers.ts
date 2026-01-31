@@ -73,7 +73,8 @@ export function useAdminUsers() {
   }
 
   async function handleImpersonate() {
-    if (!selectedUser.value) return;
+    if (!selectedUser.value)
+      return;
 
     impersonating.value = true;
     const result = await startImpersonation(

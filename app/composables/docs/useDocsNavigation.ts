@@ -15,7 +15,8 @@ export function useDocsNavigation() {
   });
 
   const navItems = computed<NavigationMenuItem[][]>(() => {
-    if (!data.value || !data.value[0]?.children) return [];
+    if (!data.value || !data.value[0]?.children)
+      return [];
 
     // Icon defaults per section
     const iconMap: Record<string, string> = {

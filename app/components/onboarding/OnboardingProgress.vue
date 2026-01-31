@@ -26,8 +26,7 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
         class="flex flex-1 flex-col items-center"
       >
         <div
-          :class="[
-            'mb-2 flex h-10 w-10 items-center justify-center rounded-full font-semibold transition-colors',
+          class="mb-2 flex h-10 w-10 items-center justify-center rounded-full font-semibold transition-colors" :class="[
             i <= currentStep
               ? 'bg-primary text-white'
               : 'bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400',
@@ -41,8 +40,7 @@ const stepLabels = ['Welcome', 'Profile', 'Preferences', 'Use Case', 'Organizati
           <span v-else>{{ i }}</span>
         </div>
         <span
-          :class="[
-            'hidden text-center text-xs sm:block',
+          class="hidden text-center text-xs sm:block" :class="[
             i <= currentStep
               ? 'font-medium text-neutral-900 dark:text-white'
               : 'text-neutral-500 dark:text-neutral-400',

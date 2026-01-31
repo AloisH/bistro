@@ -1,8 +1,8 @@
+import type { AuthSession, AuthUser } from '#shared/auth';
 import { createAuthClient } from 'better-auth/client';
 import { adminClient, magicLinkClient } from 'better-auth/client/plugins';
-import type { AuthUser, AuthSession } from '#shared/auth';
 
-export const useAuth = () => {
+export function useAuth() {
   const url = useRequestURL();
   const headers = import.meta.server ? useRequestHeaders() : undefined;
 
@@ -44,7 +44,8 @@ export const useAuth = () => {
 
   if (import.meta.client) {
     client.$store.listen('$sessionSignal', (signal) => {
-      if (!signal) return;
+      if (!signal)
+        return;
       void fetchSession();
     });
   }
@@ -61,7 +62,7 @@ export const useAuth = () => {
       return await navigateTo({ name: 'organizations-create' });
     }
     catch {
-      return await navigateTo({ name: 'organizations-create' });
+      return navigateTo({ name: 'organizations-create' });
     }
   };
 
@@ -95,4 +96,4 @@ export const useAuth = () => {
     redirectToUserDashboard,
     client,
   };
-};
+}

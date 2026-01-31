@@ -50,7 +50,8 @@ export async function useBlogPosts(options: { limit?: number } = {}) {
   const totalPages = computed(() => postsData.value?.totalPages || 1);
 
   const allTags = computed<TagCount[]>(() => {
-    if (!posts.value.length) return [];
+    if (!posts.value.length)
+      return [];
 
     const tagCounts = new Map<string, number>();
     for (const post of posts.value) {

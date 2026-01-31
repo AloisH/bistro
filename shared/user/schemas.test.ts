@@ -1,14 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
-  updateProfileSchema,
   changePasswordSchema,
-  deleteAccountPasswordSchema,
   deleteAccountEmailSchema,
+  deleteAccountPasswordSchema,
   deleteAccountSchema,
   updateOnboardingSchema,
+  updateProfileSchema,
 } from './schemas';
 
-describe('User Schemas', () => {
+describe('user Schemas', () => {
   describe('updateProfileSchema', () => {
     it('accepts valid profile data', () => {
       const result = updateProfileSchema.parse({

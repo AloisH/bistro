@@ -1,3 +1,20 @@
+<script setup lang="ts">
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  tags?: string[];
+  date: string;
+  author?: { name: string; avatar?: string };
+}
+
+withDefaults(defineProps<Props>(), {
+  image: '',
+  tags: () => [],
+  author: undefined,
+});
+</script>
+
 <template>
   <div class="relative -mx-4 mb-12 sm:mx-0">
     <div class="relative h-[400px] overflow-hidden rounded-3xl">
@@ -63,20 +80,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-interface Props {
-  title: string;
-  description: string;
-  image?: string;
-  tags?: string[];
-  date: string;
-  author?: { name: string; avatar?: string };
-}
-
-withDefaults(defineProps<Props>(), {
-  image: '',
-  tags: () => [],
-  author: undefined,
-});
-</script>

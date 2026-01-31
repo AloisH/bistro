@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
 import { createTestUser } from '../../testing/testFixtures';
 import { impersonationRepository } from './impersonation-repository';
 
-describe('ImpersonationRepository', () => {
+describe('impersonationRepository', () => {
   beforeEach(async () => {
     await startTransaction();
   });

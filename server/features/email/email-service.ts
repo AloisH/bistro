@@ -1,10 +1,11 @@
-import { render, type ExtractComponentProps } from '@vue-email/render';
-import type { Component } from 'vue';
 import type { SendEmailInput } from '#shared/email';
+import type { ExtractComponentProps } from '@vue-email/render';
+import type { Component } from 'vue';
 import { sendEmailSchema } from '#shared/email';
-import { resend } from './email-client';
+import { render } from '@vue-email/render';
 import { getLogger } from '../../utils/logger';
 import { log } from '../../utils/request-context';
+import { resend } from './email-client';
 import AccountDeletion from './templates/AccountDeletion.vue';
 import MagicLinkEmail from './templates/MagicLinkEmail.vue';
 import ResetPasswordEmail from './templates/ResetPasswordEmail.vue';

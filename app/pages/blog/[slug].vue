@@ -1,3 +1,49 @@
+<script setup lang="ts">
+const route = useRoute();
+const config = useRuntimeConfig();
+const slug = route.params.slug as string;
+const siteUrl = config.public.appUrl || 'http://localhost:3000';
+
+const { post, error, isAdmin } = await useBlogPost(slug);
+
+// 404 if not found or error
+if (error.value || !post.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Post not found',
+  });
+}
+
+// SEO with computed values (reactive)
+const title = computed(() => `${post.value?.title} - Bistro`);
+const description = computed(() => post.value?.description || '');
+
+useSeoMeta({
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  ogImage: () => post.value?.image,
+  twitterImage: () => post.value?.image,
+  articlePublishedTime: () => post.value?.date,
+  articleTag: () => post.value?.tags,
+});
+
+useHead({
+  link: [{ rel: 'canonical', href: `${siteUrl}${route.path}` }],
+});
+
+// OG image generation (server only)
+if (import.meta.server && post.value) {
+  defineOgImageComponent('NuxtSeo', {
+    title: post.value.title,
+    description: post.value.description,
+  });
+}
+</script>
+
 <template>
   <div class="container mx-auto max-w-4xl px-4 py-12">
     <!-- Draft badge for admins -->
@@ -49,49 +95,3 @@
     </article>
   </div>
 </template>
-
-<script setup lang="ts">
-const route = useRoute();
-const config = useRuntimeConfig();
-const slug = route.params.slug as string;
-const siteUrl = config.public.appUrl || 'http://localhost:3000';
-
-const { post, error, isAdmin } = await useBlogPost(slug);
-
-// 404 if not found or error
-if (error.value || !post.value) {
-  throw createError({
-    statusCode: 404,
-    message: 'Post not found',
-  });
-}
-
-// SEO with computed values (reactive)
-const title = computed(() => `${post.value?.title} - Bistro`);
-const description = computed(() => post.value?.description || '');
-
-useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
-  ogType: 'article',
-  twitterCard: 'summary_large_image',
-  ogImage: () => post.value?.image,
-  twitterImage: () => post.value?.image,
-  articlePublishedTime: () => post.value?.date,
-  articleTag: () => post.value?.tags,
-});
-
-useHead({
-  link: [{ rel: 'canonical', href: `${siteUrl}${route.path}` }],
-});
-
-// OG image generation (server only)
-if (import.meta.server && post.value) {
-  defineOgImageComponent('NuxtSeo', {
-    title: post.value.title,
-    description: post.value.description,
-  });
-}
-</script>

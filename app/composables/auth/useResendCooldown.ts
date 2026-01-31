@@ -32,7 +32,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
   }
 
   async function resend(action: () => Promise<unknown>, successMessage: string) {
-    if (!canResend.value) return;
+    if (!canResend.value)
+      return;
 
     resending.value = true;
 

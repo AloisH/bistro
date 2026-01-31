@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
-import { createTestUser, createTestTodo } from '../../testing/testFixtures';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
+import { createTestTodo, createTestUser } from '../../testing/testFixtures';
 import { TodoService } from './todo-service';
 
-describe('TodoService', () => {
+describe('todoService', () => {
   const service = new TodoService();
 
   beforeEach(async () => {

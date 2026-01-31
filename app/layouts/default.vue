@@ -1,3 +1,78 @@
+<script setup lang="ts">
+import type { FooterColumn, NavigationMenuItem } from '@nuxt/ui';
+
+const route = useRoute();
+
+const navLinks = computed<NavigationMenuItem[][]>(() => [
+  [
+    {
+      label: 'Features',
+      to: '/#features',
+      active: route.hash === '#features',
+    },
+    {
+      label: 'Pricing',
+      to: '/#pricing',
+      active: route.hash === '#pricing',
+    },
+    {
+      label: 'Blog',
+      to: '/blog',
+      active: route.path.startsWith('/blog'),
+    },
+    {
+      label: 'Docs',
+      to: '/docs',
+      active: route.path.startsWith('/docs'),
+    },
+    {
+      label: 'Changelog',
+      to: '/changelog',
+      active: route.path.startsWith('/changelog'),
+    },
+    {
+      label: 'Contact',
+      to: '/contact',
+      active: route.path === '/contact',
+    },
+  ],
+]);
+
+const footerColumns: FooterColumn[] = [
+  {
+    label: 'Product',
+    children: [
+      { label: 'Features', to: '/#features' },
+      { label: 'Pricing', to: '/#pricing' },
+      { label: 'Changelog', to: '/changelog' },
+      { label: 'FAQ', to: '/#faq' },
+    ],
+  },
+  {
+    label: 'Resources',
+    children: [
+      { label: 'Documentation', to: '/docs' },
+      { label: 'Blog', to: '/blog' },
+      { label: 'GitHub', to: 'https://github.com/AloisH/bistro', target: '_blank' },
+    ],
+  },
+  {
+    label: 'Legal',
+    children: [
+      { label: 'Privacy Policy', to: '/legal/privacy' },
+      { label: 'Terms of Service', to: '/legal/terms' },
+    ],
+  },
+  {
+    label: 'Company',
+    children: [
+      { label: 'About', to: '/#features' },
+      { label: 'Contact', to: '/contact' },
+    ],
+  },
+];
+</script>
+
 <template>
   <div>
     <UBanner
@@ -132,78 +207,3 @@
     </UFooter>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { FooterColumn, NavigationMenuItem } from '@nuxt/ui';
-
-const route = useRoute();
-
-const navLinks = computed<NavigationMenuItem[][]>(() => [
-  [
-    {
-      label: 'Features',
-      to: '/#features',
-      active: route.hash === '#features',
-    },
-    {
-      label: 'Pricing',
-      to: '/#pricing',
-      active: route.hash === '#pricing',
-    },
-    {
-      label: 'Blog',
-      to: '/blog',
-      active: route.path.startsWith('/blog'),
-    },
-    {
-      label: 'Docs',
-      to: '/docs',
-      active: route.path.startsWith('/docs'),
-    },
-    {
-      label: 'Changelog',
-      to: '/changelog',
-      active: route.path.startsWith('/changelog'),
-    },
-    {
-      label: 'Contact',
-      to: '/contact',
-      active: route.path === '/contact',
-    },
-  ],
-]);
-
-const footerColumns: FooterColumn[] = [
-  {
-    label: 'Product',
-    children: [
-      { label: 'Features', to: '/#features' },
-      { label: 'Pricing', to: '/#pricing' },
-      { label: 'Changelog', to: '/changelog' },
-      { label: 'FAQ', to: '/#faq' },
-    ],
-  },
-  {
-    label: 'Resources',
-    children: [
-      { label: 'Documentation', to: '/docs' },
-      { label: 'Blog', to: '/blog' },
-      { label: 'GitHub', to: 'https://github.com/AloisH/bistro', target: '_blank' },
-    ],
-  },
-  {
-    label: 'Legal',
-    children: [
-      { label: 'Privacy Policy', to: '/legal/privacy' },
-      { label: 'Terms of Service', to: '/legal/terms' },
-    ],
-  },
-  {
-    label: 'Company',
-    children: [
-      { label: 'About', to: '/#features' },
-      { label: 'Contact', to: '/contact' },
-    ],
-  },
-];
-</script>

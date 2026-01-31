@@ -1,7 +1,7 @@
+import type { MembersListResponse, MemberWithUser } from '#shared/organization';
 import type { Organization, OrganizationRole } from '../../../prisma/generated/client';
-import type { MemberWithUser, MembersListResponse } from '#shared/organization';
 
-export const useOrganization = () => {
+export function useOrganization() {
   // State - SSR-safe with useState
   const organizations = useState<Organization[]>('org:list', () => []);
   const members = useState<MemberWithUser[]>('org:members', () => []);
@@ -86,7 +86,8 @@ export const useOrganization = () => {
   async function switchOrganization(slug: string) {
     // Only skip if already on this org's page (URL slug matches)
     // Always navigate if on non-org page (profile, admin, etc.)
-    if (slug === urlOrgSlug.value) return;
+    if (slug === urlOrgSlug.value)
+      return;
 
     try {
       switching.value = true;
@@ -140,4 +141,4 @@ export const useOrganization = () => {
     fetching: readonly(fetching),
     switching: readonly(switching),
   };
-};
+}

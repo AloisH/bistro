@@ -1,6 +1,6 @@
-import { defineApiHandler } from '../../../utils/api-handler';
-import { sessionService } from '../../../features/auth/session-service';
 import { serverAuth } from '../../../features/auth/auth-session';
+import { sessionService } from '../../../features/auth/session-service';
+import { defineApiHandler } from '../../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

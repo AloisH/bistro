@@ -1,3 +1,49 @@
+<script setup lang="ts">
+const config = useRuntimeConfig();
+const { signIn } = useAuth();
+const loading = ref<'github' | 'google' | null>(null);
+
+const hasOAuth = computed(
+  () => config.public.oauthGithubEnabled || config.public.oauthGoogleEnabled,
+);
+
+async function signInWithGithub() {
+  loading.value = 'github';
+  try {
+    const result = await signIn.social({
+      provider: 'github',
+      callbackURL: config.public.authCallbackUrl,
+    });
+
+    // Redirect to OAuth provider (external URL)
+    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
+      await navigateTo(result.url, { external: true });
+    }
+  }
+  catch {
+    loading.value = null;
+  }
+}
+
+async function signInWithGoogle() {
+  loading.value = 'google';
+  try {
+    const result = await signIn.social({
+      provider: 'google',
+      callbackURL: config.public.authCallbackUrl,
+    });
+
+    // Redirect to OAuth provider (external URL)
+    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
+      await navigateTo(result.url, { external: true });
+    }
+  }
+  catch {
+    loading.value = null;
+  }
+}
+</script>
+
 <template>
   <div
     v-if="hasOAuth"
@@ -39,49 +85,3 @@
     </UButton>
   </div>
 </template>
-
-<script setup lang="ts">
-const config = useRuntimeConfig();
-const { signIn } = useAuth();
-const loading = ref<'github' | 'google' | null>(null);
-
-const hasOAuth = computed(
-  () => config.public.oauthGithubEnabled || config.public.oauthGoogleEnabled,
-);
-
-const signInWithGithub = async () => {
-  loading.value = 'github';
-  try {
-    const result = await signIn.social({
-      provider: 'github',
-      callbackURL: config.public.authCallbackUrl,
-    });
-
-    // Redirect to OAuth provider (external URL)
-    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
-      await navigateTo(result.url, { external: true });
-    }
-  }
-  catch {
-    loading.value = null;
-  }
-};
-
-const signInWithGoogle = async () => {
-  loading.value = 'google';
-  try {
-    const result = await signIn.social({
-      provider: 'google',
-      callbackURL: config.public.authCallbackUrl,
-    });
-
-    // Redirect to OAuth provider (external URL)
-    if (result && typeof result === 'object' && 'url' in result && typeof result.url === 'string') {
-      await navigateTo(result.url, { external: true });
-    }
-  }
-  catch {
-    loading.value = null;
-  }
-};
-</script>

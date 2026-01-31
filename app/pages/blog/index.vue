@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag }
+  = await useBlogPosts();
+
+useSeo({
+  title: 'Blog',
+  description: 'Latest articles and updates from Bistro',
+});
+</script>
+
 <template>
   <div class="container mx-auto px-4 py-12">
     <!-- Hero Section -->
@@ -60,13 +70,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag }
-  = await useBlogPosts();
-
-useSeo({
-  title: 'Blog',
-  description: 'Latest articles and updates from Bistro',
-});
-</script>

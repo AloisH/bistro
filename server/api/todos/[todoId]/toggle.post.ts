@@ -1,6 +1,6 @@
-import { defineValidatedApiHandler } from '../../../utils/api-handler';
 import { toggleTodoSchema } from '#shared/todo';
 import { todoService } from '../../../features/todo/todo-service';
+import { defineValidatedApiHandler } from '../../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

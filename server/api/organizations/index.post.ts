@@ -1,6 +1,6 @@
-import { defineValidatedApiHandler } from '../../utils/api-handler';
 import { createOrganizationSchema } from '#shared/organization';
 import { organizationService } from '../../features/organization/organization-service';
+import { defineValidatedApiHandler } from '../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

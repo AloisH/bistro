@@ -1,6 +1,6 @@
 import type { CreateTodoInput, TodoQueryInput } from '#shared/todo';
+import type { Prisma, Todo } from '../../../prisma/generated/client';
 import { db } from '../../utils/db';
-import type { Todo, Prisma } from '../../../prisma/generated/client';
 
 export class TodoRepository {
   protected readonly db = db;
@@ -12,8 +12,10 @@ export class TodoRepository {
     const { filter = 'all', sort = 'date', page = 1, limit = 10 } = options || {};
 
     const where: Prisma.TodoWhereInput = { userId };
-    if (filter === 'active') where.completed = false;
-    if (filter === 'completed') where.completed = true;
+    if (filter === 'active')
+      where.completed = false;
+    if (filter === 'completed')
+      where.completed = true;
 
     const orderBy = sort === 'date' ? { createdAt: 'desc' as const } : { title: 'asc' as const };
 

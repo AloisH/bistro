@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { startImpersonationSchema, impersonationLogSchema } from './schemas';
+import { describe, expect, it } from 'vitest';
+import { impersonationLogSchema, startImpersonationSchema } from './schemas';
 
-describe('Impersonation Schemas', () => {
+describe('impersonation Schemas', () => {
   describe('startImpersonationSchema', () => {
     it('accepts valid userId', () => {
       const result = startImpersonationSchema.parse({ userId: 'user-123' });

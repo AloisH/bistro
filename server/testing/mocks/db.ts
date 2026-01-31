@@ -1,20 +1,22 @@
 import { vi } from 'vitest';
 
-const createModelMock = () => ({
-  findMany: vi.fn(),
-  findUnique: vi.fn(),
-  findFirst: vi.fn(),
-  create: vi.fn(),
-  createMany: vi.fn(),
-  update: vi.fn(),
-  updateMany: vi.fn(),
-  delete: vi.fn(),
-  deleteMany: vi.fn(),
-  count: vi.fn(),
-  aggregate: vi.fn(),
-  groupBy: vi.fn(),
-  upsert: vi.fn(),
-});
+function createModelMock() {
+  return {
+    findMany: vi.fn(),
+    findUnique: vi.fn(),
+    findFirst: vi.fn(),
+    create: vi.fn(),
+    createMany: vi.fn(),
+    update: vi.fn(),
+    updateMany: vi.fn(),
+    delete: vi.fn(),
+    deleteMany: vi.fn(),
+    count: vi.fn(),
+    aggregate: vi.fn(),
+    groupBy: vi.fn(),
+    upsert: vi.fn(),
+  };
+}
 
 export const mockDb = {
   user: createModelMock(),
@@ -34,7 +36,7 @@ export const mockDb = {
   $disconnect: vi.fn(),
 };
 
-export const resetMockDb = () => {
+export function resetMockDb() {
   for (const value of Object.values(mockDb)) {
     if (typeof value === 'object' && value !== null) {
       for (const fn of Object.values(value as Record<string, unknown>)) {
@@ -47,4 +49,4 @@ export const resetMockDb = () => {
       (value as ReturnType<typeof vi.fn>).mockReset();
     }
   }
-};
+}

@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
-import { createTestUser, createTestOrg, createTestOrgMember } from '../../testing/testFixtures';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
+import { createTestOrg, createTestOrgMember, createTestUser } from '../../testing/testFixtures';
 import { organizationService } from './organization-service';
 
-describe('OrganizationService', () => {
+describe('organizationService', () => {
   beforeEach(async () => {
     await startTransaction();
   });

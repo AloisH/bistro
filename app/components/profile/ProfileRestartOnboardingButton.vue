@@ -1,35 +1,3 @@
-<template>
-  <div class="border-default border-b pb-6">
-    <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
-      <div>
-        <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-          Restart Onboarding
-        </h2>
-        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Go through the setup wizard again to update your preferences
-        </p>
-      </div>
-    </div>
-    <UButton
-      color="neutral"
-      variant="outline"
-      size="lg"
-      class="w-full sm:w-auto"
-      :loading="restartOnboardingLoading"
-      @click="restartOnboarding"
-    >
-      <template #leading>
-        <UIcon
-          v-if="!restartOnboardingLoading"
-          name="i-lucide-refresh-cw"
-          class="mr-2"
-        />
-      </template>
-      Restart Onboarding
-    </UButton>
-  </div>
-</template>
-
 <script setup lang="ts">
 const { fetchSession } = useAuth();
 const router = useRouter();
@@ -74,3 +42,35 @@ async function restartOnboarding() {
   }
 }
 </script>
+
+<template>
+  <div class="border-default border-b pb-6">
+    <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+      <div>
+        <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
+          Restart Onboarding
+        </h2>
+        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+          Go through the setup wizard again to update your preferences
+        </p>
+      </div>
+    </div>
+    <UButton
+      color="neutral"
+      variant="outline"
+      size="lg"
+      class="w-full sm:w-auto"
+      :loading="restartOnboardingLoading"
+      @click="restartOnboarding"
+    >
+      <template #leading>
+        <UIcon
+          v-if="!restartOnboardingLoading"
+          name="i-lucide-refresh-cw"
+          class="mr-2"
+        />
+      </template>
+      Restart Onboarding
+    </UButton>
+  </div>
+</template>

@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { createTodoSchema, updateTodoSchema, toggleTodoSchema, todoQuerySchema } from './schemas';
+import { describe, expect, it } from 'vitest';
+import { createTodoSchema, todoQuerySchema, toggleTodoSchema, updateTodoSchema } from './schemas';
 
-describe('Todo Schemas', () => {
+describe('todo Schemas', () => {
   describe('createTodoSchema', () => {
     it('accepts valid todo', () => {
       const result = createTodoSchema.parse({ title: 'My Task' });

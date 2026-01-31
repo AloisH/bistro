@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { resetPasswordSchema } from '#shared/auth';
+
+const { state, loading, error, submit } = usePasswordReset();
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -65,15 +71,11 @@
           <NuxtLink
             to="/auth/login"
             class="text-primary hover:underline"
-          > Sign in </NuxtLink>
+          >
+            Sign in
+          </NuxtLink>
         </p>
       </template>
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-import { resetPasswordSchema } from '#shared/auth';
-
-const { state, loading, error, submit } = usePasswordReset();
-</script>

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ref, computed } from 'vue';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, ref } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);
@@ -45,7 +45,7 @@ describe('useResendCooldown', () => {
     it('is false while resending', async () => {
       const { canResend, resend, resending } = useResendCooldown();
       let resolveAction: () => void;
-      const action = vi.fn(() => new Promise<void>((r) => {
+      const action = vi.fn(async () => new Promise<void>((r) => {
         resolveAction = r;
       }));
 

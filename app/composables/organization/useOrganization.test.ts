@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref, computed, reactive, readonly, watch } from 'vue';
 import type { Organization, OrganizationRole } from '../../../prisma/generated/client';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, reactive, readonly, ref, watch } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);
@@ -19,12 +19,18 @@ const mockRouteParams = reactive<{ slug?: string }>({});
 const mockRouterPush = vi.fn();
 
 vi.stubGlobal('useState', vi.fn((key: string, init?: () => unknown) => {
-  if (key === 'org:list') return mockOrganizations;
-  if (key === 'org:members') return mockMembers;
-  if (key === 'org:currentUserRole') return mockCurrentUserRole;
-  if (key === 'org:fetching') return mockFetching;
-  if (key === 'org:switching') return mockSwitching;
-  if (key === 'org:lastSlug') return mockLastOrgSlug;
+  if (key === 'org:list')
+    return mockOrganizations;
+  if (key === 'org:members')
+    return mockMembers;
+  if (key === 'org:currentUserRole')
+    return mockCurrentUserRole;
+  if (key === 'org:fetching')
+    return mockFetching;
+  if (key === 'org:switching')
+    return mockSwitching;
+  if (key === 'org:lastSlug')
+    return mockLastOrgSlug;
   return ref(init?.());
 }));
 
@@ -41,16 +47,18 @@ vi.stubGlobal('$fetch', vi.fn());
 // Import after mocks
 const { useOrganization } = await import('./useOrganization');
 
-const createOrg = (slug: string, id = `id-${slug}`): Organization => ({
-  id,
-  slug,
-  name: slug.toUpperCase(),
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  image: null,
-  description: null,
-  planType: 'FREE',
-});
+function createOrg(slug: string, id = `id-${slug}`): Organization {
+  return {
+    id,
+    slug,
+    name: slug.toUpperCase(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    image: null,
+    description: null,
+    planType: 'FREE',
+  };
+}
 
 describe('useOrganization', () => {
   beforeEach(() => {
@@ -188,7 +196,7 @@ describe('useOrganization', () => {
     });
 
     it('sets fetching flag', async () => {
-      vi.mocked(globalThis.$fetch).mockImplementation(() => {
+      vi.mocked(globalThis.$fetch).mockImplementation(async () => {
         expect(mockFetching.value).toBe(true);
         return Promise.resolve({ organizations: [] });
       });
@@ -247,7 +255,7 @@ describe('useOrganization', () => {
     });
 
     it('sets switching flag', async () => {
-      mockRouterPush.mockImplementation(() => {
+      mockRouterPush.mockImplementation(async () => {
         expect(mockSwitching.value).toBe(true);
         return Promise.resolve();
       });

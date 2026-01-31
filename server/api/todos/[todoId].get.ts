@@ -1,5 +1,5 @@
-import { defineApiHandler } from '../../utils/api-handler';
 import { todoService } from '../../features/todo/todo-service';
+import { defineApiHandler } from '../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

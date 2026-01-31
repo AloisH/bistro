@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { state, loading, schema, createOrganization } = useOrgCreate();
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -71,7 +75,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-const { state, loading, schema, createOrganization } = useOrgCreate();
-</script>

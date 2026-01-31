@@ -1,6 +1,6 @@
-import { defineValidatedApiHandler } from '../../utils/api-handler';
 import { updateProfileSchema } from '#shared/user';
 import { userService } from '../../features/user/user-service';
+import { defineValidatedApiHandler } from '../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

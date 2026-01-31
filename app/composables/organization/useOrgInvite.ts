@@ -30,7 +30,8 @@ export function useOrgInvite(token: string) {
   const invite = computed(() => inviteData.value?.invite ?? null);
 
   async function acceptInvite() {
-    if (!invite.value) return;
+    if (!invite.value)
+      return;
 
     accepting.value = true;
     try {

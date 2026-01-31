@@ -7,11 +7,11 @@ interface Props {
 
 defineProps<Props>();
 
+const emit = defineEmits<Emits>();
+
 interface Emits {
   (e: 'select', tag: string): void;
 }
-
-const emit = defineEmits<Emits>();
 </script>
 
 <template>

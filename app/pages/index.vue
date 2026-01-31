@@ -1,15 +1,3 @@
-<template>
-  <div>
-    <HomeHero />
-    <HomeTechStack ref="techSection" />
-    <HomeFeatures ref="featuresSection" />
-    <HomeTestimonials ref="testimonialsSection" />
-    <HomePricing ref="pricingSection" />
-    <HomeFAQ ref="faqSection" />
-    <HomeCTA ref="ctaSection" />
-  </div>
-</template>
-
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const siteUrl = config.public.appUrl || 'http://localhost:3000';
@@ -66,3 +54,15 @@ onMounted(() => {
   ].forEach((section) => { observe(section); });
 });
 </script>
+
+<template>
+  <div>
+    <HomeHero />
+    <HomeTechStack ref="techSection" />
+    <HomeFeatures ref="featuresSection" />
+    <HomeTestimonials ref="testimonialsSection" />
+    <HomePricing ref="pricingSection" />
+    <HomeFAQ ref="faqSection" />
+    <HomeCTA ref="ctaSection" />
+  </div>
+</template>

@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import type { CreateTodoInput } from '#shared/todo';
+import { createTodoSchema } from '#shared/todo';
+
+interface Emits {
+  (e: 'created'): void;
+}
+
+const emit = defineEmits<Emits>();
+
+const { createTodo } = useTodos();
+
+const state = reactive<CreateTodoInput>({
+  title: '',
+  description: '',
+});
+
+const loading = ref(false);
+const error = ref('');
+
+async function onSubmit() {
+  loading.value = true;
+  error.value = '';
+
+  try {
+    await createTodo(state);
+    emit('created');
+    state.title = '';
+    state.description = '';
+  }
+  catch {
+    error.value = 'Failed to create todo. Please try again.';
+  }
+  finally {
+    loading.value = false;
+  }
+}
+</script>
+
 <template>
   <UForm
     :state="state"
@@ -48,42 +87,3 @@
     </div>
   </UForm>
 </template>
-
-<script setup lang="ts">
-import { createTodoSchema } from '#shared/todo';
-import type { CreateTodoInput } from '#shared/todo';
-
-interface Emits {
-  (e: 'created'): void;
-}
-
-const emit = defineEmits<Emits>();
-
-const { createTodo } = useTodos();
-
-const state = reactive<CreateTodoInput>({
-  title: '',
-  description: '',
-});
-
-const loading = ref(false);
-const error = ref('');
-
-async function onSubmit() {
-  loading.value = true;
-  error.value = '';
-
-  try {
-    await createTodo(state);
-    emit('created');
-    state.title = '';
-    state.description = '';
-  }
-  catch {
-    error.value = 'Failed to create todo. Please try again.';
-  }
-  finally {
-    loading.value = false;
-  }
-}
-</script>

@@ -32,8 +32,7 @@ const colorModeOptions = [
             v-for="option in colorModeOptions"
             :key="option.value"
             type="button"
-            :class="[
-              'flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all',
+            class="flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all" :class="[
               colorMode.preference === option.value
                 ? 'border-primary bg-primary/5'
                 : 'border-default hover:border-neutral-400 dark:hover:border-neutral-500',

@@ -1,3 +1,38 @@
+<script setup lang="ts">
+const { client } = useAuth();
+const route = useRoute();
+const router = useRouter();
+const toast = useToast();
+const config = useRuntimeConfig();
+
+const email = ref(route.query.email as string);
+
+onMounted(() => {
+  if (!email.value) {
+    toast.add({
+      title: 'Email required',
+      description: 'Please enter your email first',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    router.push({ name: 'auth-forgot-password' });
+  }
+});
+
+const { resending, cooldown, canResend, resend } = useResendCooldown();
+
+function resendReset() {
+  resend(
+    () =>
+      client.requestPasswordReset({
+        email: email.value,
+        redirectTo: `${config.public.appUrl}/auth/reset-password`,
+      }),
+    'Check your inbox for reset link',
+  );
+}
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -61,44 +96,11 @@
           <NuxtLink
             to="/auth/login"
             class="text-primary hover:underline"
-          > Sign in </NuxtLink>
+          >
+            Sign in
+          </NuxtLink>
         </p>
       </template>
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-const { client } = useAuth();
-const route = useRoute();
-const router = useRouter();
-const toast = useToast();
-const config = useRuntimeConfig();
-
-const email = ref(route.query.email as string);
-
-onMounted(() => {
-  if (!email.value) {
-    toast.add({
-      title: 'Email required',
-      description: 'Please enter your email first',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    router.push({ name: 'auth-forgot-password' });
-  }
-});
-
-const { resending, cooldown, canResend, resend } = useResendCooldown();
-
-function resendReset() {
-  resend(
-    () =>
-      client.requestPasswordReset({
-        email: email.value,
-        redirectTo: `${config.public.appUrl}/auth/reset-password`,
-      }),
-    'Check your inbox for reset link',
-  );
-}
-</script>

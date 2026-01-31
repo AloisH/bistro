@@ -23,7 +23,7 @@ const g = globalThis as unknown as Record<string, unknown>;
 g.getHeader = mockGetHeader;
 g.appendResponseHeader = mockAppendResponseHeader;
 
-describe('ImpersonationService', () => {
+describe('impersonationService', () => {
   beforeEach(async () => {
     await startTransaction();
     vi.clearAllMocks();
@@ -71,7 +71,7 @@ describe('ImpersonationService', () => {
       const { auth } = await import('../auth/auth-config');
       vi.mocked(auth.api.impersonateUser).mockResolvedValue({
         headers: { getSetCookie: () => [] },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
@@ -96,7 +96,7 @@ describe('ImpersonationService', () => {
 
       vi.mocked(auth.api.impersonateUser).mockResolvedValue({
         headers: { getSetCookie: () => [] },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
@@ -128,7 +128,7 @@ describe('ImpersonationService', () => {
 
       vi.mocked(auth.api.impersonateUser).mockResolvedValue({
         headers: { getSetCookie: () => [] },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
@@ -156,7 +156,7 @@ describe('ImpersonationService', () => {
 
       vi.mocked(auth.api.impersonateUser).mockResolvedValue({
         headers: { getSetCookie: () => [] },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<
@@ -219,7 +219,7 @@ describe('ImpersonationService', () => {
 
       vi.mocked(auth.api.stopImpersonating).mockResolvedValue({
         headers: { getSetCookie: () => [] },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       } as any);
 
       const mockEvent = { headers: new Headers() } as Parameters<

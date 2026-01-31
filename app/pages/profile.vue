@@ -1,3 +1,31 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'dashboard',
+});
+
+const { user } = useAuth();
+
+// Fetch full profile with hasPassword flag
+const { data: profile } = await useFetch('/api/user/profile');
+const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false);
+
+// Ref to ProfileSessionManagement component
+const sessionManagement = ref<{ fetchSessions: () => void } | null>(null);
+
+// Helper function to get initials from name
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase())
+    .join('');
+}
+
+// Refresh sessions when password changed with revoke option
+function onPasswordChanged() {
+  sessionManagement.value?.fetchSessions();
+}
+</script>
+
 <template>
   <UCard class="mx-auto w-full max-w-4xl">
     <template #header>
@@ -36,31 +64,3 @@
     </div>
   </UCard>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: 'dashboard',
-});
-
-const { user } = useAuth();
-
-// Fetch full profile with hasPassword flag
-const { data: profile } = await useFetch('/api/user/profile');
-const hasPassword = computed(() => profile.value?.profile.hasPassword ?? false);
-
-// Ref to ProfileSessionManagement component
-const sessionManagement = ref<{ fetchSessions: () => void } | null>(null);
-
-// Helper function to get initials from name
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase())
-    .join('');
-}
-
-// Refresh sessions when password changed with revoke option
-function onPasswordChanged() {
-  sessionManagement.value?.fetchSessions();
-}
-</script>

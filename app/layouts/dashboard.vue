@@ -1,3 +1,93 @@
+<script setup lang="ts">
+import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui';
+
+const { user, signOut } = useAuth();
+const { isAdmin } = useRole();
+const { activeOrgSlug, fetchOrganizations } = useOrganization();
+
+// UI state
+const commandPaletteOpen = ref(false);
+const shortcutsHelpOpen = ref(false);
+const sidebarCollapsed = ref(false);
+
+// Global keyboard shortcuts
+useKeyboardShortcuts({
+  onOpenCommandPalette: () => (commandPaletteOpen.value = true),
+  onToggleSidebar: () => (sidebarCollapsed.value = !sidebarCollapsed.value),
+  onOpenShortcutsHelp: () => (shortcutsHelpOpen.value = true),
+});
+
+// Fetch orgs on mount for sidebar
+onMounted(() => fetchOrganizations());
+
+// Unified navigation - always shows all items
+const navigationItems = computed<NavigationMenuItem[][]>(() => {
+  const mainItems: NavigationMenuItem[] = [
+    {
+      label: 'Dashboard',
+      icon: 'i-lucide-house',
+      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select',
+    },
+    {
+      label: 'Profile',
+      icon: 'i-lucide-user',
+      to: '/profile',
+    },
+  ];
+
+  const adminItems: NavigationMenuItem[] = isAdmin.value
+    ? [
+        {
+          label: 'Admin',
+          icon: 'i-lucide-shield',
+          to: '/admin/users',
+        },
+        {
+          label: 'Email Previews',
+          icon: 'i-lucide-mail',
+          to: '/admin/email-preview',
+        },
+      ]
+    : [];
+
+  return [[...mainItems, ...adminItems]];
+});
+
+const footerItems: NavigationMenuItem[][] = [
+  [
+    {
+      label: 'Feedback',
+      icon: 'i-lucide-message-circle',
+      to: 'https://github.com/aloish/bistro',
+      target: '_blank',
+    },
+    {
+      label: 'Help & Support',
+      icon: 'i-lucide-info',
+      to: 'https://github.com/nuxt/ui',
+      target: '_blank',
+    },
+  ],
+];
+
+const userMenuItems = computed<DropdownMenuItem[][]>(() => [
+  [
+    {
+      label: 'Profile',
+      icon: 'i-lucide-user',
+      to: '/profile',
+    },
+  ],
+  [
+    {
+      label: 'Logout',
+      icon: 'i-lucide-log-out',
+      onSelect: () => signOut({ redirectTo: '/auth/login' }),
+    },
+  ],
+]);
+</script>
+
 <template>
   <UDashboardGroup>
     <UDashboardSidebar
@@ -98,93 +188,3 @@
     <DashboardShortcutsHelp v-model:open="shortcutsHelpOpen" />
   </UDashboardGroup>
 </template>
-
-<script setup lang="ts">
-import type { NavigationMenuItem, DropdownMenuItem } from '@nuxt/ui';
-
-const { user, signOut } = useAuth();
-const { isAdmin } = useRole();
-const { activeOrgSlug, fetchOrganizations } = useOrganization();
-
-// UI state
-const commandPaletteOpen = ref(false);
-const shortcutsHelpOpen = ref(false);
-const sidebarCollapsed = ref(false);
-
-// Global keyboard shortcuts
-useKeyboardShortcuts({
-  onOpenCommandPalette: () => (commandPaletteOpen.value = true),
-  onToggleSidebar: () => (sidebarCollapsed.value = !sidebarCollapsed.value),
-  onOpenShortcutsHelp: () => (shortcutsHelpOpen.value = true),
-});
-
-// Fetch orgs on mount for sidebar
-onMounted(() => fetchOrganizations());
-
-// Unified navigation - always shows all items
-const navigationItems = computed<NavigationMenuItem[][]>(() => {
-  const mainItems: NavigationMenuItem[] = [
-    {
-      label: 'Dashboard',
-      icon: 'i-lucide-house',
-      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select',
-    },
-    {
-      label: 'Profile',
-      icon: 'i-lucide-user',
-      to: '/profile',
-    },
-  ];
-
-  const adminItems: NavigationMenuItem[] = isAdmin.value
-    ? [
-        {
-          label: 'Admin',
-          icon: 'i-lucide-shield',
-          to: '/admin/users',
-        },
-        {
-          label: 'Email Previews',
-          icon: 'i-lucide-mail',
-          to: '/admin/email-preview',
-        },
-      ]
-    : [];
-
-  return [[...mainItems, ...adminItems]];
-});
-
-const footerItems: NavigationMenuItem[][] = [
-  [
-    {
-      label: 'Feedback',
-      icon: 'i-lucide-message-circle',
-      to: 'https://github.com/aloish/bistro',
-      target: '_blank',
-    },
-    {
-      label: 'Help & Support',
-      icon: 'i-lucide-info',
-      to: 'https://github.com/nuxt/ui',
-      target: '_blank',
-    },
-  ],
-];
-
-const userMenuItems = computed<DropdownMenuItem[][]>(() => [
-  [
-    {
-      label: 'Profile',
-      icon: 'i-lucide-user',
-      to: '/profile',
-    },
-  ],
-  [
-    {
-      label: 'Logout',
-      icon: 'i-lucide-log-out',
-      onSelect: () => signOut({ redirectTo: '/auth/login' }),
-    },
-  ],
-]);
-</script>

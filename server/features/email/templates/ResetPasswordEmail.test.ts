@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@vue-email/render';
+import { describe, expect, it } from 'vitest';
 import ResetPasswordEmail from './ResetPasswordEmail.vue';
 
-describe('ResetPasswordEmail template', () => {
+describe('resetPasswordEmail template', () => {
   it('renders html with all props', async () => {
     const html = await render(ResetPasswordEmail, {
       name: 'Test User',

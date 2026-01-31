@@ -1,5 +1,5 @@
-import { createOrganizationSchema } from '#shared/organization';
 import type { CreateOrganizationInput } from '#shared/organization';
+import { createOrganizationSchema } from '#shared/organization';
 
 export function useOrgCreate() {
   const router = useRouter();

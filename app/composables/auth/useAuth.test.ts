@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref, computed, readonly, watch } from 'vue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, readonly, ref, watch } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);
@@ -31,9 +31,12 @@ const mockUser = ref<{ id: string; name: string } | null>(null);
 const mockSessionFetching = ref(false);
 
 vi.stubGlobal('useState', vi.fn((key: string, init?: () => unknown) => {
-  if (key === 'auth:session') return mockSession;
-  if (key === 'auth:user') return mockUser;
-  if (key === 'auth:sessionFetching') return mockSessionFetching;
+  if (key === 'auth:session')
+    return mockSession;
+  if (key === 'auth:user')
+    return mockUser;
+  if (key === 'auth:sessionFetching')
+    return mockSessionFetching;
   return ref(init?.());
 }));
 

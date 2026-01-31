@@ -7,7 +7,8 @@ export function getFieldErrors(error: z.ZodError): Record<string, string[] | und
   const fieldErrors: Record<string, string[]> = {};
   for (const issue of error.issues) {
     const path = issue.path.join('.') || '_root';
-    if (!fieldErrors[path]) fieldErrors[path] = [];
+    if (!fieldErrors[path])
+      fieldErrors[path] = [];
     fieldErrors[path].push(issue.message);
   }
   return fieldErrors;

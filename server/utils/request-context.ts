@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3';
-import { AsyncLocalStorage } from 'node:async_hooks';
 import type { LogContext } from './logger';
+import { AsyncLocalStorage } from 'node:async_hooks';
 
 const storage = new AsyncLocalStorage<H3Event>();
 

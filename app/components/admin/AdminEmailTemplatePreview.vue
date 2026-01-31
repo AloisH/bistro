@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import type { EmailTemplate } from '~/composables/admin/useEmailTemplates';
+
+interface Props {
+  template: EmailTemplate;
+  viewMode: 'html' | 'text';
+  sendingTest: boolean;
+}
+
+defineProps<Props>();
+
+defineEmits<Emits>();
+
+interface Emits {
+  (e: 'update:viewMode', mode: 'html' | 'text'): void;
+  (e: 'sendTest'): void;
+}
+</script>
+
 <template>
   <div>
     <div class="mb-4">
@@ -72,22 +91,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { EmailTemplate } from '~/composables/admin/useEmailTemplates';
-
-interface Props {
-  template: EmailTemplate;
-  viewMode: 'html' | 'text';
-  sendingTest: boolean;
-}
-
-defineProps<Props>();
-
-interface Emits {
-  (e: 'update:viewMode', mode: 'html' | 'text'): void;
-  (e: 'sendTest'): void;
-}
-
-defineEmits<Emits>();
-</script>

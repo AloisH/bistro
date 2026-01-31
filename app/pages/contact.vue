@@ -1,3 +1,73 @@
+<script setup lang="ts">
+import { z } from 'zod';
+
+const toast = useToast();
+
+const contactSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100),
+  email: z.string().email('Invalid email address'),
+  subject: z.enum(['general', 'support', 'feedback', 'other']),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(2000),
+});
+
+type ContactForm = z.infer<typeof contactSchema>;
+
+const state = reactive<ContactForm>({
+  name: '',
+  email: '',
+  subject: '' as ContactForm['subject'],
+  message: '',
+});
+
+const subjectOptions = [
+  { value: 'general', label: 'General Inquiry' },
+  { value: 'support', label: 'Support' },
+  { value: 'feedback', label: 'Feedback' },
+  { value: 'other', label: 'Other' },
+];
+
+const loading = ref(false);
+
+async function onSubmit() {
+  loading.value = true;
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: state,
+    });
+
+    toast.add({
+      title: 'Message sent',
+      description: 'Thanks for reaching out. We\'ll get back to you soon.',
+      color: 'success',
+      icon: 'i-lucide-check',
+    });
+
+    // Reset form
+    state.name = '';
+    state.email = '';
+    state.subject = '' as ContactForm['subject'];
+    state.message = '';
+  }
+  catch {
+    toast.add({
+      title: 'Error',
+      description: 'Failed to send message. Please try again.',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+  }
+  finally {
+    loading.value = false;
+  }
+}
+
+useSeo({
+  title: 'Contact',
+  description: 'Get in touch with the Bistro team for support, feedback, or general inquiries.',
+});
+</script>
+
 <template>
   <div class="container mx-auto px-4 py-12">
     <div class="mx-auto max-w-2xl">
@@ -109,73 +179,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { z } from 'zod';
-
-const toast = useToast();
-
-const contactSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100),
-  email: z.string().email('Invalid email address'),
-  subject: z.enum(['general', 'support', 'feedback', 'other']),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000),
-});
-
-type ContactForm = z.infer<typeof contactSchema>;
-
-const state = reactive<ContactForm>({
-  name: '',
-  email: '',
-  subject: '' as ContactForm['subject'],
-  message: '',
-});
-
-const subjectOptions = [
-  { value: 'general', label: 'General Inquiry' },
-  { value: 'support', label: 'Support' },
-  { value: 'feedback', label: 'Feedback' },
-  { value: 'other', label: 'Other' },
-];
-
-const loading = ref(false);
-
-async function onSubmit() {
-  loading.value = true;
-  try {
-    await $fetch('/api/contact', {
-      method: 'POST',
-      body: state,
-    });
-
-    toast.add({
-      title: 'Message sent',
-      description: 'Thanks for reaching out. We\'ll get back to you soon.',
-      color: 'success',
-      icon: 'i-lucide-check',
-    });
-
-    // Reset form
-    state.name = '';
-    state.email = '';
-    state.subject = '' as ContactForm['subject'];
-    state.message = '';
-  }
-  catch {
-    toast.add({
-      title: 'Error',
-      description: 'Failed to send message. Please try again.',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-  }
-  finally {
-    loading.value = false;
-  }
-}
-
-useSeo({
-  title: 'Contact',
-  description: 'Get in touch with the Bistro team for support, feedback, or general inquiries.',
-});
-</script>

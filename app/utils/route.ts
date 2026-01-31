@@ -8,7 +8,7 @@ export function isPublicRoute(path: string, publicRoutes: string[]): boolean {
   return publicRoutes.some((route) => {
     if (route.endsWith('/*')) {
       const basePath = route.slice(0, -2);
-      return path === basePath || path.startsWith(basePath + '/');
+      return path === basePath || path.startsWith(`${basePath}/`);
     }
     return path === route;
   });

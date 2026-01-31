@@ -1,7 +1,7 @@
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vue from '@vitejs/plugin-vue';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -10,7 +10,6 @@ export default defineNuxtConfig({
   // https://github.com/nuxt/nuxt/issues/33987
 
   modules: [
-    '@nuxt/eslint',
     '@nuxt/content',
     '@nuxt/ui',
     '@nuxt/image',
@@ -165,25 +164,10 @@ export default defineNuxtConfig({
   },
   hooks: {
     close: (nuxt) => {
-      if (!nuxt.options._prepare) process.exit(0);
+      if (!nuxt.options._prepare)
+        process.exit(0);
     },
   },
-  eslint: {
-    config: {
-      stylistic: {
-        semi: true,
-      },
-      formatters: {
-        css: true,
-        html: true,
-        markdown: 'prettier',
-      },
-      typescript: {
-        tsconfigPath: 'tsconfig.json',
-      },
-    },
-  },
-
   // Image optimization
   image: {
     format: ['avif', 'webp'],

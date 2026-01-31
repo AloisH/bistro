@@ -4,10 +4,12 @@
 export function getUserInitials(
   user: { name?: string; email?: string } | null | undefined,
 ): string {
-  if (!user) return 'U';
+  if (!user)
+    return 'U';
 
   const name = user.name || user.email || '';
-  if (!name) return 'U';
+  if (!name)
+    return 'U';
 
   // For emails, use first letter
   if (name.includes('@')) {

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref, computed, reactive, watch } from 'vue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, reactive, ref, watch } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);

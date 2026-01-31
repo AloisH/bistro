@@ -1,3 +1,41 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'dashboard',
+});
+
+const { isAdmin } = useRole();
+const toast = useToast();
+
+// Permission gate
+onMounted(() => {
+  if (!isAdmin.value) {
+    toast.add({
+      title: 'Access denied',
+      description: 'You do not have permission to access this page',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    navigateTo({ name: 'index' });
+  }
+});
+
+const {
+  templates,
+  loading,
+  error,
+  selectedTemplateId,
+  viewMode,
+  sendingTest,
+  selectedTemplate,
+  fetchTemplates,
+  sendTestEmail,
+  selectTemplate,
+  setViewMode,
+} = useEmailTemplates();
+
+onMounted(fetchTemplates);
+</script>
+
 <template>
   <div>
     <div class="mb-6">
@@ -57,41 +95,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: 'dashboard',
-});
-
-const { isAdmin } = useRole();
-const toast = useToast();
-
-// Permission gate
-onMounted(() => {
-  if (!isAdmin.value) {
-    toast.add({
-      title: 'Access denied',
-      description: 'You do not have permission to access this page',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    navigateTo({ name: 'index' });
-  }
-});
-
-const {
-  templates,
-  loading,
-  error,
-  selectedTemplateId,
-  viewMode,
-  sendingTest,
-  selectedTemplate,
-  fetchTemplates,
-  sendTestEmail,
-  selectTemplate,
-  setViewMode,
-} = useEmailTemplates();
-
-onMounted(fetchTemplates);
-</script>

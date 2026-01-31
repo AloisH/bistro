@@ -49,7 +49,8 @@ export function useEmailTemplates() {
   }
 
   async function sendTestEmail() {
-    if (!selectedTemplate.value) return;
+    if (!selectedTemplate.value)
+      return;
 
     sendingTest.value = true;
     try {

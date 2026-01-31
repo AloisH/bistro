@@ -17,7 +17,8 @@ export function useDocsSearch() {
   });
 
   const fuse = computed(() => {
-    if (!sections.value) return null;
+    if (!sections.value)
+      return null;
 
     return new Fuse(sections.value, {
       keys: [
@@ -31,7 +32,8 @@ export function useDocsSearch() {
   });
 
   const results = computed(() => {
-    if (!query.value || !fuse.value) return [];
+    if (!query.value || !fuse.value)
+      return [];
 
     return fuse.value
       .search(query.value)

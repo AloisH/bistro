@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { ZodSchema } from 'zod';
 
+defineProps<Props>();
+
+const emit = defineEmits<Emits>();
+
 const state = defineModel<{ email: string }>('state', { required: true });
 
 interface Props {
@@ -9,13 +13,9 @@ interface Props {
   error: string;
 }
 
-defineProps<Props>();
-
 interface Emits {
   (e: 'submit'): void;
 }
-
-const emit = defineEmits<Emits>();
 </script>
 
 <template>

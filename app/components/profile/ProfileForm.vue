@@ -1,65 +1,3 @@
-<template>
-  <div class="border-default border-b pb-6">
-    <h2 class="mb-6 text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-      Profile Information
-    </h2>
-    <UForm
-      :state="profileState"
-      :schema="updateProfileSchema"
-      class="space-y-4"
-      @submit.prevent="updateProfile"
-    >
-      <UFormField
-        name="name"
-        label="Full Name"
-        description="Your display name that appears on your profile"
-      >
-        <UInput
-          v-model="profileState.name"
-          placeholder="Your full name"
-          size="lg"
-          class="w-full"
-        />
-      </UFormField>
-
-      <UFormField
-        name="email"
-        label="Email Address"
-        :description="
-          hasPassword
-            ? 'Your account email address'
-            : 'Managed by your OAuth provider (GitHub/Google)'
-        "
-      >
-        <UInput
-          :model-value="user?.email"
-          disabled
-          size="lg"
-          class="w-full"
-        />
-      </UFormField>
-
-      <div class="pt-4">
-        <UButton
-          type="submit"
-          :loading="profileLoading"
-          size="lg"
-          class="w-full sm:w-auto"
-        >
-          <template #leading>
-            <UIcon
-              v-if="!profileLoading"
-              name="i-lucide-save"
-              class="mr-2"
-            />
-          </template>
-          Save Changes
-        </UButton>
-      </div>
-    </UForm>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { updateProfileSchema } from '#shared/user';
 
@@ -127,3 +65,65 @@ async function updateProfile() {
   }
 }
 </script>
+
+<template>
+  <div class="border-default border-b pb-6">
+    <h2 class="mb-6 text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
+      Profile Information
+    </h2>
+    <UForm
+      :state="profileState"
+      :schema="updateProfileSchema"
+      class="space-y-4"
+      @submit.prevent="updateProfile"
+    >
+      <UFormField
+        name="name"
+        label="Full Name"
+        description="Your display name that appears on your profile"
+      >
+        <UInput
+          v-model="profileState.name"
+          placeholder="Your full name"
+          size="lg"
+          class="w-full"
+        />
+      </UFormField>
+
+      <UFormField
+        name="email"
+        label="Email Address"
+        :description="
+          hasPassword
+            ? 'Your account email address'
+            : 'Managed by your OAuth provider (GitHub/Google)'
+        "
+      >
+        <UInput
+          :model-value="user?.email"
+          disabled
+          size="lg"
+          class="w-full"
+        />
+      </UFormField>
+
+      <div class="pt-4">
+        <UButton
+          type="submit"
+          :loading="profileLoading"
+          size="lg"
+          class="w-full sm:w-auto"
+        >
+          <template #leading>
+            <UIcon
+              v-if="!profileLoading"
+              name="i-lucide-save"
+              class="mr-2"
+            />
+          </template>
+          Save Changes
+        </UButton>
+      </div>
+    </UForm>
+  </div>
+</template>

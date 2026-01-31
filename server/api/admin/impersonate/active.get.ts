@@ -1,5 +1,5 @@
-import { requireRole } from '../../../utils/require-role';
 import { impersonationService } from '../../../features/impersonation/impersonation-service';
+import { requireRole } from '../../../utils/require-role';
 
 defineRouteMeta({
   openAPI: {

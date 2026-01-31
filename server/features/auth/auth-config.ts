@@ -1,12 +1,12 @@
+import { ac, roles } from '#shared/auth/access-control';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink } from 'better-auth/plugins';
-import { ac, roles } from '#shared/auth/access-control';
+import { logAuthEvent } from '../../utils/audit-log';
 import { db } from '../../utils/db';
 import { getLogger } from '../../utils/logger';
 import { log } from '../../utils/request-context';
 import { emailService } from '../email/email-service';
-import { logAuthEvent } from '../../utils/audit-log';
 
 // Build socialProviders config conditionally based on env vars
 const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
@@ -132,7 +132,7 @@ export const auth = betterAuth({
   plugins: [
     admin({
       ac,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       roles: roles as Record<string, any>,
       defaultRole: 'USER',
       impersonationSessionDuration: 60 * 60, // 1 hour

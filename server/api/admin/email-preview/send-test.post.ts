@@ -1,11 +1,11 @@
-import { requireRole } from '../../../utils/require-role';
-import { emailService } from '../../../features/email/email-service';
-import { z } from 'zod';
-import VerifyEmail from '../../../features/email/templates/VerifyEmail.vue';
-import ResetPasswordEmail from '../../../features/email/templates/ResetPasswordEmail.vue';
-import MagicLinkEmail from '../../../features/email/templates/MagicLinkEmail.vue';
-import AccountDeletion from '../../../features/email/templates/AccountDeletion.vue';
 import type { Component } from 'vue';
+import { z } from 'zod';
+import { emailService } from '../../../features/email/email-service';
+import AccountDeletion from '../../../features/email/templates/AccountDeletion.vue';
+import MagicLinkEmail from '../../../features/email/templates/MagicLinkEmail.vue';
+import ResetPasswordEmail from '../../../features/email/templates/ResetPasswordEmail.vue';
+import VerifyEmail from '../../../features/email/templates/VerifyEmail.vue';
+import { requireRole } from '../../../utils/require-role';
 
 defineRouteMeta({
   openAPI: {

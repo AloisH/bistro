@@ -1,5 +1,5 @@
-import { defineApiHandler } from '../../utils/api-handler';
 import { organizationRepository } from '../../features/organization/organization-repository';
+import { defineApiHandler } from '../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

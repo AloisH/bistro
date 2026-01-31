@@ -1,3 +1,41 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'dashboard',
+});
+
+const { isSuperAdmin } = useRole();
+const toast = useToast();
+
+// Permission gate
+onMounted(() => {
+  if (!isSuperAdmin.value) {
+    toast.add({
+      title: 'Access denied',
+      description: 'You do not have permission to access this page',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    navigateTo({ name: 'index' });
+  }
+});
+
+const {
+  users,
+  loading,
+  selectedUser,
+  isModalOpen,
+  impersonateReason,
+  impersonating,
+  fetchUsers,
+  openImpersonateModal,
+  handleImpersonate,
+  getRoleColor,
+  getRoleIcon,
+} = useAdminUsers();
+
+onMounted(fetchUsers);
+</script>
+
 <template>
   <div>
     <div class="mb-6">
@@ -39,41 +77,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: 'dashboard',
-});
-
-const { isSuperAdmin } = useRole();
-const toast = useToast();
-
-// Permission gate
-onMounted(() => {
-  if (!isSuperAdmin.value) {
-    toast.add({
-      title: 'Access denied',
-      description: 'You do not have permission to access this page',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    navigateTo({ name: 'index' });
-  }
-});
-
-const {
-  users,
-  loading,
-  selectedUser,
-  isModalOpen,
-  impersonateReason,
-  impersonating,
-  fetchUsers,
-  openImpersonateModal,
-  handleImpersonate,
-  getRoleColor,
-  getRoleIcon,
-} = useAdminUsers();
-
-onMounted(fetchUsers);
-</script>

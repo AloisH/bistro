@@ -1,4 +1,3 @@
-import { randomBytes } from 'node:crypto';
 import type {
   CreateOrganizationInput,
   InviteMemberInput,
@@ -10,6 +9,7 @@ import type {
   OrganizationMember,
   OrganizationRole,
 } from '../../../prisma/generated/client';
+import { randomBytes } from 'node:crypto';
 import { db } from '../../utils/db';
 import { organizationRepository } from './organization-repository';
 

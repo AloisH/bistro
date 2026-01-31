@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { createOrganizationSchema } from '#shared/organization';
 import type { CreateOrganizationInput } from '#shared/organization';
+import { createOrganizationSchema } from '#shared/organization';
 
 const model = defineModel<CreateOrganizationInput>({ required: true });
 

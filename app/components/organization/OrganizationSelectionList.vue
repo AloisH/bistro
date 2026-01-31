@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import type { FetchError } from 'ofetch';
+import type { Organization } from '../../../prisma/generated/client';
+
+interface Props {
+  organizations: Organization[];
+  pending: boolean;
+  error: FetchError | null | undefined;
+}
+
+defineProps<Props>();
+
+defineEmits<Emits>();
+
+interface Emits {
+  (e: 'select', slug: string): void;
+  (e: 'retry'): void;
+}
+</script>
+
 <template>
   <div
     v-if="pending"
@@ -73,23 +93,3 @@
     </UButton>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { FetchError } from 'ofetch';
-import type { Organization } from '../../../prisma/generated/client';
-
-interface Props {
-  organizations: Organization[];
-  pending: boolean;
-  error: FetchError | null | undefined;
-}
-
-defineProps<Props>();
-
-interface Emits {
-  (e: 'select', slug: string): void;
-  (e: 'retry'): void;
-}
-
-defineEmits<Emits>();
-</script>

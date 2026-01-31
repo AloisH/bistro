@@ -12,7 +12,8 @@ export function useRole() {
 
   // Check if user has one of the allowed roles
   const hasRole = (roles: Role[]): boolean => {
-    if (!userRole.value) return false;
+    if (!userRole.value)
+      return false;
     return roles.includes(userRole.value);
   };
 

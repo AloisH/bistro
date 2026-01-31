@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { scrypt } from 'node:crypto';
 import { promisify } from 'node:util';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
 import { createTestUser } from '../../testing/testFixtures';
-import { UserService } from './user-service';
-import { emailService } from '../email/email-service';
 import { log } from '../../utils/request-context';
+import { emailService } from '../email/email-service';
+import { UserService } from './user-service';
 
 const scryptAsync = promisify(scrypt);
 
@@ -26,7 +26,7 @@ vi.mock('../../utils/request-context', () => ({
 
 const mockSendAccountDeletion = emailService.sendAccountDeletion as ReturnType<typeof vi.fn>;
 
-describe('UserService', () => {
+describe('userService', () => {
   const userService = new UserService();
 
   beforeEach(async () => {

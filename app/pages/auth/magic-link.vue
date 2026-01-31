@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { magicLinkSchema } from '#shared/auth';
+
+const { state, loading, error, submit } = useMagicLink();
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -60,9 +66,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-import { magicLinkSchema } from '#shared/auth';
-
-const { state, loading, error, submit } = useMagicLink();
-</script>

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref, readonly } from 'vue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { readonly, ref } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);
@@ -11,8 +11,10 @@ const mockImpersonatedUser = ref<{ id: string; name: string } | null>(null);
 const mockFetchSession = vi.fn();
 
 vi.stubGlobal('useState', vi.fn((key: string) => {
-  if (key === 'impersonating') return mockIsImpersonating;
-  if (key === 'impersonatedUser') return mockImpersonatedUser;
+  if (key === 'impersonating')
+    return mockIsImpersonating;
+  if (key === 'impersonatedUser')
+    return mockImpersonatedUser;
   return ref(null);
 }));
 

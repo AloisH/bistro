@@ -1,5 +1,5 @@
-import { requireRole } from '../../../utils/require-role';
 import { userRepository } from '../../../features/user/user-repository';
+import { requireRole } from '../../../utils/require-role';
 
 defineRouteMeta({
   openAPI: {

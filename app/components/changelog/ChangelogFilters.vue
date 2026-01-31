@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { changeTypes } from '~/composables/changelog/useChangelog';
+
+interface Props {
+  selectedType: string;
+  totalCount: number;
+  countByType: (type: string) => number;
+}
+
+defineProps<Props>();
+
+defineEmits<Emits>();
+
+interface Emits {
+  (e: 'filter', type: string): void;
+}
+</script>
+
 <template>
   <div class="mb-8">
     <div class="mb-4 flex items-center gap-3">
@@ -36,21 +54,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { changeTypes } from '~/composables/changelog/useChangelog';
-
-interface Props {
-  selectedType: string;
-  totalCount: number;
-  countByType: (type: string) => number;
-}
-
-defineProps<Props>();
-
-interface Emits {
-  (e: 'filter', type: string): void;
-}
-
-defineEmits<Emits>();
-</script>

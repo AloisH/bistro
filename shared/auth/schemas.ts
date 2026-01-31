@@ -17,7 +17,7 @@ export const passwordSchema = z
   .min(PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`)
   .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
   .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number');
+  .regex(/\d/, 'Password must contain at least one number');
 
 export const signInSchema = z.object({
   email: z.email('Invalid email address'),

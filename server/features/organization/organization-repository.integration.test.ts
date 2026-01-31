@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
-import { createTestUser, createTestOrg, createTestOrgMember } from '../../testing/testFixtures';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
+import { createTestOrg, createTestOrgMember, createTestUser } from '../../testing/testFixtures';
 import { organizationRepository } from './organization-repository';
 
-describe('OrganizationRepository', () => {
+describe('organizationRepository', () => {
   beforeEach(async () => {
     await startTransaction();
   });
@@ -12,7 +12,7 @@ describe('OrganizationRepository', () => {
     await rollbackTransaction();
   });
 
-  describe('Organization CRUD', () => {
+  describe('organization CRUD', () => {
     describe('findById', () => {
       it('returns organization if found', async () => {
         const org = await createTestOrg({ name: 'Test Org' });
@@ -115,7 +115,7 @@ describe('OrganizationRepository', () => {
     });
   });
 
-  describe('Membership methods', () => {
+  describe('membership methods', () => {
     describe('findUserOrganizations', () => {
       it('returns organizations for user', async () => {
         const user = await createTestUser();
@@ -240,7 +240,7 @@ describe('OrganizationRepository', () => {
     });
   });
 
-  describe('Invite methods', () => {
+  describe('invite methods', () => {
     describe('createInvite', () => {
       it('creates invite with all fields', async () => {
         const user = await createTestUser();

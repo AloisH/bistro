@@ -1,4 +1,4 @@
-import { validateEnv, OPTIONAL_VAR_GROUPS, getFieldErrors } from '#shared/env';
+import { getFieldErrors, OPTIONAL_VAR_GROUPS, validateEnv } from '#shared/env';
 
 export default defineNitroPlugin((_nitroApp) => {
   const isProduction = process.env.NODE_ENV === 'production';

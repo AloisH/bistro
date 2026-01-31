@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref, reactive, computed, readonly, watch } from 'vue';
 import type { Todo } from '#shared/todo';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, reactive, readonly, ref, watch } from 'vue';
 
 // Stub Vue auto-imports
 vi.stubGlobal('ref', ref);
@@ -17,9 +17,12 @@ const mockRouterPush = vi.fn();
 const mockToastAdd = vi.fn();
 
 vi.stubGlobal('useState', vi.fn((key: string, init?: () => unknown) => {
-  if (key === 'todos:list') return mockTodos;
-  if (key === 'todos:loading') return mockLoading;
-  if (key === 'todos:total') return mockTotal;
+  if (key === 'todos:list')
+    return mockTodos;
+  if (key === 'todos:loading')
+    return mockLoading;
+  if (key === 'todos:total')
+    return mockTotal;
   return ref(init?.());
 }));
 
@@ -40,15 +43,17 @@ vi.stubGlobal('$fetch', vi.fn());
 // Import after mocks
 const { useTodos } = await import('./useTodos');
 
-const createTodo = (id: string, completed = false): Todo => ({
-  id,
-  title: `Todo ${id}`,
-  description: null,
-  completed,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  userId: 'user-1',
-});
+function createTodo(id: string, completed = false): Todo {
+  return {
+    id,
+    title: `Todo ${id}`,
+    description: null,
+    completed,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    userId: 'user-1',
+  };
+}
 
 describe('useTodos', () => {
   beforeEach(() => {
@@ -134,7 +139,7 @@ describe('useTodos', () => {
     });
 
     it('sets loading flag', async () => {
-      vi.mocked(globalThis.$fetch).mockImplementation(() => {
+      vi.mocked(globalThis.$fetch).mockImplementation(async () => {
         expect(mockLoading.value).toBe(true);
         return Promise.resolve({ todos: [], total: 0 });
       });

@@ -3,11 +3,13 @@ export function useScrollAnimation() {
 
   function observe(el: Ref<HTMLElement | ComponentPublicInstance | null> | HTMLElement | null) {
     const raw = isRef(el) ? el.value : el;
-    if (!raw) return;
+    if (!raw)
+      return;
 
     // Handle Vue component instances (get $el) or raw DOM elements
     const target = '$el' in raw ? (raw.$el as HTMLElement | null) : raw;
-    if (!target || !(target instanceof Element)) return;
+    if (!target || !(target instanceof Element))
+      return;
 
     const observer = new IntersectionObserver(
       (entries) => {

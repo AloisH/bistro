@@ -1,5 +1,5 @@
-import { defineApiHandler } from '../../utils/api-handler';
 import { userService } from '../../features/user/user-service';
+import { defineApiHandler } from '../../utils/api-handler';
 
 defineRouteMeta({
   openAPI: {

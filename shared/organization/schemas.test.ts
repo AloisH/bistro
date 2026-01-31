@@ -1,14 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
-  slugSchema,
   createOrganizationSchema,
-  updateOrganizationSchema,
   inviteMemberSchema,
-  updateMemberRoleSchema,
   organizationRoleSchema,
+  slugSchema,
+  updateMemberRoleSchema,
+  updateOrganizationSchema,
 } from './schemas';
 
-describe('Organization Schemas', () => {
+describe('organization Schemas', () => {
   describe('slugSchema', () => {
     it('accepts valid slugs', () => {
       expect(slugSchema.parse('my-org')).toBe('my-org');

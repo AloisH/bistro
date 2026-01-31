@@ -45,8 +45,7 @@ const useCases = [
         v-for="useCase in useCases"
         :key="useCase.value"
         type="button"
-        :class="[
-          'flex w-full items-start gap-4 rounded-lg border-2 p-4 text-left transition-all',
+        class="flex w-full items-start gap-4 rounded-lg border-2 p-4 text-left transition-all" :class="[
           model === useCase.value
             ? 'border-primary bg-primary/5'
             : 'border-default hover:border-neutral-400 dark:hover:border-neutral-500',
@@ -55,8 +54,7 @@ const useCases = [
       >
         <div class="mt-0.5">
           <div
-            :class="[
-              'flex h-5 w-5 items-center justify-center rounded-full border-2',
+            class="flex h-5 w-5 items-center justify-center rounded-full border-2" :class="[
               model === useCase.value
                 ? 'border-primary'
                 : 'border-neutral-300 dark:border-neutral-600',

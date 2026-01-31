@@ -1,4 +1,4 @@
-import type { Todo, TodoResponse, TodoListResponse, CreateTodoInput } from '#shared/todo';
+import type { CreateTodoInput, Todo, TodoListResponse, TodoResponse } from '#shared/todo';
 
 export function useTodos() {
   const route = useRoute();
@@ -43,9 +43,12 @@ export function useTodos() {
 
   function updateUrl() {
     const query: Record<string, string | number> = {};
-    if (filter.value !== 'all') query.filter = filter.value;
-    if (sort.value !== 'date') query.sort = sort.value;
-    if (page.value > 1) query.page = page.value;
+    if (filter.value !== 'all')
+      query.filter = filter.value;
+    if (sort.value !== 'date')
+      query.sort = sort.value;
+    if (page.value > 1)
+      query.page = page.value;
     void router.push({ query });
   }
 
@@ -64,7 +67,8 @@ export function useTodos() {
   }
 
   function setPage(newPage: number) {
-    if (newPage < 1 || newPage > totalPages.value) return;
+    if (newPage < 1 || newPage > totalPages.value)
+      return;
     page.value = newPage;
     updateUrl();
     void fetchTodos();
@@ -102,7 +106,8 @@ export function useTodos() {
 
   async function toggleTodo(id: string, completed: boolean) {
     const todo = todos.value.find(t => t.id === id);
-    if (todo) todo.completed = completed;
+    if (todo)
+      todo.completed = completed;
 
     try {
       await $fetch(`/api/todos/${id}/toggle`, {
@@ -111,7 +116,8 @@ export function useTodos() {
       });
     }
     catch {
-      if (todo) todo.completed = !completed;
+      if (todo)
+        todo.completed = !completed;
       toast.add({
         title: 'Error',
         description: 'Failed to update todo',

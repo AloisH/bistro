@@ -1,5 +1,5 @@
-import type { AuditEvent, AuditStatus, Prisma } from '../../prisma/generated/client';
 import type { H3Event } from 'h3';
+import type { AuditEvent, AuditStatus, Prisma } from '../../prisma/generated/client';
 import { db } from './db';
 import { getLogger } from './logger';
 

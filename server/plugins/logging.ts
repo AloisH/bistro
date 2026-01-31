@@ -1,4 +1,5 @@
-import { generateRequestId, getLogger, type LogContext } from '../utils/logger';
+import type { LogContext } from '../utils/logger';
+import { generateRequestId, getLogger } from '../utils/logger';
 import { shouldSampleRequest, shouldSampleRequestDev } from '../utils/tail-sampling';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -15,7 +16,8 @@ export default defineNitroPlugin((_nitroApp) => {
         && !url.startsWith('/api/_nuxt_icon')
         && !url.startsWith('/api/auth/session');
 
-    if (!shouldLog) return;
+    if (!shouldLog)
+      return;
 
     const requestId = generateRequestId();
     const startTime = Date.now();
@@ -38,10 +40,12 @@ export default defineNitroPlugin((_nitroApp) => {
   // Hook: Request end
   _nitroApp.hooks.hook('afterResponse', (event) => {
     const context = event.context.logContext as Partial<LogContext> | undefined;
-    if (!context) return;
+    if (!context)
+      return;
 
     // Skip if already logged by error hook
-    if (context.error) return;
+    if (context.error)
+      return;
 
     // Finalize
     context.endTime = Date.now();

@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { sendEmailSchema } from './schemas';
 
-describe('Email Schemas', () => {
+describe('email Schemas', () => {
   describe('sendEmailSchema', () => {
     it('accepts single email recipient', () => {
       const result = sendEmailSchema.parse({

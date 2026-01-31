@@ -107,9 +107,12 @@ export class SessionService {
    * Get device type from UA parser result
    */
   private getDeviceType(deviceType?: string): string {
-    if (!deviceType) return 'Desktop';
-    if (deviceType === 'mobile') return 'Mobile';
-    if (deviceType === 'tablet') return 'Tablet';
+    if (!deviceType)
+      return 'Desktop';
+    if (deviceType === 'mobile')
+      return 'Mobile';
+    if (deviceType === 'tablet')
+      return 'Tablet';
     return 'Desktop';
   }
 }

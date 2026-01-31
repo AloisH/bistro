@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { USER_ID_MIN_LENGTH, REASON_MIN_LENGTH, REASON_MAX_LENGTH } from './constants';
+import { REASON_MAX_LENGTH, REASON_MIN_LENGTH, USER_ID_MIN_LENGTH } from './constants';
 
 /**
  * Start impersonation schema

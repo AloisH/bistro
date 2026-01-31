@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { roleSchema, updateRoleSchema } from './schemas';
 
-describe('Role Schemas', () => {
+describe('role Schemas', () => {
   describe('roleSchema', () => {
     it('accepts USER role', () => {
       expect(roleSchema.parse('USER')).toBe('USER');

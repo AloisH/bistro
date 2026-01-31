@@ -1,14 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { startTransaction, rollbackTransaction, db } from '../../testing/testDb';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { db, rollbackTransaction, startTransaction } from '../../testing/testDb';
 import {
-  createTestUser,
-  createTestSession,
   createTestOrg,
   createTestOrgMember,
+  createTestSession,
+  createTestUser,
 } from '../../testing/testFixtures';
 import { sessionService } from './session-service';
 
-describe('SessionService', () => {
+describe('sessionService', () => {
   beforeEach(async () => {
     await startTransaction();
   });

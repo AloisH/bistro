@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@vue-email/render';
+import { describe, expect, it } from 'vitest';
 import AccountDeletion from './AccountDeletion.vue';
 
-describe('AccountDeletion template', () => {
+describe('accountDeletion template', () => {
   it('renders html with name', async () => {
     const html = await render(AccountDeletion, {
       name: 'Test User',

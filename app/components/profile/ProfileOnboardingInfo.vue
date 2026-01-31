@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { user } = useAuth();
+</script>
+
 <template>
   <div class="border-default border-b pb-6">
     <div class="mb-6">
@@ -86,7 +90,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const { user } = useAuth();
-</script>

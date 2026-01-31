@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { computed } from 'vue';
 import { getUserInitials } from '../../utils/user';
 import AuthButton from './AuthButton.vue';
@@ -39,7 +39,7 @@ vi.stubGlobal('useRole', () => ({
 
 vi.stubGlobal('computed', computed);
 
-describe('AuthButton', () => {
+describe('authButton', () => {
   beforeEach(() => {
     mockSession = null;
     mockUser = null;

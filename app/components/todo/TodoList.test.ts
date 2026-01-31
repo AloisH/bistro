@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { ref, computed } from 'vue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { computed, ref } from 'vue';
 import TodoList from './TodoList.vue';
 
 // Mock state
@@ -59,7 +59,7 @@ const stubs = {
   },
 };
 
-describe('TodoList', () => {
+describe('todoList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockTodos.value = [];

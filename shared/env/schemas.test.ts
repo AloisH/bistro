@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { validateEnv, OPTIONAL_VAR_GROUPS } from './schemas';
+import { describe, expect, it } from 'vitest';
+import { OPTIONAL_VAR_GROUPS, validateEnv } from './schemas';
 
-describe('Env Schemas', () => {
+describe('env Schemas', () => {
   describe('validateEnv - development', () => {
     it('accepts minimal valid config', () => {
       const result = validateEnv(
@@ -177,7 +177,7 @@ describe('Env Schemas', () => {
     });
   });
 
-  describe('OPTIONAL_VAR_GROUPS', () => {
+  describe('oPTIONAL_VAR_GROUPS', () => {
     it('contains email group', () => {
       expect(OPTIONAL_VAR_GROUPS.email).toContain('RESEND_API_KEY');
     });

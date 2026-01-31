@@ -1,3 +1,57 @@
+<script setup lang="ts">
+import { changePasswordSchema } from '#shared/user';
+
+interface Emits {
+  (e: 'changed'): void;
+}
+
+const emit = defineEmits<Emits>();
+
+const { client } = useAuth();
+const toast = useToast();
+
+const passwordState = ref({
+  currentPassword: '',
+  newPassword: '',
+  revokeOtherSessions: true,
+});
+const passwordLoading = ref(false);
+
+async function changePassword() {
+  passwordLoading.value = true;
+  try {
+    await client.changePassword({
+      currentPassword: passwordState.value.currentPassword,
+      newPassword: passwordState.value.newPassword,
+      revokeOtherSessions: passwordState.value.revokeOtherSessions,
+    });
+    passwordState.value.currentPassword = '';
+    passwordState.value.newPassword = '';
+    toast.add({
+      title: 'Password Updated',
+      description: 'Your password has been changed successfully',
+      color: 'success',
+      icon: 'i-lucide-check-circle',
+    });
+    // Emit event if sessions were revoked
+    if (passwordState.value.revokeOtherSessions) {
+      emit('changed');
+    }
+  }
+  catch (e: unknown) {
+    toast.add({
+      title: 'Password Change Failed',
+      description: getErrorMessage(e, 'Failed to change password. Please check your current password.'),
+      color: 'error',
+      icon: 'i-lucide-alert-circle',
+    });
+  }
+  finally {
+    passwordLoading.value = false;
+  }
+}
+</script>
+
 <template>
   <div class="border-default border-b pb-6">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
@@ -89,57 +143,3 @@
     </UForm>
   </div>
 </template>
-
-<script setup lang="ts">
-import { changePasswordSchema } from '#shared/user';
-
-interface Emits {
-  (e: 'changed'): void;
-}
-
-const emit = defineEmits<Emits>();
-
-const { client } = useAuth();
-const toast = useToast();
-
-const passwordState = ref({
-  currentPassword: '',
-  newPassword: '',
-  revokeOtherSessions: true,
-});
-const passwordLoading = ref(false);
-
-async function changePassword() {
-  passwordLoading.value = true;
-  try {
-    await client.changePassword({
-      currentPassword: passwordState.value.currentPassword,
-      newPassword: passwordState.value.newPassword,
-      revokeOtherSessions: passwordState.value.revokeOtherSessions,
-    });
-    passwordState.value.currentPassword = '';
-    passwordState.value.newPassword = '';
-    toast.add({
-      title: 'Password Updated',
-      description: 'Your password has been changed successfully',
-      color: 'success',
-      icon: 'i-lucide-check-circle',
-    });
-    // Emit event if sessions were revoked
-    if (passwordState.value.revokeOtherSessions) {
-      emit('changed');
-    }
-  }
-  catch (e: unknown) {
-    toast.add({
-      title: 'Password Change Failed',
-      description: getErrorMessage(e, 'Failed to change password. Please check your current password.'),
-      color: 'error',
-      icon: 'i-lucide-alert-circle',
-    });
-  }
-  finally {
-    passwordLoading.value = false;
-  }
-}
-</script>

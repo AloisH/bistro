@@ -53,7 +53,8 @@ export function useOnboardingWizard() {
 
   async function saveCurrentStep() {
     // Steps 1 and 6 don't save data
-    if (state.currentStep === 1 || state.currentStep === 6) return;
+    if (state.currentStep === 1 || state.currentStep === 6)
+      return;
 
     try {
       isLoading.value = true;
@@ -142,7 +143,8 @@ export function useOnboardingWizard() {
   }
 
   async function nextStep() {
-    if (isLoading.value) return;
+    if (isLoading.value)
+      return;
 
     if (state.currentStep < TOTAL_STEPS) {
       await saveCurrentStep();
@@ -160,7 +162,8 @@ export function useOnboardingWizard() {
   }
 
   async function skipStep() {
-    if (isLoading.value) return;
+    if (isLoading.value)
+      return;
 
     if (state.currentStep < TOTAL_STEPS) {
       state.currentStep++;

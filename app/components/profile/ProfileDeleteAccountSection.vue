@@ -1,3 +1,53 @@
+<script setup lang="ts">
+import { deleteAccountEmailSchema, deleteAccountPasswordSchema } from '#shared/user';
+
+interface Props {
+  hasPassword: boolean;
+}
+
+const { hasPassword } = defineProps<Props>();
+
+const { user, signOut } = useAuth();
+const toast = useToast();
+
+const showDeleteModal = ref(false);
+const deleteState = ref({
+  password: '',
+  email: '',
+});
+const deleteLoading = ref(false);
+
+async function deleteAccount() {
+  deleteLoading.value = true;
+  try {
+    const body = hasPassword ? { password: deleteState.value.password } : { email: deleteState.value.email };
+
+    await $fetch('/api/user/account', {
+      method: 'DELETE',
+      body,
+    });
+    toast.add({
+      title: 'Account Deleted',
+      description: 'Your account has been permanently deleted',
+      color: 'success',
+      icon: 'i-lucide-check-circle',
+    });
+    await signOut({ redirectTo: '/auth/login' });
+  }
+  catch (e: unknown) {
+    toast.add({
+      title: 'Deletion Failed',
+      description: getErrorMessage(e, 'Failed to delete account. Please verify your credentials.'),
+      color: 'error',
+      icon: 'i-lucide-alert-circle',
+    });
+  }
+  finally {
+    deleteLoading.value = false;
+  }
+}
+</script>
+
 <template>
   <div class="pb-6">
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
@@ -151,53 +201,3 @@
     </UModal>
   </div>
 </template>
-
-<script setup lang="ts">
-import { deleteAccountPasswordSchema, deleteAccountEmailSchema } from '#shared/user';
-
-interface Props {
-  hasPassword: boolean;
-}
-
-const { hasPassword } = defineProps<Props>();
-
-const auth = useAuth();
-const toast = useToast();
-
-const showDeleteModal = ref(false);
-const deleteState = ref({
-  password: '',
-  email: '',
-});
-const deleteLoading = ref(false);
-
-async function deleteAccount() {
-  deleteLoading.value = true;
-  try {
-    const body = hasPassword ? { password: deleteState.value.password } : { email: deleteState.value.email };
-
-    await $fetch('/api/user/account', {
-      method: 'DELETE',
-      body,
-    });
-    toast.add({
-      title: 'Account Deleted',
-      description: 'Your account has been permanently deleted',
-      color: 'success',
-      icon: 'i-lucide-check-circle',
-    });
-    await auth.signOut({ redirectTo: '/auth/login' });
-  }
-  catch (e: unknown) {
-    toast.add({
-      title: 'Deletion Failed',
-      description: getErrorMessage(e, 'Failed to delete account. Please verify your credentials.'),
-      color: 'error',
-      icon: 'i-lucide-alert-circle',
-    });
-  }
-  finally {
-    deleteLoading.value = false;
-  }
-}
-</script>

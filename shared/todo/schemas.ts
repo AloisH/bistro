@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import {
-  TITLE_MIN_LENGTH,
-  MAX_TITLE_LENGTH,
   MAX_DESCRIPTION_LENGTH,
+  MAX_TITLE_LENGTH,
+  TITLE_MIN_LENGTH,
   TODO_FILTERS,
   TODO_SORT_OPTIONS,
 } from './constants';

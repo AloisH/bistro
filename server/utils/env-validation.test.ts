@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { validateEnv, OPTIONAL_VAR_GROUPS, getFieldErrors } from '../../shared/env';
+import { describe, expect, it } from 'vitest';
+import { getFieldErrors, OPTIONAL_VAR_GROUPS, validateEnv } from '../../shared/env';
 
 describe('validateEnv', () => {
   const validBaseEnv = {
@@ -62,7 +62,7 @@ describe('validateEnv', () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         const fieldErrors = getFieldErrors(result.error);
-        expect(fieldErrors['AUTH_TRUSTED_ORIGINS']).toBeDefined();
+        expect(fieldErrors.AUTH_TRUSTED_ORIGINS).toBeDefined();
       }
     });
 
@@ -86,12 +86,12 @@ describe('validateEnv', () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         const fieldErrors = getFieldErrors(result.error);
-        expect(fieldErrors['AUTH_TRUSTED_ORIGINS']?.[0]).toContain('https://');
+        expect(fieldErrors.AUTH_TRUSTED_ORIGINS?.[0]).toContain('https://');
       }
     });
   });
 
-  describe('OPTIONAL_VAR_GROUPS', () => {
+  describe('oPTIONAL_VAR_GROUPS', () => {
     it('contains expected groups', () => {
       expect(OPTIONAL_VAR_GROUPS).toHaveProperty('email');
       expect(OPTIONAL_VAR_GROUPS).toHaveProperty('ai');

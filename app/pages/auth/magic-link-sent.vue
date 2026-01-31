@@ -1,3 +1,33 @@
+<script setup lang="ts">
+const { client } = useAuth();
+const route = useRoute();
+const router = useRouter();
+const toast = useToast();
+
+const email = ref(route.query.email as string);
+
+onMounted(() => {
+  if (!email.value) {
+    toast.add({
+      title: 'Email required',
+      description: 'Please enter your email first',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    router.push({ name: 'auth-magic-link' });
+  }
+});
+
+const { resending, cooldown, canResend, resend } = useResendCooldown();
+
+function resendMagicLink() {
+  resend(
+    () => client.signIn.magicLink({ email: email.value, callbackURL: '/org/select' }),
+    'Check your inbox for login link',
+  );
+}
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -69,33 +99,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-const { client } = useAuth();
-const route = useRoute();
-const router = useRouter();
-const toast = useToast();
-
-const email = ref(route.query.email as string);
-
-onMounted(() => {
-  if (!email.value) {
-    toast.add({
-      title: 'Email required',
-      description: 'Please enter your email first',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    router.push({ name: 'auth-magic-link' });
-  }
-});
-
-const { resending, cooldown, canResend, resend } = useResendCooldown();
-
-function resendMagicLink() {
-  resend(
-    () => client.signIn.magicLink({ email: email.value, callbackURL: '/org/select' }),
-    'Check your inbox for login link',
-  );
-}
-</script>

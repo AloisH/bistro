@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@vue-email/render';
+import { describe, expect, it } from 'vitest';
 import VerifyEmail from './VerifyEmail.vue';
 
-describe('VerifyEmail template', () => {
+describe('verifyEmail template', () => {
   it('renders html with all props', async () => {
     const html = await render(VerifyEmail, {
       name: 'Test User',

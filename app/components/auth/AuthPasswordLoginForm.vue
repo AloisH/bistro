@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { signInSchema } from '#shared/auth';
 
+defineProps<Props>();
+
+const emit = defineEmits<Emits>();
+
 const state = defineModel<{ email: string; password: string }>('state', { required: true });
 
 interface Props {
@@ -8,13 +12,9 @@ interface Props {
   error: string;
 }
 
-defineProps<Props>();
-
 interface Emits {
   (e: 'submit'): void;
 }
-
-const emit = defineEmits<Emits>();
 </script>
 
 <template>

@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import type { Organization } from '../../../prisma/generated/client';
+
+const router = useRouter();
+
+const {
+  data: organizations,
+  pending,
+  error,
+  refresh,
+} = await useFetch<{ organizations: Organization[] }>('/api/organizations');
+
+function selectOrg(slug: string) {
+  router.push(`/org/${slug}/dashboard`);
+}
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-2xl">
@@ -34,20 +51,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { Organization } from '../../../prisma/generated/client';
-
-const router = useRouter();
-
-const {
-  data: organizations,
-  pending,
-  error,
-  refresh,
-} = await useFetch<{ organizations: Organization[] }>('/api/organizations');
-
-function selectOrg(slug: string) {
-  router.push(`/org/${slug}/dashboard`);
-}
-</script>

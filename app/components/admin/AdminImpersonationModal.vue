@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import type { AdminUser } from '~/composables/admin/useAdminUsers';
+
+interface Props {
+  user: AdminUser | null;
+  loading: boolean;
+}
+
+defineProps<Props>();
+
+defineEmits<Emits>();
+
+interface Emits {
+  (e: 'confirm'): void;
+}
+
+const model = defineModel<boolean>({ required: true });
+const reason = defineModel<string>('reason', { required: true });
+</script>
+
 <template>
   <UModal v-model:open="model">
     <template #content="{ close }">
@@ -71,23 +91,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-import type { AdminUser } from '~/composables/admin/useAdminUsers';
-
-interface Props {
-  user: AdminUser | null;
-  loading: boolean;
-}
-
-defineProps<Props>();
-
-interface Emits {
-  (e: 'confirm'): void;
-}
-
-defineEmits<Emits>();
-
-const model = defineModel<boolean>({ required: true });
-const reason = defineModel<string>('reason', { required: true });
-</script>

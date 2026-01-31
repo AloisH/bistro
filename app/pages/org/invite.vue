@@ -1,3 +1,10 @@
+<script setup lang="ts">
+const route = useRoute();
+const token = route.query.token as string;
+
+const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -88,10 +95,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-const route = useRoute();
-const token = route.query.token as string;
-
-const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
-</script>

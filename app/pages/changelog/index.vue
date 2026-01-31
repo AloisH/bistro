@@ -1,3 +1,21 @@
+<script setup lang="ts">
+const {
+  selectedType,
+  entries,
+  allEntries,
+  filterByType,
+  countByType,
+  getVersionColor,
+  getChangeIcon,
+  getChangeColor,
+} = useChangelog();
+
+useSeo({
+  title: 'Changelog',
+  description: 'Track new features, improvements, and bug fixes in Bistro.',
+});
+</script>
+
 <template>
   <div class="container mx-auto px-4 py-12">
     <!-- Hero Section -->
@@ -34,21 +52,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-const {
-  selectedType,
-  entries,
-  allEntries,
-  filterByType,
-  countByType,
-  getVersionColor,
-  getChangeIcon,
-  getChangeColor,
-} = useChangelog();
-
-useSeo({
-  title: 'Changelog',
-  description: 'Track new features, improvements, and bug fixes in Bistro.',
-});
-</script>

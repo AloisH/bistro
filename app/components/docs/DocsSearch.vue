@@ -8,7 +8,8 @@ defineShortcuts({
 });
 
 const groups = computed(() => {
-  if (!results.value.length) return [];
+  if (!results.value.length)
+    return [];
 
   return [
     {

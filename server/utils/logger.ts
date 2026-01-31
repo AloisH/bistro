@@ -1,5 +1,5 @@
-import pino from 'pino';
 import { nanoid } from 'nanoid';
+import pino from 'pino';
 
 export interface LogContext {
   // Request lifecycle

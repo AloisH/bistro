@@ -1,5 +1,3 @@
-import { scrypt, timingSafeEqual } from 'node:crypto';
-import { promisify } from 'node:util';
 import type {
   OnboardingState,
   OnboardingSteps,
@@ -7,6 +5,8 @@ import type {
   UpdateProfileInput,
   UserProfile,
 } from '#shared/user';
+import { scrypt, timingSafeEqual } from 'node:crypto';
+import { promisify } from 'node:util';
 import { log } from '../../utils/request-context';
 import { emailService } from '../email/email-service';
 import { userRepository } from './user-repository';

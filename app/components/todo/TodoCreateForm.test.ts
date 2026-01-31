@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { ref, reactive } from 'vue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { reactive, ref } from 'vue';
 import TodoCreateForm from './TodoCreateForm.vue';
 
 // Mock createTodo
@@ -42,7 +42,7 @@ const stubs = {
   },
 };
 
-describe('TodoCreateForm', () => {
+describe('todoCreateForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockCreateTodo.mockReset();

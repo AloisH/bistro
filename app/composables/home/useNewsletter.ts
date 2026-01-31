@@ -5,7 +5,8 @@ export function useNewsletter() {
   const subscribing = ref(false);
 
   async function subscribe() {
-    if (!email.value) return;
+    if (!email.value)
+      return;
 
     subscribing.value = true;
     try {

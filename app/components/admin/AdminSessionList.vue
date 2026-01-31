@@ -1,3 +1,60 @@
+<script setup lang="ts">
+interface SessionWithMetadata {
+  id: string;
+  isCurrent: boolean;
+  browser: string;
+  os: string;
+  device: string;
+  ipAddress: string | null;
+  createdAt: Date;
+  lastActive: Date;
+}
+
+interface Props {
+  sessions: SessionWithMetadata[];
+  loading?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  loading: false,
+});
+
+defineEmits<Emits>();
+
+interface Emits {
+  (e: 'revoke', id: string): void;
+}
+
+function getDeviceIcon(device: string): string {
+  if (device === 'Mobile')
+    return 'i-lucide-smartphone';
+  if (device === 'Tablet')
+    return 'i-lucide-tablet';
+  return 'i-lucide-monitor';
+}
+
+function formatTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - new Date(date).getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1)
+    return 'Just now';
+  if (diffMins < 60)
+    return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+  if (diffHours < 24)
+    return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+  if (diffDays === 1)
+    return 'Yesterday';
+  if (diffDays < 7)
+    return `${diffDays} days ago`;
+
+  return new Date(date).toLocaleDateString();
+}
+</script>
+
 <template>
   <div class="space-y-4">
     <div
@@ -67,53 +124,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-interface SessionWithMetadata {
-  id: string;
-  isCurrent: boolean;
-  browser: string;
-  os: string;
-  device: string;
-  ipAddress: string | null;
-  createdAt: Date;
-  lastActive: Date;
-}
-
-interface Props {
-  sessions: SessionWithMetadata[];
-  loading?: boolean;
-}
-
-withDefaults(defineProps<Props>(), {
-  loading: false,
-});
-
-interface Emits {
-  (e: 'revoke', id: string): void;
-}
-
-defineEmits<Emits>();
-
-function getDeviceIcon(device: string): string {
-  if (device === 'Mobile') return 'i-lucide-smartphone';
-  if (device === 'Tablet') return 'i-lucide-tablet';
-  return 'i-lucide-monitor';
-}
-
-function formatTime(date: Date): string {
-  const now = new Date();
-  const diffMs = now.getTime() - new Date(date).getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays} days ago`;
-
-  return new Date(date).toLocaleDateString();
-}
-</script>

@@ -1,14 +1,6 @@
-<template>
-  <UTable
-    :data="users"
-    :columns="columns"
-    :loading="loading"
-  />
-</template>
-
 <script setup lang="ts">
-import { h, resolveComponent } from 'vue';
 import type { AdminUser } from '~/composables/admin/useAdminUsers';
+import { h, resolveComponent } from 'vue';
 
 interface Props {
   users: AdminUser[];
@@ -19,11 +11,11 @@ interface Props {
 
 const { users, loading, getRoleColor, getRoleIcon } = defineProps<Props>();
 
+const emit = defineEmits<Emits>();
+
 interface Emits {
   (e: 'impersonate', user: AdminUser): void;
 }
-
-const emit = defineEmits<Emits>();
 
 const columns = [
   {
@@ -78,3 +70,11 @@ const columns = [
   },
 ];
 </script>
+
+<template>
+  <UTable
+    :data="users"
+    :columns="columns"
+    :loading="loading"
+  />
+</template>

@@ -1,3 +1,33 @@
+<script setup lang="ts">
+const route = useRoute();
+const router = useRouter();
+const { client } = useAuth();
+const toast = useToast();
+
+const email = ref(route.query.email as string);
+
+onMounted(() => {
+  if (!email.value) {
+    toast.add({
+      title: 'Email required',
+      description: 'Please register first',
+      color: 'error',
+      icon: 'i-lucide-alert-triangle',
+    });
+    router.push({ name: 'auth-register' });
+  }
+});
+
+const { resending, cooldown, canResend, resend } = useResendCooldown();
+
+function resendVerification() {
+  resend(
+    () => client.sendVerificationEmail({ email: email.value, callbackURL: '/org/select' }),
+    'Check your inbox for verification link',
+  );
+}
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center p-4">
     <UCard class="w-full max-w-md">
@@ -61,39 +91,11 @@
           <NuxtLink
             to="/auth/login"
             class="text-primary hover:underline"
-          > Sign in </NuxtLink>
+          >
+            Sign in
+          </NuxtLink>
         </p>
       </template>
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-const route = useRoute();
-const router = useRouter();
-const { client } = useAuth();
-const toast = useToast();
-
-const email = ref(route.query.email as string);
-
-onMounted(() => {
-  if (!email.value) {
-    toast.add({
-      title: 'Email required',
-      description: 'Please register first',
-      color: 'error',
-      icon: 'i-lucide-alert-triangle',
-    });
-    router.push({ name: 'auth-register' });
-  }
-});
-
-const { resending, cooldown, canResend, resend } = useResendCooldown();
-
-function resendVerification() {
-  resend(
-    () => client.sendVerificationEmail({ email: email.value, callbackURL: '/org/select' }),
-    'Check your inbox for verification link',
-  );
-}
-</script>

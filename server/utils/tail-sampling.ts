@@ -25,7 +25,7 @@ class P99Tracker {
 }
 
 const p99Tracker = new P99Tracker();
-const SAMPLE_RATE = parseFloat(process.env.LOG_SAMPLE_RATE || '0.05');
+const SAMPLE_RATE = Number.parseFloat(process.env.LOG_SAMPLE_RATE || '0.05');
 
 export function shouldSampleRequest(context: Partial<LogContext>): {
   shouldLog: boolean;

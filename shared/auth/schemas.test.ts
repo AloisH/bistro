@@ -1,14 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
+  forgotPasswordSchema,
+  magicLinkSchema,
   passwordSchema,
+  resetPasswordSchema,
   signInSchema,
   signUpSchema,
-  forgotPasswordSchema,
-  resetPasswordSchema,
-  magicLinkSchema,
 } from './schemas';
 
-describe('Auth Schemas', () => {
+describe('auth Schemas', () => {
   describe('passwordSchema', () => {
     it('accepts valid password with all requirements', () => {
       const result = passwordSchema.parse('Password123');

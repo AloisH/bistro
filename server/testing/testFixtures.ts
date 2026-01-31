@@ -1,11 +1,11 @@
 import type {
-  User,
   Organization,
-  Todo,
-  Session,
   OrganizationMember,
   OrganizationRole,
   Prisma,
+  Session,
+  Todo,
+  User,
 } from '../../prisma/generated/client';
 import { db } from './testDb';
 
@@ -58,7 +58,7 @@ export async function createTestUser(overrides?: Partial<Prisma.UserCreateInput>
     emailNotifications: true,
   };
 
-  return await db.user.create({
+  return db.user.create({
     data: { ...defaults, ...overrides },
   });
 }
@@ -109,7 +109,7 @@ export async function createTestOrg(
     planType: 'free',
   };
 
-  return await db.organization.create({
+  return db.organization.create({
     data: { ...defaults, ...overrides },
   });
 }
@@ -165,7 +165,7 @@ export async function createTestTodo(
     },
   };
 
-  return await db.todo.create({
+  return db.todo.create({
     data: { ...defaults, ...overrides },
   });
 }
@@ -202,7 +202,7 @@ export async function createTestTodo(
  */
 export async function createTestSession(user: User): Promise<Session> {
   const token = `test-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-  return await db.session.create({
+  return db.session.create({
     data: {
       token,
       userId: user.id,
@@ -248,7 +248,7 @@ export async function createTestOrgMember(
   organizationId: string,
   role: OrganizationRole = 'MEMBER',
 ): Promise<OrganizationMember> {
-  return await db.organizationMember.create({
+  return db.organizationMember.create({
     data: { userId, organizationId, role },
   });
 }

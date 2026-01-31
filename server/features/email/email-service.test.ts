@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { Component } from 'vue';
-
-import { EmailService } from './email-service';
-import { resend } from './email-client';
 import { render } from '@vue-email/render';
+
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { resend } from './email-client';
+import { EmailService } from './email-service';
 
 // Mock resend
 vi.mock('./email-client', () => ({
@@ -27,7 +27,7 @@ vi.mock('h3', () => ({
 const mockSend = resend!.emails.send as ReturnType<typeof vi.fn>;
 const mockRender = render as ReturnType<typeof vi.fn>;
 
-describe('EmailService', () => {
+describe('emailService', () => {
   let emailService: EmailService;
 
   beforeEach(() => {

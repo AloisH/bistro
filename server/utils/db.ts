@@ -4,7 +4,7 @@ import { incrementDbQueries, log } from './request-context';
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const prismaClientSingleton = () => {
+function prismaClientSingleton() {
   const connectionString = process.env.DATABASE_URL;
 
   if (!connectionString) {
@@ -35,7 +35,7 @@ const prismaClientSingleton = () => {
   }
 
   return client;
-};
+}
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 

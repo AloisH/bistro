@@ -1,19 +1,5 @@
-<template>
-  <UModal v-model:open="isOpen">
-    <template #content>
-      <UCommandPalette
-        :groups="groups"
-        placeholder="Search..."
-        close
-        @update:open="isOpen = $event"
-        @update:model-value="handleSelect"
-      />
-    </template>
-  </UModal>
-</template>
-
 <script setup lang="ts">
-import type { CommandPaletteItem, CommandPaletteGroup } from '@nuxt/ui';
+import type { CommandPaletteGroup, CommandPaletteItem } from '@nuxt/ui';
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
@@ -52,69 +38,6 @@ function handleSelect(item: CommandPaletteItem | undefined) {
     });
   }
 }
-
-// Build groups based on permissions
-const groups = computed<CommandPaletteGroup[]>(() => {
-  const result: CommandPaletteGroup[] = [];
-
-  // Recent items (if any)
-  if (recentItems.value.length > 0) {
-    result.push({
-      id: 'recent',
-      label: 'Recent',
-      items: recentItems.value.map(item => ({
-        id: item.id,
-        label: item.label,
-        icon: item.icon || 'i-lucide-clock',
-        onSelect: (e: Event) => {
-          // Find and execute the original action
-          const allItems = [
-            ...navItems.value,
-            ...orgItems.value,
-            ...adminItems.value,
-            ...actionItems.value,
-          ];
-          const original = allItems.find(i => i.id === item.id);
-          original?.onSelect?.(e);
-        },
-      })),
-    });
-  }
-
-  // Always visible - Navigation
-  result.push({
-    id: 'navigation',
-    label: 'Navigation',
-    items: navItems.value,
-  });
-
-  // Org pages - show when org is active
-  if (activeOrgSlug.value && orgItems.value.length > 0) {
-    result.push({
-      id: 'organization',
-      label: 'Organization',
-      items: orgItems.value,
-    });
-  }
-
-  // Admin only
-  if (isAdmin.value) {
-    result.push({
-      id: 'admin',
-      label: 'Admin',
-      items: adminItems.value,
-    });
-  }
-
-  // Actions - always visible
-  result.push({
-    id: 'actions',
-    label: 'Actions',
-    items: actionItems.value,
-  });
-
-  return result;
-});
 
 // Navigation items
 const navItems = computed<CommandPaletteItem[]>(() => [
@@ -183,4 +106,81 @@ const actionItems = computed<CommandPaletteItem[]>(() => [
     onSelect: handleLogout,
   },
 ]);
+
+// Build groups based on permissions
+const groups = computed<CommandPaletteGroup[]>(() => {
+  const result: CommandPaletteGroup[] = [];
+
+  // Recent items (if any)
+  if (recentItems.value.length > 0) {
+    result.push({
+      id: 'recent',
+      label: 'Recent',
+      items: recentItems.value.map(item => ({
+        id: item.id,
+        label: item.label,
+        icon: item.icon || 'i-lucide-clock',
+        onSelect: (e: Event) => {
+          // Find and execute the original action
+          const allItems = [
+            ...navItems.value,
+            ...orgItems.value,
+            ...adminItems.value,
+            ...actionItems.value,
+          ];
+          const original = allItems.find(i => i.id === item.id);
+          original?.onSelect?.(e);
+        },
+      })),
+    });
+  }
+
+  // Always visible - Navigation
+  result.push({
+    id: 'navigation',
+    label: 'Navigation',
+    items: navItems.value,
+  });
+
+  // Org pages - show when org is active
+  if (activeOrgSlug.value && orgItems.value.length > 0) {
+    result.push({
+      id: 'organization',
+      label: 'Organization',
+      items: orgItems.value,
+    });
+  }
+
+  // Admin only
+  if (isAdmin.value) {
+    result.push({
+      id: 'admin',
+      label: 'Admin',
+      items: adminItems.value,
+    });
+  }
+
+  // Actions - always visible
+  result.push({
+    id: 'actions',
+    label: 'Actions',
+    items: actionItems.value,
+  });
+
+  return result;
+});
 </script>
+
+<template>
+  <UModal v-model:open="isOpen">
+    <template #content>
+      <UCommandPalette
+        :groups="groups"
+        placeholder="Search..."
+        close
+        @update:open="isOpen = $event"
+        @update:model-value="handleSelect"
+      />
+    </template>
+  </UModal>
+</template>

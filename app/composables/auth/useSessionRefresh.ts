@@ -3,12 +3,13 @@ import { useAuth } from './useAuth';
 const REFRESH_INTERVAL = 60 * 1000; // Check every minute
 const REFRESH_BEFORE_EXPIRY = 5 * 60 * 1000; // Refresh 5 min before expiry
 
-export const useSessionRefresh = () => {
+export function useSessionRefresh() {
   const { session, fetchSession, loggedIn } = useAuth();
 
   if (import.meta.client) {
     const checkAndRefresh = async () => {
-      if (!loggedIn.value || !session.value) return;
+      if (!loggedIn.value || !session.value)
+        return;
 
       const expiresAt = new Date(session.value.expiresAt);
       const now = new Date();
@@ -28,4 +29,4 @@ export const useSessionRefresh = () => {
       clearInterval(interval);
     });
   }
-};
+}

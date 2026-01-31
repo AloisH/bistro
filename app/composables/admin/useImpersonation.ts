@@ -1,5 +1,5 @@
 /** Partial user info returned from impersonation API */
-type ImpersonatedUserInfo = { id: string; email: string; name: string };
+interface ImpersonatedUserInfo { id: string; email: string; name: string }
 
 /**
  * useImpersonation composable

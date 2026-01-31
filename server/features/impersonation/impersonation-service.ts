@@ -1,11 +1,12 @@
-import type { H3Event } from 'h3';
 import type { StartImpersonationInput } from '#shared/impersonation';
+import type { H3Event } from 'h3';
 import type { ImpersonationLog } from '../../../prisma/generated/client';
+import type { ImpersonationLogWithTargetUser } from './impersonation-repository';
 import { db } from '../../utils/db';
 import { getLogger } from '../../utils/logger';
 import { log } from '../../utils/request-context';
 import { auth } from '../auth/auth-config';
-import { impersonationRepository, type ImpersonationLogWithTargetUser } from './impersonation-repository';
+import { impersonationRepository } from './impersonation-repository';
 
 /**
  * Service for impersonation business logic

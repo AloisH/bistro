@@ -1,6 +1,7 @@
-import { createEvent, type H3Event } from 'h3';
+import type { H3Event } from 'h3';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { User } from '../../prisma/generated/client';
+import { createEvent } from 'h3';
 import { createTestSession } from './testFixtures';
 
 /**

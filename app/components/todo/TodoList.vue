@@ -1,3 +1,59 @@
+<script setup lang="ts">
+const {
+  todos,
+  loading,
+  filter,
+  sort,
+  page,
+  total,
+  totalPages,
+  setFilter,
+  setSort,
+  setPage,
+  toggleTodo,
+  deleteTodo,
+} = useTodos();
+
+// Status message for screen readers
+const statusMessage = computed(() => {
+  if (loading.value)
+    return 'Loading todos...';
+  if (todos.value.length === 0)
+    return 'No todos found.';
+  const completed = todos.value.filter(t => t.completed).length;
+  return `${todos.value.length} todos, ${completed} completed.`;
+});
+
+async function handleToggle(id: string, completed: string | boolean) {
+  await toggleTodo(id, Boolean(completed));
+}
+
+async function handleDelete(id: string) {
+  await deleteTodo(id);
+}
+
+function formatTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - new Date(date).getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1)
+    return 'Just now';
+  if (diffMins < 60)
+    return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
+  if (diffHours < 24)
+    return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+  if (diffDays === 1)
+    return 'Yesterday';
+  if (diffDays < 7)
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+
+  return new Date(date).toLocaleDateString();
+}
+</script>
+
 <template>
   <div class="space-y-6">
     <!-- Screen reader announcements -->
@@ -189,52 +245,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const {
-  todos,
-  loading,
-  filter,
-  sort,
-  page,
-  total,
-  totalPages,
-  setFilter,
-  setSort,
-  setPage,
-  toggleTodo,
-  deleteTodo,
-} = useTodos();
-
-// Status message for screen readers
-const statusMessage = computed(() => {
-  if (loading.value) return 'Loading todos...';
-  if (todos.value.length === 0) return 'No todos found.';
-  const completed = todos.value.filter(t => t.completed).length;
-  return `${todos.value.length} todos, ${completed} completed.`;
-});
-
-async function handleToggle(id: string, completed: string | boolean) {
-  await toggleTodo(id, Boolean(completed));
-}
-
-async function handleDelete(id: string) {
-  await deleteTodo(id);
-}
-
-function formatTime(date: Date): string {
-  const now = new Date();
-  const diffMs = now.getTime() - new Date(date).getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
-
-  return new Date(date).toLocaleDateString();
-}
-</script>

@@ -17,6 +17,7 @@ export interface AdminApiHandlerContext {
  * Checks session and queries user role from database
  * During impersonation, checks the ADMIN's role, not the impersonated user's role
  *
+ * @param event - H3 event object
  * @param allowedRoles - Array of roles that can access the endpoint
  * @returns Context with userId and userRole
  * @throws 401 if not authenticated

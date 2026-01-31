@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@vue-email/render';
+import { describe, expect, it } from 'vitest';
 import MagicLinkEmail from './MagicLinkEmail.vue';
 
-describe('MagicLinkEmail template', () => {
+describe('magicLinkEmail template', () => {
   it('renders html with all props', async () => {
     const html = await render(MagicLinkEmail, {
       magicLink: 'https://example.com/api/auth/magic-link/verify?token=abc123',

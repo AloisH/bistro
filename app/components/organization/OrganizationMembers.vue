@@ -206,7 +206,8 @@ function openRemoveModal(userId: string) {
 }
 
 async function confirmRemove() {
-  if (!memberToRemove.value) return;
+  if (!memberToRemove.value)
+    return;
 
   removing.value = true;
   try {

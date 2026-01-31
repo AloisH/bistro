@@ -1,14 +1,14 @@
 import type { H3Event } from 'h3';
 import type { z } from 'zod';
 import { serverAuth } from '../features/auth/auth-session';
-import {
-  addUserContext,
-  addOrgContext,
-  setRequestContext,
-  runWithContext,
-} from './request-context';
 import { db } from './db';
 import { getLogger } from './logger';
+import {
+  addOrgContext,
+  addUserContext,
+  runWithContext,
+  setRequestContext,
+} from './request-context';
 
 /**
  * API Handler Context - passed to all handlers

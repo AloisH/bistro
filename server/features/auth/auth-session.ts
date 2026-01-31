@@ -1,5 +1,5 @@
 import { auth } from './auth-config';
 
-export const serverAuth = () => {
+export function serverAuth() {
   return auth.api;
-};
+}

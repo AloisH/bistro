@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { navigation, status } = useDocsNavigation();
+</script>
+
 <template>
   <UDashboardGroup>
     <!-- Left sidebar -->
@@ -108,7 +112,3 @@
     </UDashboardPanel>
   </UDashboardGroup>
 </template>
-
-<script setup lang="ts">
-const { navigation, status } = useDocsNavigation();
-</script>
