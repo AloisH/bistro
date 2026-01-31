@@ -25,19 +25,21 @@ export default antfu(
       'no-alert': 'off',
     },
     ignores: [
+      // Generated
       'coverage/**',
       'prisma/generated/**',
-      'vitest.*.config.ts',
-      'content.config.ts',
-      'playwright.config.ts',
-      'prisma.config.ts',
-      'e2e/**',
-      'prisma/seed.ts',
-      'scripts/**',
       '.nuxt/**',
-      '.*/**',
-      'content/**',
+      // Markdown virtual files from formatter
       '**/*.md/**',
+      // Hidden folders (docs, agent instructions)
+      '.*/**',
+      // MDC content (not code)
+      'content/**',
+      // Files outside tsconfig (have own configs or rarely change)
+      'e2e/**',
+      'scripts/**',
+      'prisma/seed.ts',
+      '*.config.ts',
     ],
   },
   // Disable type-aware rules for Vue files (parser issues + OOM in CI)
