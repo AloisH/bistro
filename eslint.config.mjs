@@ -40,20 +40,6 @@ export default antfu(
       '**/*.md/**',
     ],
   },
-  // Temporarily warn for strictNullChecks transition (TS files only)
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
-    rules: {
-      'ts/no-unnecessary-condition': 'warn',
-      'ts/no-floating-promises': 'warn',
-      'ts/no-deprecated': 'warn',
-      'ts/no-unsafe-assignment': 'warn',
-      'ts/no-unsafe-member-access': 'warn',
-      'ts/no-unsafe-argument': 'warn',
-      'ts/no-unsafe-return': 'warn',
-      'ts/no-misused-promises': 'warn',
-    },
-  },
   // Allow numbers/booleans in template literals
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
@@ -79,11 +65,12 @@ export default antfu(
       'ts/restrict-template-expressions': 'off',
     },
   },
-  // Test files: disable unbound-method (conflicts with expect() pattern)
+  // Test files: vitest patterns
   {
     files: ['**/*.test.ts', '**/*.integration.test.ts'],
     rules: {
-      'ts/unbound-method': 'off',
+      'ts/unbound-method': 'off', // expect(mock.method) pattern
+      'ts/no-unsafe-assignment': 'off', // expect.any() returns any
     },
   },
   // Vue a11y
