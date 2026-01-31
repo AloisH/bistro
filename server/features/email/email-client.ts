@@ -1,9 +1,8 @@
 import { Resend } from 'resend';
 import { getLogger } from '../../utils/logger';
 
-declare global {
-  var resend: Resend | undefined;
-}
+// Symbol key for HMR-safe singleton
+const RESEND_KEY = Symbol.for('bistro.resend');
 
 function createResendClient(): Resend | undefined {
   const apiKey = process.env.RESEND_API_KEY;
@@ -16,8 +15,15 @@ function createResendClient(): Resend | undefined {
   return new Resend(apiKey);
 }
 
-export const resend = globalThis.resend ?? createResendClient();
+function getResend(): Resend | undefined {
+  const cached = (globalThis as Record<symbol, unknown>)[RESEND_KEY] as Resend | undefined;
+  if (cached !== undefined) {
+    return cached;
+  }
 
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.resend = resend;
+  const client = createResendClient();
+  (globalThis as Record<symbol, unknown>)[RESEND_KEY] = client;
+  return client;
 }
+
+export const resend = getResend();

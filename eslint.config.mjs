@@ -101,13 +101,6 @@ export default antfu(
       'ts/no-floating-promises': 'off',
     },
   },
-  // Allow global var declarations for singletons
-  {
-    files: ['server/utils/db.ts', 'server/features/email/email-client.ts'],
-    rules: {
-      'vars-on-top': 'off',
-    },
-  },
   // Allow console in server plugins and API routes
   {
     files: ['server/plugins/**/*.ts', 'server/api/**/*.ts'],

@@ -4,6 +4,9 @@ import { incrementDbQueries, log } from './request-context';
 
 const isDev = process.env.NODE_ENV === 'development';
 
+// Symbol key for HMR-safe singleton
+const PRISMA_KEY = Symbol.for('bistro.prisma');
+
 function prismaClientSingleton() {
   const connectionString = process.env.DATABASE_URL;
 
@@ -39,16 +42,16 @@ function prismaClientSingleton() {
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
-declare global {
-  var prisma: PrismaClientSingleton | undefined;
-}
-
 // Lazy init - avoids crash during prerender when no DATABASE_URL
 function getDb(): PrismaClientSingleton {
-  if (!globalThis.prisma) {
-    globalThis.prisma = prismaClientSingleton();
+  const cached = (globalThis as Record<symbol, unknown>)[PRISMA_KEY] as PrismaClientSingleton | undefined;
+  if (cached) {
+    return cached;
   }
-  return globalThis.prisma;
+
+  const client = prismaClientSingleton();
+  (globalThis as Record<symbol, unknown>)[PRISMA_KEY] = client;
+  return client;
 }
 
 export const db = new Proxy({} as PrismaClientSingleton, {
