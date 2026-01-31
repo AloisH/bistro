@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { vi } from 'vitest';
 
 function createModelMock() {
@@ -38,15 +39,19 @@ export const mockDb = {
 
 export function resetMockDb() {
   for (const value of Object.values(mockDb)) {
-    if (typeof value === 'object' && value !== null) {
-      for (const fn of Object.values(value as Record<string, unknown>)) {
-        if (typeof fn === 'function' && 'mockReset' in fn) {
-          (fn as ReturnType<typeof vi.fn>).mockReset();
-        }
+    if (typeof value === 'function') {
+      // Direct mock function ($transaction, $connect, etc.)
+      if ('mockReset' in value) {
+        (value as Mock).mockReset();
       }
     }
-    else if (typeof value === 'function' && 'mockReset' in value) {
-      (value as ReturnType<typeof vi.fn>).mockReset();
+    else {
+      // Model mock object with methods
+      for (const fn of Object.values(value)) {
+        if (typeof fn === 'function' && 'mockReset' in fn) {
+          (fn as Mock).mockReset();
+        }
+      }
     }
   }
 }

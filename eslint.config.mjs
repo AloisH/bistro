@@ -79,17 +79,11 @@ export default antfu(
       'ts/restrict-template-expressions': 'off',
     },
   },
-  // Relax rules for test files
+  // Test files: disable unbound-method (conflicts with expect() pattern)
   {
-    files: ['**/*.test.ts', '**/*.integration.test.ts', '**/testing/**/*.ts', 'e2e/**/*.ts'],
+    files: ['**/*.test.ts', '**/*.integration.test.ts'],
     rules: {
-      'ts/no-unsafe-assignment': 'off',
-      'ts/no-unsafe-argument': 'off',
-      'ts/no-unsafe-member-access': 'off',
-      'ts/no-unsafe-call': 'off',
-      'ts/no-unsafe-return': 'off',
       'ts/unbound-method': 'off',
-      'ts/no-unnecessary-condition': 'off',
     },
   },
   // Vue a11y

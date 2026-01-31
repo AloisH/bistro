@@ -24,7 +24,7 @@ vi.mock('../../utils/request-context', () => ({
   },
 }));
 
-const mockSendAccountDeletion = emailService.sendAccountDeletion as ReturnType<typeof vi.fn>;
+const mockEmailService = vi.mocked(emailService);
 
 describe('userService', () => {
   const userService = new UserService();
@@ -32,7 +32,7 @@ describe('userService', () => {
   beforeEach(async () => {
     await startTransaction();
     vi.clearAllMocks();
-    mockSendAccountDeletion.mockResolvedValue({ id: 'test-email-id' });
+    mockEmailService.sendAccountDeletion.mockResolvedValue({ id: 'test-email-id' });
   });
 
   afterEach(async () => {
@@ -71,7 +71,7 @@ describe('userService', () => {
       const user = await createTestUser();
 
       const result = await userService.updateProfile(user.id, {
-        name: user.name ?? 'Test User',
+        name: user.name,
         image: 'https://example.com/avatar.png',
       });
 
@@ -103,7 +103,7 @@ describe('userService', () => {
 
       await userService.deleteAccountWithPassword(user.id, password);
 
-      expect(mockSendAccountDeletion).toHaveBeenCalledWith({
+      expect(mockEmailService.sendAccountDeletion).toHaveBeenCalledWith({
         to: user.email,
         name: user.name,
       });
@@ -134,7 +134,7 @@ describe('userService', () => {
     it('still deletes account even if email fails', async () => {
       const password = 'testpassword123';
       const user = await createUserWithPassword(password);
-      mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
+      mockEmailService.sendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
       await userService.deleteAccountWithPassword(user.id, password);
 
@@ -145,7 +145,7 @@ describe('userService', () => {
     it('logs warning if email fails', async () => {
       const password = 'testpassword123';
       const user = await createUserWithPassword(password);
-      mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
+      mockEmailService.sendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
       await userService.deleteAccountWithPassword(user.id, password);
 
@@ -168,7 +168,7 @@ describe('userService', () => {
 
       await userService.deleteAccountWithEmail(user.id, user.email);
 
-      expect(mockSendAccountDeletion).toHaveBeenCalledWith({
+      expect(mockEmailService.sendAccountDeletion).toHaveBeenCalledWith({
         to: user.email,
         name: 'OAuth User',
       });
@@ -179,7 +179,7 @@ describe('userService', () => {
 
       await userService.deleteAccountWithEmail(user.id, user.email);
 
-      expect(mockSendAccountDeletion).toHaveBeenCalledWith({
+      expect(mockEmailService.sendAccountDeletion).toHaveBeenCalledWith({
         to: user.email,
         name: undefined, // empty string is falsy, converted to undefined
       });
@@ -207,7 +207,7 @@ describe('userService', () => {
 
     it('still deletes account even if email fails', async () => {
       const user = await createTestUser({ password: null });
-      mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
+      mockEmailService.sendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
       await userService.deleteAccountWithEmail(user.id, user.email);
 
@@ -217,7 +217,7 @@ describe('userService', () => {
 
     it('logs warning if email fails', async () => {
       const user = await createTestUser({ password: null });
-      mockSendAccountDeletion.mockRejectedValue(new Error('Email service error'));
+      mockEmailService.sendAccountDeletion.mockRejectedValue(new Error('Email service error'));
 
       await userService.deleteAccountWithEmail(user.id, user.email);
 

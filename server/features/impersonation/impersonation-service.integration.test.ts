@@ -4,6 +4,15 @@ import { createTestUser } from '../../testing/testFixtures';
 import { impersonationRepository } from './impersonation-repository';
 import { impersonationService } from './impersonation-service';
 
+// Type for Better Auth API response (partial mock)
+interface MockAuthResponse {
+  headers: { getSetCookie: () => string[] };
+}
+
+const mockAuthResponse: MockAuthResponse = {
+  headers: { getSetCookie: () => [] },
+};
+
 // Mock Better Auth
 vi.mock('../auth/auth-config', () => ({
   auth: {
@@ -69,10 +78,7 @@ describe('impersonationService', () => {
 
       // Mock successful Better Auth response
       const { auth } = await import('../auth/auth-config');
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
-        headers: { getSetCookie: () => [] },
-
-      } as any);
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue(mockAuthResponse);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -94,10 +100,7 @@ describe('impersonationService', () => {
 
       const { auth } = await import('../auth/auth-config');
 
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
-        headers: { getSetCookie: () => [] },
-
-      } as any);
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue(mockAuthResponse);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -126,10 +129,7 @@ describe('impersonationService', () => {
 
       const { auth } = await import('../auth/auth-config');
 
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
-        headers: { getSetCookie: () => [] },
-
-      } as any);
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue(mockAuthResponse);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -154,10 +154,7 @@ describe('impersonationService', () => {
 
       const { auth } = await import('../auth/auth-config');
 
-      vi.mocked(auth.api.impersonateUser).mockResolvedValue({
-        headers: { getSetCookie: () => [] },
-
-      } as any);
+      vi.mocked(auth.api.impersonateUser).mockResolvedValue(mockAuthResponse);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.startImpersonation
@@ -217,10 +214,7 @@ describe('impersonationService', () => {
 
       const { auth } = await import('../auth/auth-config');
 
-      vi.mocked(auth.api.stopImpersonating).mockResolvedValue({
-        headers: { getSetCookie: () => [] },
-
-      } as any);
+      vi.mocked(auth.api.stopImpersonating).mockResolvedValue(mockAuthResponse);
 
       const mockEvent = { headers: new Headers() } as Parameters<
         typeof impersonationService.stopImpersonation

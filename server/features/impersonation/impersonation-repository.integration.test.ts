@@ -110,9 +110,10 @@ describe('impersonationRepository', () => {
 
       const active = await impersonationRepository.getActiveSession(admin.id);
 
-      expect(active?.adminId).toBe(admin.id);
-      expect(active?.endedAt).toBeNull();
-      expect(active?.targetUser?.name).toBe('Target User');
+      expect(active).not.toBeNull();
+      expect(active!.adminId).toBe(admin.id);
+      expect(active!.endedAt).toBeNull();
+      expect(active!.targetUser.name).toBe('Target User');
     });
 
     it('returns null if no active session', async () => {
@@ -208,9 +209,10 @@ describe('impersonationRepository', () => {
       const logs = await impersonationRepository.getLogs({ adminId: admin.id });
 
       expect(logs).toHaveLength(1);
-      expect(logs.at(0)?.adminId).toBe(admin.id);
-      expect(logs.at(0)?.targetUserId).toBe(target.id);
-      expect(logs.at(0)?.admin?.name).toBe('Admin');
+      const log = logs[0]!;
+      expect(log.adminId).toBe(admin.id);
+      expect(log.targetUserId).toBe(target.id);
+      expect(log.admin.name).toBe('Admin');
     });
   });
 });

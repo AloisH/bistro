@@ -21,11 +21,11 @@ vi.mock('@vue-email/render', () => ({
 
 // Mock createError
 vi.mock('h3', () => ({
-  createError: vi.fn(error => error),
+  createError: vi.fn((error: { statusCode: number; message: string }) => error),
 }));
 
-const mockSend = resend!.emails.send as ReturnType<typeof vi.fn>;
-const mockRender = render as ReturnType<typeof vi.fn>;
+const mockEmails = vi.mocked(resend!.emails);
+const mockRender = vi.mocked(render);
 
 describe('emailService', () => {
   let emailService: EmailService;
@@ -33,7 +33,7 @@ describe('emailService', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     emailService = new EmailService();
-    mockSend.mockResolvedValue({
+    mockEmails.send.mockResolvedValue({
       data: { id: 'test-email-id' },
       error: null,
     });
@@ -55,7 +55,7 @@ describe('emailService', () => {
       });
 
       expect(result).toEqual({ id: 'test-email-id' });
-      expect(mockSend).toHaveBeenCalledWith({
+      expect(mockEmails.send).toHaveBeenCalledWith({
         from: 'noreply@resend.dev',
         to: 'test@example.com',
         subject: 'Test Subject',
@@ -72,7 +72,7 @@ describe('emailService', () => {
         html: '<p>Test</p>',
       });
 
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           to: ['test1@example.com', 'test2@example.com'],
         }),
@@ -87,7 +87,7 @@ describe('emailService', () => {
         from: 'custom@example.com',
       });
 
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           from: 'custom@example.com',
         }),
@@ -102,7 +102,7 @@ describe('emailService', () => {
         replyTo: 'reply@example.com',
       });
 
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           replyTo: 'reply@example.com',
         }),
@@ -110,7 +110,7 @@ describe('emailService', () => {
     });
 
     it('throws error when Resend API returns error', async () => {
-      mockSend.mockResolvedValue({
+      mockEmails.send.mockResolvedValue({
         data: null,
         error: { message: 'Invalid API key' },
       });
@@ -128,7 +128,7 @@ describe('emailService', () => {
     });
 
     it('throws error when send fails', async () => {
-      mockSend.mockRejectedValue(new Error('Network error'));
+      mockEmails.send.mockRejectedValue(new Error('Network error'));
 
       await expect(
         emailService.sendEmail({
@@ -196,7 +196,7 @@ describe('emailService', () => {
       );
 
       // Check email was sent with rendered content
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           html: '<html>rendered html</html>',
           text: 'rendered text',
@@ -214,7 +214,7 @@ describe('emailService', () => {
         replyTo: 'reply@example.com',
       });
 
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           from: 'custom@example.com',
           replyTo: 'reply@example.com',
@@ -273,7 +273,7 @@ describe('emailService', () => {
         resetLink: 'https://example.com/reset',
       });
 
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           subject: 'Reset your Bistro password',
         }),
@@ -308,7 +308,7 @@ describe('emailService', () => {
 
       expect(result).toEqual({ id: 'test-email-id' });
       expect(mockRender).toHaveBeenCalled();
-      expect(mockSend).toHaveBeenCalledWith(
+      expect(mockEmails.send).toHaveBeenCalledWith(
         expect.objectContaining({
           subject: 'Your Bistro account has been deleted',
         }),
