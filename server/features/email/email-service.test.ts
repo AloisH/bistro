@@ -5,6 +5,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { resend } from './email-client';
 import { EmailService } from './email-service';
 
+type SendEmailResult = Awaited<ReturnType<NonNullable<typeof resend>['emails']['send']>>;
+
 // Mock resend
 vi.mock('./email-client', () => ({
   resend: {
@@ -27,16 +29,19 @@ vi.mock('h3', () => ({
 const mockEmails = vi.mocked(resend!.emails);
 const mockRender = vi.mocked(render);
 
+// Mock success response
+const mockEmailResponse = {
+  data: { id: 'test-email-id' },
+  error: null,
+} as unknown as SendEmailResult;
+
 describe('emailService', () => {
   let emailService: EmailService;
 
   beforeEach(() => {
     vi.clearAllMocks();
     emailService = new EmailService();
-    mockEmails.send.mockResolvedValue({
-      data: { id: 'test-email-id' },
-      error: null,
-    });
+    mockEmails.send.mockResolvedValue(mockEmailResponse);
     mockRender.mockResolvedValue('<html>rendered</html>');
   });
 
@@ -110,10 +115,11 @@ describe('emailService', () => {
     });
 
     it('throws error when Resend API returns error', async () => {
-      mockEmails.send.mockResolvedValue({
+      const errorResponse = {
         data: null,
-        error: { message: 'Invalid API key' },
-      });
+        error: { message: 'Invalid API key', name: 'validation_error' },
+      } as unknown as SendEmailResult;
+      mockEmails.send.mockResolvedValue(errorResponse);
 
       await expect(
         emailService.sendEmail({

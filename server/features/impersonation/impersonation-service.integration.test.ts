@@ -4,14 +4,12 @@ import { createTestUser } from '../../testing/testFixtures';
 import { impersonationRepository } from './impersonation-repository';
 import { impersonationService } from './impersonation-service';
 
-// Type for Better Auth API response (partial mock)
-interface MockAuthResponse {
-  headers: { getSetCookie: () => string[] };
-}
-
-const mockAuthResponse: MockAuthResponse = {
+// Partial mock for Better Auth API response - cast to expected type
+const mockAuthResponse = {
+  session: { id: 'mock-session', userId: 'mock-user', token: 'mock-token', expiresAt: new Date(), createdAt: new Date(), updatedAt: new Date() },
+  user: { id: 'mock-user', email: 'mock@test.com', name: 'Mock', role: 'USER', emailVerified: true, createdAt: new Date(), updatedAt: new Date() },
   headers: { getSetCookie: () => [] },
-};
+} as unknown as Awaited<ReturnType<typeof import('../auth/auth-config').auth.api.impersonateUser>>;
 
 // Mock Better Auth
 vi.mock('../auth/auth-config', () => ({
