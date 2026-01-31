@@ -209,6 +209,9 @@ jobs:
         env:
           DATABASE_URL: postgresql://bistro:bistro@localhost:5432/bistro
 
+      - name: Prepare Nuxt
+        run: bun nuxt prepare
+
       - name: Run e2e tests
         run: bun run test:e2e
         env:
