@@ -40,16 +40,6 @@ export default antfu(
       '**/*.md/**',
     ],
   },
-  // Allow numbers/booleans in template literals
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
-    rules: {
-      'ts/restrict-template-expressions': ['error', {
-        allowNumber: true,
-        allowBoolean: true,
-      }],
-    },
-  },
   // Disable type-aware rules for Vue files (parser issues + OOM in CI)
   {
     files: ['**/*.vue'],
