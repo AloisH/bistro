@@ -43,5 +43,6 @@ export default defineNitroPlugin((_nitroApp) => {
     .filter(Boolean)
     .join(' ');
 
+  // eslint-disable-next-line no-console -- startup info
   console.log(summary);
 });

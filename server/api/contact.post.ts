@@ -46,6 +46,7 @@ ${data.message}
 
   if (!adminEmail) {
     // If no email configured, log and return success
+    // eslint-disable-next-line no-console -- fallback when email not configured
     console.log('[Contact] No CONTACT_EMAIL configured, logging submission:', data);
     return { success: true };
   }

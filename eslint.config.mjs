@@ -92,22 +92,6 @@ export default antfu(
       'ts/no-unnecessary-condition': 'off',
     },
   },
-  // Relax rules for config files
-  {
-    files: ['*.config.ts', 'prisma/*.ts', 'scripts/*.ts'],
-    rules: {
-      'ts/no-unsafe-assignment': 'off',
-      'ts/no-unsafe-member-access': 'off',
-      'ts/no-floating-promises': 'off',
-    },
-  },
-  // Allow console in server plugins and API routes
-  {
-    files: ['server/plugins/**/*.ts', 'server/api/**/*.ts'],
-    rules: {
-      'no-console': 'off',
-    },
-  },
   // Vue a11y
   ...pluginVueA11y.configs['flat/recommended'],
   {
