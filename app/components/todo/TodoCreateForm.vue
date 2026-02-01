@@ -53,6 +53,7 @@ async function onSubmit() {
         <UInput
           v-model="state.title"
           placeholder="Todo title..."
+          autocomplete="off"
           @keyup.enter="onSubmit"
         />
       </UFormField>
@@ -64,6 +65,7 @@ async function onSubmit() {
         <UTextarea
           v-model="state.description"
           placeholder="Description (optional)"
+          autocomplete="off"
           :rows="2"
         />
       </UFormField>

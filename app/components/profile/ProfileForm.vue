@@ -85,6 +85,7 @@ async function updateProfile() {
         <UInput
           v-model="profileState.name"
           placeholder="Your full name"
+          autocomplete="name"
           size="lg"
           class="w-full"
         />
@@ -102,6 +103,7 @@ async function updateProfile() {
         <UInput
           :model-value="user?.email"
           disabled
+          autocomplete="email"
           size="lg"
           class="w-full"
         />
