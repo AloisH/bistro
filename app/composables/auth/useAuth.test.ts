@@ -51,6 +51,36 @@ vi.stubGlobal('$fetch', mockFetch);
 // Import after mocks
 const { useAuth } = await import('./useAuth');
 
+// Test fixtures matching Zod schemas
+const mockSessionData = {
+  id: 'session-1',
+  userId: 'user-1',
+  expiresAt: new Date(),
+  token: 'token-123',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  ipAddress: null,
+  userAgent: null,
+  impersonatedBy: null,
+  currentOrganizationId: null,
+};
+
+const mockUserData = {
+  id: 'user-1',
+  email: 'test@example.com',
+  emailVerified: true,
+  name: 'Test',
+  image: null,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  role: 'USER' as const,
+  onboardingCompleted: true,
+  bio: null,
+  company: null,
+  useCase: null,
+  emailNotifications: true,
+};
+
 describe('useAuth', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -97,16 +127,16 @@ describe('useAuth', () => {
     it('fetches and updates session/user', async () => {
       mockClient.getSession.mockResolvedValue({
         data: {
-          session: { id: 'session-1' },
-          user: { id: 'user-1', name: 'Test' },
+          session: mockSessionData,
+          user: mockUserData,
         },
       });
 
       const { fetchSession } = useAuth();
       await fetchSession();
 
-      expect(mockSession.value).toEqual({ id: 'session-1' });
-      expect(mockUser.value).toEqual({ id: 'user-1', name: 'Test' });
+      expect(mockSession.value).toEqual(mockSessionData);
+      expect(mockUser.value).toEqual(mockUserData);
     });
 
     it('clears session/user when fetch returns null', async () => {

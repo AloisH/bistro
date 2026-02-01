@@ -1,4 +1,5 @@
 import type { AuthSession, AuthUser } from '#shared/auth';
+import { authSessionSchema, authUserSchema } from '#shared/auth';
 import { createAuthClient } from 'better-auth/client';
 import { adminClient, magicLinkClient } from 'better-auth/client/plugins';
 
@@ -35,9 +36,10 @@ export function useAuth() {
         ...(options?.forceRefresh && { query: { disableCookieCache: true } }),
       },
     });
-    // Cast through unknown since Better Auth's base types don't include custom fields
-    session.value = data?.session ? (data.session as unknown as AuthSession) : null;
-    user.value = data?.user ? (data.user as unknown as AuthUser) : null;
+    const parsedSession = authSessionSchema.safeParse(data?.session);
+    const parsedUser = authUserSchema.safeParse(data?.user);
+    session.value = parsedSession.success ? parsedSession.data : null;
+    user.value = parsedUser.success ? parsedUser.data : null;
     sessionFetching.value = false;
     return data;
   };

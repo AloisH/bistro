@@ -5,6 +5,40 @@ import { PASSWORD_MIN_LENGTH } from './constants';
  * Auth validation schemas
  */
 
+// User schema with custom fields (matches better-auth.d.ts augmentation)
+export const authUserSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  emailVerified: z.boolean(),
+  name: z.string(),
+  image: z.string().nullish(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  role: z.enum(['USER', 'ADMIN', 'SUPER_ADMIN']),
+  onboardingCompleted: z.boolean(),
+  bio: z.string().nullish(),
+  company: z.string().nullish(),
+  useCase: z.string().nullish(),
+  emailNotifications: z.boolean(),
+});
+
+// Session schema with custom fields
+export const authSessionSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  expiresAt: z.coerce.date(),
+  token: z.string(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  ipAddress: z.string().nullish(),
+  userAgent: z.string().nullish(),
+  impersonatedBy: z.string().nullish(),
+  currentOrganizationId: z.string().nullish(),
+});
+
+export type AuthUser = z.infer<typeof authUserSchema>;
+export type AuthSession = z.infer<typeof authSessionSchema>;
+
 /**
  * Password schema with complexity requirements
  * - Min 8 characters
