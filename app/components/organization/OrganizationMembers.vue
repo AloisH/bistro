@@ -129,11 +129,12 @@ const columns = [
           // Remove button (OWNER/ADMIN, not self)
           canRemove
             ? h(resolveComponent('UButton'), {
-                icon: 'i-lucide-trash-2',
-                size: 'xs',
-                color: 'error',
-                variant: 'ghost',
-                onClick: () => { openRemoveModal(member.userId); },
+                'icon': 'i-lucide-trash-2',
+                'size': 'xs',
+                'color': 'error',
+                'variant': 'ghost',
+                'aria-label': 'Remove member',
+                'onClick': () => { openRemoveModal(member.userId); },
               })
             : null,
         ].filter(Boolean),
