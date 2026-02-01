@@ -1,6 +1,11 @@
 import { getFieldErrors, OPTIONAL_VAR_GROUPS, validateEnv } from '#shared/env';
 
 export default defineNitroPlugin((_nitroApp) => {
+  // Skip during prerender (build time) - env vars not available
+  if (import.meta.prerender) {
+    return;
+  }
+
   const isProduction = process.env.NODE_ENV === 'production';
   const result = validateEnv(process.env, isProduction);
 
