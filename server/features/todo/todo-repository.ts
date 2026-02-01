@@ -5,13 +5,13 @@ import { db } from '../../utils/db';
 export class TodoRepository {
   protected readonly db = db;
 
-  async findByUserId(
-    userId: string,
+  async findByOrganizationId(
+    organizationId: string,
     options?: Partial<TodoQueryInput>,
   ): Promise<{ todos: Todo[]; total: number }> {
     const { filter = 'all', sort = 'date', page = 1, limit = 10 } = options || {};
 
-    const where: Prisma.TodoWhereInput = { userId };
+    const where: Prisma.TodoWhereInput = { organizationId };
     if (filter === 'active')
       where.completed = false;
     if (filter === 'completed')
@@ -32,23 +32,24 @@ export class TodoRepository {
     return { todos, total };
   }
 
-  async findById(id: string, userId: string): Promise<Todo | null> {
+  async findById(id: string, organizationId: string): Promise<Todo | null> {
     return this.db.todo.findFirst({
-      where: { id, userId }, // CRITICAL: always filter by userId
+      where: { id, organizationId },
     });
   }
 
-  async create(userId: string, data: CreateTodoInput): Promise<Todo> {
+  async create(organizationId: string, createdBy: string, data: CreateTodoInput): Promise<Todo> {
     return this.db.todo.create({
       data: {
         title: data.title,
         description: data.description,
-        user: { connect: { id: userId } },
+        organization: { connect: { id: organizationId } },
+        creator: { connect: { id: createdBy } },
       },
     });
   }
 
-  async update(id: string, userId: string, data: Prisma.TodoUpdateInput): Promise<Todo> {
+  async update(id: string, organizationId: string, data: Prisma.TodoUpdateInput): Promise<Todo> {
     return this.db.todo.update({
       where: { id },
       data,

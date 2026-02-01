@@ -115,21 +115,22 @@ export async function createTestOrg(
 }
 
 /**
- * Create a test todo linked to a user.
+ * Create a test todo linked to an organization.
  *
- * Todos require a valid userId - create a user first with createTestUser().
- * This demonstrates the parent-child relationship pattern used throughout
- * the codebase.
+ * Todos require a valid organizationId and createdBy - create an org and user first.
+ * This demonstrates the org-scoped relationship pattern used throughout the codebase.
  *
  * **Default Values:**
  * - title: "Test Todo"
  * - description: null
  * - completed: false
- * - userId: (from parameter - required)
+ * - organizationId: (from parameter - required)
+ * - createdBy: (from parameter - required)
  *
  * **Performance:** <50ms per fixture
  *
- * @param userId - User ID that owns this todo (required - must exist)
+ * @param organizationId - Organization ID that owns this todo (required - must exist)
+ * @param createdBy - User ID that created this todo (required - must exist)
  * @param overrides - Partial todo data to override defaults
  * @returns Created todo object with generated CUID
  * @see CLAUDE.md Test Infrastructure for usage patterns
@@ -138,35 +139,30 @@ export async function createTestOrg(
  * ```typescript
  * // Basic todo
  * const user = await createTestUser()
- * const todo = await createTestTodo(user.id)
+ * const org = await createTestOrg()
+ * const todo = await createTestTodo(org.id, user.id)
  *
  * // Completed todo with description
- * const completedTodo = await createTestTodo(user.id, {
+ * const completedTodo = await createTestTodo(org.id, user.id, {
  *   title: 'Important Task',
  *   description: 'This needs to be done',
  *   completed: true
  * })
- *
- * // Multiple todos for same user
- * const user = await createTestUser()
- * const todo1 = await createTestTodo(user.id, { title: 'First' })
- * const todo2 = await createTestTodo(user.id, { title: 'Second' })
  * ```
  */
 export async function createTestTodo(
-  userId: string,
-  overrides?: Partial<Prisma.TodoCreateInput>,
+  organizationId: string,
+  createdBy: string,
+  overrides?: Partial<Omit<Prisma.TodoCreateInput, 'organization' | 'creator'>>,
 ): Promise<Todo> {
-  const defaults: Prisma.TodoCreateInput = {
-    title: 'Test Todo',
-    completed: false,
-    user: {
-      connect: { id: userId },
-    },
-  };
-
   return db.todo.create({
-    data: { ...defaults, ...overrides },
+    data: {
+      title: overrides?.title ?? 'Test Todo',
+      description: overrides?.description,
+      completed: overrides?.completed ?? false,
+      organization: { connect: { id: organizationId } },
+      creator: { connect: { id: createdBy } },
+    },
   });
 }
 

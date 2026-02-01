@@ -13,6 +13,7 @@ const mockTodos = ref<Todo[]>([]);
 const mockLoading = ref(false);
 const mockTotal = ref(0);
 const mockRouteQuery = reactive<Record<string, string | number>>({});
+const mockRouteParams = reactive<Record<string, string>>({ slug: 'test-org' });
 const mockRouterPush = vi.fn();
 const mockToastAdd = vi.fn();
 
@@ -28,6 +29,7 @@ vi.stubGlobal('useState', vi.fn((key: string, init?: () => unknown) => {
 
 vi.stubGlobal('useRoute', vi.fn(() => ({
   query: mockRouteQuery,
+  params: mockRouteParams,
 })));
 
 vi.stubGlobal('useRouter', vi.fn(() => ({
@@ -51,7 +53,8 @@ function createTodo(id: string, completed = false): Todo {
     completed,
     createdAt: new Date(),
     updatedAt: new Date(),
-    userId: 'user-1',
+    organizationId: 'org-1',
+    createdBy: 'user-1',
   };
 }
 
@@ -62,6 +65,7 @@ describe('useTodos', () => {
     mockLoading.value = false;
     mockTotal.value = 0;
     Object.keys(mockRouteQuery).forEach(k => delete mockRouteQuery[k]);
+    mockRouteParams.slug = 'test-org';
   });
 
   describe('totalPages', () => {
@@ -102,13 +106,13 @@ describe('useTodos', () => {
   });
 
   describe('fetchTodos', () => {
-    it('fetches with current filter/sort/page', async () => {
+    it('fetches with org slug and current filter/sort/page', async () => {
       vi.mocked(globalThis.$fetch).mockResolvedValue({ todos: [], total: 0 });
 
       const { fetchTodos } = useTodos();
       await fetchTodos();
 
-      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/todos', {
+      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/organizations/test-org/todos', {
         query: { filter: 'all', sort: 'date', page: 1, limit: 10 },
       });
     });
@@ -223,13 +227,13 @@ describe('useTodos', () => {
       expect(mockTodos.value).toHaveLength(2);
     });
 
-    it('calls API with input', async () => {
+    it('calls API with org slug', async () => {
       vi.mocked(globalThis.$fetch).mockResolvedValue({ todo: createTodo('1') });
 
       const { createTodo: create } = useTodos();
       await create({ title: 'Test' });
 
-      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/todos', {
+      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/organizations/test-org/todos', {
         method: 'POST',
         body: { title: 'Test' },
       });
@@ -248,7 +252,7 @@ describe('useTodos', () => {
   });
 
   describe('toggleTodo', () => {
-    it('optimistically updates then calls API', async () => {
+    it('optimistically updates then calls API with org slug', async () => {
       const todo = createTodo('1', false);
       mockTodos.value = [todo];
       vi.mocked(globalThis.$fetch).mockResolvedValue({});
@@ -257,7 +261,7 @@ describe('useTodos', () => {
       await toggleTodo('1', true);
 
       expect(mockTodos.value[0]?.completed).toBe(true);
-      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/todos/1/toggle', {
+      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/organizations/test-org/todos/1/toggle', {
         method: 'POST',
         body: { completed: true },
       });
@@ -277,7 +281,7 @@ describe('useTodos', () => {
   });
 
   describe('deleteTodo', () => {
-    it('optimistically removes then calls API', async () => {
+    it('optimistically removes then calls API with org slug', async () => {
       mockTodos.value = [createTodo('1'), createTodo('2')];
       vi.mocked(globalThis.$fetch).mockResolvedValue({});
 
@@ -286,6 +290,9 @@ describe('useTodos', () => {
 
       expect(mockTodos.value).toHaveLength(1);
       expect(mockTodos.value[0]?.id).toBe('2');
+      expect(globalThis.$fetch).toHaveBeenCalledWith('/api/organizations/test-org/todos/1', {
+        method: 'DELETE',
+      });
       expect(mockToastAdd).toHaveBeenCalledWith(
         expect.objectContaining({ color: 'success' }),
       );

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { rollbackTransaction, startTransaction } from '../../testing/testDb';
-import { createTestTodo, createTestUser } from '../../testing/testFixtures';
+import { createTestOrg, createTestOrgMember, createTestTodo, createTestUser } from '../../testing/testFixtures';
 import { todoRepository } from './todo-repository';
 
 describe('todoRepository (Integration)', () => {
@@ -12,13 +12,15 @@ describe('todoRepository (Integration)', () => {
     await rollbackTransaction();
   });
 
-  describe('findByUserId', () => {
-    it('returns todos for specific user', async () => {
+  describe('findByOrganizationId', () => {
+    it('returns todos for specific organization', async () => {
       const user = await createTestUser();
-      const todo1 = await createTestTodo(user.id, { title: 'Task 1' });
-      const todo2 = await createTestTodo(user.id, { title: 'Task 2' });
+      const org = await createTestOrg();
+      await createTestOrgMember(user.id, org.id, 'MEMBER');
+      const todo1 = await createTestTodo(org.id, user.id, { title: 'Task 1' });
+      const todo2 = await createTestTodo(org.id, user.id, { title: 'Task 2' });
 
-      const { todos, total } = await todoRepository.findByUserId(user.id);
+      const { todos, total } = await todoRepository.findByOrganizationId(org.id);
 
       expect(todos).toHaveLength(2);
       expect(total).toBe(2);
@@ -26,25 +28,29 @@ describe('todoRepository (Integration)', () => {
       expect(todos.map(t => t.id)).toContain(todo2.id);
     });
 
-    it('does not return other users todos', async () => {
-      const user1 = await createTestUser();
-      const user2 = await createTestUser();
-      await createTestTodo(user1.id);
-      await createTestTodo(user2.id);
+    it('does not return other organizations todos', async () => {
+      const user = await createTestUser();
+      const org1 = await createTestOrg();
+      const org2 = await createTestOrg();
+      await createTestOrgMember(user.id, org1.id, 'MEMBER');
+      await createTestOrgMember(user.id, org2.id, 'MEMBER');
+      await createTestTodo(org1.id, user.id);
+      await createTestTodo(org2.id, user.id);
 
-      const { todos, total } = await todoRepository.findByUserId(user1.id);
+      const { todos, total } = await todoRepository.findByOrganizationId(org1.id);
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
-      expect(todos.at(0)?.userId).toBe(user1.id);
+      expect(todos.at(0)?.organizationId).toBe(org1.id);
     });
 
     it('filters active todos', async () => {
       const user = await createTestUser();
-      await createTestTodo(user.id, { completed: false });
-      await createTestTodo(user.id, { completed: true });
+      const org = await createTestOrg();
+      await createTestTodo(org.id, user.id, { completed: false });
+      await createTestTodo(org.id, user.id, { completed: true });
 
-      const { todos, total } = await todoRepository.findByUserId(user.id, { filter: 'active' });
+      const { todos, total } = await todoRepository.findByOrganizationId(org.id, { filter: 'active' });
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
@@ -53,10 +59,11 @@ describe('todoRepository (Integration)', () => {
 
     it('filters completed todos', async () => {
       const user = await createTestUser();
-      await createTestTodo(user.id, { completed: false });
-      await createTestTodo(user.id, { completed: true });
+      const org = await createTestOrg();
+      await createTestTodo(org.id, user.id, { completed: false });
+      await createTestTodo(org.id, user.id, { completed: true });
 
-      const { todos, total } = await todoRepository.findByUserId(user.id, { filter: 'completed' });
+      const { todos, total } = await todoRepository.findByOrganizationId(org.id, { filter: 'completed' });
 
       expect(todos).toHaveLength(1);
       expect(total).toBe(1);
@@ -65,10 +72,11 @@ describe('todoRepository (Integration)', () => {
 
     it('sorts by date descending by default', async () => {
       const user = await createTestUser();
-      const todo1 = await createTestTodo(user.id, { title: 'First' });
-      const todo2 = await createTestTodo(user.id, { title: 'Second' });
+      const org = await createTestOrg();
+      const todo1 = await createTestTodo(org.id, user.id, { title: 'First' });
+      const todo2 = await createTestTodo(org.id, user.id, { title: 'Second' });
 
-      const { todos } = await todoRepository.findByUserId(user.id);
+      const { todos } = await todoRepository.findByOrganizationId(org.id);
 
       // Most recent first (todo2 created after todo1)
       expect(todos.at(0)?.id).toBe(todo2.id);
@@ -77,10 +85,11 @@ describe('todoRepository (Integration)', () => {
 
     it('sorts by title when specified', async () => {
       const user = await createTestUser();
-      await createTestTodo(user.id, { title: 'Zebra' });
-      await createTestTodo(user.id, { title: 'Apple' });
+      const org = await createTestOrg();
+      await createTestTodo(org.id, user.id, { title: 'Zebra' });
+      await createTestTodo(org.id, user.id, { title: 'Apple' });
 
-      const { todos } = await todoRepository.findByUserId(user.id, { sort: 'title' });
+      const { todos } = await todoRepository.findByOrganizationId(org.id, { sort: 'title' });
 
       expect(todos.at(0)?.title).toBe('Apple');
       expect(todos.at(1)?.title).toBe('Zebra');
@@ -88,12 +97,13 @@ describe('todoRepository (Integration)', () => {
 
     it('paginates results', async () => {
       const user = await createTestUser();
+      const org = await createTestOrg();
       for (let i = 0; i < 15; i++) {
-        await createTestTodo(user.id, { title: `Task ${i}` });
+        await createTestTodo(org.id, user.id, { title: `Task ${i}` });
       }
 
-      const page1 = await todoRepository.findByUserId(user.id, { page: 1, limit: 10 });
-      const page2 = await todoRepository.findByUserId(user.id, { page: 2, limit: 10 });
+      const page1 = await todoRepository.findByOrganizationId(org.id, { page: 1, limit: 10 });
+      const page2 = await todoRepository.findByOrganizationId(org.id, { page: 2, limit: 10 });
 
       expect(page1.todos).toHaveLength(10);
       expect(page1.total).toBe(15);
@@ -103,30 +113,32 @@ describe('todoRepository (Integration)', () => {
   });
 
   describe('findById', () => {
-    it('finds todo by id for correct user', async () => {
+    it('finds todo by id for correct organization', async () => {
       const user = await createTestUser();
-      const todo = await createTestTodo(user.id, { title: 'Find me' });
+      const org = await createTestOrg();
+      const todo = await createTestTodo(org.id, user.id, { title: 'Find me' });
 
-      const result = await todoRepository.findById(todo.id, user.id);
+      const result = await todoRepository.findById(todo.id, org.id);
 
       expect(result).not.toBeNull();
       expect(result?.title).toBe('Find me');
     });
 
-    it('returns null if todo belongs to different user', async () => {
-      const user1 = await createTestUser();
-      const user2 = await createTestUser();
-      const todo = await createTestTodo(user1.id);
+    it('returns null if todo belongs to different organization', async () => {
+      const user = await createTestUser();
+      const org1 = await createTestOrg();
+      const org2 = await createTestOrg();
+      const todo = await createTestTodo(org1.id, user.id);
 
-      const result = await todoRepository.findById(todo.id, user2.id);
+      const result = await todoRepository.findById(todo.id, org2.id);
 
       expect(result).toBeNull();
     });
 
     it('returns null if todo does not exist', async () => {
-      const user = await createTestUser();
+      const org = await createTestOrg();
 
-      const result = await todoRepository.findById('nonexistent-id', user.id);
+      const result = await todoRepository.findById('nonexistent-id', org.id);
 
       expect(result).toBeNull();
     });
@@ -135,20 +147,23 @@ describe('todoRepository (Integration)', () => {
   describe('create', () => {
     it('creates todo with title only', async () => {
       const user = await createTestUser();
+      const org = await createTestOrg();
 
-      const result = await todoRepository.create(user.id, { title: 'New task' });
+      const result = await todoRepository.create(org.id, user.id, { title: 'New task' });
 
       expect(result.id).toBeDefined();
       expect(result.title).toBe('New task');
       expect(result.description).toBeNull();
       expect(result.completed).toBe(false);
-      expect(result.userId).toBe(user.id);
+      expect(result.organizationId).toBe(org.id);
+      expect(result.createdBy).toBe(user.id);
     });
 
     it('creates todo with description', async () => {
       const user = await createTestUser();
+      const org = await createTestOrg();
 
-      const result = await todoRepository.create(user.id, {
+      const result = await todoRepository.create(org.id, user.id, {
         title: 'Task with details',
         description: 'More info here',
       });
@@ -161,9 +176,10 @@ describe('todoRepository (Integration)', () => {
   describe('update', () => {
     it('updates todo title', async () => {
       const user = await createTestUser();
-      const todo = await createTestTodo(user.id, { title: 'Original' });
+      const org = await createTestOrg();
+      const todo = await createTestTodo(org.id, user.id, { title: 'Original' });
 
-      const result = await todoRepository.update(todo.id, user.id, { title: 'Updated' });
+      const result = await todoRepository.update(todo.id, org.id, { title: 'Updated' });
 
       expect(result.title).toBe('Updated');
       expect(result.id).toBe(todo.id);
@@ -171,18 +187,20 @@ describe('todoRepository (Integration)', () => {
 
     it('updates todo completed status', async () => {
       const user = await createTestUser();
-      const todo = await createTestTodo(user.id, { completed: false });
+      const org = await createTestOrg();
+      const todo = await createTestTodo(org.id, user.id, { completed: false });
 
-      const result = await todoRepository.update(todo.id, user.id, { completed: true });
+      const result = await todoRepository.update(todo.id, org.id, { completed: true });
 
       expect(result.completed).toBe(true);
     });
 
     it('updates multiple fields', async () => {
       const user = await createTestUser();
-      const todo = await createTestTodo(user.id);
+      const org = await createTestOrg();
+      const todo = await createTestTodo(org.id, user.id);
 
-      const result = await todoRepository.update(todo.id, user.id, {
+      const result = await todoRepository.update(todo.id, org.id, {
         title: 'Updated Title',
         description: 'Updated Description',
         completed: true,
@@ -197,14 +215,15 @@ describe('todoRepository (Integration)', () => {
   describe('delete', () => {
     it('deletes todo', async () => {
       const user = await createTestUser();
-      const todo = await createTestTodo(user.id);
+      const org = await createTestOrg();
+      const todo = await createTestTodo(org.id, user.id);
 
       const result = await todoRepository.delete(todo.id);
 
       expect(result.id).toBe(todo.id);
 
       // Verify deleted
-      const found = await todoRepository.findById(todo.id, user.id);
+      const found = await todoRepository.findById(todo.id, org.id);
       expect(found).toBeNull();
     });
   });

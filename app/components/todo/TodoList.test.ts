@@ -34,6 +34,12 @@ vi.stubGlobal('useTodos', () => ({
 
 vi.stubGlobal('computed', computed);
 
+// Mock useRoute for org slug
+vi.stubGlobal('useRoute', () => ({
+  params: { slug: 'test-org' },
+  query: {},
+}));
+
 // Stub components
 const stubs = {
   TodoCreateForm: { template: '<div class="todo-create-form" />' },

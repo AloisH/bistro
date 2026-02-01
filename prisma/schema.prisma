@@ -68,7 +68,7 @@ model User {
   impersonationsReceived  ImpersonationLog[] @relation("ImpersonationsOfUser")
   organizationMembers     OrganizationMember[]
   sentInvites             OrganizationInvite[] @relation("SentInvites")
-  todos                   Todo[]
+  createdTodos            Todo[]               @relation("TodosCreated")
   auditLogs               AuditLog[]
 
   createdAt     DateTime  @default(now())
@@ -166,18 +166,21 @@ model AuditLog {
 }
 
 model Todo {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  completed   Boolean  @default(false)
-  userId      String
+  id             String       @id @default(cuid())
+  title          String
+  description    String?
+  completed      Boolean      @default(false)
+  organizationId String
+  createdBy      String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  creator      User         @relation("TodosCreated", fields: [createdBy], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@index([organizationId])
+  @@index([createdBy])
   @@index([completed])
   @@map("todos")
 }
@@ -192,6 +195,7 @@ model Organization {
 
   members OrganizationMember[]
   invites OrganizationInvite[]
+  todos   Todo[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

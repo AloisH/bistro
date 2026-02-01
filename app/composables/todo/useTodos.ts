@@ -7,6 +7,8 @@ export function useTodos() {
   const loading = useState('todos:loading', () => false);
   const toast = useToast();
 
+  const orgSlug = computed(() => route.params.slug as string);
+
   // Pagination state
   const page = ref(Number(route.query.page) || 1);
   const limit = ref(10);
@@ -22,7 +24,7 @@ export function useTodos() {
   async function fetchTodos() {
     loading.value = true;
     try {
-      const data = await $fetch<TodoListResponse>('/api/todos', {
+      const data = await $fetch<TodoListResponse>(`/api/organizations/${orgSlug.value}/todos`, {
         query: { filter: filter.value, sort: sort.value, page: page.value, limit: limit.value },
       });
       todos.value = data.todos;
@@ -87,7 +89,7 @@ export function useTodos() {
 
   async function createTodo(input: CreateTodoInput) {
     try {
-      const { todo } = await $fetch<TodoResponse>('/api/todos', {
+      const { todo } = await $fetch<TodoResponse>(`/api/organizations/${orgSlug.value}/todos`, {
         method: 'POST',
         body: input,
       });
@@ -110,7 +112,7 @@ export function useTodos() {
       todo.completed = completed;
 
     try {
-      await $fetch(`/api/todos/${id}/toggle`, {
+      await $fetch(`/api/organizations/${orgSlug.value}/todos/${id}/toggle`, {
         method: 'POST',
         body: { completed },
       });
@@ -132,7 +134,7 @@ export function useTodos() {
     const removed = todos.value.splice(index, 1);
 
     try {
-      await $fetch(`/api/todos/${id}`, { method: 'DELETE' });
+      await $fetch(`/api/organizations/${orgSlug.value}/todos/${id}`, { method: 'DELETE' });
       toast.add({
         title: 'Success',
         description: 'Todo deleted',

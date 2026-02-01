@@ -65,7 +65,8 @@ export const todoSchema = z.object({
   title: z.string(),
   description: z.string().nullable(),
   completed: z.boolean(),
-  userId: z.string(),
+  organizationId: z.string(),
+  createdBy: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
