@@ -10,8 +10,11 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Fetch legal page
-  const page = await queryCollection(event, 'legal').path(`/legal/${slug}`).first();
+  const query = getQuery(event);
+  const locale = query.locale === 'fr' ? 'fr' : null;
+  const contentPath = locale ? `/legal/fr/${slug}` : `/legal/${slug}`;
+
+  const page = await queryCollection(event, 'legal').path(contentPath).first();
 
   if (!page) {
     throw createError({

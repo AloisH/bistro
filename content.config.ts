@@ -39,7 +39,7 @@ export default defineContentConfig({
     }),
     legal: defineCollection({
       type: 'page',
-      source: 'legal/*.md',
+      source: 'legal/**/*.md',
       schema: z.object({
         title: z.string(),
         description: z.string(),

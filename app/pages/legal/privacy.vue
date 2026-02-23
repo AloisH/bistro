@@ -6,12 +6,16 @@ interface LegalPage {
   body: unknown;
 }
 
-const { data: page } = await useFetch<LegalPage>('/api/legal/privacy');
+const { locale, t } = useI18n();
+
+const { data: page } = await useFetch<LegalPage>('/api/legal/privacy', {
+  query: { locale },
+});
 
 if (!page.value) {
   throw createError({
     statusCode: 404,
-    message: 'Page not found',
+    message: t('legal.pageNotFound'),
   });
 }
 
@@ -34,9 +38,9 @@ useSeo({
           {{ page.description }}
         </p>
         <p class="text-sm text-neutral-500">
-          Last updated:
+          {{ $t('legal.lastUpdated') }}
           {{
-            new Date(page.lastUpdated).toLocaleDateString('en-US', {
+            new Date(page.lastUpdated).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',

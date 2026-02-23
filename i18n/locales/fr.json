@@ -605,6 +605,10 @@
     "noResults": "Aucun résultat",
     "startTyping": "Commencez à taper pour rechercher"
   },
+  "legal": {
+    "lastUpdated": "Dernière mise à jour :",
+    "pageNotFound": "Page non trouvée"
+  },
   "changelog": {
     "title": "Changelog",
     "seoTitle": "Changelog",

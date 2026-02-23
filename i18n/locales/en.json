@@ -605,6 +605,10 @@
     "noResults": "No results",
     "startTyping": "Start typing to search"
   },
+  "legal": {
+    "lastUpdated": "Last updated:",
+    "pageNotFound": "Page not found"
+  },
   "changelog": {
     "title": "Changelog",
     "seoTitle": "Changelog",
