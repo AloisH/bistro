@@ -12,6 +12,7 @@ interface SessionWithMetadata {
   lastActive: Date;
 }
 
+const { t } = useI18n();
 const toast = useToast();
 
 const sessions = ref<SessionWithMetadata[]>([]);
@@ -42,8 +43,8 @@ async function fetchSessions() {
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Failed to Load Sessions',
-      description: getErrorMessage(e, 'Could not load active sessions'),
+      title: t('profile.sessions.toast.loadError'),
+      description: getErrorMessage(e, t('profile.sessions.toast.loadErrorDescription')),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
@@ -61,16 +62,16 @@ async function revokeSession(sessionId: string) {
     });
     await fetchSessions();
     toast.add({
-      title: 'Session Revoked',
-      description: 'The session has been successfully revoked',
+      title: t('profile.sessions.toast.revokeSuccess'),
+      description: t('profile.sessions.toast.revokeSuccessDescription'),
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Failed to Revoke Session',
-      description: getErrorMessage(e, 'Could not revoke the session'),
+      title: t('profile.sessions.toast.revokeError'),
+      description: getErrorMessage(e, t('profile.sessions.toast.revokeErrorDescription')),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
@@ -90,16 +91,16 @@ async function revokeAllOthers() {
     showRevokeAllModal.value = false;
     const count = data.count;
     toast.add({
-      title: 'Sessions Revoked',
-      description: `Successfully revoked ${count} session${count !== 1 ? 's' : ''}`,
+      title: t('profile.sessions.toast.revokeAllSuccess'),
+      description: t('profile.sessions.toast.revokeAllSuccessDescription', { count }),
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Failed to Revoke Sessions',
-      description: getErrorMessage(e, 'Could not revoke sessions'),
+      title: t('profile.sessions.toast.revokeAllError'),
+      description: getErrorMessage(e, t('profile.sessions.toast.revokeAllErrorDescription')),
       color: 'error',
       icon: 'i-lucide-alert-circle',
     });
@@ -120,18 +121,18 @@ defineExpose({
       <div class="flex-1">
         <div class="mb-1 flex items-center gap-2">
           <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-            Active Sessions
+            {{ $t('profile.sessions.title') }}
           </h2>
           <UBadge
             color="primary"
             variant="subtle"
             size="sm"
           >
-            Security
+            {{ $t('profile.sessions.badge') }}
           </UBadge>
         </div>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Manage devices where you're currently logged in
+          {{ $t('profile.sessions.description') }}
         </p>
       </div>
     </div>
@@ -159,15 +160,15 @@ defineExpose({
             class="mr-2"
           />
         </template>
-        Revoke All Other Sessions
+        {{ $t('profile.sessions.revokeAllButton') }}
       </UButton>
     </div>
 
     <!-- Revoke All Sessions Modal -->
     <UModal
       v-model:open="showRevokeAllModal"
-      title="Revoke All Other Sessions?"
-      description="You will be signed out from all devices except this one."
+      :title="$t('profile.sessions.revokeAllTitle')"
+      :description="$t('profile.sessions.revokeAllWarning')"
       :ui="{
         footer: 'flex flex-col sm:flex-row gap-3 w-full',
       }"
@@ -177,8 +178,8 @@ defineExpose({
           <UAlert
             color="warning"
             variant="subtle"
-            title="Security Action"
-            description="This will sign you out from all other devices. You'll need to log in again on those devices."
+            :title="$t('profile.sessions.securityAction')"
+            :description="$t('profile.sessions.securityActionDescription')"
           />
         </div>
       </template>
@@ -192,7 +193,7 @@ defineExpose({
             class="w-full sm:w-auto"
             @click="close"
           >
-            Cancel
+            {{ $t('profile.sessions.cancelButton') }}
           </UButton>
           <UButton
             color="error"
@@ -209,7 +210,7 @@ defineExpose({
                 class="mr-2"
               />
             </template>
-            Revoke All Sessions
+            {{ $t('profile.sessions.confirmRevokeAll') }}
           </UButton>
         </div>
       </template>

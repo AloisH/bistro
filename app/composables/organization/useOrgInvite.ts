@@ -13,12 +13,14 @@ export interface OrgInvite {
 export function useOrgInvite(token: string) {
   const router = useRouter();
   const toast = useToast();
+  const { t } = useI18n();
+  const localePath = useLocalePath();
 
   const accepting = ref(false);
 
   // Redirect if no token
   if (!token) {
-    void router.push('/org/select');
+    void router.push(localePath('/org/select'));
   }
 
   // Fetch invite data
@@ -41,19 +43,19 @@ export function useOrgInvite(token: string) {
       });
 
       toast.add({
-        title: 'Success',
-        description: 'You have joined the organization',
+        title: t('common.success'),
+        description: t('org.invite.toast.success'),
         color: 'success',
         icon: 'i-lucide-check',
       });
 
-      await router.push(`/org/${invite.value.organization.slug}/dashboard`);
+      await router.push(localePath(`/org/${invite.value.organization.slug}/dashboard`));
     }
     catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
-        title: 'Error',
-        description: error.data?.message || 'Failed to accept invite',
+        title: t('common.error'),
+        description: error.data?.message || t('org.invite.toast.error'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });

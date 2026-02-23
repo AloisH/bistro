@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { organizations, activeOrganization, activeOrgSlug, fetchOrganizations } = useOrganization();
 
 // Fetch orgs on mount
@@ -7,14 +9,14 @@ onMounted(() => fetchOrganizations());
 const items = computed(() => [
   [
     {
-      label: 'Members',
+      label: t('org.switcher.members'),
       icon: 'i-lucide-users',
-      to: `/org/${activeOrgSlug.value}/members`,
+      to: localePath(`/org/${activeOrgSlug.value}/members`),
     },
     {
-      label: 'Settings',
+      label: t('org.switcher.settings'),
       icon: 'i-lucide-settings',
-      to: `/org/${activeOrgSlug.value}/settings`,
+      to: localePath(`/org/${activeOrgSlug.value}/settings`),
     },
   ],
   [
@@ -22,14 +24,14 @@ const items = computed(() => [
       label: org.name,
       avatar: { text: org.name.charAt(0).toUpperCase() },
       trailingIcon: org.slug === activeOrgSlug.value ? 'i-lucide-check' : undefined,
-      to: `/org/${org.slug}/dashboard`,
+      to: localePath(`/org/${org.slug}/dashboard`),
     })),
   ],
   [
     {
-      label: 'Create Organization',
+      label: t('org.switcher.createOrganization'),
       icon: 'i-lucide-plus',
-      to: '/org/create',
+      to: localePath('/org/create'),
     },
   ],
 ]);
@@ -50,7 +52,7 @@ const items = computed(() => [
         trailing-icon="i-lucide-chevron-down"
         block
         class="group hover:bg-neutral-100 dark:hover:bg-neutral-800"
-        :aria-label="`Switch organization, current: ${activeOrganization.name}`"
+        :aria-label="t('org.switcher.switchLabel', { name: activeOrganization.name })"
       >
         <div class="flex items-center gap-2">
           <UAvatar
@@ -67,13 +69,13 @@ const items = computed(() => [
       v-else
       color="neutral"
       variant="ghost"
-      to="/org/create"
+      :to="localePath('/org/create')"
       block
       class="hover:bg-neutral-100 dark:hover:bg-neutral-800"
     >
       <div class="flex items-center gap-2">
         <UIcon name="i-lucide-plus" />
-        <span>Create Organization</span>
+        <span>{{ $t('org.switcher.createOrganization') }}</span>
       </div>
     </UButton>
   </ClientOnly>

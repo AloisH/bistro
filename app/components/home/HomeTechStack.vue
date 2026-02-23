@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const techStack = [
   { name: 'Nuxt', icon: 'i-simple-icons-nuxtdotjs', url: 'https://nuxt.com' },
   { name: 'Vue', icon: 'i-simple-icons-vuedotjs', url: 'https://vuejs.org' },
@@ -13,7 +15,7 @@ const techStack = [
   <UPageSection class="scroll-animate">
     <div class="text-center">
       <p class="text-muted mb-6 text-sm">
-        Built with modern technologies
+        {{ t('home.techStack.builtWith') }}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
         <NuxtLink

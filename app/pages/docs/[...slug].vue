@@ -69,7 +69,7 @@ useSeo({
       <aside class="hidden lg:block">
         <div class="sticky top-6">
           <h3 class="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
-            On this page
+            {{ $t('docs.onThisPage') }}
           </h3>
           <UContentToc
             v-if="tocLinks.length"
@@ -80,7 +80,7 @@ useSeo({
             v-else
             class="text-sm text-neutral-500"
           >
-            No sections
+            {{ $t('docs.noSections') }}
           </p>
         </div>
       </aside>

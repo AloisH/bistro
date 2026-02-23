@@ -11,13 +11,13 @@ const slug = route.params.slug as string;
   <UCard>
     <template #header>
       <h1 class="text-3xl font-bold">
-        Organization Settings
+        {{ $t('org.settings.title') }}
       </h1>
     </template>
 
     <div class="space-y-6">
       <p class="text-neutral-600 dark:text-neutral-400">
-        Settings for {{ slug }}
+        {{ $t('org.settings.description', { slug }) }}
       </p>
     </div>
   </UCard>

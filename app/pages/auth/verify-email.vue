@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 const router = useRouter();
 const { client } = useAuth();
@@ -9,8 +11,8 @@ const email = ref(route.query.email as string);
 onMounted(() => {
   if (!email.value) {
     toast.add({
-      title: 'Email required',
-      description: 'Please register first',
+      title: t('auth.emailRequired'),
+      description: t('auth.emailRequiredDescription'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -23,7 +25,7 @@ const { resending, cooldown, canResend, resend } = useResendCooldown();
 function resendVerification() {
   resend(
     () => client.sendVerificationEmail({ email: email.value, callbackURL: '/org/select' }),
-    'Check your inbox for verification link',
+    t('auth.verifyEmail.heading'),
   );
 }
 </script>
@@ -41,10 +43,10 @@ function resendVerification() {
           </div>
           <div>
             <h2 class="text-2xl font-bold">
-              Check your email
+              {{ $t('auth.verifyEmail.title') }}
             </h2>
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-              Verify to continue
+              {{ $t('auth.verifyEmail.badge') }}
             </p>
           </div>
         </div>
@@ -54,18 +56,18 @@ function resendVerification() {
         <UAlert
           color="info"
           variant="subtle"
-          title="Verification email sent"
+          :title="t('auth.verifyEmail.heading')"
         >
           <template #description>
             <p class="text-sm">
-              We sent a verification link to <strong>{{ email }}</strong>. Click the link to verify your account and sign in.
+              {{ $t('auth.verifyEmail.description', { email }) }}
             </p>
           </template>
         </UAlert>
 
         <div class="space-y-2">
           <p class="text-sm text-neutral-600 dark:text-neutral-400">
-            Didn't receive the email? Check spam or resend.
+            {{ $t('auth.verifyEmail.resendHint') }}
           </p>
 
           <UButton
@@ -76,10 +78,10 @@ function resendVerification() {
             @click="resendVerification"
           >
             <template v-if="cooldown > 0">
-              Resend in {{ cooldown }}s
+              {{ $t('auth.verifyEmail.resendCountdown', { cooldown }) }}
             </template>
             <template v-else>
-              Resend verification email
+              {{ $t('auth.verifyEmail.resendButton') }}
             </template>
           </UButton>
         </div>
@@ -87,12 +89,12 @@ function resendVerification() {
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Already verified?
+          {{ $t('auth.verifyEmail.alreadyVerified') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </NuxtLink>
         </p>
       </template>

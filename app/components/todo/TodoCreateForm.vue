@@ -8,6 +8,8 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
+const { t } = useI18n();
+
 const { createTodo } = useTodos();
 
 const state = reactive<CreateTodoInput>({
@@ -29,7 +31,7 @@ async function onSubmit() {
     state.description = '';
   }
   catch {
-    error.value = 'Failed to create todo. Please try again.';
+    error.value = t('todo.toast.createFormError');
   }
   finally {
     loading.value = false;
@@ -41,18 +43,18 @@ async function onSubmit() {
   <UForm
     :state="state"
     :schema="createTodoSchema"
-    aria-label="Create new todo"
+    :aria-label="t('todo.createNewTodo')"
     @submit.prevent="onSubmit"
   >
     <div class="space-y-3">
       <UFormField
         name="title"
-        label="Title"
+        :label="t('todo.titleLabel')"
         required
       >
         <UInput
           v-model="state.title"
-          placeholder="Todo title..."
+          :placeholder="t('todo.titlePlaceholder')"
           autocomplete="off"
           @keyup.enter="onSubmit"
         />
@@ -60,11 +62,11 @@ async function onSubmit() {
 
       <UFormField
         name="description"
-        label="Description"
+        :label="t('todo.descriptionLabel')"
       >
         <UTextarea
           v-model="state.description"
-          placeholder="Description (optional)"
+          :placeholder="t('todo.descriptionPlaceholder')"
           autocomplete="off"
           :rows="2"
         />
@@ -84,7 +86,7 @@ async function onSubmit() {
         :loading="loading"
         block
       >
-        Add Todo
+        {{ $t('todo.addButton') }}
       </UButton>
     </div>
   </UForm>

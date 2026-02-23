@@ -1,38 +1,35 @@
 <script setup lang="ts">
-const faqItems = [
+const { t } = useI18n();
+
+const faqItems = computed(() => [
   {
-    label: 'Is Bistro really free?',
-    content:
-      'Yes! Bistro is 100% free and open source. There are no premium tiers, no hidden fees, and no credit card required. You can use all features without any limitations.',
+    label: t('home.faq.q1'),
+    content: t('home.faq.a1'),
   },
   {
-    label: 'Can I self-host Bistro?',
-    content:
-      'Absolutely. Bistro is open source and designed to be self-hosted. Check out our GitHub repository for deployment instructions using Docker or your preferred hosting platform.',
+    label: t('home.faq.q2'),
+    content: t('home.faq.a2'),
   },
   {
-    label: 'How do organizations work?',
-    content:
-      'Organizations allow you to collaborate with others. Create an organization, invite team members via email, and assign roles (Owner, Admin, Member, Guest) to control access levels.',
+    label: t('home.faq.q3'),
+    content: t('home.faq.a3'),
   },
   {
-    label: 'Is my data secure?',
-    content:
-      'Security is a priority. We use industry-standard encryption, secure authentication, and never share your data with third parties. For maximum control, you can always self-host.',
+    label: t('home.faq.q4'),
+    content: t('home.faq.a4'),
   },
   {
-    label: 'What tech stack does Bistro use?',
-    content:
-      'Bistro is built with Nuxt 4, Vue 3, Tailwind CSS, Prisma, and PostgreSQL. It uses Better Auth for authentication and Nuxt UI for the component library.',
+    label: t('home.faq.q5'),
+    content: t('home.faq.a5'),
   },
-];
+]);
 </script>
 
 <template>
   <UPageSection
     id="faq"
-    title="Frequently asked questions"
-    description="Got questions? We've got answers."
+    :title="t('home.faq.title')"
+    :description="t('home.faq.description')"
     class="scroll-animate"
   >
     <UAccordion

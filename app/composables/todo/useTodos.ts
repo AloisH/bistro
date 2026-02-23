@@ -6,6 +6,7 @@ export function useTodos() {
   const todos = useState<Todo[]>('todos:list', () => []);
   const loading = useState('todos:loading', () => false);
   const toast = useToast();
+  const { t } = useI18n();
 
   const orgSlug = computed(() => route.params.slug as string);
 
@@ -32,8 +33,8 @@ export function useTodos() {
     }
     catch {
       toast.add({
-        title: 'Error',
-        description: 'Failed to load todos',
+        title: t('common.error'),
+        description: t('todo.toast.loadError'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
@@ -97,8 +98,8 @@ export function useTodos() {
     }
     catch {
       toast.add({
-        title: 'Error',
-        description: 'Failed to create todo',
+        title: t('common.error'),
+        description: t('todo.toast.createError'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
@@ -121,8 +122,8 @@ export function useTodos() {
       if (todo)
         todo.completed = !completed;
       toast.add({
-        title: 'Error',
-        description: 'Failed to update todo',
+        title: t('common.error'),
+        description: t('todo.toast.updateError'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
@@ -136,8 +137,8 @@ export function useTodos() {
     try {
       await $fetch(`/api/organizations/${orgSlug.value}/todos/${id}`, { method: 'DELETE' });
       toast.add({
-        title: 'Success',
-        description: 'Todo deleted',
+        title: t('common.success'),
+        description: t('todo.toast.deleteSuccess'),
         color: 'success',
         icon: 'i-lucide-check',
       });
@@ -145,8 +146,8 @@ export function useTodos() {
     catch {
       todos.value.splice(index, 0, ...removed);
       toast.add({
-        title: 'Error',
-        description: 'Failed to delete todo',
+        title: t('common.error'),
+        description: t('todo.toast.deleteError'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });

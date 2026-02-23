@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { client } = useAuth();
 const route = useRoute();
 const router = useRouter();
@@ -10,8 +12,8 @@ const email = ref(route.query.email as string);
 onMounted(() => {
   if (!email.value) {
     toast.add({
-      title: 'Email required',
-      description: 'Please enter your email first',
+      title: t('auth.emailRequired'),
+      description: t('auth.emailRequiredDescription'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -28,7 +30,7 @@ function resendReset() {
         email: email.value,
         redirectTo: `${config.public.appUrl}/auth/reset-password`,
       }),
-    'Check your inbox for reset link',
+    t('auth.resetPassword.toast.successDescription'),
   );
 }
 </script>
@@ -46,10 +48,10 @@ function resendReset() {
           </div>
           <div>
             <h2 class="text-2xl font-bold">
-              Check your email
+              {{ $t('auth.forgotPasswordSent.title') }}
             </h2>
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-              Reset link sent
+              {{ $t('auth.forgotPasswordSent.badge') }}
             </p>
           </div>
         </div>
@@ -59,18 +61,18 @@ function resendReset() {
         <UAlert
           color="info"
           variant="subtle"
-          title="Password reset email sent"
+          :title="t('auth.forgotPasswordSent.heading')"
         >
           <template #description>
             <p class="text-sm">
-              We sent a password reset link to <strong>{{ email }}</strong>. Click the link to create a new password.
+              {{ $t('auth.forgotPasswordSent.description', { email }) }}
             </p>
           </template>
         </UAlert>
 
         <div class="space-y-2">
           <p class="text-sm text-neutral-600 dark:text-neutral-400">
-            Didn't receive the email? Check spam or resend.
+            {{ $t('auth.forgotPasswordSent.resendHint') }}
           </p>
 
           <UButton
@@ -81,10 +83,10 @@ function resendReset() {
             @click="resendReset"
           >
             <template v-if="cooldown > 0">
-              Resend in {{ cooldown }}s
+              {{ $t('auth.forgotPasswordSent.resendCountdown', { cooldown }) }}
             </template>
             <template v-else>
-              Resend reset email
+              {{ $t('auth.forgotPasswordSent.resendButton') }}
             </template>
           </UButton>
         </div>
@@ -92,12 +94,12 @@ function resendReset() {
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Remember your password?
+          {{ $t('auth.forgotPasswordSent.rememberPassword') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </NuxtLink>
         </p>
       </template>

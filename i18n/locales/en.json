@@ -1,0 +1,716 @@
+{
+  "common": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "getStarted": "Get Started",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "remove": "Remove",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "loading": "Loading...",
+    "yes": "Yes",
+    "no": "No",
+    "error": "Error",
+    "success": "Success",
+    "submit": "Submit",
+    "close": "Close",
+    "or": "Or",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "actions": "Actions",
+    "description": "Description",
+    "title": "Title",
+    "previous": "Previous",
+    "all": "All",
+    "stop": "Stop",
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "docs": "Docs",
+    "changelog": "Changelog",
+    "contact": "Contact",
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "admin": "Admin",
+    "emailPreviews": "Email Previews",
+    "feedback": "Feedback",
+    "helpSupport": "Help & Support",
+    "logout": "Logout"
+  },
+  "seo": {
+    "title": "Bistro",
+    "description": "Production-ready Nuxt 4 SaaS boilerplate with auth, multi-tenancy, and RBAC."
+  },
+  "banner": {
+    "announcement": "New: Command palette search with Cmd+K"
+  },
+  "footer": {
+    "product": "Product",
+    "resources": "Resources",
+    "legal": "Legal",
+    "company": "Company",
+    "documentation": "Documentation",
+    "about": "About",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "faq": "FAQ",
+    "followUs": "Follow us",
+    "tagline": "Open source todo app built with Nuxt.",
+    "copyright": "© {year} Bistro. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "headline": "100% Free & Open Source",
+      "title": "The simplest way to manage your tasks",
+      "description": "Bistro is a free, open-source todo app that helps you stay organized. No bloat, no complexity - just a clean interface to get things done.",
+      "startForFree": "Start for free",
+      "viewOnGithub": "View on GitHub"
+    },
+    "features": {
+      "title": "Everything you need, nothing you don't",
+      "description": "Focus on what matters. Bistro keeps task management simple while providing the essentials for personal productivity.",
+      "simpleTaskManagement": "Simple task management",
+      "simpleTaskManagementDescription": "Create, organize, and complete tasks with an intuitive interface. No learning curve required.",
+      "smartFiltering": "Smart filtering",
+      "smartFilteringDescription": "Filter tasks by status, sort by date or priority. Find what you need instantly.",
+      "teamCollaboration": "Team collaboration",
+      "teamCollaborationDescription": "Create organizations, invite team members, and manage tasks together.",
+      "darkMode": "Dark mode",
+      "darkModeDescription": "Easy on the eyes with automatic dark mode support. Work comfortably day or night.",
+      "worksEverywhere": "Works everywhere",
+      "worksEverywhereDescription": "Fully responsive design that works beautifully on desktop, tablet, and mobile.",
+      "secureByDefault": "Secure by default",
+      "secureByDefaultDescription": "Your data is yours. Self-host it or trust our secure infrastructure."
+    },
+    "pricing": {
+      "title": "Simple pricing",
+      "description": "Start free, scale as you grow. No hidden fees.",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "yearlySave": "Save 20%",
+      "free": {
+        "title": "Free",
+        "description": "Everything you need to stay productive",
+        "tagline": "Forever free",
+        "getStarted": "Get started",
+        "features": {
+          "unlimitedTasks": "Unlimited tasks",
+          "unlimitedOrganizations": "Unlimited organizations",
+          "teamCollaboration": "Team collaboration",
+          "darkMode": "Dark mode",
+          "mobileResponsive": "Mobile responsive",
+          "openSource": "Open source"
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "description": "Got questions? We've got answers.",
+      "q1": "Is Bistro really free?",
+      "a1": "Yes! Bistro is 100% free and open source. There are no premium tiers, no hidden fees, and no credit card required. You can use all features without any limitations.",
+      "q2": "Can I self-host Bistro?",
+      "a2": "Absolutely. Bistro is open source and designed to be self-hosted. Check out our GitHub repository for deployment instructions using Docker or your preferred hosting platform.",
+      "q3": "How do organizations work?",
+      "a3": "Organizations allow you to collaborate with others. Create an organization, invite team members via email, and assign roles (Owner, Admin, Member, Guest) to control access levels.",
+      "q4": "Is my data secure?",
+      "a4": "Security is a priority. We use industry-standard encryption, secure authentication, and never share your data with third parties. For maximum control, you can always self-host.",
+      "q5": "What tech stack does Bistro use?",
+      "a5": "Bistro is built with Nuxt 4, Vue 3, Tailwind CSS, Prisma, and PostgreSQL. It uses Better Auth for authentication and Nuxt UI for the component library."
+    },
+    "cta": {
+      "title": "Get early access to new features",
+      "description": "Join our newsletter to be the first to know about updates, new features, and tips to boost your productivity.",
+      "emailPlaceholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "testimonials": {
+      "title": "Loved by developers",
+      "description": "See what others are saying about Bistro.",
+      "sarah": {
+        "name": "Sarah Chen",
+        "role": "Indie Developer",
+        "quote": "Finally, a todo app that doesn't try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow."
+      },
+      "marcus": {
+        "name": "Marcus Johnson",
+        "role": "Startup Founder",
+        "quote": "We switched our team to Bistro and productivity went up. The organization features are exactly what we needed without the bloat."
+      },
+      "emily": {
+        "name": "Emily Rodriguez",
+        "role": "Open Source Contributor",
+        "quote": "Love that it's open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too."
+      }
+    },
+    "techStack": {
+      "builtWith": "Built with modern technologies"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Sign in to your account",
+      "noAccount": "Don't have an account?",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "password": "Password",
+      "magicLink": "Magic Link",
+      "forgotPassword": "Forgot password?",
+      "signInButton": "Sign in"
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Sign up to get started",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you{'@'}example.com",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Create account",
+      "hasAccount": "Already have an account?",
+      "toast": {
+        "title": "Account created!",
+        "description": "Check your email for verification link."
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "description": "Enter your email to receive a reset link",
+      "emailPlaceholder": "you{'@'}example.com",
+      "submitButton": "Send reset link",
+      "rememberPassword": "Remember your password?"
+    },
+    "forgotPasswordSent": {
+      "title": "Check your email",
+      "badge": "Reset link sent",
+      "heading": "Password reset email sent",
+      "description": "We sent a password reset link to {email}. Click the link to create a new password.",
+      "resendHint": "Didn't receive the email? Check spam or resend.",
+      "resendCountdown": "Resend in {cooldown}s",
+      "resendButton": "Resend reset email",
+      "rememberPassword": "Remember your password?"
+    },
+    "resetPassword": {
+      "title": "Create new password",
+      "description": "Enter your new password below",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm password",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Reset password",
+      "rememberPassword": "Remember your password?",
+      "toast": {
+        "invalidLink": "Invalid link",
+        "invalidLinkDescription": "Password reset link is missing or invalid",
+        "success": "Password updated",
+        "successDescription": "You can now sign in with your new password"
+      }
+    },
+    "magicLink": {
+      "title": "Magic Link Login",
+      "description": "Enter your email to receive a login link",
+      "emailPlaceholder": "you{'@'}example.com",
+      "submitButton": "Send magic link",
+      "preferPassword": "Prefer a password?",
+      "signInWithPassword": "Sign in with password"
+    },
+    "magicLinkSent": {
+      "title": "Check your email",
+      "badge": "Magic link sent",
+      "heading": "Login link sent",
+      "description": "We sent a login link to {email}. Click the link to sign in instantly.",
+      "resendHint": "Didn't receive the email? Check spam or resend.",
+      "resendCountdown": "Resend in {cooldown}s",
+      "resendButton": "Resend magic link",
+      "preferPassword": "Prefer a password?",
+      "signInWithPassword": "Sign in with password"
+    },
+    "verifyEmail": {
+      "title": "Check your email",
+      "badge": "Verify to continue",
+      "heading": "Verification email sent",
+      "description": "We sent a verification link to {email}. Click the link to verify your account and sign in.",
+      "resendHint": "Didn't receive the email? Check spam or resend.",
+      "resendCountdown": "Resend in {cooldown}s",
+      "resendButton": "Resend verification email",
+      "alreadyVerified": "Already verified?"
+    },
+    "oauth": {
+      "orContinueWith": "Or continue with",
+      "continueWithGithub": "Continue with GitHub",
+      "continueWithGoogle": "Continue with Google"
+    },
+    "magicLinkForm": {
+      "emailLabel": "Email",
+      "hint": "We'll send you a link to sign in without a password.",
+      "submitButton": "Send Magic Link"
+    },
+    "resend": {
+      "emailSent": "Email sent",
+      "tooManyAttempts": "Too many attempts",
+      "tooManyAttemptsDescription": "Please wait before trying again",
+      "failedToSend": "Failed to send",
+      "failedToSendDescription": "Please try again later"
+    },
+    "emailRequired": "Email required",
+    "emailRequiredDescription": "Please enter your email first",
+    "userMenu": "User menu"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "description": "Manage your account information and preferences",
+    "form": {
+      "title": "Profile Information",
+      "nameLabel": "Full Name",
+      "nameHint": "Your display name that appears on your profile",
+      "namePlaceholder": "Your full name",
+      "emailLabel": "Email Address",
+      "emailHint": "Your account email address",
+      "emailOauthHint": "Managed by your OAuth provider (GitHub/Google)",
+      "saveButton": "Save Changes",
+      "toast": {
+        "success": "Profile Updated",
+        "successDescription": "Your profile information has been saved successfully",
+        "error": "Update Failed"
+      }
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "description": "Update your password to keep your account secure",
+      "badge": "Security",
+      "currentPasswordLabel": "Current Password",
+      "currentPasswordHint": "Enter your current password for verification",
+      "newPasswordLabel": "New Password",
+      "newPasswordHint": "Choose a strong password with at least 8 characters",
+      "passwordPlaceholder": "••••••••",
+      "revokeSessionsLabel": "Sign out from all other devices",
+      "revokeSessionsHint": "Recommended for security when changing passwords",
+      "submitButton": "Update Password",
+      "toast": {
+        "success": "Password Updated",
+        "successDescription": "Your password has been changed successfully",
+        "error": "Password Change Failed"
+      }
+    },
+    "sessions": {
+      "title": "Active Sessions",
+      "badge": "Security",
+      "description": "Manage devices where you're currently logged in",
+      "revokeAllButton": "Revoke All Other Sessions",
+      "revokeAllTitle": "Revoke All Other Sessions?",
+      "revokeAllWarning": "You will be signed out from all devices except this one.",
+      "securityAction": "Security Action",
+      "securityActionDescription": "This will sign you out from all other devices. You'll need to log in again on those devices.",
+      "cancelButton": "Cancel",
+      "confirmRevokeAll": "Revoke All Sessions",
+      "toast": {
+        "loadError": "Failed to Load Sessions",
+        "loadErrorDescription": "Could not load active sessions",
+        "revokeSuccess": "Session Revoked",
+        "revokeSuccessDescription": "The session has been successfully revoked",
+        "revokeError": "Failed to Revoke Session",
+        "revokeErrorDescription": "Could not revoke the session",
+        "revokeAllSuccess": "Sessions Revoked",
+        "revokeAllSuccessDescription": "Successfully revoked {count} session(s)",
+        "revokeAllError": "Failed to Revoke Sessions",
+        "revokeAllErrorDescription": "Could not revoke sessions"
+      }
+    },
+    "deleteAccount": {
+      "title": "Danger Zone",
+      "description": "Once you delete your account, there is no going back. All your data will be permanently deleted.",
+      "deleteButton": "Delete Account",
+      "modalTitle": "Confirm Account Deletion",
+      "modalDescription": "This action cannot be undone. All your data will be permanently deleted.",
+      "irreversible": "Irreversible Action",
+      "irreversibleDescription": "Once deleted, your account and all associated data cannot be recovered.",
+      "dataList": "The following data will be permanently deleted:",
+      "dataProfile": "Your user profile and account information",
+      "dataProjects": "All your projects and their configurations",
+      "dataJobs": "All AI jobs and their results",
+      "dataSessions": "All active sessions across devices",
+      "passwordLabel": "Enter your password to confirm",
+      "passwordHint": "This is required for security verification",
+      "emailLabel": "Enter your email to confirm",
+      "emailHint": "Enter your account email address",
+      "passwordPlaceholder": "••••••••",
+      "confirmButton": "Delete Forever",
+      "toast": {
+        "success": "Account Deleted",
+        "successDescription": "Your account has been permanently deleted",
+        "error": "Deletion Failed"
+      }
+    },
+    "restartOnboarding": {
+      "title": "Restart Onboarding",
+      "description": "Go through the onboarding wizard again",
+      "button": "Restart Onboarding"
+    },
+    "onboardingInfo": {
+      "title": "Onboarding Status",
+      "completed": "Completed",
+      "notCompleted": "Not completed"
+    }
+  },
+  "onboarding": {
+    "title": "Welcome to Bistro",
+    "skipButton": "Skip",
+    "backButton": "Back",
+    "nextButton": "Next",
+    "finishButton": "Go to Dashboard",
+    "welcome": {
+      "title": "Welcome to Bistro!",
+      "description": "Let's get you set up in just a few steps. This will only take a minute.",
+      "step1Title": "Set up your profile",
+      "step1Description": "Add bio and company info",
+      "step2Title": "Configure preferences",
+      "step2Description": "Customize your experience",
+      "step3Title": "Tell us about yourself",
+      "step3Description": "Help us tailor Bistro for you"
+    },
+    "profile": {
+      "title": "Set up your profile",
+      "description": "Tell us a bit about yourself (all fields optional)",
+      "bioLabel": "Bio",
+      "bioPlaceholder": "Tell us about yourself...",
+      "bioCount": "{count} / 500",
+      "companyLabel": "Company / Organization",
+      "companyPlaceholder": "Acme Inc."
+    },
+    "organization": {
+      "title": "Create Your Organization",
+      "description": "Organizations help you collaborate with your team",
+      "nameLabel": "Organization Name",
+      "namePlaceholder": "My Company",
+      "slugLabel": "URL Slug",
+      "slugHint": "Used in the organization URL",
+      "slugPlaceholder": "my-company",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What does your organization do?"
+    },
+    "useCase": {
+      "title": "What brings you to Bistro?",
+      "description": "This helps us tailor your experience",
+      "personal": "Personal Project",
+      "personalDescription": "Building something for myself",
+      "business": "Business",
+      "businessDescription": "For my company or startup",
+      "agency": "Agency",
+      "agencyDescription": "Building for clients",
+      "other": "Other",
+      "otherDescription": "Something else"
+    },
+    "preferences": {
+      "title": "Configure preferences",
+      "description": "Customize your Bistro experience",
+      "themeLabel": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "emailNotificationsLabel": "Email notifications",
+      "emailNotificationsDescription": "Receive product updates, tips, and announcements"
+    },
+    "complete": {
+      "title": "You're all set!",
+      "description": "Welcome to Bistro. You're ready to start building amazing things.",
+      "whatsNext": "What's next?",
+      "step1": "Explore your dashboard and create your first project",
+      "step2": "Check out the documentation to learn more",
+      "step3": "Customize your profile settings anytime"
+    },
+    "toast": {
+      "error": "Error",
+      "saveError": "Failed to save progress",
+      "completeSuccess": "Welcome!",
+      "completeSuccessDescription": "Your account is all set up",
+      "completeError": "Failed to complete onboarding"
+    }
+  },
+  "org": {
+    "create": {
+      "title": "Create Organization",
+      "description": "Set up your new organization",
+      "nameLabel": "Organization Name",
+      "namePlaceholder": "My Organization",
+      "slugLabel": "URL Slug",
+      "slugHint": "Used in the organization URL",
+      "slugPlaceholder": "my-organization",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What does your organization do?",
+      "submitButton": "Create Organization",
+      "toast": {
+        "success": "Organization created successfully"
+      }
+    },
+    "select": {
+      "title": "Select Organization",
+      "description": "Choose an organization to continue",
+      "createNew": "Create New Organization"
+    },
+    "switcher": {
+      "members": "Members",
+      "settings": "Settings",
+      "createOrganization": "Create Organization",
+      "switchLabel": "Switch organization, current: {name}"
+    },
+    "selectionList": {
+      "errorLoading": "Error loading organizations",
+      "retry": "Retry",
+      "noOrgsTitle": "No organizations yet",
+      "noOrgsDescription": "Create your first organization to get started",
+      "createOrganization": "Create Organization"
+    },
+    "invite": {
+      "title": "Organization Invitation",
+      "invalidTitle": "Invalid Invitation",
+      "goToOrgs": "Go to Organizations",
+      "invitedToJoin": "You have been invited to join",
+      "emailLabel": "Email:",
+      "roleLabel": "Role:",
+      "acceptButton": "Accept Invitation",
+      "declineButton": "Decline",
+      "toast": {
+        "success": "You have joined the organization",
+        "error": "Failed to accept invite"
+      }
+    },
+    "dashboard": {
+      "title": "My Todos"
+    },
+    "members": {
+      "title": "Organization Members",
+      "membersLabel": "Members",
+      "inviteButton": "Invite Member",
+      "nameHeader": "Name",
+      "emailHeader": "Email",
+      "roleHeader": "Role",
+      "actionsHeader": "Actions",
+      "roleOwner": "Owner",
+      "roleAdmin": "Admin",
+      "roleMember": "Member",
+      "roleGuest": "Guest",
+      "inviteTitle": "Invite Member",
+      "inviteEmailPlaceholder": "member{'@'}example.com",
+      "inviteRoleLabel": "Role",
+      "sendInvitation": "Send Invitation",
+      "removeTitle": "Remove Member",
+      "removeConfirm": "Are you sure you want to remove this member?",
+      "toast": {
+        "inviteSuccess": "Invitation sent",
+        "inviteError": "Failed to send invite",
+        "roleSuccess": "Member role updated",
+        "roleError": "Failed to update role",
+        "removeSuccess": "Member removed",
+        "removeError": "Failed to remove member"
+      }
+    },
+    "settings": {
+      "title": "Organization Settings",
+      "description": "Settings for {slug}"
+    }
+  },
+  "todo": {
+    "loading": "Loading todos...",
+    "empty": "No todos found.",
+    "statusSummary": "{total} todos, {completed} completed.",
+    "filterLabel": "Filter:",
+    "filterAll": "All",
+    "filterActive": "Active",
+    "filterCompleted": "Completed",
+    "sortLabel": "Sort:",
+    "sortDate": "Date",
+    "sortTitle": "Title",
+    "emptyTitle": "No todos yet",
+    "emptyDescription": "Create your first one to get started!",
+    "totalCount": "{total} total",
+    "pageInfo": "{page} / {totalPages}",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Todo title...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description (optional)",
+    "addButton": "Add Todo",
+    "deleteTodoLabel": "Delete todo",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "createNewTodo": "Create new todo",
+    "toast": {
+      "loadError": "Failed to load todos",
+      "createError": "Failed to create todo",
+      "updateError": "Failed to update todo",
+      "deleteSuccess": "Todo deleted",
+      "deleteError": "Failed to delete todo",
+      "createFormError": "Failed to create todo. Please try again."
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "seoTitle": "Contact",
+    "description": "Have a question or feedback? We'd love to hear from you.",
+    "seoDescription": "Get in touch with the Bistro team for support, feedback, or general inquiries.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you{'@'}example.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "Select a subject",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help?",
+    "submitButton": "Send Message",
+    "preferGithub": "Prefer GitHub?",
+    "openIssue": "Open an issue",
+    "startDiscussion": "start a discussion",
+    "subjects": {
+      "general": "General Inquiry",
+      "support": "Support",
+      "feedback": "Feedback",
+      "other": "Other"
+    },
+    "toast": {
+      "success": "Message sent",
+      "successDescription": "Thanks for reaching out. We'll get back to you soon.",
+      "error": "Failed to send message. Please try again."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "seoTitle": "Blog",
+    "seoDescription": "Latest articles and updates from Bistro",
+    "description": "Thoughts, tutorials, and insights on building modern SaaS applications",
+    "articlesCount": "{total}",
+    "articlesLabel": "Articles",
+    "topicsCount": "{total}",
+    "topicsLabel": "Topics",
+    "draftPost": "Draft Post",
+    "draftDescription": "This post is not published and only visible to admins",
+    "postNotFound": "Post not found"
+  },
+  "docs": {
+    "title": "Documentation",
+    "notFound": "Documentation not found",
+    "pageNotFound": "Documentation page not found",
+    "errorLoading": "Error loading navigation",
+    "noItems": "No navigation items",
+    "onThisPage": "On this page",
+    "noSections": "No sections",
+    "searchButton": "Search",
+    "searchPlaceholder": "Search docs...",
+    "noResults": "No results",
+    "startTyping": "Start typing to search"
+  },
+  "changelog": {
+    "title": "Changelog",
+    "seoTitle": "Changelog",
+    "seoDescription": "Track new features, improvements, and bug fixes in Bistro.",
+    "description": "Track new features, improvements, and bug fixes in Bistro."
+  },
+  "admin": {
+    "users": {
+      "title": "User Management",
+      "description": "Manage users and impersonate for support",
+      "allUsers": "All Users",
+      "userCount": "{count} users",
+      "nameHeader": "Name",
+      "emailHeader": "Email",
+      "roleHeader": "Role",
+      "verifiedHeader": "Verified",
+      "actionsHeader": "Actions",
+      "cannotImpersonate": "Cannot impersonate",
+      "impersonate": "Impersonate",
+      "toast": {
+        "accessDenied": "Access denied",
+        "accessDeniedDescription": "You do not have permission to access this page",
+        "fetchError": "Failed to fetch users",
+        "impersonateSuccess": "Impersonation started",
+        "impersonateSuccessDescription": "Now viewing as {name}"
+      }
+    },
+    "emailPreview": {
+      "title": "Email Template Previews",
+      "description": "Preview how email templates appear to recipients",
+      "templatesLabel": "Templates",
+      "templateCount": "{count} templates",
+      "loading": "Loading templates...",
+      "loadError": "Failed to load email templates",
+      "toast": {
+        "loadError": "Failed to load templates",
+        "sendSuccess": "Test email sent",
+        "sendSuccessDescription": "Check your inbox at {email}",
+        "notConfigured": "Email not configured",
+        "notConfiguredDescription": "RESEND_API_KEY missing - emails disabled"
+      }
+    },
+    "impersonation": {
+      "viewingAs": "Viewing as {name}",
+      "restricted": "Some actions may be restricted",
+      "stopTitle": "Stopped impersonation",
+      "stopDescription": "Returned to your admin account",
+      "errorTitle": "Error",
+      "stopError": "Failed to stop impersonation",
+      "impersonateUser": "Impersonate User",
+      "closeModal": "Close modal",
+      "aboutToImpersonate": "You are about to impersonate:",
+      "reasonLabel": "Reason (optional)",
+      "reasonHelp": "Document why you're impersonating this user",
+      "reasonPlaceholder": "e.g., Debug checkout issue",
+      "importantTitle": "Important",
+      "importantDescription": "Some actions are restricted during impersonation. The session will auto-expire after 1 hour.",
+      "startButton": "Start Impersonating"
+    },
+    "emailPreviewIframe": "Email preview",
+    "subject": "Subject:",
+    "htmlPreview": "HTML Preview",
+    "plainText": "Plain Text",
+    "sendTestEmail": "Send Test Email",
+    "sampleData": "Sample Data",
+    "sessions": {
+      "noSessions": "No active sessions found",
+      "currentSession": "Current Session",
+      "lastActive": "Last active:",
+      "revoke": "Revoke",
+      "on": "on"
+    }
+  },
+  "dashboard": {
+    "commandPalette": {
+      "search": "Search...",
+      "recent": "Recent",
+      "navigation": "Navigation",
+      "organization": "Organization",
+      "admin": "Admin",
+      "actions": "Actions",
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "members": "Members",
+      "settings": "Settings",
+      "adminPanel": "Admin Panel",
+      "emailPreviews": "Email Previews",
+      "switchToLight": "Switch to Light Mode",
+      "switchToDark": "Switch to Dark Mode",
+      "logout": "Logout"
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "navigation": "Navigation",
+      "modals": "Modals",
+      "openCommandPalette": "Open command palette",
+      "toggleSidebar": "Toggle sidebar",
+      "showShortcutsHelp": "Show shortcuts help",
+      "closeModal": "Close modal"
+    }
+  },
+  "newsletter": {
+    "toast": {
+      "success": "Subscribed!",
+      "successDescription": "Thanks for subscribing. We'll keep you posted.",
+      "error": "Something went wrong. Please try again."
+    }
+  }
+}

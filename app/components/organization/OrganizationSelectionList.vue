@@ -2,15 +2,16 @@
 import type { FetchError } from 'ofetch';
 import type { Organization } from '../../../prisma/generated/client';
 
+defineProps<Props>();
+defineEmits<Emits>();
+const { t } = useI18n();
+const localePath = useLocalePath();
+
 interface Props {
   organizations: Organization[];
   pending: boolean;
   error: FetchError | null | undefined;
 }
-
-defineProps<Props>();
-
-defineEmits<Emits>();
 
 interface Emits {
   (e: 'select', slug: string): void;
@@ -43,23 +44,23 @@ interface Emits {
     <UAlert
       color="error"
       icon="i-lucide-alert-triangle"
-      title="Error loading organizations"
+      :title="t('org.selectionList.errorLoading')"
       :description="error.message"
     />
     <UButton
       class="mt-4"
       @click="$emit('retry')"
     >
-      Retry
+      {{ $t('org.selectionList.retry') }}
     </UButton>
   </div>
 
   <UEmpty
     v-else-if="organizations.length === 0"
     icon="i-lucide-building-2"
-    title="No organizations yet"
-    description="Create your first organization to get started"
-    :actions="[{ label: 'Create Organization', to: '/org/create', icon: 'i-lucide-plus' }]"
+    :title="t('org.selectionList.noOrgsTitle')"
+    :description="t('org.selectionList.noOrgsDescription')"
+    :actions="[{ label: t('org.selectionList.createOrganization'), to: localePath('/org/create'), icon: 'i-lucide-plus' }]"
   />
 
   <div

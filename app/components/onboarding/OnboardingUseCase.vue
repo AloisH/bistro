@@ -1,42 +1,44 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const model = defineModel<string>({ required: true });
 
-const useCases = [
+const useCases = computed(() => [
   {
     value: 'personal',
-    label: 'Personal Project',
-    description: 'Building something for myself',
+    label: t('onboarding.useCase.personal'),
+    description: t('onboarding.useCase.personalDescription'),
     icon: 'i-lucide-user',
   },
   {
     value: 'business',
-    label: 'Business',
-    description: 'For my company or startup',
+    label: t('onboarding.useCase.business'),
+    description: t('onboarding.useCase.businessDescription'),
     icon: 'i-lucide-briefcase',
   },
   {
     value: 'agency',
-    label: 'Agency',
-    description: 'Building for clients',
+    label: t('onboarding.useCase.agency'),
+    description: t('onboarding.useCase.agencyDescription'),
     icon: 'i-lucide-building',
   },
   {
     value: 'other',
-    label: 'Other',
-    description: 'Something else',
+    label: t('onboarding.useCase.other'),
+    description: t('onboarding.useCase.otherDescription'),
     icon: 'i-lucide-help-circle',
   },
-];
+]);
 </script>
 
 <template>
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">
-        What brings you to Bistro?
+        {{ $t('onboarding.useCase.title') }}
       </h2>
       <p class="text-neutral-600 dark:text-neutral-300">
-        This helps us tailor your experience
+        {{ $t('onboarding.useCase.description') }}
       </p>
     </div>
 

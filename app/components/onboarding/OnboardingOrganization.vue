@@ -2,6 +2,8 @@
 import type { CreateOrganizationInput } from '#shared/organization';
 import { createOrganizationSchema } from '#shared/organization';
 
+const { t } = useI18n();
+
 const model = defineModel<CreateOrganizationInput>({ required: true });
 
 const name = computed(() => model.value.name);
@@ -16,10 +18,10 @@ useSlugify(name, slug);
   <div class="space-y-6">
     <div>
       <h3 class="mb-2 text-lg font-semibold">
-        Create Your Organization
+        {{ $t('onboarding.organization.title') }}
       </h3>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
-        Organizations help you collaborate with your team
+        {{ $t('onboarding.organization.description') }}
       </p>
     </div>
 
@@ -30,34 +32,34 @@ useSlugify(name, slug);
       <div class="space-y-4">
         <UFormField
           name="name"
-          label="Organization Name"
+          :label="t('onboarding.organization.nameLabel')"
           required
         >
           <UInput
             v-model="model.name"
-            placeholder="My Company"
+            :placeholder="t('onboarding.organization.namePlaceholder')"
           />
         </UFormField>
 
         <UFormField
           name="slug"
-          label="URL Slug"
+          :label="t('onboarding.organization.slugLabel')"
           required
-          description="Used in the organization URL"
+          :description="t('onboarding.organization.slugHint')"
         >
           <UInput
             v-model="model.slug"
-            placeholder="my-company"
+            :placeholder="t('onboarding.organization.slugPlaceholder')"
           />
         </UFormField>
 
         <UFormField
           name="description"
-          label="Description"
+          :label="t('onboarding.organization.descriptionLabel')"
         >
           <UTextarea
             v-model="model.description"
-            placeholder="What does your organization do?"
+            :placeholder="t('onboarding.organization.descriptionPlaceholder')"
             :rows="3"
           />
         </UFormField>

@@ -1,36 +1,39 @@
 <script setup lang="ts">
-const billingPeriod = ref('monthly');
-const billingOptions = [
-  { label: 'Monthly', value: 'monthly' },
-  { label: 'Yearly', value: 'yearly', badge: 'Save 20%' },
-];
+const { t } = useI18n();
+const localePath = useLocalePath();
 
-const plans = {
+const billingPeriod = ref('monthly');
+const billingOptions = computed(() => [
+  { label: t('home.pricing.monthly'), value: 'monthly' },
+  { label: t('home.pricing.yearly'), value: 'yearly', badge: t('home.pricing.yearlySave') },
+]);
+
+const plans = computed(() => ({
   free: {
-    title: 'Free',
-    description: 'Everything you need to stay productive',
-    tagline: 'Forever free',
+    title: t('home.pricing.free.title'),
+    description: t('home.pricing.free.description'),
+    tagline: t('home.pricing.free.tagline'),
     features: [
-      'Unlimited tasks',
-      'Unlimited organizations',
-      'Team collaboration',
-      'Dark mode',
-      'Mobile responsive',
-      'Open source',
+      t('home.pricing.free.features.unlimitedTasks'),
+      t('home.pricing.free.features.unlimitedOrganizations'),
+      t('home.pricing.free.features.teamCollaboration'),
+      t('home.pricing.free.features.darkMode'),
+      t('home.pricing.free.features.mobileResponsive'),
+      t('home.pricing.free.features.openSource'),
     ],
     button: {
-      label: 'Get started',
-      to: '/auth/register',
+      label: t('home.pricing.free.getStarted'),
+      to: localePath('/auth/register'),
     },
     highlight: true,
     monthly: { price: '$0', discount: '' },
     yearly: { price: '$0', discount: '' },
   },
-};
+}));
 
 const currentPlans = computed(() => {
   const period = billingPeriod.value as 'monthly' | 'yearly';
-  return Object.values(plans).map(plan => ({
+  return Object.values(plans.value).map(plan => ({
     title: plan.title,
     description: plan.description,
     tagline: plan.tagline,
@@ -46,8 +49,8 @@ const currentPlans = computed(() => {
 <template>
   <UPageSection
     id="pricing"
-    title="Simple pricing"
-    description="Start free, scale as you grow. No hidden fees."
+    :title="t('home.pricing.title')"
+    :description="t('home.pricing.description')"
     class="scroll-animate"
   >
     <div class="mb-8 flex justify-center">

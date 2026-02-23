@@ -2,13 +2,14 @@ import { magicLinkSchema } from '#shared/auth/schemas';
 
 export function useAuthLogin() {
   const { signIn, fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
+  const { t } = useI18n();
 
   // Tabs
   const activeTab = ref('password');
-  const tabItems = [
-    { label: 'Password', value: 'password', icon: 'i-lucide-key' },
-    { label: 'Magic Link', value: 'magic-link', icon: 'i-lucide-mail' },
-  ];
+  const tabItems = computed(() => [
+    { label: t('auth.login.password'), value: 'password', icon: 'i-lucide-key' },
+    { label: t('auth.login.magicLink'), value: 'magic-link', icon: 'i-lucide-mail' },
+  ]);
 
   // Redirect if already authenticated
   onMounted(async () => {

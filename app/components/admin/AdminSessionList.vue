@@ -65,7 +65,7 @@ function formatTime(date: Date): string {
         name="i-lucide-shield-off"
         class="mx-auto mb-3 text-4xl"
       />
-      <p>No active sessions found</p>
+      <p>{{ $t('admin.sessions.noSessions') }}</p>
     </div>
 
     <div
@@ -82,14 +82,14 @@ function formatTime(date: Date): string {
           <div class="min-w-0 flex-1">
             <div class="mb-1 flex items-center gap-2">
               <h3 class="font-medium text-neutral-900 dark:text-white">
-                {{ session.browser }} on {{ session.os }}
+                {{ session.browser }} {{ $t('admin.sessions.on') }} {{ session.os }}
               </h3>
               <UBadge
                 v-if="session.isCurrent"
                 color="primary"
                 variant="subtle"
               >
-                Current Session
+                {{ $t('admin.sessions.currentSession') }}
               </UBadge>
             </div>
             <div class="space-y-1 text-sm text-neutral-500 dark:text-neutral-400">
@@ -105,7 +105,7 @@ function formatTime(date: Date): string {
                   name="i-lucide-clock"
                   class="mr-1 inline"
                 />
-                Last active: {{ formatTime(session.lastActive) }}
+                {{ $t('admin.sessions.lastActive') }} {{ formatTime(session.lastActive) }}
               </p>
             </div>
           </div>
@@ -118,7 +118,7 @@ function formatTime(date: Date): string {
           :loading="loading"
           @click="$emit('revoke', session.id)"
         >
-          Revoke
+          {{ $t('admin.sessions.revoke') }}
         </UButton>
       </div>
     </div>

@@ -7,6 +7,8 @@ const emit = defineEmits<Emits>();
 
 const state = defineModel<{ email: string; password: string }>('state', { required: true });
 
+const localePath = useLocalePath();
+
 interface Props {
   loading: boolean;
   error: string;
@@ -25,7 +27,7 @@ interface Emits {
   >
     <UFormField
       name="email"
-      label="Email"
+      :label="$t('auth.login.emailLabel')"
     >
       <UInput
         v-model="state.email"
@@ -37,7 +39,7 @@ interface Emits {
 
     <UFormField
       name="password"
-      label="Password"
+      :label="$t('auth.login.passwordLabel')"
       class="mt-4"
     >
       <UInput
@@ -50,10 +52,10 @@ interface Emits {
 
     <div class="mt-2 flex items-center justify-end">
       <NuxtLink
-        to="/auth/forgot-password"
+        :to="localePath('/auth/forgot-password')"
         class="text-primary text-sm font-medium hover:underline"
       >
-        Forgot password?
+        {{ $t('auth.login.forgotPassword') }}
       </NuxtLink>
     </div>
 
@@ -72,7 +74,7 @@ interface Emits {
       size="xl"
       class="mt-6 font-semibold"
     >
-      Sign in
+      {{ $t('auth.login.signInButton') }}
     </UButton>
   </UForm>
 </template>

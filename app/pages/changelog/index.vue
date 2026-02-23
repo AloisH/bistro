@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const {
   selectedType,
   entries,
@@ -11,8 +13,8 @@ const {
 } = useChangelog();
 
 useSeo({
-  title: 'Changelog',
-  description: 'Track new features, improvements, and bug fixes in Bistro.',
+  title: t('changelog.seoTitle'),
+  description: t('changelog.seoDescription'),
 });
 </script>
 
@@ -29,10 +31,10 @@ useSeo({
         <h1
           class="mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-5xl font-bold text-transparent dark:from-white dark:to-gray-400"
         >
-          Changelog
+          {{ $t('changelog.title') }}
         </h1>
         <p class="text-xl text-neutral-600 dark:text-neutral-400">
-          Track new features, improvements, and bug fixes in Bistro.
+          {{ $t('changelog.description') }}
         </p>
       </div>
     </div>

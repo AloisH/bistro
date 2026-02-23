@@ -1,13 +1,16 @@
 <script setup lang="ts">
-const links = [
+const { t } = useI18n();
+const localePath = useLocalePath();
+
+const links = computed(() => [
   {
-    label: 'Start for free',
-    to: '/auth/register',
+    label: t('home.hero.startForFree'),
+    to: localePath('/auth/register'),
     trailingIcon: 'i-lucide-arrow-right',
     size: 'xl' as const,
   },
   {
-    label: 'View on GitHub',
+    label: t('home.hero.viewOnGithub'),
     to: 'https://github.com/AloisH/bistro',
     target: '_blank',
     icon: 'i-simple-icons-github',
@@ -15,14 +18,14 @@ const links = [
     color: 'neutral' as const,
     variant: 'subtle' as const,
   },
-];
+]);
 </script>
 
 <template>
   <UPageHero
-    headline="100% Free & Open Source"
-    title="The simplest way to manage your tasks"
-    description="Bistro is a free, open-source todo app that helps you stay organized. No bloat, no complexity - just a clean interface to get things done."
+    :headline="t('home.hero.headline')"
+    :title="t('home.hero.title')"
+    :description="t('home.hero.description')"
     :links="links"
     :ui="{
       title:

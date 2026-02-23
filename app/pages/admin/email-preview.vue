@@ -3,6 +3,7 @@ definePageMeta({
   layout: 'dashboard',
 });
 
+const { t } = useI18n();
 const { isAdmin } = useRole();
 const toast = useToast();
 
@@ -10,8 +11,8 @@ const toast = useToast();
 onMounted(() => {
   if (!isAdmin.value) {
     toast.add({
-      title: 'Access denied',
-      description: 'You do not have permission to access this page',
+      title: t('admin.users.toast.accessDenied'),
+      description: t('admin.users.toast.accessDeniedDescription'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -40,10 +41,10 @@ onMounted(fetchTemplates);
   <div>
     <div class="mb-6">
       <h1 class="text-2xl font-bold">
-        Email Template Previews
+        {{ $t('admin.emailPreview.title') }}
       </h1>
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
-        Preview how email templates appear to recipients
+        {{ $t('admin.emailPreview.description') }}
       </p>
     </div>
 
@@ -51,10 +52,10 @@ onMounted(fetchTemplates);
       <template #header>
         <div class="flex items-center justify-between">
           <h2 class="text-lg font-semibold">
-            Templates
+            {{ $t('admin.emailPreview.templatesLabel') }}
           </h2>
           <UBadge color="neutral">
-            {{ templates.length }} templates
+            {{ $t('admin.emailPreview.templateCount', { count: templates.length }) }}
           </UBadge>
         </div>
       </template>
@@ -80,7 +81,7 @@ onMounted(fetchTemplates);
     <UCard v-else-if="loading">
       <div class="flex items-center justify-center py-12">
         <div class="text-neutral-600 dark:text-neutral-400">
-          Loading templates...
+          {{ $t('admin.emailPreview.loading') }}
         </div>
       </div>
     </UCard>
@@ -90,7 +91,7 @@ onMounted(fetchTemplates);
         color="error"
         icon="i-lucide-alert-triangle"
         :title="error"
-        description="Failed to load email templates"
+        :description="t('admin.emailPreview.loadError')"
       />
     </UCard>
   </div>

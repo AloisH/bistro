@@ -25,13 +25,13 @@ const reason = defineModel<string>('reason', { required: true });
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold">
-              Impersonate User
+              {{ $t('admin.impersonation.impersonateUser') }}
             </h3>
             <UButton
               color="neutral"
               variant="ghost"
               icon="i-lucide-x"
-              aria-label="Close modal"
+              :aria-label="$t('admin.impersonation.closeModal')"
               @click="close"
             />
           </div>
@@ -40,7 +40,7 @@ const reason = defineModel<string>('reason', { required: true });
         <div class="space-y-4">
           <div>
             <p class="text-sm text-neutral-600 dark:text-neutral-400">
-              You are about to impersonate:
+              {{ $t('admin.impersonation.aboutToImpersonate') }}
             </p>
             <p class="mt-1 font-semibold">
               {{ user?.name || user?.email }}
@@ -51,12 +51,12 @@ const reason = defineModel<string>('reason', { required: true });
           </div>
 
           <UFormField
-            label="Reason (optional)"
-            help="Document why you're impersonating this user"
+            :label="$t('admin.impersonation.reasonLabel')"
+            :help="$t('admin.impersonation.reasonHelp')"
           >
             <UTextarea
               v-model="reason"
-              placeholder="e.g., Debug checkout issue"
+              :placeholder="$t('admin.impersonation.reasonPlaceholder')"
               :rows="3"
             />
           </UFormField>
@@ -64,8 +64,8 @@ const reason = defineModel<string>('reason', { required: true });
           <UAlert
             color="warning"
             icon="i-lucide-alert-triangle"
-            title="Important"
-            description="Some actions are restricted during impersonation. The session will auto-expire after 1 hour."
+            :title="$t('admin.impersonation.importantTitle')"
+            :description="$t('admin.impersonation.importantDescription')"
           />
         </div>
 
@@ -76,14 +76,14 @@ const reason = defineModel<string>('reason', { required: true });
               variant="subtle"
               @click="close"
             >
-              Cancel
+              {{ $t('common.cancel') }}
             </UButton>
             <UButton
               color="warning"
               :loading="loading"
               @click="$emit('confirm')"
             >
-              Start Impersonating
+              {{ $t('admin.impersonation.startButton') }}
             </UButton>
           </div>
         </template>

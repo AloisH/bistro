@@ -11,6 +11,7 @@ export interface EmailTemplate {
 export function useEmailTemplates() {
   const toast = useToast();
   const { user } = useAuth();
+  const { t } = useI18n();
 
   // State
   const templates = ref<EmailTemplate[]>([]);
@@ -35,9 +36,9 @@ export function useEmailTemplates() {
     }
     catch (err) {
       const apiError = err as { data?: { message?: string } };
-      error.value = apiError.data?.message || 'Failed to load templates';
+      error.value = apiError.data?.message || t('admin.emailPreview.toast.loadError');
       toast.add({
-        title: 'Error',
+        title: t('common.error'),
         description: error.value,
         color: 'error',
         icon: 'i-lucide-alert-triangle',
@@ -60,8 +61,8 @@ export function useEmailTemplates() {
       });
 
       toast.add({
-        title: 'Test email sent',
-        description: `Check your inbox at ${user.value?.email}`,
+        title: t('admin.emailPreview.toast.sendSuccess'),
+        description: t('admin.emailPreview.toast.sendSuccessDescription', { email: user.value?.email }),
         color: 'success',
         icon: 'i-lucide-check',
       });
@@ -72,15 +73,15 @@ export function useEmailTemplates() {
 
       if (errorMessage.includes('not configured')) {
         toast.add({
-          title: 'Email not configured',
-          description: 'RESEND_API_KEY missing - emails disabled',
+          title: t('admin.emailPreview.toast.notConfigured'),
+          description: t('admin.emailPreview.toast.notConfiguredDescription'),
           color: 'warning',
           icon: 'i-lucide-alert-triangle',
         });
       }
       else {
         toast.add({
-          title: 'Error',
+          title: t('common.error'),
           description: errorMessage,
           color: 'error',
           icon: 'i-lucide-alert-triangle',

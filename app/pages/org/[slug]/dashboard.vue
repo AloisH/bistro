@@ -12,7 +12,7 @@ onMounted(() => fetchTodos());
   <UCard>
     <template #header>
       <h1 class="text-3xl font-bold">
-        My Todos
+        {{ $t('org.dashboard.title') }}
       </h1>
     </template>
 

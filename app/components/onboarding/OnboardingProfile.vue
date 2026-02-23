@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const model = defineModel<{ bio: string; company: string }>({ required: true });
 </script>
 
@@ -6,10 +8,10 @@ const model = defineModel<{ bio: string; company: string }>({ required: true });
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">
-        Set up your profile
+        {{ $t('onboarding.profile.title') }}
       </h2>
       <p class="text-neutral-600 dark:text-neutral-300">
-        Tell us a bit about yourself (all fields optional)
+        {{ $t('onboarding.profile.description') }}
       </p>
     </div>
 
@@ -18,15 +20,15 @@ const model = defineModel<{ bio: string; company: string }>({ required: true });
         <label
           for="profile-bio"
           class="mb-2 block text-sm font-medium"
-        > Bio </label>
+        > {{ $t('onboarding.profile.bioLabel') }} </label>
         <UTextarea
           id="profile-bio"
           v-model="model.bio"
-          placeholder="Tell us about yourself..."
+          :placeholder="t('onboarding.profile.bioPlaceholder')"
           :rows="4"
         />
         <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-          {{ model.bio?.length || 0 }} / 500
+          {{ $t('onboarding.profile.bioCount', { count: model.bio?.length || 0 }) }}
         </p>
       </div>
 
@@ -34,11 +36,11 @@ const model = defineModel<{ bio: string; company: string }>({ required: true });
         <label
           for="profile-company"
           class="mb-2 block text-sm font-medium"
-        > Company / Organization </label>
+        > {{ $t('onboarding.profile.companyLabel') }} </label>
         <UInput
           id="profile-company"
           v-model="model.company"
-          placeholder="Acme Inc."
+          :placeholder="t('onboarding.profile.companyPlaceholder')"
         />
       </div>
     </div>

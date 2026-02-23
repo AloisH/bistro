@@ -1,23 +1,25 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const model = defineModel<{ emailNotifications: boolean }>({ required: true });
 
 const colorMode = useColorMode();
 
-const colorModeOptions = [
-  { value: 'light', label: 'Light', icon: 'i-lucide-sun' },
-  { value: 'dark', label: 'Dark', icon: 'i-lucide-moon' },
-  { value: 'system', label: 'System', icon: 'i-lucide-laptop' },
-];
+const colorModeOptions = computed(() => [
+  { value: 'light', label: t('onboarding.preferences.light'), icon: 'i-lucide-sun' },
+  { value: 'dark', label: t('onboarding.preferences.dark'), icon: 'i-lucide-moon' },
+  { value: 'system', label: t('onboarding.preferences.system'), icon: 'i-lucide-laptop' },
+]);
 </script>
 
 <template>
   <div class="py-4">
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-bold">
-        Configure preferences
+        {{ $t('onboarding.preferences.title') }}
       </h2>
       <p class="text-neutral-600 dark:text-neutral-300">
-        Customize your Bistro experience
+        {{ $t('onboarding.preferences.description') }}
       </p>
     </div>
 
@@ -25,7 +27,7 @@ const colorModeOptions = [
       <!-- Dark mode -->
       <fieldset>
         <legend class="mb-3 block text-sm font-medium">
-          Theme
+          {{ $t('onboarding.preferences.themeLabel') }}
         </legend>
         <div class="grid grid-cols-3 gap-3">
           <button
@@ -59,10 +61,10 @@ const colorModeOptions = [
             for="email-notifications"
             class="block cursor-pointer text-sm font-medium"
           >
-            Email notifications
+            {{ $t('onboarding.preferences.emailNotificationsLabel') }}
           </label>
           <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Receive product updates, tips, and announcements
+            {{ $t('onboarding.preferences.emailNotificationsDescription') }}
           </p>
         </div>
       </div>

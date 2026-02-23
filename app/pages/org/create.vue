@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { state, loading, schema, createOrganization } = useOrgCreate();
 </script>
 
@@ -7,10 +9,10 @@ const { state, loading, schema, createOrganization } = useOrgCreate();
     <UCard class="w-full max-w-md">
       <template #header>
         <h1 class="text-2xl font-bold">
-          Create Organization
+          {{ $t('org.create.title') }}
         </h1>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Set up your new organization
+          {{ $t('org.create.description') }}
         </p>
       </template>
 
@@ -22,34 +24,34 @@ const { state, loading, schema, createOrganization } = useOrgCreate();
         <div class="space-y-4">
           <UFormField
             name="name"
-            label="Organization Name"
+            :label="t('org.create.nameLabel')"
             required
           >
             <UInput
               v-model="state.name"
-              placeholder="My Organization"
+              :placeholder="t('org.create.namePlaceholder')"
             />
           </UFormField>
 
           <UFormField
             name="slug"
-            label="URL Slug"
+            :label="t('org.create.slugLabel')"
             required
-            description="Used in the organization URL"
+            :description="t('org.create.slugHint')"
           >
             <UInput
               v-model="state.slug"
-              placeholder="my-organization"
+              :placeholder="t('org.create.slugPlaceholder')"
             />
           </UFormField>
 
           <UFormField
             name="description"
-            label="Description"
+            :label="t('org.create.descriptionLabel')"
           >
             <UTextarea
               v-model="state.description"
-              placeholder="What does your organization do?"
+              :placeholder="t('org.create.descriptionPlaceholder')"
               :rows="3"
             />
           </UFormField>
@@ -60,14 +62,14 @@ const { state, loading, schema, createOrganization } = useOrgCreate();
               :loading="loading"
               block
             >
-              Create Organization
+              {{ $t('org.create.submitButton') }}
             </UButton>
             <UButton
               variant="ghost"
-              to="/org/select"
+              :to="localePath('/org/select')"
               :disabled="loading"
             >
-              Cancel
+              {{ $t('common.cancel') }}
             </UButton>
           </div>
         </div>

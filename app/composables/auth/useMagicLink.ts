@@ -2,6 +2,7 @@ export function useMagicLink() {
   const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
   const config = useRuntimeConfig();
   const toast = useToast();
+  const { t } = useI18n();
 
   const state = reactive({ email: '' });
   const loading = ref(false);
@@ -30,8 +31,8 @@ export function useMagicLink() {
       }
 
       toast.add({
-        title: 'Email sent',
-        description: 'Check your inbox for the login link',
+        title: t('auth.resend.emailSent'),
+        description: t('auth.magicLinkSent.heading'),
         color: 'success',
         icon: 'i-lucide-mail-check',
       });

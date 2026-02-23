@@ -7,6 +7,7 @@ interface Props {
 
 const { hasPassword } = defineProps<Props>();
 
+const { t } = useI18n();
 const { user, signOut } = useAuth();
 const toast = useToast();
 
@@ -27,8 +28,8 @@ async function deleteAccount() {
       body,
     });
     toast.add({
-      title: 'Account Deleted',
-      description: 'Your account has been permanently deleted',
+      title: t('profile.deleteAccount.toast.success'),
+      description: t('profile.deleteAccount.toast.successDescription'),
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
@@ -36,7 +37,7 @@ async function deleteAccount() {
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Deletion Failed',
+      title: t('profile.deleteAccount.toast.error'),
       description: getErrorMessage(e, 'Failed to delete account. Please verify your credentials.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
@@ -53,11 +54,10 @@ async function deleteAccount() {
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
         <h2 class="text-lg font-semibold text-red-600 sm:text-xl dark:text-red-400">
-          Danger Zone
+          {{ $t('profile.deleteAccount.title') }}
         </h2>
         <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Once you delete your account, there is no going back. All your data will be permanently
-          deleted.
+          {{ $t('profile.deleteAccount.description') }}
         </p>
       </div>
     </div>
@@ -74,14 +74,14 @@ async function deleteAccount() {
           class="mr-2"
         />
       </template>
-      Delete Account
+      {{ $t('profile.deleteAccount.deleteButton') }}
     </UButton>
 
     <!-- Delete Confirmation Modal -->
     <UModal
       v-model:open="showDeleteModal"
-      title="Confirm Account Deletion"
-      description="This action cannot be undone. All your data will be permanently deleted."
+      :title="$t('profile.deleteAccount.modalTitle')"
+      :description="$t('profile.deleteAccount.modalDescription')"
       :ui="{
         footer: 'flex flex-col sm:flex-row gap-3 w-full',
       }"
@@ -91,14 +91,14 @@ async function deleteAccount() {
           <UAlert
             color="error"
             variant="subtle"
-            title="Irreversible Action"
-            description="Once deleted, your account and all associated data cannot be recovered."
+            :title="$t('profile.deleteAccount.irreversible')"
+            :description="$t('profile.deleteAccount.irreversibleDescription')"
             class="mb-4"
           />
 
           <div>
             <p class="mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
-              The following data will be permanently deleted:
+              {{ $t('profile.deleteAccount.dataList') }}
             </p>
             <ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li class="flex items-start gap-2">
@@ -106,28 +106,28 @@ async function deleteAccount() {
                   name="i-lucide-user"
                   class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
-                <span>Your user profile and account information</span>
+                <span>{{ $t('profile.deleteAccount.dataProfile') }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-folder"
                   class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
-                <span>All your projects and their configurations</span>
+                <span>{{ $t('profile.deleteAccount.dataProjects') }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-bot"
                   class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
-                <span>All AI jobs and their results</span>
+                <span>{{ $t('profile.deleteAccount.dataJobs') }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <UIcon
                   name="i-lucide-globe"
                   class="mt-1 text-neutral-400 dark:text-neutral-500"
                 />
-                <span>All active sessions across devices</span>
+                <span>{{ $t('profile.deleteAccount.dataSessions') }}</span>
               </li>
             </ul>
           </div>
@@ -140,13 +140,13 @@ async function deleteAccount() {
             <UFormField
               v-if="hasPassword"
               name="password"
-              label="Enter your password to confirm"
-              description="This is required for security verification"
+              :label="$t('profile.deleteAccount.passwordLabel')"
+              :description="$t('profile.deleteAccount.passwordHint')"
             >
               <UInput
                 v-model="deleteState.password"
                 type="password"
-                placeholder="••••••••"
+                :placeholder="$t('profile.deleteAccount.passwordPlaceholder')"
                 size="lg"
               />
             </UFormField>
@@ -154,8 +154,8 @@ async function deleteAccount() {
             <UFormField
               v-else
               name="email"
-              label="Enter your email to confirm"
-              description="Enter your account email address"
+              :label="$t('profile.deleteAccount.emailLabel')"
+              :description="$t('profile.deleteAccount.emailHint')"
             >
               <UInput
                 v-model="deleteState.email"
@@ -177,7 +177,7 @@ async function deleteAccount() {
             class="w-full sm:w-auto"
             @click="close"
           >
-            Cancel
+            {{ $t('common.cancel') }}
           </UButton>
           <UButton
             color="error"
@@ -194,7 +194,7 @@ async function deleteAccount() {
                 class="mr-2"
               />
             </template>
-            Delete Forever
+            {{ $t('profile.deleteAccount.confirmButton') }}
           </UButton>
         </div>
       </template>

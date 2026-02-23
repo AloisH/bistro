@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
 const route = useRoute();
 const config = useRuntimeConfig();
 const slug = route.params.slug as string;
@@ -51,8 +52,8 @@ if (import.meta.server && post.value) {
       v-if="post?.draft && isAdmin"
       color="warning"
       icon="i-lucide-file-edit"
-      title="Draft Post"
-      description="This post is not published and only visible to admins"
+      :title="$t('blog.draftPost')"
+      :description="$t('blog.draftDescription')"
       class="mb-6"
     />
 
@@ -60,14 +61,14 @@ if (import.meta.server && post.value) {
       <!-- Back button -->
       <div class="mb-8">
         <UButton
-          to="/blog"
+          :to="localePath('/blog')"
           variant="ghost"
           icon="i-lucide-arrow-left"
           size="sm"
           class="group"
         >
           <span class="inline-block transition-transform group-hover:-translate-x-1">
-            Back to Blog
+            {{ $t('nav.blog') }}
           </span>
         </UButton>
       </div>

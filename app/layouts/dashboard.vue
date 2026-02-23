@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { user, signOut } = useAuth();
 const { isAdmin } = useRole();
 const { activeOrgSlug, fetchOrganizations } = useOrganization();
@@ -24,28 +26,28 @@ onMounted(() => fetchOrganizations());
 const navigationItems = computed<NavigationMenuItem[][]>(() => {
   const mainItems: NavigationMenuItem[] = [
     {
-      label: 'Dashboard',
+      label: t('nav.dashboard'),
       icon: 'i-lucide-house',
-      to: activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select',
+      to: activeOrgSlug.value ? localePath(`/org/${activeOrgSlug.value}/dashboard`) : localePath('/org/select'),
     },
     {
-      label: 'Profile',
+      label: t('nav.profile'),
       icon: 'i-lucide-user',
-      to: '/profile',
+      to: localePath('/profile'),
     },
   ];
 
   const adminItems: NavigationMenuItem[] = isAdmin.value
     ? [
         {
-          label: 'Admin',
+          label: t('nav.admin'),
           icon: 'i-lucide-shield',
-          to: '/admin/users',
+          to: localePath('/admin/users'),
         },
         {
-          label: 'Email Previews',
+          label: t('nav.emailPreviews'),
           icon: 'i-lucide-mail',
-          to: '/admin/email-preview',
+          to: localePath('/admin/email-preview'),
         },
       ]
     : [];
@@ -56,13 +58,13 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
 const footerItems: NavigationMenuItem[][] = [
   [
     {
-      label: 'Feedback',
+      label: t('nav.feedback'),
       icon: 'i-lucide-message-circle',
       to: 'https://github.com/aloish/bistro',
       target: '_blank',
     },
     {
-      label: 'Help & Support',
+      label: t('nav.helpSupport'),
       icon: 'i-lucide-info',
       to: 'https://github.com/nuxt/ui',
       target: '_blank',
@@ -73,16 +75,16 @@ const footerItems: NavigationMenuItem[][] = [
 const userMenuItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
-      label: 'Profile',
+      label: t('nav.profile'),
       icon: 'i-lucide-user',
-      to: '/profile',
+      to: localePath('/profile'),
     },
   ],
   [
     {
-      label: 'Logout',
+      label: t('nav.logout'),
       icon: 'i-lucide-log-out',
-      onSelect: () => signOut({ redirectTo: '/auth/login' }),
+      onSelect: () => signOut({ redirectTo: localePath('/auth/login') }),
     },
   ],
 ]);
@@ -170,6 +172,7 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => [
     <UDashboardPanel class="flex h-screen w-full flex-col">
       <UDashboardNavbar title="Bistro">
         <template #right>
+          <LocaleSwitcher />
           <UColorModeButton />
         </template>
       </UDashboardNavbar>

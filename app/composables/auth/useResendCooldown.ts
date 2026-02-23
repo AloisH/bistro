@@ -8,6 +8,7 @@ interface UseResendCooldownOptions {
 export function useResendCooldown(options: UseResendCooldownOptions = {}) {
   const { cooldownSeconds = 60, onSuccess, onRateLimit, onError } = options;
   const toast = useToast();
+  const { t } = useI18n();
 
   const resending = ref(false);
   const cooldown = ref(0);
@@ -41,7 +42,7 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
       await action();
 
       toast.add({
-        title: 'Email sent',
+        title: t('auth.resend.emailSent'),
         description: successMessage,
         color: 'success',
         icon: 'i-lucide-mail-check',
@@ -54,8 +55,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
       const err = e as { status?: number } | null;
       if (err?.status === 429) {
         toast.add({
-          title: 'Too many attempts',
-          description: 'Please wait before trying again',
+          title: t('auth.resend.tooManyAttempts'),
+          description: t('auth.resend.tooManyAttemptsDescription'),
           color: 'error',
           icon: 'i-lucide-alert-triangle',
         });
@@ -63,8 +64,8 @@ export function useResendCooldown(options: UseResendCooldownOptions = {}) {
       }
       else {
         toast.add({
-          title: 'Failed to send',
-          description: 'Please try again later',
+          title: t('auth.resend.failedToSend'),
+          description: t('auth.resend.failedToSendDescription'),
           color: 'error',
           icon: 'i-lucide-alert-triangle',
         });

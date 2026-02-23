@@ -1,76 +1,78 @@
 <script setup lang="ts">
 import type { FooterColumn, NavigationMenuItem } from '@nuxt/ui';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 
 const navLinks = computed<NavigationMenuItem[][]>(() => [
   [
     {
-      label: 'Features',
-      to: '/#features',
+      label: t('nav.features'),
+      to: localePath('/#features'),
       active: route.hash === '#features',
     },
     {
-      label: 'Pricing',
-      to: '/#pricing',
+      label: t('nav.pricing'),
+      to: localePath('/#pricing'),
       active: route.hash === '#pricing',
     },
     {
-      label: 'Blog',
-      to: '/blog',
-      active: route.path.startsWith('/blog'),
+      label: t('nav.blog'),
+      to: localePath('/blog'),
+      active: route.path.startsWith('/blog') || route.path.startsWith('/fr/blog'),
     },
     {
-      label: 'Docs',
-      to: '/docs',
-      active: route.path.startsWith('/docs'),
+      label: t('nav.docs'),
+      to: localePath('/docs'),
+      active: route.path.startsWith('/docs') || route.path.startsWith('/fr/docs'),
     },
     {
-      label: 'Changelog',
-      to: '/changelog',
-      active: route.path.startsWith('/changelog'),
+      label: t('nav.changelog'),
+      to: localePath('/changelog'),
+      active: route.path.startsWith('/changelog') || route.path.startsWith('/fr/changelog'),
     },
     {
-      label: 'Contact',
-      to: '/contact',
-      active: route.path === '/contact',
+      label: t('nav.contact'),
+      to: localePath('/contact'),
+      active: route.path === '/contact' || route.path === '/fr/contact',
     },
   ],
 ]);
 
-const footerColumns: FooterColumn[] = [
+const footerColumns = computed<FooterColumn[]>(() => [
   {
-    label: 'Product',
+    label: t('footer.product'),
     children: [
-      { label: 'Features', to: '/#features' },
-      { label: 'Pricing', to: '/#pricing' },
-      { label: 'Changelog', to: '/changelog' },
-      { label: 'FAQ', to: '/#faq' },
+      { label: t('nav.features'), to: localePath('/#features') },
+      { label: t('nav.pricing'), to: localePath('/#pricing') },
+      { label: t('nav.changelog'), to: localePath('/changelog') },
+      { label: t('footer.faq'), to: localePath('/#faq') },
     ],
   },
   {
-    label: 'Resources',
+    label: t('footer.resources'),
     children: [
-      { label: 'Documentation', to: '/docs' },
-      { label: 'Blog', to: '/blog' },
+      { label: t('footer.documentation'), to: localePath('/docs') },
+      { label: t('nav.blog'), to: localePath('/blog') },
       { label: 'GitHub', to: 'https://github.com/AloisH/bistro', target: '_blank' },
     ],
   },
   {
-    label: 'Legal',
+    label: t('footer.legal'),
     children: [
-      { label: 'Privacy Policy', to: '/legal/privacy' },
-      { label: 'Terms of Service', to: '/legal/terms' },
+      { label: t('footer.privacyPolicy'), to: localePath('/legal/privacy') },
+      { label: t('footer.termsOfService'), to: localePath('/legal/terms') },
     ],
   },
   {
-    label: 'Company',
+    label: t('footer.company'),
     children: [
-      { label: 'About', to: '/#features' },
-      { label: 'Contact', to: '/contact' },
+      { label: t('footer.about'), to: localePath('/#features') },
+      { label: t('nav.contact'), to: localePath('/contact') },
     ],
   },
-];
+]);
 </script>
 
 <template>
@@ -78,7 +80,7 @@ const footerColumns: FooterColumn[] = [
     <UBanner
       id="announcement-v1"
       icon="i-lucide-sparkles"
-      title="New: Command palette search with Cmd+K"
+      :title="$t('banner.announcement')"
       to="https://github.com/AloisH/bistro"
       target="_blank"
       :close="true"
@@ -87,7 +89,7 @@ const footerColumns: FooterColumn[] = [
     <UHeader :links="navLinks">
       <template #left>
         <NuxtLink
-          to="/"
+          :to="localePath('/')"
           class="flex items-center gap-2"
         >
           <UIcon
@@ -104,16 +106,17 @@ const footerColumns: FooterColumn[] = [
       </template>
 
       <template #right>
+        <LocaleSwitcher class="hidden md:flex" />
         <UColorModeButton class="hidden md:flex" />
         <UButton
-          to="/auth/login"
+          :to="localePath('/auth/login')"
           variant="ghost"
           class="hidden sm:flex"
         >
-          Sign in
+          {{ $t('common.signIn') }}
         </UButton>
-        <UButton to="/auth/register">
-          Get Started
+        <UButton :to="localePath('/auth/register')">
+          {{ $t('common.getStarted') }}
         </UButton>
       </template>
 
@@ -126,17 +129,17 @@ const footerColumns: FooterColumn[] = [
         <USeparator class="my-4" />
         <div class="flex flex-col gap-2">
           <UButton
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             variant="ghost"
             block
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </UButton>
           <UButton
-            to="/auth/register"
+            :to="localePath('/auth/register')"
             block
           >
-            Get Started
+            {{ $t('common.getStarted') }}
           </UButton>
         </div>
       </template>
@@ -153,7 +156,7 @@ const footerColumns: FooterColumn[] = [
             <template #right>
               <div class="flex flex-col gap-4">
                 <p class="text-sm font-semibold">
-                  Follow us
+                  {{ $t('footer.followUs') }}
                 </p>
                 <div class="flex gap-2">
                   <UButton
@@ -188,17 +191,18 @@ const footerColumns: FooterColumn[] = [
           <span class="font-semibold">Bistro</span>
         </div>
         <p class="text-muted mt-1 text-sm">
-          Open source todo app built with Nuxt.
+          {{ $t('footer.tagline') }}
         </p>
       </template>
 
       <template #default>
         <p class="text-muted text-sm">
-          &copy; {{ new Date().getFullYear() }} Bistro. All rights reserved.
+          {{ $t('footer.copyright', { year: new Date().getFullYear() }) }}
         </p>
       </template>
 
       <template #right>
+        <LocaleSwitcher />
         <UColorModeButton
           color="neutral"
           variant="ghost"

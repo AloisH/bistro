@@ -6,6 +6,7 @@ export function useAdminUsers() {
   const toast = useToast();
   const { startImpersonation } = useImpersonation();
   const { redirectToUserDashboard } = useAuth();
+  const { t } = useI18n();
 
   // State
   const users = ref<AdminUser[]>([]);
@@ -25,8 +26,8 @@ export function useAdminUsers() {
     catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
-        title: 'Error',
-        description: error.data?.message || 'Failed to fetch users',
+        title: t('common.error'),
+        description: error.data?.message || t('admin.users.toast.fetchError'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
@@ -85,8 +86,8 @@ export function useAdminUsers() {
 
     if (result.success) {
       toast.add({
-        title: 'Impersonation started',
-        description: `Now viewing as ${selectedUser.value.name || selectedUser.value.email}`,
+        title: t('admin.users.toast.impersonateSuccess'),
+        description: t('admin.users.toast.impersonateSuccessDescription', { name: selectedUser.value.name || selectedUser.value.email }),
         color: 'success',
         icon: 'i-lucide-check',
       });
@@ -95,7 +96,7 @@ export function useAdminUsers() {
     }
     else {
       toast.add({
-        title: 'Error',
+        title: t('common.error'),
         description: result.error || 'Failed to start impersonation',
         color: 'error',
         icon: 'i-lucide-alert-triangle',

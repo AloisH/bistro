@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { client } = useAuth();
 const route = useRoute();
 const router = useRouter();
@@ -9,8 +11,8 @@ const email = ref(route.query.email as string);
 onMounted(() => {
   if (!email.value) {
     toast.add({
-      title: 'Email required',
-      description: 'Please enter your email first',
+      title: t('auth.emailRequired'),
+      description: t('auth.emailRequiredDescription'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -23,7 +25,7 @@ const { resending, cooldown, canResend, resend } = useResendCooldown();
 function resendMagicLink() {
   resend(
     () => client.signIn.magicLink({ email: email.value, callbackURL: '/org/select' }),
-    'Check your inbox for login link',
+    t('auth.magicLinkSent.heading'),
   );
 }
 </script>
@@ -41,10 +43,10 @@ function resendMagicLink() {
           </div>
           <div>
             <h2 class="text-2xl font-bold">
-              Check your email
+              {{ $t('auth.magicLinkSent.title') }}
             </h2>
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-              Magic link sent
+              {{ $t('auth.magicLinkSent.badge') }}
             </p>
           </div>
         </div>
@@ -54,18 +56,18 @@ function resendMagicLink() {
         <UAlert
           color="info"
           variant="subtle"
-          title="Login link sent"
+          :title="t('auth.magicLinkSent.heading')"
         >
           <template #description>
             <p class="text-sm">
-              We sent a login link to <strong>{{ email }}</strong>. Click the link to sign in instantly.
+              {{ $t('auth.magicLinkSent.description', { email }) }}
             </p>
           </template>
         </UAlert>
 
         <div class="space-y-2">
           <p class="text-sm text-neutral-600 dark:text-neutral-400">
-            Didn't receive the email? Check spam or resend.
+            {{ $t('auth.magicLinkSent.resendHint') }}
           </p>
 
           <UButton
@@ -76,10 +78,10 @@ function resendMagicLink() {
             @click="resendMagicLink"
           >
             <template v-if="cooldown > 0">
-              Resend in {{ cooldown }}s
+              {{ $t('auth.magicLinkSent.resendCountdown', { cooldown }) }}
             </template>
             <template v-else>
-              Resend magic link
+              {{ $t('auth.magicLinkSent.resendButton') }}
             </template>
           </UButton>
         </div>
@@ -87,12 +89,12 @@ function resendMagicLink() {
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Prefer a password?
+          {{ $t('auth.magicLinkSent.preferPassword') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in with password
+            {{ $t('auth.magicLinkSent.signInWithPassword') }}
           </NuxtLink>
         </p>
       </template>

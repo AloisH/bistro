@@ -1,45 +1,45 @@
 <script setup lang="ts">
-const features = [
+const { t } = useI18n();
+
+const features = computed(() => [
   {
     icon: 'i-lucide-list-checks',
-    title: 'Simple task management',
-    description:
-      'Create, organize, and complete tasks with an intuitive interface. No learning curve required.',
+    title: t('home.features.simpleTaskManagement'),
+    description: t('home.features.simpleTaskManagementDescription'),
   },
   {
     icon: 'i-lucide-filter',
-    title: 'Smart filtering',
-    description: 'Filter tasks by status, sort by date or priority. Find what you need instantly.',
+    title: t('home.features.smartFiltering'),
+    description: t('home.features.smartFilteringDescription'),
   },
   {
     icon: 'i-lucide-users',
-    title: 'Team collaboration',
-    description: 'Create organizations, invite team members, and manage tasks together.',
+    title: t('home.features.teamCollaboration'),
+    description: t('home.features.teamCollaborationDescription'),
   },
   {
     icon: 'i-lucide-moon',
-    title: 'Dark mode',
-    description:
-      'Easy on the eyes with automatic dark mode support. Work comfortably day or night.',
+    title: t('home.features.darkMode'),
+    description: t('home.features.darkModeDescription'),
   },
   {
     icon: 'i-lucide-smartphone',
-    title: 'Works everywhere',
-    description: 'Fully responsive design that works beautifully on desktop, tablet, and mobile.',
+    title: t('home.features.worksEverywhere'),
+    description: t('home.features.worksEverywhereDescription'),
   },
   {
     icon: 'i-lucide-lock',
-    title: 'Secure by default',
-    description: 'Your data is yours. Self-host it or trust our secure infrastructure.',
+    title: t('home.features.secureByDefault'),
+    description: t('home.features.secureByDefaultDescription'),
   },
-];
+]);
 </script>
 
 <template>
   <UPageSection
     id="features"
-    title="Everything you need, nothing you don't"
-    description="Focus on what matters. Bistro keeps task management simple while providing the essentials for personal productivity."
+    :title="t('home.features.title')"
+    :description="t('home.features.description')"
     :features="features"
     class="scroll-animate"
   />

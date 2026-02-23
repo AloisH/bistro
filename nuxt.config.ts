@@ -17,8 +17,26 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/sitemap',
     'nuxt-og-image',
+    '@nuxtjs/i18n',
     // '@scalar/nuxt', // TODO: fix build issue with @scalar/helpers
   ],
+
+  i18n: {
+    baseUrl: process.env.APP_URL || 'http://localhost:3000',
+    locales: [
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'fr', language: 'fr-FR', name: 'Français', file: 'fr.json' },
+    ],
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    langDir: '../i18n/locales',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      fallbackLocale: 'en',
+      redirectOn: 'root',
+    },
+  },
 
   // Auto-import components from nested feature directories
   components: [
@@ -99,11 +117,16 @@ export default defineNuxtConfig({
     '/changelog': { prerender: true },
     '/legal/**': { prerender: true },
     '/contact': { prerender: true },
-    // Protected routes - skip prerender
+    // Protected routes - skip prerender (both default and locale-prefixed)
     '/admin/**': { prerender: false },
     '/onboarding/**': { prerender: false },
     '/profile/**': { prerender: false },
     '/org/**': { prerender: false },
+    '/fr/admin/**': { prerender: false },
+    '/fr/onboarding/**': { prerender: false },
+    '/fr/profile/**': { prerender: false },
+    '/fr/org/**': { prerender: false },
+    '/fr/sitemap.xml': { prerender: false },
   },
 
   compatibilityDate: '2025-01-15',
@@ -218,7 +241,7 @@ export default defineNuxtConfig({
     strict: process.env.NODE_ENV === 'production',
   },
   sitemap: {
-    exclude: ['/auth/**', '/admin/**', '/org/**', '/api/**', '/onboarding/**'],
+    exclude: ['/auth/**', '/admin/**', '/org/**', '/api/**', '/onboarding/**', '/fr/auth/**', '/fr/admin/**', '/fr/org/**', '/fr/onboarding/**'],
     sources: ['/api/__sitemap__/urls'],
   },
 });

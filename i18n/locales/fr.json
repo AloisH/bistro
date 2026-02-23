@@ -1,0 +1,716 @@
+{
+  "common": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "getStarted": "Commencer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "remove": "Retirer",
+    "back": "Retour",
+    "next": "Suivant",
+    "skip": "Passer",
+    "loading": "Chargement...",
+    "yes": "Oui",
+    "no": "Non",
+    "error": "Erreur",
+    "success": "Succès",
+    "submit": "Envoyer",
+    "close": "Fermer",
+    "or": "Ou",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "actions": "Actions",
+    "description": "Description",
+    "title": "Titre",
+    "previous": "Précédent",
+    "all": "Tout",
+    "stop": "Arrêter",
+    "skipToContent": "Aller au contenu"
+  },
+  "nav": {
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "blog": "Blog",
+    "docs": "Docs",
+    "changelog": "Changelog",
+    "contact": "Contact",
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "admin": "Admin",
+    "emailPreviews": "Aperçu des e-mails",
+    "feedback": "Retours",
+    "helpSupport": "Aide et support",
+    "logout": "Déconnexion"
+  },
+  "seo": {
+    "title": "Bistro",
+    "description": "Boilerplate SaaS Nuxt 4 prêt pour la production avec authentification, multi-tenancy et RBAC."
+  },
+  "banner": {
+    "announcement": "Nouveau : Recherche avec palette de commandes Cmd+K"
+  },
+  "footer": {
+    "product": "Produit",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "company": "Entreprise",
+    "documentation": "Documentation",
+    "about": "À propos",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "faq": "FAQ",
+    "followUs": "Suivez-nous",
+    "tagline": "Application de tâches open source construite avec Nuxt.",
+    "copyright": "© {year} Bistro. Tous droits réservés."
+  },
+  "home": {
+    "hero": {
+      "headline": "100% Gratuit & Open Source",
+      "title": "La manière la plus simple de gérer vos tâches",
+      "description": "Bistro est une application de tâches gratuite et open source qui vous aide à rester organisé. Pas de superflu, pas de complexité - juste une interface propre pour avancer.",
+      "startForFree": "Commencer gratuitement",
+      "viewOnGithub": "Voir sur GitHub"
+    },
+    "features": {
+      "title": "Tout ce qu'il vous faut, rien de plus",
+      "description": "Concentrez-vous sur l'essentiel. Bistro simplifie la gestion des tâches tout en fournissant les outils indispensables à votre productivité.",
+      "simpleTaskManagement": "Gestion simple des tâches",
+      "simpleTaskManagementDescription": "Créez, organisez et complétez vos tâches avec une interface intuitive. Aucune courbe d'apprentissage.",
+      "smartFiltering": "Filtrage intelligent",
+      "smartFilteringDescription": "Filtrez les tâches par statut, triez par date ou priorité. Trouvez ce qu'il vous faut instantanément.",
+      "teamCollaboration": "Collaboration d'équipe",
+      "teamCollaborationDescription": "Créez des organisations, invitez des membres et gérez les tâches ensemble.",
+      "darkMode": "Mode sombre",
+      "darkModeDescription": "Agréable pour les yeux avec le mode sombre automatique. Travaillez confortablement jour et nuit.",
+      "worksEverywhere": "Fonctionne partout",
+      "worksEverywhereDescription": "Design entièrement responsive, parfait sur ordinateur, tablette et mobile.",
+      "secureByDefault": "Sécurisé par défaut",
+      "secureByDefaultDescription": "Vos données vous appartiennent. Auto-hébergez ou faites confiance à notre infrastructure sécurisée."
+    },
+    "pricing": {
+      "title": "Tarification simple",
+      "description": "Commencez gratuitement, évoluez à votre rythme. Pas de frais cachés.",
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "yearlySave": "Économisez 20%",
+      "free": {
+        "title": "Gratuit",
+        "description": "Tout ce qu'il faut pour rester productif",
+        "tagline": "Gratuit pour toujours",
+        "getStarted": "Commencer",
+        "features": {
+          "unlimitedTasks": "Tâches illimitées",
+          "unlimitedOrganizations": "Organisations illimitées",
+          "teamCollaboration": "Collaboration d'équipe",
+          "darkMode": "Mode sombre",
+          "mobileResponsive": "Responsive mobile",
+          "openSource": "Open source"
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "description": "Des questions ? Nous avons les réponses.",
+      "q1": "Bistro est-il vraiment gratuit ?",
+      "a1": "Oui ! Bistro est 100% gratuit et open source. Pas de plans premium, pas de frais cachés et pas de carte bancaire requise. Vous pouvez utiliser toutes les fonctionnalités sans aucune limitation.",
+      "q2": "Puis-je auto-héberger Bistro ?",
+      "a2": "Absolument. Bistro est open source et conçu pour l'auto-hébergement. Consultez notre dépôt GitHub pour les instructions de déploiement avec Docker ou votre plateforme préférée.",
+      "q3": "Comment fonctionnent les organisations ?",
+      "a3": "Les organisations vous permettent de collaborer avec d'autres. Créez une organisation, invitez des membres par e-mail et attribuez des rôles (Propriétaire, Admin, Membre, Invité) pour contrôler les niveaux d'accès.",
+      "q4": "Mes données sont-elles sécurisées ?",
+      "a4": "La sécurité est une priorité. Nous utilisons un chiffrement standard, une authentification sécurisée et ne partageons jamais vos données avec des tiers. Pour un contrôle maximal, vous pouvez toujours auto-héberger.",
+      "q5": "Quelle stack technique utilise Bistro ?",
+      "a5": "Bistro est construit avec Nuxt 4, Vue 3, Tailwind CSS, Prisma et PostgreSQL. Il utilise Better Auth pour l'authentification et Nuxt UI pour la bibliothèque de composants."
+    },
+    "cta": {
+      "title": "Accédez en avant-première aux nouvelles fonctionnalités",
+      "description": "Rejoignez notre newsletter pour être le premier informé des mises à jour, nouvelles fonctionnalités et astuces pour booster votre productivité.",
+      "emailPlaceholder": "Entrez votre e-mail",
+      "subscribe": "S'abonner"
+    },
+    "testimonials": {
+      "title": "Adoré par les développeurs",
+      "description": "Découvrez ce que les autres disent de Bistro.",
+      "sarah": {
+        "name": "Sarah Chen",
+        "role": "Développeuse indépendante",
+        "quote": "Enfin une app de tâches qui n'essaie pas de tout faire. Bistro est simple, rapide et fonctionne. Parfait pour mon quotidien."
+      },
+      "marcus": {
+        "name": "Marcus Johnson",
+        "role": "Fondateur de startup",
+        "quote": "Nous avons migré notre équipe vers Bistro et la productivité a augmenté. Les fonctionnalités d'organisation sont exactement ce qu'il nous fallait sans le superflu."
+      },
+      "emily": {
+        "name": "Emily Rodriguez",
+        "role": "Contributrice Open Source",
+        "quote": "J'adore que ce soit open source ! Je peux l'auto-héberger, le personnaliser et avoir confiance que mes données restent les miennes. Le code est propre aussi."
+      }
+    },
+    "techStack": {
+      "builtWith": "Construit avec des technologies modernes"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "password": "Mot de passe",
+      "magicLink": "Lien magique",
+      "forgotPassword": "Mot de passe oublié ?",
+      "signInButton": "Se connecter"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Inscrivez-vous pour commencer",
+      "nameLabel": "Nom",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "namePlaceholder": "Jean Dupont",
+      "emailPlaceholder": "vous{'@'}exemple.com",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Créer un compte",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "toast": {
+        "title": "Compte créé !",
+        "description": "Vérifiez votre e-mail pour le lien de vérification."
+      }
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Entrez votre e-mail pour recevoir un lien de réinitialisation",
+      "emailPlaceholder": "vous{'@'}exemple.com",
+      "submitButton": "Envoyer le lien",
+      "rememberPassword": "Vous vous souvenez de votre mot de passe ?"
+    },
+    "forgotPasswordSent": {
+      "title": "Vérifiez votre e-mail",
+      "badge": "Lien envoyé",
+      "heading": "E-mail de réinitialisation envoyé",
+      "description": "Nous avons envoyé un lien de réinitialisation à {email}. Cliquez sur le lien pour créer un nouveau mot de passe.",
+      "resendHint": "Vous n'avez pas reçu l'e-mail ? Vérifiez les spams ou renvoyez.",
+      "resendCountdown": "Renvoyer dans {cooldown}s",
+      "resendButton": "Renvoyer l'e-mail",
+      "rememberPassword": "Vous vous souvenez de votre mot de passe ?"
+    },
+    "resetPassword": {
+      "title": "Nouveau mot de passe",
+      "description": "Entrez votre nouveau mot de passe ci-dessous",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Réinitialiser",
+      "rememberPassword": "Vous vous souvenez de votre mot de passe ?",
+      "toast": {
+        "invalidLink": "Lien invalide",
+        "invalidLinkDescription": "Le lien de réinitialisation est manquant ou invalide",
+        "success": "Mot de passe mis à jour",
+        "successDescription": "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe"
+      }
+    },
+    "magicLink": {
+      "title": "Connexion par lien magique",
+      "description": "Entrez votre e-mail pour recevoir un lien de connexion",
+      "emailPlaceholder": "vous{'@'}exemple.com",
+      "submitButton": "Envoyer le lien magique",
+      "preferPassword": "Vous préférez un mot de passe ?",
+      "signInWithPassword": "Se connecter avec mot de passe"
+    },
+    "magicLinkSent": {
+      "title": "Vérifiez votre e-mail",
+      "badge": "Lien magique envoyé",
+      "heading": "Lien de connexion envoyé",
+      "description": "Nous avons envoyé un lien de connexion à {email}. Cliquez sur le lien pour vous connecter instantanément.",
+      "resendHint": "Vous n'avez pas reçu l'e-mail ? Vérifiez les spams ou renvoyez.",
+      "resendCountdown": "Renvoyer dans {cooldown}s",
+      "resendButton": "Renvoyer le lien magique",
+      "preferPassword": "Vous préférez un mot de passe ?",
+      "signInWithPassword": "Se connecter avec mot de passe"
+    },
+    "verifyEmail": {
+      "title": "Vérifiez votre e-mail",
+      "badge": "Vérification requise",
+      "heading": "E-mail de vérification envoyé",
+      "description": "Nous avons envoyé un lien de vérification à {email}. Cliquez sur le lien pour vérifier votre compte et vous connecter.",
+      "resendHint": "Vous n'avez pas reçu l'e-mail ? Vérifiez les spams ou renvoyez.",
+      "resendCountdown": "Renvoyer dans {cooldown}s",
+      "resendButton": "Renvoyer l'e-mail de vérification",
+      "alreadyVerified": "Déjà vérifié ?"
+    },
+    "oauth": {
+      "orContinueWith": "Ou continuer avec",
+      "continueWithGithub": "Continuer avec GitHub",
+      "continueWithGoogle": "Continuer avec Google"
+    },
+    "magicLinkForm": {
+      "emailLabel": "E-mail",
+      "hint": "Nous vous enverrons un lien pour vous connecter sans mot de passe.",
+      "submitButton": "Envoyer le lien magique"
+    },
+    "resend": {
+      "emailSent": "E-mail envoyé",
+      "tooManyAttempts": "Trop de tentatives",
+      "tooManyAttemptsDescription": "Veuillez patienter avant de réessayer",
+      "failedToSend": "Échec de l'envoi",
+      "failedToSendDescription": "Veuillez réessayer plus tard"
+    },
+    "emailRequired": "E-mail requis",
+    "emailRequiredDescription": "Veuillez d'abord entrer votre e-mail",
+    "userMenu": "Menu utilisateur"
+  },
+  "profile": {
+    "title": "Paramètres du profil",
+    "description": "Gérez vos informations de compte et vos préférences",
+    "form": {
+      "title": "Informations du profil",
+      "nameLabel": "Nom complet",
+      "nameHint": "Le nom affiché sur votre profil",
+      "namePlaceholder": "Votre nom complet",
+      "emailLabel": "Adresse e-mail",
+      "emailHint": "L'adresse e-mail de votre compte",
+      "emailOauthHint": "Géré par votre fournisseur OAuth (GitHub/Google)",
+      "saveButton": "Enregistrer",
+      "toast": {
+        "success": "Profil mis à jour",
+        "successDescription": "Vos informations ont été enregistrées avec succès",
+        "error": "Échec de la mise à jour"
+      }
+    },
+    "changePassword": {
+      "title": "Changer le mot de passe",
+      "description": "Mettez à jour votre mot de passe pour sécuriser votre compte",
+      "badge": "Sécurité",
+      "currentPasswordLabel": "Mot de passe actuel",
+      "currentPasswordHint": "Entrez votre mot de passe actuel pour vérification",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "newPasswordHint": "Choisissez un mot de passe fort d'au moins 8 caractères",
+      "passwordPlaceholder": "••••••••",
+      "revokeSessionsLabel": "Déconnecter tous les autres appareils",
+      "revokeSessionsHint": "Recommandé pour la sécurité lors du changement de mot de passe",
+      "submitButton": "Mettre à jour",
+      "toast": {
+        "success": "Mot de passe mis à jour",
+        "successDescription": "Votre mot de passe a été changé avec succès",
+        "error": "Échec du changement"
+      }
+    },
+    "sessions": {
+      "title": "Sessions actives",
+      "badge": "Sécurité",
+      "description": "Gérez les appareils connectés à votre compte",
+      "revokeAllButton": "Révoquer toutes les autres sessions",
+      "revokeAllTitle": "Révoquer toutes les sessions ?",
+      "revokeAllWarning": "Vous serez déconnecté de tous les appareils sauf celui-ci.",
+      "securityAction": "Action de sécurité",
+      "securityActionDescription": "Vous serez déconnecté de tous les autres appareils. Vous devrez vous reconnecter sur ces appareils.",
+      "cancelButton": "Annuler",
+      "confirmRevokeAll": "Révoquer toutes les sessions",
+      "toast": {
+        "loadError": "Échec du chargement des sessions",
+        "loadErrorDescription": "Impossible de charger les sessions actives",
+        "revokeSuccess": "Session révoquée",
+        "revokeSuccessDescription": "La session a été révoquée avec succès",
+        "revokeError": "Échec de la révocation",
+        "revokeErrorDescription": "Impossible de révoquer la session",
+        "revokeAllSuccess": "Sessions révoquées",
+        "revokeAllSuccessDescription": "{count} session(s) révoquée(s) avec succès",
+        "revokeAllError": "Échec de la révocation",
+        "revokeAllErrorDescription": "Impossible de révoquer les sessions"
+      }
+    },
+    "deleteAccount": {
+      "title": "Zone de danger",
+      "description": "La suppression de votre compte est irréversible. Toutes vos données seront définitivement supprimées.",
+      "deleteButton": "Supprimer le compte",
+      "modalTitle": "Confirmer la suppression",
+      "modalDescription": "Cette action est irréversible. Toutes vos données seront définitivement supprimées.",
+      "irreversible": "Action irréversible",
+      "irreversibleDescription": "Une fois supprimé, votre compte et toutes les données associées ne pourront pas être récupérés.",
+      "dataList": "Les données suivantes seront définitivement supprimées :",
+      "dataProfile": "Votre profil utilisateur et les informations de compte",
+      "dataProjects": "Tous vos projets et leurs configurations",
+      "dataJobs": "Tous les jobs IA et leurs résultats",
+      "dataSessions": "Toutes les sessions actives sur tous les appareils",
+      "passwordLabel": "Entrez votre mot de passe pour confirmer",
+      "passwordHint": "Requis pour la vérification de sécurité",
+      "emailLabel": "Entrez votre e-mail pour confirmer",
+      "emailHint": "Entrez l'adresse e-mail de votre compte",
+      "passwordPlaceholder": "••••••••",
+      "confirmButton": "Supprimer définitivement",
+      "toast": {
+        "success": "Compte supprimé",
+        "successDescription": "Votre compte a été définitivement supprimé",
+        "error": "Échec de la suppression"
+      }
+    },
+    "restartOnboarding": {
+      "title": "Relancer l'intégration",
+      "description": "Repasser par l'assistant d'intégration",
+      "button": "Relancer l'intégration"
+    },
+    "onboardingInfo": {
+      "title": "Statut d'intégration",
+      "completed": "Terminé",
+      "notCompleted": "Non terminé"
+    }
+  },
+  "onboarding": {
+    "title": "Bienvenue sur Bistro",
+    "skipButton": "Passer",
+    "backButton": "Retour",
+    "nextButton": "Suivant",
+    "finishButton": "Aller au tableau de bord",
+    "welcome": {
+      "title": "Bienvenue sur Bistro !",
+      "description": "Configurons votre compte en quelques étapes. Cela ne prendra qu'une minute.",
+      "step1Title": "Configurer votre profil",
+      "step1Description": "Ajouter bio et entreprise",
+      "step2Title": "Configurer les préférences",
+      "step2Description": "Personnaliser votre expérience",
+      "step3Title": "Parlez-nous de vous",
+      "step3Description": "Aidez-nous à adapter Bistro pour vous"
+    },
+    "profile": {
+      "title": "Configurez votre profil",
+      "description": "Parlez-nous un peu de vous (tous les champs sont optionnels)",
+      "bioLabel": "Bio",
+      "bioPlaceholder": "Parlez-nous de vous...",
+      "bioCount": "{count} / 500",
+      "companyLabel": "Entreprise / Organisation",
+      "companyPlaceholder": "Acme Inc."
+    },
+    "organization": {
+      "title": "Créez votre organisation",
+      "description": "Les organisations vous aident à collaborer avec votre équipe",
+      "nameLabel": "Nom de l'organisation",
+      "namePlaceholder": "Mon Entreprise",
+      "slugLabel": "Identifiant URL",
+      "slugHint": "Utilisé dans l'URL de l'organisation",
+      "slugPlaceholder": "mon-entreprise",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Que fait votre organisation ?"
+    },
+    "useCase": {
+      "title": "Qu'est-ce qui vous amène sur Bistro ?",
+      "description": "Cela nous aide à adapter votre expérience",
+      "personal": "Projet personnel",
+      "personalDescription": "Je construis quelque chose pour moi",
+      "business": "Entreprise",
+      "businessDescription": "Pour mon entreprise ou startup",
+      "agency": "Agence",
+      "agencyDescription": "Je développe pour des clients",
+      "other": "Autre",
+      "otherDescription": "Autre chose"
+    },
+    "preferences": {
+      "title": "Configurer les préférences",
+      "description": "Personnalisez votre expérience Bistro",
+      "themeLabel": "Thème",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système",
+      "emailNotificationsLabel": "Notifications par e-mail",
+      "emailNotificationsDescription": "Recevoir les mises à jour, conseils et annonces"
+    },
+    "complete": {
+      "title": "Vous êtes prêt !",
+      "description": "Bienvenue sur Bistro. Vous êtes prêt à créer des choses incroyables.",
+      "whatsNext": "Et maintenant ?",
+      "step1": "Explorez votre tableau de bord et créez votre premier projet",
+      "step2": "Consultez la documentation pour en savoir plus",
+      "step3": "Personnalisez vos paramètres de profil à tout moment"
+    },
+    "toast": {
+      "error": "Erreur",
+      "saveError": "Échec de la sauvegarde",
+      "completeSuccess": "Bienvenue !",
+      "completeSuccessDescription": "Votre compte est prêt",
+      "completeError": "Échec de la finalisation"
+    }
+  },
+  "org": {
+    "create": {
+      "title": "Créer une organisation",
+      "description": "Configurez votre nouvelle organisation",
+      "nameLabel": "Nom de l'organisation",
+      "namePlaceholder": "Mon Organisation",
+      "slugLabel": "Identifiant URL",
+      "slugHint": "Utilisé dans l'URL de l'organisation",
+      "slugPlaceholder": "mon-organisation",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Que fait votre organisation ?",
+      "submitButton": "Créer l'organisation",
+      "toast": {
+        "success": "Organisation créée avec succès"
+      }
+    },
+    "select": {
+      "title": "Sélectionner une organisation",
+      "description": "Choisissez une organisation pour continuer",
+      "createNew": "Créer une nouvelle organisation"
+    },
+    "switcher": {
+      "members": "Membres",
+      "settings": "Paramètres",
+      "createOrganization": "Créer une organisation",
+      "switchLabel": "Changer d'organisation, actuelle : {name}"
+    },
+    "selectionList": {
+      "errorLoading": "Erreur de chargement des organisations",
+      "retry": "Réessayer",
+      "noOrgsTitle": "Aucune organisation",
+      "noOrgsDescription": "Créez votre première organisation pour commencer",
+      "createOrganization": "Créer une organisation"
+    },
+    "invite": {
+      "title": "Invitation à une organisation",
+      "invalidTitle": "Invitation invalide",
+      "goToOrgs": "Aller aux organisations",
+      "invitedToJoin": "Vous avez été invité à rejoindre",
+      "emailLabel": "E-mail :",
+      "roleLabel": "Rôle :",
+      "acceptButton": "Accepter l'invitation",
+      "declineButton": "Refuser",
+      "toast": {
+        "success": "Vous avez rejoint l'organisation",
+        "error": "Échec de l'acceptation"
+      }
+    },
+    "dashboard": {
+      "title": "Mes tâches"
+    },
+    "members": {
+      "title": "Membres de l'organisation",
+      "membersLabel": "Membres",
+      "inviteButton": "Inviter un membre",
+      "nameHeader": "Nom",
+      "emailHeader": "E-mail",
+      "roleHeader": "Rôle",
+      "actionsHeader": "Actions",
+      "roleOwner": "Propriétaire",
+      "roleAdmin": "Administrateur",
+      "roleMember": "Membre",
+      "roleGuest": "Invité",
+      "inviteTitle": "Inviter un membre",
+      "inviteEmailPlaceholder": "membre{'@'}exemple.com",
+      "inviteRoleLabel": "Rôle",
+      "sendInvitation": "Envoyer l'invitation",
+      "removeTitle": "Retirer le membre",
+      "removeConfirm": "Êtes-vous sûr de vouloir retirer ce membre ?",
+      "toast": {
+        "inviteSuccess": "Invitation envoyée",
+        "inviteError": "Échec de l'envoi de l'invitation",
+        "roleSuccess": "Rôle du membre mis à jour",
+        "roleError": "Échec de la mise à jour du rôle",
+        "removeSuccess": "Membre retiré",
+        "removeError": "Échec du retrait du membre"
+      }
+    },
+    "settings": {
+      "title": "Paramètres de l'organisation",
+      "description": "Paramètres pour {slug}"
+    }
+  },
+  "todo": {
+    "loading": "Chargement des tâches...",
+    "empty": "Aucune tâche trouvée.",
+    "statusSummary": "{total} tâches, {completed} terminées.",
+    "filterLabel": "Filtre :",
+    "filterAll": "Toutes",
+    "filterActive": "Actives",
+    "filterCompleted": "Terminées",
+    "sortLabel": "Tri :",
+    "sortDate": "Date",
+    "sortTitle": "Titre",
+    "emptyTitle": "Aucune tâche",
+    "emptyDescription": "Créez votre première tâche pour commencer !",
+    "totalCount": "{total} au total",
+    "pageInfo": "{page} / {totalPages}",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Titre de la tâche...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description (optionnel)",
+    "addButton": "Ajouter",
+    "deleteTodoLabel": "Supprimer la tâche",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "createNewTodo": "Créer une nouvelle tâche",
+    "toast": {
+      "loadError": "Échec du chargement des tâches",
+      "createError": "Échec de la création de la tâche",
+      "updateError": "Échec de la mise à jour de la tâche",
+      "deleteSuccess": "Tâche supprimée",
+      "deleteError": "Échec de la suppression de la tâche",
+      "createFormError": "Échec de la création. Veuillez réessayer."
+    }
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "seoTitle": "Contact",
+    "description": "Vous avez une question ou un retour ? Nous serions ravis de vous entendre.",
+    "seoDescription": "Contactez l'équipe Bistro pour du support, des retours ou des questions générales.",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "vous{'@'}exemple.com",
+    "subjectLabel": "Sujet",
+    "subjectPlaceholder": "Sélectionnez un sujet",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+    "submitButton": "Envoyer",
+    "preferGithub": "Vous préférez GitHub ?",
+    "openIssue": "Ouvrir un ticket",
+    "startDiscussion": "démarrer une discussion",
+    "subjects": {
+      "general": "Question générale",
+      "support": "Support",
+      "feedback": "Retour",
+      "other": "Autre"
+    },
+    "toast": {
+      "success": "Message envoyé",
+      "successDescription": "Merci de nous avoir contactés. Nous vous répondrons bientôt.",
+      "error": "Échec de l'envoi. Veuillez réessayer."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "seoTitle": "Blog",
+    "seoDescription": "Derniers articles et mises à jour de Bistro",
+    "description": "Réflexions, tutoriels et analyses sur la création d'applications SaaS modernes",
+    "articlesCount": "{total}",
+    "articlesLabel": "Articles",
+    "topicsCount": "{total}",
+    "topicsLabel": "Sujets",
+    "draftPost": "Brouillon",
+    "draftDescription": "Cet article n'est pas publié et n'est visible que par les administrateurs",
+    "postNotFound": "Article introuvable"
+  },
+  "docs": {
+    "title": "Documentation",
+    "notFound": "Documentation introuvable",
+    "pageNotFound": "Page de documentation introuvable",
+    "errorLoading": "Erreur de chargement de la navigation",
+    "noItems": "Aucun élément de navigation",
+    "onThisPage": "Sur cette page",
+    "noSections": "Aucune section",
+    "searchButton": "Rechercher",
+    "searchPlaceholder": "Rechercher dans la doc...",
+    "noResults": "Aucun résultat",
+    "startTyping": "Commencez à taper pour rechercher"
+  },
+  "changelog": {
+    "title": "Changelog",
+    "seoTitle": "Changelog",
+    "seoDescription": "Suivez les nouvelles fonctionnalités, améliorations et corrections de Bistro.",
+    "description": "Suivez les nouvelles fonctionnalités, améliorations et corrections de Bistro."
+  },
+  "admin": {
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "description": "Gérer les utilisateurs et usurper l'identité pour le support",
+      "allUsers": "Tous les utilisateurs",
+      "userCount": "{count} utilisateurs",
+      "nameHeader": "Nom",
+      "emailHeader": "E-mail",
+      "roleHeader": "Rôle",
+      "verifiedHeader": "Vérifié",
+      "actionsHeader": "Actions",
+      "cannotImpersonate": "Impossible d'usurper",
+      "impersonate": "Usurper l'identité",
+      "toast": {
+        "accessDenied": "Accès refusé",
+        "accessDeniedDescription": "Vous n'avez pas la permission d'accéder à cette page",
+        "fetchError": "Échec du chargement des utilisateurs",
+        "impersonateSuccess": "Usurpation démarrée",
+        "impersonateSuccessDescription": "Affichage en tant que {name}"
+      }
+    },
+    "emailPreview": {
+      "title": "Aperçu des modèles d'e-mails",
+      "description": "Prévisualiser l'apparence des e-mails pour les destinataires",
+      "templatesLabel": "Modèles",
+      "templateCount": "{count} modèles",
+      "loading": "Chargement des modèles...",
+      "loadError": "Échec du chargement des modèles d'e-mails",
+      "toast": {
+        "loadError": "Échec du chargement des modèles",
+        "sendSuccess": "E-mail de test envoyé",
+        "sendSuccessDescription": "Vérifiez votre boîte de réception à {email}",
+        "notConfigured": "E-mail non configuré",
+        "notConfiguredDescription": "RESEND_API_KEY manquante - e-mails désactivés"
+      }
+    },
+    "impersonation": {
+      "viewingAs": "Affichage en tant que {name}",
+      "restricted": "Certaines actions peuvent être restreintes",
+      "stopTitle": "Usurpation arrêtée",
+      "stopDescription": "Retour à votre compte administrateur",
+      "errorTitle": "Erreur",
+      "stopError": "Échec de l'arrêt de l'usurpation",
+      "impersonateUser": "Usurper l'identité",
+      "closeModal": "Fermer la modale",
+      "aboutToImpersonate": "Vous êtes sur le point d'usurper l'identité de :",
+      "reasonLabel": "Raison (optionnel)",
+      "reasonHelp": "Documentez pourquoi vous usurpez l'identité de cet utilisateur",
+      "reasonPlaceholder": "ex : Déboguer un problème de paiement",
+      "importantTitle": "Important",
+      "importantDescription": "Certaines actions sont restreintes pendant l'usurpation. La session expirera automatiquement après 1 heure.",
+      "startButton": "Commencer l'usurpation"
+    },
+    "emailPreviewIframe": "Aperçu de l'e-mail",
+    "subject": "Objet :",
+    "htmlPreview": "Aperçu HTML",
+    "plainText": "Texte brut",
+    "sendTestEmail": "Envoyer un e-mail test",
+    "sampleData": "Données d'exemple",
+    "sessions": {
+      "noSessions": "Aucune session active trouvée",
+      "currentSession": "Session actuelle",
+      "lastActive": "Dernière activité :",
+      "revoke": "Révoquer",
+      "on": "sur"
+    }
+  },
+  "dashboard": {
+    "commandPalette": {
+      "search": "Rechercher...",
+      "recent": "Récents",
+      "navigation": "Navigation",
+      "organization": "Organisation",
+      "admin": "Admin",
+      "actions": "Actions",
+      "dashboard": "Tableau de bord",
+      "profile": "Profil",
+      "members": "Membres",
+      "settings": "Paramètres",
+      "adminPanel": "Panneau d'administration",
+      "emailPreviews": "Aperçu des e-mails",
+      "switchToLight": "Passer en mode clair",
+      "switchToDark": "Passer en mode sombre",
+      "logout": "Déconnexion"
+    },
+    "shortcuts": {
+      "title": "Raccourcis clavier",
+      "navigation": "Navigation",
+      "modals": "Modales",
+      "openCommandPalette": "Ouvrir la palette de commandes",
+      "toggleSidebar": "Afficher/masquer la barre latérale",
+      "showShortcutsHelp": "Afficher l'aide des raccourcis",
+      "closeModal": "Fermer la modale"
+    }
+  },
+  "newsletter": {
+    "toast": {
+      "success": "Abonné !",
+      "successDescription": "Merci pour votre inscription. Nous vous tiendrons informé.",
+      "error": "Une erreur est survenue. Veuillez réessayer."
+    }
+  }
+}

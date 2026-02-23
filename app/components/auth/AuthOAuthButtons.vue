@@ -54,7 +54,7 @@ async function signInWithGoogle() {
         <span class="border-default w-full border-t" />
       </div>
       <div class="relative flex justify-center text-xs uppercase">
-        <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400">Or continue with</span>
+        <span class="bg-white px-2 text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400">{{ $t('auth.oauth.orContinueWith') }}</span>
       </div>
     </div>
 
@@ -68,7 +68,7 @@ async function signInWithGoogle() {
       <template #leading>
         <UIcon name="i-simple-icons-github" />
       </template>
-      Continue with GitHub
+      {{ $t('auth.oauth.continueWithGithub') }}
     </UButton>
 
     <UButton
@@ -81,7 +81,7 @@ async function signInWithGoogle() {
       <template #leading>
         <UIcon name="i-simple-icons-google" />
       </template>
-      Continue with Google
+      {{ $t('auth.oauth.continueWithGoogle') }}
     </UButton>
   </div>
 </template>

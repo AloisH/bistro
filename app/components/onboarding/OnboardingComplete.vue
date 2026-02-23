@@ -10,16 +10,16 @@
     </div>
 
     <h1 class="mb-4 text-3xl font-bold">
-      You're all set!
+      {{ $t('onboarding.complete.title') }}
     </h1>
 
     <p class="mx-auto mb-8 max-w-md text-lg text-neutral-600 dark:text-neutral-300">
-      Welcome to Bistro. You're ready to start building amazing things.
+      {{ $t('onboarding.complete.description') }}
     </p>
 
     <div class="mx-auto max-w-md rounded-lg bg-neutral-50 p-6 dark:bg-neutral-800">
       <h3 class="mb-3 font-semibold">
-        What's next?
+        {{ $t('onboarding.complete.whatsNext') }}
       </h3>
       <ul class="space-y-2 text-left text-sm">
         <li class="flex items-start gap-2">
@@ -27,21 +27,21 @@
             name="i-lucide-circle-check"
             class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
           />
-          <span>Explore your dashboard and create your first project</span>
+          <span>{{ $t('onboarding.complete.step1') }}</span>
         </li>
         <li class="flex items-start gap-2">
           <UIcon
             name="i-lucide-circle-check"
             class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
           />
-          <span>Check out the documentation to learn more</span>
+          <span>{{ $t('onboarding.complete.step2') }}</span>
         </li>
         <li class="flex items-start gap-2">
           <UIcon
             name="i-lucide-circle-check"
             class="text-primary mt-0.5 h-4 w-4 flex-shrink-0"
           />
-          <span>Customize your profile settings anytime</span>
+          <span>{{ $t('onboarding.complete.step3') }}</span>
         </li>
       </ul>
     </div>

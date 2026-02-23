@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { forgotPasswordSchema } from '#shared/auth';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { state, loading, error, submit } = usePasswordResetRequest();
 </script>
 
@@ -9,10 +11,10 @@ const { state, loading, error, submit } = usePasswordResetRequest();
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">
-          Reset password
+          {{ $t('auth.forgotPassword.title') }}
         </h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Enter your email to receive a reset link
+          {{ $t('auth.forgotPassword.description') }}
         </p>
       </template>
 
@@ -23,12 +25,12 @@ const { state, loading, error, submit } = usePasswordResetRequest();
       >
         <UFormField
           name="email"
-          label="Email"
+          :label="t('common.email')"
         >
           <UInput
             v-model="state.email"
             type="email"
-            placeholder="you@example.com"
+            :placeholder="t('auth.forgotPassword.emailPlaceholder')"
             autocomplete="email"
           />
         </UFormField>
@@ -48,18 +50,18 @@ const { state, loading, error, submit } = usePasswordResetRequest();
           size="xl"
           class="mt-6 font-semibold"
         >
-          Send reset link
+          {{ $t('auth.forgotPassword.submitButton') }}
         </UButton>
       </UForm>
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Remember your password?
+          {{ $t('auth.forgotPassword.rememberPassword') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </NuxtLink>
         </p>
       </template>

@@ -1,6 +1,7 @@
 export function useAuthRegister() {
   const { signUp, fetchSession, redirectToUserDashboard, loggedIn } = useAuth();
   const toast = useToast();
+  const { t } = useI18n();
 
   const state = reactive({
     name: '',
@@ -36,8 +37,8 @@ export function useAuthRegister() {
       }
 
       toast.add({
-        title: 'Account created!',
-        description: 'Check your email for verification link.',
+        title: t('auth.register.toast.title'),
+        description: t('auth.register.toast.description'),
         color: 'success',
         icon: 'i-lucide-mail-check',
       });

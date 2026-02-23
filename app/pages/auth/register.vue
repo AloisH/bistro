@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { signUpSchema } from '#shared/auth';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { state, loading, error, submit } = useAuthRegister();
 </script>
 
@@ -9,10 +11,10 @@ const { state, loading, error, submit } = useAuthRegister();
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">
-          Create account
+          {{ $t('auth.register.title') }}
         </h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Sign up to get started
+          {{ $t('auth.register.description') }}
         </p>
       </template>
 
@@ -23,38 +25,38 @@ const { state, loading, error, submit } = useAuthRegister();
       >
         <UFormField
           name="name"
-          label="Name"
+          :label="t('auth.register.nameLabel')"
         >
           <UInput
             v-model="state.name"
             type="text"
-            placeholder="John Doe"
+            :placeholder="t('auth.register.namePlaceholder')"
             autocomplete="name"
           />
         </UFormField>
 
         <UFormField
           name="email"
-          label="Email"
+          :label="t('auth.register.emailLabel')"
           class="mt-4"
         >
           <UInput
             v-model="state.email"
             type="email"
-            placeholder="you@example.com"
+            :placeholder="t('auth.register.emailPlaceholder')"
             autocomplete="email"
           />
         </UFormField>
 
         <UFormField
           name="password"
-          label="Password"
+          :label="t('auth.register.passwordLabel')"
           class="mt-4"
         >
           <UInput
             v-model="state.password"
             type="password"
-            placeholder="••••••••"
+            :placeholder="t('auth.register.passwordPlaceholder')"
             autocomplete="new-password"
           />
         </UFormField>
@@ -74,7 +76,7 @@ const { state, loading, error, submit } = useAuthRegister();
           size="xl"
           class="mt-6 font-semibold"
         >
-          Create account
+          {{ $t('auth.register.submitButton') }}
         </UButton>
       </UForm>
 
@@ -82,12 +84,12 @@ const { state, loading, error, submit } = useAuthRegister();
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Already have an account?
+          {{ $t('auth.register.hasAccount') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </NuxtLink>
         </p>
       </template>

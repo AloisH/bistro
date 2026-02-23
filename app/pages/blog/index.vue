@@ -1,10 +1,12 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const { posts, total, totalPages, currentPage, selectedTag, allTags, limit, filterByTag }
   = await useBlogPosts();
 
 useSeo({
-  title: 'Blog',
-  description: 'Latest articles and updates from Bistro',
+  title: t('blog.seoTitle'),
+  description: t('blog.seoDescription'),
 });
 </script>
 
@@ -21,27 +23,27 @@ useSeo({
         <h1
           class="mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-5xl font-bold text-transparent dark:from-white dark:to-gray-400"
         >
-          Blog
+          {{ $t('blog.title') }}
         </h1>
         <p class="mb-8 text-xl text-neutral-600 dark:text-neutral-400">
-          Thoughts, tutorials, and insights on building modern SaaS applications
+          {{ $t('blog.description') }}
         </p>
 
         <div class="flex gap-8 text-sm">
           <div>
             <div class="text-2xl font-bold text-neutral-900 dark:text-white">
-              {{ total }}
+              {{ $t('blog.articlesCount', { total }) }}
             </div>
             <div class="text-neutral-600 dark:text-neutral-400">
-              Articles
+              {{ $t('blog.articlesLabel') }}
             </div>
           </div>
           <div>
             <div class="text-2xl font-bold text-neutral-900 dark:text-white">
-              {{ allTags.length }}
+              {{ $t('blog.topicsCount', { total: allTags.length }) }}
             </div>
             <div class="text-neutral-600 dark:text-neutral-400">
-              Topics
+              {{ $t('blog.topicsLabel') }}
             </div>
           </div>
         </div>

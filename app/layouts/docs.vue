@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
 const { navigation, status } = useDocsNavigation();
 </script>
 
@@ -15,7 +16,7 @@ const { navigation, status } = useDocsNavigation();
           class="flex w-full items-center justify-between gap-2"
         >
           <NuxtLink
-            to="/"
+            :to="localePath('/')"
             class="flex items-center gap-2"
           >
             <UIcon
@@ -57,13 +58,13 @@ const { navigation, status } = useDocsNavigation();
             v-else-if="status === 'error'"
             class="p-4 text-sm text-red-500"
           >
-            Error loading navigation
+            {{ $t('docs.errorLoading') }}
           </div>
           <div
             v-else
             class="p-4 text-sm text-neutral-500"
           >
-            No navigation items
+            {{ $t('docs.noItems') }}
           </div>
         </ClientOnly>
       </template>
@@ -75,31 +76,32 @@ const { navigation, status } = useDocsNavigation();
         <template #left>
           <div class="flex items-center gap-2">
             <UButton
-              to="/"
+              :to="localePath('/')"
               variant="ghost"
               size="sm"
             >
-              Home
+              {{ $t('nav.home') }}
             </UButton>
             <UButton
-              to="/blog"
+              :to="localePath('/blog')"
               variant="ghost"
               size="sm"
             >
-              Blog
+              {{ $t('nav.blog') }}
             </UButton>
             <UButton
-              to="/docs"
+              :to="localePath('/docs')"
               variant="ghost"
               color="primary"
               size="sm"
             >
-              Docs
+              {{ $t('nav.docs') }}
             </UButton>
           </div>
         </template>
 
         <template #right>
+          <LocaleSwitcher />
           <UColorModeButton />
           <AuthButton />
         </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const { isImpersonating, impersonatedUser, stopImpersonation, checkImpersonation }
   = useImpersonation();
 const loading = ref(false);
@@ -16,8 +17,8 @@ async function handleStopImpersonation() {
 
   if (result.success) {
     toast.add({
-      title: 'Stopped impersonation',
-      description: 'Returned to your admin account',
+      title: t('admin.impersonation.stopTitle'),
+      description: t('admin.impersonation.stopDescription'),
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -25,8 +26,8 @@ async function handleStopImpersonation() {
   }
   else {
     toast.add({
-      title: 'Error',
-      description: result.error || 'Failed to stop impersonation',
+      title: t('admin.impersonation.errorTitle'),
+      description: result.error || t('admin.impersonation.stopError'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -47,10 +48,10 @@ async function handleStopImpersonation() {
         />
         <div class="min-w-0">
           <p class="text-warning-900 dark:text-warning-100 truncate font-semibold">
-            Viewing as {{ impersonatedUser?.name || impersonatedUser?.email || 'User' }}
+            {{ $t('admin.impersonation.viewingAs', { name: impersonatedUser?.name || impersonatedUser?.email || 'User' }) }}
           </p>
           <p class="text-warning-700 dark:text-warning-300 text-sm font-medium">
-            Some actions may be restricted
+            {{ $t('admin.impersonation.restricted') }}
           </p>
         </div>
       </div>
@@ -62,7 +63,7 @@ async function handleStopImpersonation() {
         class="shrink-0 font-semibold"
         @click="handleStopImpersonation"
       >
-        Stop
+        {{ $t('common.stop') }}
       </UButton>
     </div>
   </div>

@@ -12,7 +12,7 @@ const { state, isLoading, isFirstStep, isLastStep, nextStep, previousStep, skipS
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold">
-              Welcome to Bistro
+              {{ $t('onboarding.title') }}
             </h2>
             <UButton
               variant="ghost"
@@ -21,7 +21,7 @@ const { state, isLoading, isFirstStep, isLastStep, nextStep, previousStep, skipS
               :disabled="isLoading"
               @click="skipStep"
             >
-              Skip
+              {{ $t('onboarding.skipButton') }}
             </UButton>
           </div>
           <OnboardingProgress
@@ -81,7 +81,7 @@ const { state, isLoading, isFirstStep, isLastStep, nextStep, previousStep, skipS
             <template #leading>
               <UIcon name="i-lucide-chevron-left" />
             </template>
-            Back
+            {{ $t('onboarding.backButton') }}
           </UButton>
           <div v-else />
 
@@ -91,7 +91,7 @@ const { state, isLoading, isFirstStep, isLastStep, nextStep, previousStep, skipS
             :loading="isLoading"
             @click="nextStep"
           >
-            {{ isLastStep ? 'Go to Dashboard' : 'Next' }}
+            {{ isLastStep ? $t('onboarding.finishButton') : $t('onboarding.nextButton') }}
             <template
               v-if="!isLastStep"
               #trailing

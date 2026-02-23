@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
 const route = useRoute();
 const token = route.query.token as string;
 
@@ -10,7 +11,7 @@ const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
     <UCard class="w-full max-w-md">
       <template #header>
         <h1 class="text-2xl font-bold">
-          Organization Invitation
+          {{ $t('org.invite.title') }}
         </h1>
       </template>
 
@@ -21,15 +22,15 @@ const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
         <UAlert
           color="error"
           icon="i-lucide-alert-triangle"
-          title="Invalid Invitation"
+          :title="$t('org.invite.invalidTitle')"
           :description="fetchError.message"
         />
         <UButton
           class="mt-4"
-          to="/org/select"
+          :to="localePath('/org/select')"
           block
         >
-          Go to Organizations
+          {{ $t('org.invite.goToOrgs') }}
         </UButton>
       </div>
 
@@ -40,7 +41,7 @@ const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
         <div class="space-y-4">
           <div>
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-              You have been invited to join
+              {{ $t('org.invite.invitedToJoin') }}
             </p>
             <div class="mt-2 flex items-center gap-3">
               <UIcon
@@ -64,11 +65,11 @@ const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
           <div class="rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
             <div class="space-y-2 text-sm">
               <div class="flex justify-between">
-                <span class="text-neutral-500">Email:</span>
+                <span class="text-neutral-500">{{ $t('org.invite.emailLabel') }}</span>
                 <span class="font-medium">{{ invite.email }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-neutral-500">Role:</span>
+                <span class="text-neutral-500">{{ $t('org.invite.roleLabel') }}</span>
                 <span class="font-medium">{{ invite.role }}</span>
               </div>
             </div>
@@ -81,14 +82,14 @@ const { invite, fetchError, accepting, acceptInvite } = useOrgInvite(token);
             block
             @click="acceptInvite"
           >
-            Accept Invitation
+            {{ $t('org.invite.acceptButton') }}
           </UButton>
           <UButton
             variant="ghost"
-            to="/org/select"
+            :to="localePath('/org/select')"
             :disabled="accepting"
           >
-            Decline
+            {{ $t('org.invite.declineButton') }}
           </UButton>
         </div>
       </div>

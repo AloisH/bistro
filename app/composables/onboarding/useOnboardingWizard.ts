@@ -4,6 +4,7 @@ const TOTAL_STEPS = 6;
 export function useOnboardingWizard() {
   const { fetchSession } = useAuth();
   const toast = useToast();
+  const { t } = useI18n();
 
   const state = reactive({
     currentStep: 1,
@@ -88,9 +89,9 @@ export function useOnboardingWizard() {
     }
     catch (error) {
       toast.add({
-        title: 'Error',
+        title: t('onboarding.toast.error'),
         description:
-          (error as { data?: { message?: string } } | null)?.data?.message ?? 'Failed to save progress',
+          (error as { data?: { message?: string } } | null)?.data?.message ?? t('onboarding.toast.saveError'),
         color: 'error',
       });
       throw error;
@@ -115,8 +116,8 @@ export function useOnboardingWizard() {
       await fetchSession({ forceRefresh: true });
 
       toast.add({
-        title: 'Welcome!',
-        description: 'Your account is all set up',
+        title: t('onboarding.toast.completeSuccess'),
+        description: t('onboarding.toast.completeSuccessDescription'),
         color: 'success',
       });
 
@@ -130,10 +131,10 @@ export function useOnboardingWizard() {
     }
     catch (error) {
       toast.add({
-        title: 'Error',
+        title: t('onboarding.toast.error'),
         description:
           (error as { data?: { message?: string } } | null)?.data?.message
-          ?? 'Failed to complete onboarding',
+          ?? t('onboarding.toast.completeError'),
         color: 'error',
       });
     }

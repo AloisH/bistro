@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Organization } from '../../../prisma/generated/client';
 
+const localePath = useLocalePath();
 const router = useRouter();
 
 const {
@@ -11,7 +12,7 @@ const {
 } = await useFetch<{ organizations: Organization[] }>('/api/organizations');
 
 function selectOrg(slug: string) {
-  router.push(`/org/${slug}/dashboard`);
+  router.push(localePath(`/org/${slug}/dashboard`));
 }
 </script>
 
@@ -20,10 +21,10 @@ function selectOrg(slug: string) {
     <UCard class="w-full max-w-2xl">
       <template #header>
         <h1 class="text-2xl font-bold">
-          Select Organization
+          {{ $t('org.select.title') }}
         </h1>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Choose an organization to continue
+          {{ $t('org.select.description') }}
         </p>
       </template>
 
@@ -40,12 +41,12 @@ function selectOrg(slug: string) {
         #footer
       >
         <UButton
-          to="/org/create"
+          :to="localePath('/org/create')"
           variant="soft"
           icon="i-lucide-plus"
           block
         >
-          Create New Organization
+          {{ $t('org.select.createNew') }}
         </UButton>
       </template>
     </UCard>

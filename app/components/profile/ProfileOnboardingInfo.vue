@@ -6,7 +6,7 @@ const { user } = useAuth();
   <div class="border-default border-b pb-6">
     <div class="mb-6">
       <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-        Onboarding Information
+        {{ $t('profile.onboardingInfo.title') }}
       </h2>
       <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
         Information collected during your initial setup

@@ -32,10 +32,10 @@ function onPasswordChanged() {
       <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 class="text-2xl font-bold text-neutral-900 sm:text-3xl dark:text-white">
-            Profile Settings
+            {{ $t('profile.title') }}
           </h1>
           <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-            Manage your account information and preferences
+            {{ $t('profile.description') }}
           </p>
         </div>
         <!-- Profile Picture Section -->

@@ -3,9 +3,23 @@ import { shortcuts } from '~/composables/shortcuts/useKeyboardShortcuts';
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
+const { t } = useI18n();
+
+const shortcutLabelMap: Record<string, string> = {
+  meta_k: 'dashboard.shortcuts.openCommandPalette',
+  meta_b: 'dashboard.shortcuts.toggleSidebar',
+  meta_shift_k: 'dashboard.shortcuts.showShortcutsHelp',
+  escape: 'dashboard.shortcuts.closeModal',
+};
+
 const navigationShortcuts = computed(() => shortcuts.filter(s => s.category === 'navigation'));
 
 const modalShortcuts = computed(() => shortcuts.filter(s => s.category === 'modals'));
+
+function getShortcutLabel(s: { keys: string; label: string }) {
+  const key = shortcutLabelMap[s.keys];
+  return key ? t(key) : s.label;
+}
 
 // Helper component for shortcut rows
 const ShortcutRow = defineComponent({
@@ -48,14 +62,14 @@ function isMac() {
       <div class="p-6">
         <div class="mb-6 flex items-center justify-between">
           <h2 class="text-lg font-semibold">
-            Keyboard Shortcuts
+            {{ $t('dashboard.shortcuts.title') }}
           </h2>
           <UButton
             icon="i-lucide-x"
             color="neutral"
             variant="ghost"
             size="sm"
-            aria-label="Close"
+            :aria-label="$t('common.close')"
             @click="isOpen = false"
           />
         </div>
@@ -64,13 +78,13 @@ function isMac() {
           <!-- Navigation -->
           <div>
             <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">
-              Navigation
+              {{ $t('dashboard.shortcuts.navigation') }}
             </h3>
             <div class="space-y-2">
               <ShortcutRow
                 v-for="s in navigationShortcuts"
                 :key="s.keys"
-                :label="s.label"
+                :label="getShortcutLabel(s)"
                 :keys="s.keys"
               />
             </div>
@@ -79,13 +93,13 @@ function isMac() {
           <!-- Modals -->
           <div>
             <h3 class="text-muted mb-3 text-sm font-medium tracking-wider uppercase">
-              Modals
+              {{ $t('dashboard.shortcuts.modals') }}
             </h3>
             <div class="space-y-2">
               <ShortcutRow
                 v-for="s in modalShortcuts"
                 :key="s.keys"
-                :label="s.label"
+                :label="getShortcutLabel(s)"
                 :keys="s.keys"
               />
             </div>

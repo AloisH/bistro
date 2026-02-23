@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
+
 const {
   activeTab,
   tabItems,
@@ -19,10 +21,10 @@ const {
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">
-          Login
+          {{ $t('auth.login.title') }}
         </h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Sign in to your account
+          {{ $t('auth.login.description') }}
         </p>
       </template>
 
@@ -56,12 +58,12 @@ const {
 
       <template #footer>
         <p class="text-muted text-center text-sm">
-          Don't have an account?
+          {{ $t('auth.login.noAccount') }}
           <NuxtLink
-            to="/auth/register"
+            :to="localePath('/auth/register')"
             class="text-primary font-semibold hover:underline"
           >
-            Sign up
+            {{ $t('common.signUp') }}
           </NuxtLink>
         </p>
       </template>

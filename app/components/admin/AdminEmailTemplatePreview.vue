@@ -27,7 +27,7 @@ interface Emits {
         {{ template.description }}
       </p>
       <p class="mt-1 text-sm font-medium text-neutral-700 dark:text-neutral-300">
-        Subject: {{ template.subject }}
+        {{ $t('admin.subject') }} {{ template.subject }}
       </p>
     </div>
 
@@ -38,7 +38,7 @@ interface Emits {
         size="sm"
         @click="$emit('update:viewMode', 'html')"
       >
-        HTML Preview
+        {{ $t('admin.htmlPreview') }}
       </UButton>
       <UButton
         :color="viewMode === 'text' ? 'primary' : 'neutral'"
@@ -46,7 +46,7 @@ interface Emits {
         size="sm"
         @click="$emit('update:viewMode', 'text')"
       >
-        Plain Text
+        {{ $t('admin.plainText') }}
       </UButton>
       <div class="ml-auto">
         <UButton
@@ -57,7 +57,7 @@ interface Emits {
           :loading="sendingTest"
           @click="$emit('sendTest')"
         >
-          Send Test Email
+          {{ $t('admin.sendTestEmail') }}
         </UButton>
       </div>
     </div>
@@ -69,7 +69,7 @@ interface Emits {
       <iframe
         :srcdoc="template.html"
         class="h-[600px] w-full rounded-lg"
-        title="Email preview"
+        :title="$t('admin.emailPreviewIframe')"
         sandbox="allow-same-origin"
       />
     </div>
@@ -83,7 +83,7 @@ interface Emits {
 
     <div class="mt-4 rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800">
       <h4 class="mb-2 text-sm font-semibold">
-        Sample Data
+        {{ $t('admin.sampleData') }}
       </h4>
       <pre class="text-xs text-neutral-600 dark:text-neutral-400">{{
         JSON.stringify(template.props, null, 2)

@@ -3,6 +3,8 @@ import type { CommandPaletteGroup, CommandPaletteItem } from '@nuxt/ui';
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const router = useRouter();
 const auth = useAuth();
 const { isAdmin } = useRole();
@@ -11,15 +13,15 @@ const colorMode = useColorMode();
 const { recentItems, addRecentItem } = useRecentItems();
 
 // Navigation helper
-function navigateTo(path: string) {
+function navigateToPath(path: string) {
   isOpen.value = false;
-  void router.push(path);
+  void router.push(localePath(path));
 }
 
 // Logout handler
 function handleLogout() {
   isOpen.value = false;
-  void auth.signOut({ redirectTo: '/auth/login' });
+  void auth.signOut({ redirectTo: localePath('/auth/login') });
 }
 
 // Theme toggle
@@ -43,15 +45,15 @@ function handleSelect(item: CommandPaletteItem | undefined) {
 const navItems = computed<CommandPaletteItem[]>(() => [
   {
     id: 'nav-dashboard',
-    label: 'Dashboard',
+    label: t('dashboard.commandPalette.dashboard'),
     icon: 'i-lucide-house',
-    onSelect: () => { navigateTo(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select'); },
+    onSelect: () => { navigateToPath(activeOrgSlug.value ? `/org/${activeOrgSlug.value}/dashboard` : '/org/select'); },
   },
   {
     id: 'nav-profile',
-    label: 'Profile',
+    label: t('dashboard.commandPalette.profile'),
     icon: 'i-lucide-user',
-    onSelect: () => { navigateTo('/profile'); },
+    onSelect: () => { navigateToPath('/profile'); },
   },
 ]);
 
@@ -61,15 +63,15 @@ const orgItems = computed<CommandPaletteItem[]>(() =>
     ? [
         {
           id: 'org-members',
-          label: 'Members',
+          label: t('dashboard.commandPalette.members'),
           icon: 'i-lucide-users',
-          onSelect: () => { navigateTo(`/org/${activeOrgSlug.value}/members`); },
+          onSelect: () => { navigateToPath(`/org/${activeOrgSlug.value}/members`); },
         },
         {
           id: 'org-settings',
-          label: 'Settings',
+          label: t('dashboard.commandPalette.settings'),
           icon: 'i-lucide-settings',
-          onSelect: () => { navigateTo(`/org/${activeOrgSlug.value}/settings`); },
+          onSelect: () => { navigateToPath(`/org/${activeOrgSlug.value}/settings`); },
         },
       ]
     : [],
@@ -79,15 +81,15 @@ const orgItems = computed<CommandPaletteItem[]>(() =>
 const adminItems = computed<CommandPaletteItem[]>(() => [
   {
     id: 'admin-panel',
-    label: 'Admin Panel',
+    label: t('dashboard.commandPalette.adminPanel'),
     icon: 'i-lucide-shield',
-    onSelect: () => { navigateTo('/admin/users'); },
+    onSelect: () => { navigateToPath('/admin/users'); },
   },
   {
     id: 'admin-email',
-    label: 'Email Previews',
+    label: t('dashboard.commandPalette.emailPreviews'),
     icon: 'i-lucide-mail',
-    onSelect: () => { navigateTo('/admin/email-preview'); },
+    onSelect: () => { navigateToPath('/admin/email-preview'); },
   },
 ]);
 
@@ -95,13 +97,13 @@ const adminItems = computed<CommandPaletteItem[]>(() => [
 const actionItems = computed<CommandPaletteItem[]>(() => [
   {
     id: 'action-theme',
-    label: colorMode.value === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+    label: colorMode.value === 'dark' ? t('dashboard.commandPalette.switchToLight') : t('dashboard.commandPalette.switchToDark'),
     icon: colorMode.value === 'dark' ? 'i-lucide-sun' : 'i-lucide-moon',
     onSelect: toggleTheme,
   },
   {
     id: 'action-logout',
-    label: 'Logout',
+    label: t('dashboard.commandPalette.logout'),
     icon: 'i-lucide-log-out',
     onSelect: handleLogout,
   },
@@ -115,7 +117,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
   if (recentItems.value.length > 0) {
     result.push({
       id: 'recent',
-      label: 'Recent',
+      label: t('dashboard.commandPalette.recent'),
       items: recentItems.value.map(item => ({
         id: item.id,
         label: item.label,
@@ -138,7 +140,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
   // Always visible - Navigation
   result.push({
     id: 'navigation',
-    label: 'Navigation',
+    label: t('dashboard.commandPalette.navigation'),
     items: navItems.value,
   });
 
@@ -146,7 +148,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
   if (activeOrgSlug.value && orgItems.value.length > 0) {
     result.push({
       id: 'organization',
-      label: 'Organization',
+      label: t('dashboard.commandPalette.organization'),
       items: orgItems.value,
     });
   }
@@ -155,7 +157,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
   if (isAdmin.value) {
     result.push({
       id: 'admin',
-      label: 'Admin',
+      label: t('dashboard.commandPalette.admin'),
       items: adminItems.value,
     });
   }
@@ -163,7 +165,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
   // Actions - always visible
   result.push({
     id: 'actions',
-    label: 'Actions',
+    label: t('dashboard.commandPalette.actions'),
     items: actionItems.value,
   });
 
@@ -176,7 +178,7 @@ const groups = computed<CommandPaletteGroup[]>(() => {
     <template #content>
       <UCommandPalette
         :groups="groups"
-        placeholder="Search..."
+        :placeholder="$t('dashboard.commandPalette.search')"
         close
         @update:open="isOpen = $event"
         @update:model-value="handleSelect"

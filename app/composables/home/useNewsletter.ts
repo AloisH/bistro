@@ -1,5 +1,6 @@
 export function useNewsletter() {
   const toast = useToast();
+  const { t } = useI18n();
 
   const email = ref('');
   const subscribing = ref(false);
@@ -13,8 +14,8 @@ export function useNewsletter() {
       // TODO: Implement actual subscription API
       await new Promise(resolve => setTimeout(resolve, 1000));
       toast.add({
-        title: 'Subscribed!',
-        description: 'Thanks for subscribing. We\'ll keep you posted.',
+        title: t('newsletter.toast.success'),
+        description: t('newsletter.toast.successDescription'),
         color: 'success',
         icon: 'i-lucide-check',
       });
@@ -22,8 +23,8 @@ export function useNewsletter() {
     }
     catch {
       toast.add({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        title: t('common.error'),
+        description: t('newsletter.toast.error'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });

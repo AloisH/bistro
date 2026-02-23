@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui';
 
+const { t } = useI18n();
 const { session, user, isPending, signOut } = useAuth();
 const { isSuperAdmin } = useRole();
+const localePath = useLocalePath();
 
 // Build menu items dynamically based on role
 const menuItems = computed<DropdownMenuItem[][]>(() => {
@@ -16,9 +18,9 @@ const menuItems = computed<DropdownMenuItem[][]>(() => {
     ],
     [
       {
-        label: 'Profile',
+        label: t('nav.profile'),
         icon: 'i-lucide-settings',
-        to: '/profile',
+        to: localePath('/profile'),
       },
     ],
   ];
@@ -27,9 +29,9 @@ const menuItems = computed<DropdownMenuItem[][]>(() => {
   if (isSuperAdmin.value) {
     items.push([
       {
-        label: 'Admin Panel',
+        label: t('nav.admin'),
         icon: 'i-lucide-shield',
-        to: '/admin/users',
+        to: localePath('/admin/users'),
       },
     ]);
   }
@@ -37,7 +39,7 @@ const menuItems = computed<DropdownMenuItem[][]>(() => {
   // Add logout at the end
   items.push([
     {
-      label: 'Logout',
+      label: t('nav.logout'),
       icon: 'i-lucide-log-out',
       onSelect: () => signOut({ redirectTo: '/' }),
     },
@@ -51,8 +53,8 @@ const menuItems = computed<DropdownMenuItem[][]>(() => {
   <div v-if="!isPending">
     <UButton
       v-if="!session"
-      to="/auth/login"
-      label="Login"
+      :to="localePath('/auth/login')"
+      :label="$t('auth.login.title')"
       color="primary"
       variant="solid"
       class="font-semibold"
@@ -72,7 +74,7 @@ const menuItems = computed<DropdownMenuItem[][]>(() => {
         :text="getUserInitials(user)"
         size="sm"
         role="button"
-        aria-label="User menu"
+        :aria-label="t('auth.userMenu')"
         class="hover:ring-primary cursor-pointer ring-2 ring-neutral-200 transition-colors dark:ring-neutral-700"
       />
     </UDropdownMenu>

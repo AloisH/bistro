@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { resetPasswordSchema } from '#shared/auth';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { state, loading, error, submit } = usePasswordReset();
 </script>
 
@@ -9,10 +11,10 @@ const { state, loading, error, submit } = usePasswordReset();
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">
-          Create new password
+          {{ $t('auth.resetPassword.title') }}
         </h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Enter your new password below
+          {{ $t('auth.resetPassword.description') }}
         </p>
       </template>
 
@@ -23,25 +25,25 @@ const { state, loading, error, submit } = usePasswordReset();
       >
         <UFormField
           name="password"
-          label="New password"
+          :label="t('auth.resetPassword.newPasswordLabel')"
         >
           <UInput
             v-model="state.password"
             type="password"
-            placeholder="••••••••"
+            :placeholder="t('auth.resetPassword.passwordPlaceholder')"
             autocomplete="new-password"
           />
         </UFormField>
 
         <UFormField
           name="confirmPassword"
-          label="Confirm password"
+          :label="t('auth.resetPassword.confirmPasswordLabel')"
           class="mt-4"
         >
           <UInput
             v-model="state.confirmPassword"
             type="password"
-            placeholder="••••••••"
+            :placeholder="t('auth.resetPassword.passwordPlaceholder')"
             autocomplete="new-password"
           />
         </UFormField>
@@ -61,18 +63,18 @@ const { state, loading, error, submit } = usePasswordReset();
           size="xl"
           class="mt-6 font-semibold"
         >
-          Reset password
+          {{ $t('auth.resetPassword.submitButton') }}
         </UButton>
       </UForm>
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Remember your password?
+          {{ $t('auth.resetPassword.rememberPassword') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in
+            {{ $t('common.signIn') }}
           </NuxtLink>
         </p>
       </template>

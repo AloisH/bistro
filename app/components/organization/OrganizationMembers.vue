@@ -9,6 +9,7 @@ interface Props {
 
 const { organizationSlug } = defineProps<Props>();
 
+const { t } = useI18n();
 const toast = useToast();
 const { user } = useAuth();
 const { members, currentUserRole, canManageMembers, fetchMembers, updateMemberRole, removeMember }
@@ -43,11 +44,18 @@ const roleIcons = {
   GUEST: 'i-lucide-eye',
 } as const;
 
-const columns = [
+const roleLabels = computed(() => ({
+  OWNER: t('org.members.roleOwner'),
+  ADMIN: t('org.members.roleAdmin'),
+  MEMBER: t('org.members.roleMember'),
+  GUEST: t('org.members.roleGuest'),
+}));
+
+const columns = computed(() => [
   {
     id: 'name',
     accessorKey: 'user.name',
-    header: 'Name',
+    header: t('org.members.nameHeader'),
     cell: ({
       row,
     }: {
@@ -71,14 +79,14 @@ const columns = [
   {
     id: 'email',
     accessorKey: 'user.email',
-    header: 'Email',
+    header: t('org.members.emailHeader'),
     cell: ({ row }: { row: { original: OrganizationMember & { user: { email: string } } } }) =>
       row.original.user.email,
   },
   {
     id: 'role',
     accessorKey: 'role',
-    header: 'Role',
+    header: t('org.members.roleHeader'),
     cell: ({ row }: { row: { original: OrganizationMember } }) => {
       return h(
         resolveComponent('UBadge'),
@@ -86,13 +94,13 @@ const columns = [
           color: roleColors[row.original.role as keyof typeof roleColors],
           icon: roleIcons[row.original.role as keyof typeof roleIcons],
         },
-        () => row.original.role,
+        () => roleLabels.value[row.original.role as keyof typeof roleLabels.value],
       );
     },
   },
   {
     id: 'actions',
-    header: 'Actions',
+    header: t('org.members.actionsHeader'),
     cell: ({ row }: { row: { original: OrganizationMember & { user: { id: string } } } }) => {
       const member = row.original;
       const currentUserId = user.value?.id;
@@ -109,10 +117,10 @@ const columns = [
             ? h(resolveComponent('USelect'), {
                 'modelValue': member.role,
                 'options': [
-                  { value: 'OWNER', label: 'Owner' },
-                  { value: 'ADMIN', label: 'Admin' },
-                  { value: 'MEMBER', label: 'Member' },
-                  { value: 'GUEST', label: 'Guest' },
+                  { value: 'OWNER', label: roleLabels.value.OWNER },
+                  { value: 'ADMIN', label: roleLabels.value.ADMIN },
+                  { value: 'MEMBER', label: roleLabels.value.MEMBER },
+                  { value: 'GUEST', label: roleLabels.value.GUEST },
                 ],
                 'onUpdate:modelValue': (newRole: OrganizationRole) =>
                   handleRoleChange(member.userId, newRole),
@@ -123,7 +131,7 @@ const columns = [
                   color: roleColors[member.role as keyof typeof roleColors],
                   icon: roleIcons[member.role as keyof typeof roleIcons],
                 },
-                () => member.role,
+                () => roleLabels.value[member.role as keyof typeof roleLabels.value],
               ),
 
           // Remove button (OWNER/ADMIN, not self)
@@ -133,7 +141,7 @@ const columns = [
                 'size': 'xs',
                 'color': 'error',
                 'variant': 'ghost',
-                'aria-label': 'Remove member',
+                'aria-label': t('org.members.removeTitle'),
                 'onClick': () => { openRemoveModal(member.userId); },
               })
             : null,
@@ -141,7 +149,7 @@ const columns = [
       );
     },
   },
-];
+]);
 
 function openInviteModal() {
   inviteModalOpen.value = true;
@@ -158,8 +166,8 @@ async function sendInvite() {
     });
 
     toast.add({
-      title: 'Success',
-      description: 'Invitation sent',
+      title: t('common.success'),
+      description: t('org.members.toast.inviteSuccess'),
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -169,8 +177,8 @@ async function sendInvite() {
   catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to send invite',
+      title: t('common.error'),
+      description: error.data?.message || t('org.members.toast.inviteError'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -184,8 +192,8 @@ async function handleRoleChange(userId: string, role: OrganizationRole) {
   try {
     await updateMemberRole(organizationSlug, userId, role);
     toast.add({
-      title: 'Success',
-      description: 'Member role updated',
+      title: t('common.success'),
+      description: t('org.members.toast.roleSuccess'),
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -193,8 +201,8 @@ async function handleRoleChange(userId: string, role: OrganizationRole) {
   catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to update role',
+      title: t('common.error'),
+      description: error.data?.message || t('org.members.toast.roleError'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -214,8 +222,8 @@ async function confirmRemove() {
   try {
     await removeMember(organizationSlug, memberToRemove.value);
     toast.add({
-      title: 'Success',
-      description: 'Member removed',
+      title: t('common.success'),
+      description: t('org.members.toast.removeSuccess'),
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -224,8 +232,8 @@ async function confirmRemove() {
   catch (err) {
     const error = err as { data?: { message?: string } };
     toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to remove member',
+      title: t('common.error'),
+      description: error.data?.message || t('org.members.toast.removeError'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -241,14 +249,14 @@ async function confirmRemove() {
   <div class="space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-xl font-semibold">
-        Members
+        {{ $t('org.members.membersLabel') }}
       </h2>
       <UButton
         v-if="isOwner"
         icon="i-lucide-user-plus"
         @click="openInviteModal"
       >
-        Invite Member
+        {{ $t('org.members.inviteButton') }}
       </UButton>
     </div>
 
@@ -262,7 +270,7 @@ async function confirmRemove() {
         <UCard>
           <template #header>
             <h3 class="text-lg font-semibold">
-              Invite Member
+              {{ $t('org.members.inviteTitle') }}
             </h3>
           </template>
 
@@ -274,26 +282,26 @@ async function confirmRemove() {
             <div class="space-y-4">
               <UFormField
                 name="email"
-                label="Email"
+                :label="$t('common.email')"
                 required
               >
                 <UInput
                   v-model="inviteState.email"
                   type="email"
-                  placeholder="member@example.com"
+                  :placeholder="$t('org.members.inviteEmailPlaceholder')"
                 />
               </UFormField>
 
               <UFormField
                 name="role"
-                label="Role"
+                :label="$t('org.members.inviteRoleLabel')"
               >
                 <USelect
                   v-model="inviteState.role"
                   :options="[
-                    { value: 'MEMBER', label: 'Member' },
-                    { value: 'ADMIN', label: 'Admin' },
-                    { value: 'GUEST', label: 'Guest' },
+                    { value: 'MEMBER', label: $t('org.members.roleMember') },
+                    { value: 'ADMIN', label: $t('org.members.roleAdmin') },
+                    { value: 'GUEST', label: $t('org.members.roleGuest') },
                   ]"
                   option-attribute="label"
                   value-attribute="value"
@@ -306,14 +314,14 @@ async function confirmRemove() {
                   :loading="inviting"
                   block
                 >
-                  Send Invitation
+                  {{ $t('org.members.sendInvitation') }}
                 </UButton>
                 <UButton
                   variant="ghost"
                   :disabled="inviting"
                   @click="close"
                 >
-                  Cancel
+                  {{ $t('common.cancel') }}
                 </UButton>
               </div>
             </div>
@@ -327,11 +335,11 @@ async function confirmRemove() {
         <UCard>
           <template #header>
             <h3 class="text-lg font-semibold">
-              Remove Member
+              {{ $t('org.members.removeTitle') }}
             </h3>
           </template>
 
-          <p>Are you sure you want to remove this member?</p>
+          <p>{{ $t('org.members.removeConfirm') }}</p>
 
           <template #footer>
             <div class="flex gap-2">
@@ -340,14 +348,14 @@ async function confirmRemove() {
                 :loading="removing"
                 @click="confirmRemove"
               >
-                Remove
+                {{ $t('common.remove') }}
               </UButton>
               <UButton
                 variant="ghost"
                 :disabled="removing"
                 @click="close"
               >
-                Cancel
+                {{ $t('common.cancel') }}
               </UButton>
             </div>
           </template>

@@ -1,30 +1,29 @@
 <script setup lang="ts">
-const testimonials = [
+const { t } = useI18n();
+
+const testimonials = computed(() => [
   {
-    name: 'Sarah Chen',
-    role: 'Indie Developer',
-    quote:
-      'Finally, a todo app that doesn\'t try to do everything. Bistro is simple, fast, and just works. Perfect for my daily workflow.',
+    name: t('home.testimonials.sarah.name'),
+    role: t('home.testimonials.sarah.role'),
+    quote: t('home.testimonials.sarah.quote'),
   },
   {
-    name: 'Marcus Johnson',
-    role: 'Startup Founder',
-    quote:
-      'We switched our team to Bistro and productivity went up. The organization features are exactly what we needed without the bloat.',
+    name: t('home.testimonials.marcus.name'),
+    role: t('home.testimonials.marcus.role'),
+    quote: t('home.testimonials.marcus.quote'),
   },
   {
-    name: 'Emily Rodriguez',
-    role: 'Open Source Contributor',
-    quote:
-      'Love that it\'s open source! I can self-host it, customize it, and trust that my data stays mine. The codebase is clean too.',
+    name: t('home.testimonials.emily.name'),
+    role: t('home.testimonials.emily.role'),
+    quote: t('home.testimonials.emily.quote'),
   },
-];
+]);
 </script>
 
 <template>
   <UPageSection
-    title="Loved by developers"
-    description="See what others are saying about Bistro."
+    :title="t('home.testimonials.title')"
+    :description="t('home.testimonials.description')"
     class="scroll-animate"
   >
     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">

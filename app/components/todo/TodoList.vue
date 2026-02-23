@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 const {
   todos,
   loading,
@@ -17,11 +19,11 @@ const {
 // Status message for screen readers
 const statusMessage = computed(() => {
   if (loading.value)
-    return 'Loading todos...';
+    return t('todo.loading');
   if (todos.value.length === 0)
-    return 'No todos found.';
+    return t('todo.empty');
   const completed = todos.value.filter(t => t.completed).length;
-  return `${todos.value.length} todos, ${completed} completed.`;
+  return t('todo.statusSummary', { total: todos.value.length, completed });
 });
 
 async function handleToggle(id: string, completed: string | boolean) {
@@ -76,7 +78,7 @@ function formatTime(date: Date): string {
           name="i-lucide-filter"
           class="text-neutral-400"
         />
-        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Filter:</span>
+        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ $t('todo.filterLabel') }}</span>
         <div class="flex gap-2">
           <UBadge
             variant="subtle"
@@ -84,7 +86,7 @@ function formatTime(date: Date): string {
             class="cursor-pointer"
             @click="setFilter('all')"
           >
-            All
+            {{ $t('todo.filterAll') }}
           </UBadge>
           <UBadge
             variant="subtle"
@@ -92,7 +94,7 @@ function formatTime(date: Date): string {
             class="cursor-pointer"
             @click="setFilter('active')"
           >
-            Active
+            {{ $t('todo.filterActive') }}
           </UBadge>
           <UBadge
             variant="subtle"
@@ -100,7 +102,7 @@ function formatTime(date: Date): string {
             class="cursor-pointer"
             @click="setFilter('completed')"
           >
-            Completed
+            {{ $t('todo.filterCompleted') }}
           </UBadge>
         </div>
       </div>
@@ -111,7 +113,7 @@ function formatTime(date: Date): string {
           name="i-lucide-arrow-up-down"
           class="text-neutral-400"
         />
-        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Sort:</span>
+        <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ $t('todo.sortLabel') }}</span>
         <div class="flex gap-2">
           <UBadge
             variant="subtle"
@@ -119,7 +121,7 @@ function formatTime(date: Date): string {
             class="cursor-pointer"
             @click="setSort('date')"
           >
-            Date
+            {{ $t('todo.sortDate') }}
           </UBadge>
           <UBadge
             variant="subtle"
@@ -127,7 +129,7 @@ function formatTime(date: Date): string {
             class="cursor-pointer"
             @click="setSort('title')"
           >
-            Title
+            {{ $t('todo.sortTitle') }}
           </UBadge>
         </div>
       </div>
@@ -158,8 +160,8 @@ function formatTime(date: Date): string {
     <UEmpty
       v-else-if="todos.length === 0"
       icon="i-lucide-check-circle"
-      title="No todos yet"
-      description="Create your first one to get started!"
+      :title="t('todo.emptyTitle')"
+      :description="t('todo.emptyDescription')"
     />
 
     <!-- Todo list -->
@@ -207,7 +209,7 @@ function formatTime(date: Date): string {
           color="error"
           variant="ghost"
           size="sm"
-          aria-label="Delete todo"
+          :aria-label="t('todo.deleteTodoLabel')"
           @click="handleDelete(todo.id)"
         />
       </div>
@@ -218,25 +220,25 @@ function formatTime(date: Date): string {
         class="border-default flex items-center justify-between border-t pt-4"
       >
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          {{ total }} total
+          {{ $t('todo.totalCount', { total }) }}
         </p>
         <div class="flex items-center gap-2">
           <UButton
             icon="i-lucide-chevron-left"
             variant="outline"
             size="sm"
-            aria-label="Previous page"
+            :aria-label="t('todo.previousPage')"
             :disabled="page === 1"
             @click="setPage(page - 1)"
           />
           <span class="text-sm text-neutral-700 dark:text-neutral-300">
-            {{ page }} / {{ totalPages }}
+            {{ $t('todo.pageInfo', { page, totalPages }) }}
           </span>
           <UButton
             icon="i-lucide-chevron-right"
             variant="outline"
             size="sm"
-            aria-label="Next page"
+            :aria-label="t('todo.nextPage')"
             :disabled="page === totalPages"
             @click="setPage(page + 1)"
           />

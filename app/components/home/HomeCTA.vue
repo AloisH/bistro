@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const { email, subscribing, subscribe } = useNewsletter();
 </script>
 
@@ -8,8 +9,8 @@ const { email, subscribing, subscribe } = useNewsletter();
     class="scroll-animate"
   >
     <UPageCTA
-      title="Get early access to new features"
-      description="Join our newsletter to be the first to know about updates, new features, and tips to boost your productivity."
+      :title="t('home.cta.title')"
+      :description="t('home.cta.description')"
       variant="subtle"
     >
       <template #links>
@@ -20,7 +21,7 @@ const { email, subscribing, subscribe } = useNewsletter();
           <UInput
             v-model="email"
             type="email"
-            placeholder="Enter your email"
+            :placeholder="t('home.cta.emailPlaceholder')"
             size="lg"
             class="flex-1"
             required
@@ -30,7 +31,7 @@ const { email, subscribing, subscribe } = useNewsletter();
             size="lg"
             :loading="subscribing"
           >
-            Subscribe
+            {{ t('home.cta.subscribe') }}
           </UButton>
         </form>
       </template>

@@ -1,15 +1,16 @@
+const LOCALE_PREFIX_RE = /^\/fr(?=\/|$)/;
+
 /**
  * Check if path matches public route pattern (supports wildcards)
- * @param path - The route path to check
- * @param publicRoutes - Array of public route patterns (supports /* wildcards)
- * @returns true if path matches any public route pattern
+ * Strips known locale prefixes before matching so /fr/blog matches /blog.
  */
 export function isPublicRoute(path: string, publicRoutes: string[]): boolean {
+  const cleanPath = path.replace(LOCALE_PREFIX_RE, '') || '/';
   return publicRoutes.some((route) => {
     if (route.endsWith('/*')) {
       const basePath = route.slice(0, -2);
-      return path === basePath || path.startsWith(`${basePath}/`);
+      return cleanPath === basePath || cleanPath.startsWith(`${basePath}/`);
     }
-    return path === route;
+    return cleanPath === route;
   });
 }

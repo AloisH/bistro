@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { z } from 'zod';
 
+const { t } = useI18n();
 const toast = useToast();
 
 const contactSchema = z.object({
@@ -19,12 +20,12 @@ const state = reactive<ContactForm>({
   message: '',
 });
 
-const subjectOptions = [
-  { value: 'general', label: 'General Inquiry' },
-  { value: 'support', label: 'Support' },
-  { value: 'feedback', label: 'Feedback' },
-  { value: 'other', label: 'Other' },
-];
+const subjectOptions = computed(() => [
+  { value: 'general', label: t('contact.subjects.general') },
+  { value: 'support', label: t('contact.subjects.support') },
+  { value: 'feedback', label: t('contact.subjects.feedback') },
+  { value: 'other', label: t('contact.subjects.other') },
+]);
 
 const loading = ref(false);
 
@@ -37,8 +38,8 @@ async function onSubmit() {
     });
 
     toast.add({
-      title: 'Message sent',
-      description: 'Thanks for reaching out. We\'ll get back to you soon.',
+      title: t('contact.toast.success'),
+      description: t('contact.toast.successDescription'),
       color: 'success',
       icon: 'i-lucide-check',
     });
@@ -51,8 +52,8 @@ async function onSubmit() {
   }
   catch {
     toast.add({
-      title: 'Error',
-      description: 'Failed to send message. Please try again.',
+      title: t('common.error'),
+      description: t('contact.toast.error'),
       color: 'error',
       icon: 'i-lucide-alert-triangle',
     });
@@ -63,8 +64,8 @@ async function onSubmit() {
 }
 
 useSeo({
-  title: 'Contact',
-  description: 'Get in touch with the Bistro team for support, feedback, or general inquiries.',
+  title: t('contact.seoTitle'),
+  description: t('contact.seoDescription'),
 });
 </script>
 
@@ -74,10 +75,10 @@ useSeo({
       <!-- Header -->
       <div class="mb-12 text-center">
         <h1 class="mb-4 text-4xl font-bold text-neutral-900 dark:text-white">
-          Contact Us
+          {{ $t('contact.title') }}
         </h1>
         <p class="text-lg text-neutral-600 dark:text-neutral-400">
-          Have a question or feedback? We'd love to hear from you.
+          {{ $t('contact.description') }}
         </p>
       </div>
 
@@ -91,12 +92,12 @@ useSeo({
           <div class="space-y-6">
             <UFormField
               name="name"
-              label="Name"
+              :label="t('contact.nameLabel')"
               class="w-full"
             >
               <UInput
                 v-model="state.name"
-                placeholder="Your name"
+                :placeholder="t('contact.namePlaceholder')"
                 icon="i-lucide-user"
                 class="w-full"
               />
@@ -104,13 +105,13 @@ useSeo({
 
             <UFormField
               name="email"
-              label="Email"
+              :label="t('contact.emailLabel')"
               class="w-full"
             >
               <UInput
                 v-model="state.email"
                 type="email"
-                placeholder="you@example.com"
+                :placeholder="t('contact.emailPlaceholder')"
                 icon="i-lucide-mail"
                 class="w-full"
               />
@@ -118,13 +119,13 @@ useSeo({
 
             <UFormField
               name="subject"
-              label="Subject"
+              :label="t('contact.subjectLabel')"
               class="w-full"
             >
               <USelect
                 v-model="state.subject"
                 :items="subjectOptions"
-                placeholder="Select a subject"
+                :placeholder="t('contact.subjectPlaceholder')"
                 icon="i-lucide-message-square"
                 class="w-full"
               />
@@ -132,12 +133,12 @@ useSeo({
 
             <UFormField
               name="message"
-              label="Message"
+              :label="t('contact.messageLabel')"
               class="w-full"
             >
               <UTextarea
                 v-model="state.message"
-                placeholder="How can we help?"
+                :placeholder="t('contact.messagePlaceholder')"
                 :rows="5"
                 class="w-full"
               />
@@ -149,7 +150,7 @@ useSeo({
               size="lg"
               :loading="loading"
             >
-              Send Message
+              {{ $t('contact.submitButton') }}
             </UButton>
           </div>
         </UForm>
@@ -158,21 +159,21 @@ useSeo({
       <!-- Alternative contact -->
       <div class="mt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
         <p>
-          Prefer GitHub?
+          {{ $t('contact.preferGithub') }}
           <NuxtLink
             to="https://github.com/AloisH/bistro/issues"
             target="_blank"
             class="text-primary hover:underline"
           >
-            Open an issue
+            {{ $t('contact.openIssue') }}
           </NuxtLink>
-          or
+          {{ $t('common.or').toLowerCase() }}
           <NuxtLink
             to="https://github.com/AloisH/bistro/discussions"
             target="_blank"
             class="text-primary hover:underline"
           >
-            start a discussion
+            {{ $t('contact.startDiscussion') }}
           </NuxtLink>
         </p>
       </div>

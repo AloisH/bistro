@@ -26,7 +26,7 @@ interface Emits {
   >
     <UFormField
       name="email"
-      label="Email"
+      :label="$t('auth.magicLinkForm.emailLabel')"
     >
       <UInput
         v-model="state.email"
@@ -37,7 +37,7 @@ interface Emits {
     </UFormField>
 
     <p class="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
-      We'll send you a link to sign in without a password.
+      {{ $t('auth.magicLinkForm.hint') }}
     </p>
 
     <UAlert
@@ -56,7 +56,7 @@ interface Emits {
       class="mt-6 font-semibold"
       icon="i-lucide-mail"
     >
-      Send Magic Link
+      {{ $t('auth.magicLinkForm.submitButton') }}
     </UButton>
   </UForm>
 </template>

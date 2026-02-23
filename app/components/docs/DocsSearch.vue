@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { CommandPaletteItem } from '@nuxt/ui';
 
+const { t } = useI18n();
 const { query, results, isOpen, open, close } = useDocsSearch();
 
 defineShortcuts({
@@ -14,7 +15,7 @@ const groups = computed(() => {
   return [
     {
       id: 'docs',
-      label: 'Documentation',
+      label: t('docs.title'),
       items: results.value.map(r => ({
         id: r.path,
         label: r.title,
@@ -46,7 +47,7 @@ function handleSelect(item: CommandPaletteItem | undefined) {
       block
       @click="open"
     >
-      <span class="flex-1 text-left">Search</span>
+      <span class="flex-1 text-left">{{ $t('docs.searchButton') }}</span>
       <UKbd>⌘K</UKbd>
     </UButton>
 
@@ -55,11 +56,11 @@ function handleSelect(item: CommandPaletteItem | undefined) {
         <UCommandPalette
           v-model:search-term="query"
           :groups="groups"
-          placeholder="Search docs..."
+          :placeholder="t('docs.searchPlaceholder')"
           close
           :empty-state="{
             icon: 'i-lucide-search',
-            label: query ? 'No results' : 'Start typing to search',
+            label: query ? t('docs.noResults') : t('docs.startTyping'),
           }"
           @update:open="isOpen = $event"
           @update:model-value="handleSelect"

@@ -8,11 +8,11 @@
     </div>
 
     <h1 class="mb-4 text-3xl font-bold">
-      Welcome to Bistro!
+      {{ $t('onboarding.welcome.title') }}
     </h1>
 
     <p class="mx-auto mb-6 max-w-md text-lg text-neutral-600 dark:text-neutral-300">
-      Let's get you set up in just a few steps. This will only take a minute.
+      {{ $t('onboarding.welcome.description') }}
     </p>
 
     <div class="mx-auto max-w-sm space-y-3 text-left">
@@ -23,10 +23,10 @@
         />
         <div>
           <p class="font-medium">
-            Set up your profile
+            {{ $t('onboarding.welcome.step1Title') }}
           </p>
           <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Add bio and company info
+            {{ $t('onboarding.welcome.step1Description') }}
           </p>
         </div>
       </div>
@@ -38,10 +38,10 @@
         />
         <div>
           <p class="font-medium">
-            Configure preferences
+            {{ $t('onboarding.welcome.step2Title') }}
           </p>
           <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Customize your experience
+            {{ $t('onboarding.welcome.step2Description') }}
           </p>
         </div>
       </div>
@@ -53,10 +53,10 @@
         />
         <div>
           <p class="font-medium">
-            Tell us about yourself
+            {{ $t('onboarding.welcome.step3Title') }}
           </p>
           <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Help us tailor Bistro for you
+            {{ $t('onboarding.welcome.step3Description') }}
           </p>
         </div>
       </div>

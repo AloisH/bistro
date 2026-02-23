@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { magicLinkSchema } from '#shared/auth';
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const { state, loading, error, submit } = useMagicLink();
 </script>
 
@@ -9,10 +11,10 @@ const { state, loading, error, submit } = useMagicLink();
     <UCard class="w-full max-w-md">
       <template #header>
         <h2 class="text-2xl font-bold">
-          Magic Link Login
+          {{ $t('auth.magicLink.title') }}
         </h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-          Enter your email to receive a login link
+          {{ $t('auth.magicLink.description') }}
         </p>
       </template>
 
@@ -23,12 +25,12 @@ const { state, loading, error, submit } = useMagicLink();
       >
         <UFormField
           name="email"
-          label="Email"
+          :label="t('common.email')"
         >
           <UInput
             v-model="state.email"
             type="email"
-            placeholder="you@example.com"
+            :placeholder="t('auth.magicLink.emailPlaceholder')"
             autocomplete="email"
           />
         </UFormField>
@@ -48,18 +50,18 @@ const { state, loading, error, submit } = useMagicLink();
           size="xl"
           class="mt-6 font-semibold"
         >
-          Send magic link
+          {{ $t('auth.magicLink.submitButton') }}
         </UButton>
       </UForm>
 
       <template #footer>
         <p class="text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Prefer a password?
+          {{ $t('auth.magicLink.preferPassword') }}
           <NuxtLink
-            to="/auth/login"
+            :to="localePath('/auth/login')"
             class="text-primary hover:underline"
           >
-            Sign in with password
+            {{ $t('auth.magicLink.signInWithPassword') }}
           </NuxtLink>
         </p>
       </template>

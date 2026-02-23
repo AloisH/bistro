@@ -7,6 +7,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
+const { t } = useI18n();
 const { client } = useAuth();
 const toast = useToast();
 
@@ -28,8 +29,8 @@ async function changePassword() {
     passwordState.value.currentPassword = '';
     passwordState.value.newPassword = '';
     toast.add({
-      title: 'Password Updated',
-      description: 'Your password has been changed successfully',
+      title: t('profile.changePassword.toast.success'),
+      description: t('profile.changePassword.toast.successDescription'),
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
@@ -40,7 +41,7 @@ async function changePassword() {
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Password Change Failed',
+      title: t('profile.changePassword.toast.error'),
       description: getErrorMessage(e, 'Failed to change password. Please check your current password.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
@@ -57,10 +58,10 @@ async function changePassword() {
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
         <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-          Change Password
+          {{ $t('profile.changePassword.title') }}
         </h2>
         <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Update your password to keep your account secure
+          {{ $t('profile.changePassword.description') }}
         </p>
       </div>
       <UBadge
@@ -68,7 +69,7 @@ async function changePassword() {
         variant="subtle"
         class="mt-2 sm:mt-0"
       >
-        Security
+        {{ $t('profile.changePassword.badge') }}
       </UBadge>
     </div>
     <UForm
@@ -79,26 +80,26 @@ async function changePassword() {
     >
       <UFormField
         name="currentPassword"
-        label="Current Password"
-        description="Enter your current password for verification"
+        :label="$t('profile.changePassword.currentPasswordLabel')"
+        :description="$t('profile.changePassword.currentPasswordHint')"
       >
         <UInput
           v-model="passwordState.currentPassword"
           type="password"
-          placeholder="••••••••"
+          :placeholder="$t('profile.changePassword.passwordPlaceholder')"
           size="lg"
         />
       </UFormField>
 
       <UFormField
         name="newPassword"
-        label="New Password"
-        description="Choose a strong password with at least 8 characters"
+        :label="$t('profile.changePassword.newPasswordLabel')"
+        :description="$t('profile.changePassword.newPasswordHint')"
       >
         <UInput
           v-model="passwordState.newPassword"
           type="password"
-          placeholder="••••••••"
+          :placeholder="$t('profile.changePassword.passwordPlaceholder')"
           size="lg"
         />
       </UFormField>
@@ -111,13 +112,13 @@ async function changePassword() {
           <label class="flex cursor-pointer items-center gap-3">
             <UCheckbox v-model="passwordState.revokeOtherSessions" />
             <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-              Sign out from all other devices
+              {{ $t('profile.changePassword.revokeSessionsLabel') }}
             </span>
           </label>
         </template>
         <template #description>
           <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-            Recommended for security when changing passwords
+            {{ $t('profile.changePassword.revokeSessionsHint') }}
           </p>
         </template>
       </UFormField>
@@ -137,7 +138,7 @@ async function changePassword() {
               class="mr-2"
             />
           </template>
-          Update Password
+          {{ $t('profile.changePassword.submitButton') }}
         </UButton>
       </div>
     </UForm>

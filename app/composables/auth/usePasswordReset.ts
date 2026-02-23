@@ -1,6 +1,7 @@
 export function usePasswordResetRequest() {
   const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
   const toast = useToast();
+  const { t } = useI18n();
   const config = useRuntimeConfig();
 
   const state = reactive({ email: '' });
@@ -30,8 +31,8 @@ export function usePasswordResetRequest() {
       }
 
       toast.add({
-        title: 'Email sent',
-        description: 'Check your inbox for the reset link',
+        title: t('auth.resend.emailSent'),
+        description: t('auth.forgotPasswordSent.heading'),
         color: 'success',
         icon: 'i-lucide-mail-check',
       });
@@ -53,6 +54,7 @@ export function usePasswordReset() {
   const { fetchSession, redirectToUserDashboard, loggedIn, client } = useAuth();
   const route = useRoute();
   const toast = useToast();
+  const { t } = useI18n();
 
   const token = ref(route.query.token as string);
   const state = reactive({
@@ -71,8 +73,8 @@ export function usePasswordReset() {
 
     if (!token.value) {
       toast.add({
-        title: 'Invalid link',
-        description: 'Password reset link is missing or invalid',
+        title: t('auth.resetPassword.toast.invalidLink'),
+        description: t('auth.resetPassword.toast.invalidLinkDescription'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });
@@ -96,8 +98,8 @@ export function usePasswordReset() {
       }
 
       toast.add({
-        title: 'Password updated',
-        description: 'You can now sign in with your new password',
+        title: t('auth.resetPassword.toast.success'),
+        description: t('auth.resetPassword.toast.successDescription'),
         color: 'success',
         icon: 'i-lucide-check',
       });

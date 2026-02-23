@@ -7,6 +7,7 @@ interface Props {
 
 defineProps<Props>();
 
+const { t } = useI18n();
 const { user, fetchSession } = useAuth();
 const toast = useToast();
 
@@ -46,15 +47,15 @@ async function updateProfile() {
     await fetchSession();
     originalName.value = profileState.value.name; // Reset dirty state
     toast.add({
-      title: 'Profile Updated',
-      description: 'Your profile information has been saved successfully',
+      title: t('profile.form.toast.success'),
+      description: t('profile.form.toast.successDescription'),
       color: 'success',
       icon: 'i-lucide-check-circle',
     });
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Update Failed',
+      title: t('profile.form.toast.error'),
       description: getErrorMessage(e, 'Failed to update profile. Please try again.'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
@@ -69,7 +70,7 @@ async function updateProfile() {
 <template>
   <div class="border-default border-b pb-6">
     <h2 class="mb-6 text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-      Profile Information
+      {{ $t('profile.form.title') }}
     </h2>
     <UForm
       :state="profileState"
@@ -79,12 +80,12 @@ async function updateProfile() {
     >
       <UFormField
         name="name"
-        label="Full Name"
-        description="Your display name that appears on your profile"
+        :label="$t('profile.form.nameLabel')"
+        :description="$t('profile.form.nameHint')"
       >
         <UInput
           v-model="profileState.name"
-          placeholder="Your full name"
+          :placeholder="$t('profile.form.namePlaceholder')"
           autocomplete="name"
           size="lg"
           class="w-full"
@@ -93,11 +94,11 @@ async function updateProfile() {
 
       <UFormField
         name="email"
-        label="Email Address"
+        :label="$t('profile.form.emailLabel')"
         :description="
           hasPassword
-            ? 'Your account email address'
-            : 'Managed by your OAuth provider (GitHub/Google)'
+            ? $t('profile.form.emailHint')
+            : $t('profile.form.emailOauthHint')
         "
       >
         <UInput
@@ -123,7 +124,7 @@ async function updateProfile() {
               class="mr-2"
             />
           </template>
-          Save Changes
+          {{ $t('profile.form.saveButton') }}
         </UButton>
       </div>
     </UForm>

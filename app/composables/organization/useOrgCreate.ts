@@ -4,6 +4,8 @@ import { createOrganizationSchema } from '#shared/organization';
 export function useOrgCreate() {
   const router = useRouter();
   const toast = useToast();
+  const { t } = useI18n();
+  const localePath = useLocalePath();
 
   const state = reactive<CreateOrganizationInput>({
     name: '',
@@ -25,19 +27,19 @@ export function useOrgCreate() {
       });
 
       toast.add({
-        title: 'Success',
-        description: 'Organization created successfully',
+        title: t('common.success'),
+        description: t('org.create.toast.success'),
         color: 'success',
         icon: 'i-lucide-check',
       });
 
-      await router.push(`/org/${response.organization.slug}/dashboard`);
+      await router.push(localePath(`/org/${response.organization.slug}/dashboard`));
     }
     catch (err) {
       const error = err as { data?: { message?: string } };
       toast.add({
-        title: 'Error',
-        description: error.data?.message || 'Failed to create organization',
+        title: t('common.error'),
+        description: error.data?.message || t('org.create.toast.success'),
         color: 'error',
         icon: 'i-lucide-alert-triangle',
       });

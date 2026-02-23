@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const { fetchSession } = useAuth();
 const router = useRouter();
 const toast = useToast();
@@ -23,15 +24,15 @@ async function restartOnboarding() {
     await router.push({ name: 'onboarding' });
 
     toast.add({
-      title: 'Restarting onboarding',
-      description: 'Taking you to the setup wizard',
+      title: t('profile.restartOnboarding.title'),
+      description: t('profile.restartOnboarding.description'),
       color: 'success',
       icon: 'i-lucide-refresh-cw',
     });
   }
   catch (e: unknown) {
     toast.add({
-      title: 'Error',
+      title: t('common.error'),
       description: getErrorMessage(e, 'Failed to restart onboarding'),
       color: 'error',
       icon: 'i-lucide-alert-circle',
@@ -48,10 +49,10 @@ async function restartOnboarding() {
     <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div>
         <h2 class="text-lg font-semibold text-neutral-900 sm:text-xl dark:text-white">
-          Restart Onboarding
+          {{ $t('profile.restartOnboarding.title') }}
         </h2>
         <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Go through the setup wizard again to update your preferences
+          {{ $t('profile.restartOnboarding.description') }}
         </p>
       </div>
     </div>
@@ -70,7 +71,7 @@ async function restartOnboarding() {
           class="mr-2"
         />
       </template>
-      Restart Onboarding
+      {{ $t('profile.restartOnboarding.button') }}
     </UButton>
   </div>
 </template>
